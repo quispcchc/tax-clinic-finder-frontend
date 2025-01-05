@@ -1,0 +1,13 @@
+<div class="card">
+    <h3>{{ 'clinicList' | translate }}</h3>
+    <div class="form-group">
+        <label for="pincode">{{ 'pincode' | translate }}</label>
+        <input id="pincode" type="text" placeholder="{{ 'pincode' | translate }}" [(ngModel)]="pincode" />
+    </div>
+    <div class="form-group">
+        <label for="years">{{ 'years' | translate }}</label>
+        <input id="years" type="number" placeholder="{{ 'years' | translate }}" [(ngModel)]="years" />
+    </div>
+    <button (click)="search()">{{ 'search' | translate }}</button>
+    <button (click)="logout()">{{ 'logout' | translate }}</button>
+</div>

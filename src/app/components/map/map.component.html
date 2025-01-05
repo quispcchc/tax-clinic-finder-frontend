@@ -1,0 +1,4 @@
+<google-map *ngFor="let clinic of clinics" [center]="{lat: clinic.lat, lng: clinic.lng}" [zoom]="10">
+    <map-marker *ngFor="let clinic of clinics" [position]="{lat: clinic.lat, lng: clinic.lng}"></map-marker>
+</google-map>
+  

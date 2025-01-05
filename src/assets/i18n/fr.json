@@ -1,0 +1,23 @@
+{
+    "Login": "Connexion",
+    "Welcome": "Bienvenue",
+    "Username": "Nom d'utilisateur",
+    "Email": "Courriel",
+    "Password": "Mot de passe",
+    "Forgot Password": "Mot de passe oublié",
+    "Enter your Email": "Entrez votre courriel",
+    "Email is required.": "Le courriel est requis.",
+    "Invalid email address": "Adresse courriel invalide",
+    "Enter your Password": "Entrez votre mot de passe",
+    "Password is required.": "Le mot de passe est requis.",
+    "Password must be at least 6 characters long.": "Le mot de passe doit contenir au moins 6 caractères.",
+    "Password must contain at least one special character, one uppercase letter, one lowercase letter, and one number.": "Le mot de passe doit contenir au moins un caractère spécial, une majuscule, une minuscule et un chiffre.",
+    "Send Reset Link to Email": "Envoyer le lien de réinitialisation par courriel",
+    "A password link has been sent to your email.": "Un lien de réinitialisation de mot de passe a été envoyé à votre courriel.",
+    "Please check it to update your password.": "Veuillez le vérifier pour mettre à jour votre mot de passe.",
+    "New Password:": "Nouveau mot de passe :",
+    "Enter your new password": "Entrez votre nouveau mot de passe",
+    "Reset Password": "Réinitialiser le mot de passe",
+    "Password successfully reset": "Mot de passe réinitialisé avec succès",
+    "Back to Login": "Retour à la connexion"
+}
