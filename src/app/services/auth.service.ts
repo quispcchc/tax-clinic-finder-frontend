@@ -12,8 +12,8 @@ import { environment } from '../../environments/environment.development';
 export class AuthService {
   private API_URL = environment.apiUrl;
 
-  private loginUrl = `${this.API_URL}/login`;  // Backend login endpoint
-  private resetPasswordUrl = `${this.API_URL}/reset-password`;  // Backend password reset request endpoint
+  private loginUrl = `${this.API_URL}/login`; 
+  private resetPasswordUrl = `${this.API_URL}/reset-password`;
   private resetPasswordWithTokenUrl = `${this.API_URL}/reset-password`;
 
   constructor(private http: HttpClient, @Inject(PLATFORM_ID) private platformId: Object) { }

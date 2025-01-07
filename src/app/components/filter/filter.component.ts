@@ -1,6 +1,4 @@
 import { Component, EventEmitter, Output } from '@angular/core';
-import { Router } from '@angular/router';
-import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-filter',
@@ -9,17 +7,28 @@ import { AuthService } from '../../services/auth.service';
   styleUrls: ['./filter.component.scss']
 })
 export class FilterComponent {
-  @Output() searchEvent = new EventEmitter<{ pincode: string; years: number }>();
-  pincode: string = '';
-  years: number = 0;
 
-  constructor( private authService: AuthService, private router: Router) { }
+  @Output() filterChange = new EventEmitter<{ [key: string]: any }>();
 
-  search() {
-    this.searchEvent.emit({ pincode: this.pincode, years: this.years });
-  }
-  logout(): void {
-    this.authService.logout();
-    this.router.navigate(['/login']);
+  filters: {
+    pincode?: string;
+    language?: string;
+    years?: number;
+    province?: string;
+    type?: string;
+    territory?: string;
+  } = {
+    pincode: '',
+    language: '',
+    years: 0,
+    province: '',
+    type: '',
+    territory: ''
+  };
+
+  constructor() {}
+
+  applyFilters() {
+    this.filterChange.emit(this.filters);
   }
 }

@@ -16,6 +16,8 @@ import { MapComponent } from './components/map/map.component';
 import { LanguageSelectorComponent } from './components/language-selector/language-selector.component';
 import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
 import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
+import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { ClinicDetailsComponent } from './components/clinic-details/clinic-details.component';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -30,7 +32,9 @@ export function HttpLoaderFactory(http: HttpClient) {
     MapComponent,
     LanguageSelectorComponent,
     ForgotPasswordComponent,
-    ResetPasswordComponent
+    ResetPasswordComponent,
+    DashboardComponent,
+    ClinicDetailsComponent
   ],
   imports: [
     BrowserModule,

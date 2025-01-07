@@ -49,7 +49,7 @@ export class LoginComponent implements OnInit {
 
             this.authService.login(email, password).subscribe(success => {
                 if (success) {
-                    this.router.navigate(['/filter']);
+                    this.router.navigate(['/dashboard']);
                     this.loginForm.reset();
                 } else {
                     this.errorMessage = 'Invalid email or password';

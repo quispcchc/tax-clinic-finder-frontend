@@ -1,4 +1,3 @@
-// language-selector.component.ts
 import { Component, Output, EventEmitter } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 

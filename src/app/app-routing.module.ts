@@ -7,14 +7,13 @@ import { MapComponent } from './components/map/map.component';
 import { AuthGuard } from './services/auth.guard';
 import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
 import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
+import { DashboardComponent } from './components/dashboard/dashboard.component';
 
 const routes: Routes = [
     { path: 'login', component: LoginComponent },
     { path: 'forgot-password', component: ForgotPasswordComponent },
     { path: 'reset-password/:token', component: ResetPasswordComponent },
-    { path: 'filter', component: FilterComponent, canActivate: [AuthGuard] },
-    { path: 'clinics', component: ClinicListComponent },
-    { path: 'map', component: MapComponent },
+    { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard] },
     { path: '', redirectTo: '/login', pathMatch: 'full' },
     { path: '**', redirectTo: '/login' }
 ];

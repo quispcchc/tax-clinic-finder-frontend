@@ -1,4 +1,18 @@
-<google-map *ngFor="let clinic of clinics" [center]="{lat: clinic.lat, lng: clinic.lng}" [zoom]="10">
+<!-- <google-map *ngFor="let clinic of clinics" [center]="{lat: clinic.lat, lng: clinic.lng}" [zoom]="10">
     <map-marker *ngFor="let clinic of clinics" [position]="{lat: clinic.lat, lng: clinic.lng}"></map-marker>
 </google-map>
-  
+   -->
+
+<!-- <div class="map-container">
+    <google-map
+      height="400px"
+      width="100%"
+      [zoom]="zoom"
+      [center]="center">
+      <map-marker
+        *ngFor="let clinic of clinics"
+        [position]="{ lat: clinic.lat, lng: clinic.lng }"
+        [label]="clinic.name">
+      </map-marker>
+    </google-map>
+</div> -->

@@ -1,0 +1,7 @@
+<div class="dashboard-layout">
+    <app-filter (filterChange)="applyFilters($event)"></app-filter>
+    <div class="main-content">
+      <app-clinic-list [clinics]="filteredClinics"></app-clinic-list>
+      <app-map [clinics]="filteredClinics"></app-map>
+    </div>
+</div>

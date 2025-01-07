@@ -1,13 +1,63 @@
-<div class="card">
-    <h3>{{ 'clinicList' | translate }}</h3>
+<div class="filter">
+  <form (ngSubmit)="applyFilters()">
     <div class="form-group">
-        <label for="pincode">{{ 'pincode' | translate }}</label>
-        <input id="pincode" type="text" placeholder="{{ 'pincode' | translate }}" [(ngModel)]="pincode" />
+      <label for="pincode">{{ "Postal Code" | translate }}</label>
+      <input
+        type="text"
+        id="pincode"
+        [(ngModel)]="filters.pincode"
+        name="pincode"
+        placeholder="Enter Postal Code"
+      />
     </div>
     <div class="form-group">
-        <label for="years">{{ 'years' | translate }}</label>
-        <input id="years" type="number" placeholder="{{ 'years' | translate }}" [(ngModel)]="years" />
+      <label for="language">{{ "Language Preference" | translate }}</label>
+      <select id="language" [(ngModel)]="filters.language" name="language">
+        <option value="">{{ "Any" | translate }}</option>
+        <option value="en">English</option>
+        <option value="fr">French</option>
+      </select>
     </div>
-    <button (click)="search()">{{ 'search' | translate }}</button>
-    <button (click)="logout()">{{ 'logout' | translate }}</button>
+    <div class="form-group">
+      <label for="years">{{ "Tax Years to be Done" | translate }}</label>
+      <input
+        type="number"
+        id="years"
+        [(ngModel)]="filters.years"
+        name="years"
+        placeholder="Enter Tax Years"
+      />
+    </div>
+    <div class="form-group">
+      <label for="province">{{
+        "Province of Residence on Dec 31" | translate
+      }}</label>
+      <input
+        type="text"
+        id="province"
+        [(ngModel)]="filters.province"
+        name="province"
+        placeholder="Enter Province"
+      />
+    </div>
+    <div class="form-group">
+      <label for="type">{{ "Type" | translate }}</label>
+      <select id="type" [(ngModel)]="filters.type" name="type">
+        <option value="">{{ "Any" | translate }}</option>
+        <option value="in-person">{{ "In Person" | translate }}</option>
+        <option value="virtual">{{ "Virtual" | translate }}</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="territory">{{ "Territory" | translate }}</label>
+      <input
+        type="text"
+        id="territory"
+        [(ngModel)]="filters.territory"
+        name="territory"
+        placeholder="Enter Territory"
+      />
+    </div>
+    <button type="submit">{{ "Apply Filters" | translate }}</button>
+  </form>
 </div>
