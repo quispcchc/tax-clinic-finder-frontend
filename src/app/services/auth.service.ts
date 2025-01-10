@@ -5,6 +5,7 @@ import { catchError, map } from 'rxjs/operators';
 import { isPlatformBrowser } from '@angular/common';
 import { FormControl } from '@angular/forms';
 import { environment } from '../../environments/environment.development';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +17,7 @@ export class AuthService {
   private resetPasswordUrl = `${this.API_URL}/reset-password`;
   private resetPasswordWithTokenUrl = `${this.API_URL}/reset-password`;
 
-  constructor(private http: HttpClient, @Inject(PLATFORM_ID) private platformId: Object) { }
+  constructor(private http: HttpClient, @Inject(PLATFORM_ID) private platformId: Object, private router: Router) { }
 
   login(email: string, password: string): Observable<boolean> {
     return this.http.post<{ token: string, userName: string, userRole: string, userEmail: string }>(this.loginUrl, { email, password })
@@ -24,9 +25,6 @@ export class AuthService {
         map(response => {
           if (isPlatformBrowser(this.platformId)) {
             localStorage.setItem('authToken', response.token);
-            localStorage.setItem('first_name', response.userName);
-            localStorage.setItem('role', response.userRole);
-            localStorage.setItem('email', response.userEmail);
           }
           return true;
         }),
@@ -37,11 +35,7 @@ export class AuthService {
   logout(): void {
     if (isPlatformBrowser(this.platformId)) {
       localStorage.removeItem('authToken');
-      localStorage.removeItem('first_name');
-      localStorage.removeItem('role');
-      localStorage.removeItem('email');
-      localStorage.removeItem('accessible_tabs');
-      localStorage.removeItem('accessible_forms');
+      this.router.navigate(['/login']);
     }
   }
 

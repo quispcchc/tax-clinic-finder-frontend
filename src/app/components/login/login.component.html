@@ -9,7 +9,7 @@
             <div *ngIf="email && email?.value !== '' && email.invalid && (email.dirty || email.touched)"
             class="error-message">
                 <p *ngIf="email.errors?.['required']">{{ 'Email is required.' | translate }}</p>
-                <p *ngIf="email?.errors?.['email']">{{ 'Invalid email address.' | translate }}</p>
+                <p *ngIf="email?.errors?.['email']">{{ 'Invalid email address' | translate }}</p>
             </div>
         </div>
 

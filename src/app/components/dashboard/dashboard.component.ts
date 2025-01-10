@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Clinic } from '../../models/clinic.model';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -9,52 +10,73 @@ import { Clinic } from '../../models/clinic.model';
   styleUrl: './dashboard.component.scss'
 })
 export class DashboardComponent {
+
   clinics: Clinic[] = [
     {
       id: 1,
-      name: 'Clinic A',
-      pincode: '12345',
+      name: 'Carlington Community Health Centre',
+      pincode: 'K1Z 5Z8',
       language: 'en',
       years: 5,
       province: 'Ontario',
       type: 'in-person',
       territory: 'North',
-      lat: 40.73061,
-      lng: -73.935242,
-      contact: 1234567890,
+      lat: 45.3936,
+      lng: -75.7446,
+      contact: 613-722-4000,
       address: {
-        street: '123 Main St',
+        street: '900 Merivale Rd',
         city: 'Ottawa',
         state: 'Ontario',
         country: 'Canada',
-        postalCode: 'K1A 0B1'
+        postalCode: 'K1Z 5Z8'
       }
     },
     {
       id: 2,
-      name: 'Clinic B',
-      pincode: '67890',
+      name: 'Centretown Community Health Centre',
+      pincode: 'K2P 2N6',
       language: 'fr',
       years: 3,
       province: 'Quebec',
       type: 'virtual',
       territory: 'East',
-      lat: 40.650002,
-      lng: -73.949997,
+      lat: 45.4134,
+      lng: -75.6939,
       contact: 1234567890,
       address: {
-        street: '123 Main St',
+        street: '420 Cooper St',
         city: 'Ottawa',
         state: 'Ontario',
         country: 'Canada',
-        postalCode: 'K1A 0B1'
+        postalCode: 'K2P 2N6'
+      }
+    },
+    {
+      id: 3,
+      name: 'NROCRC Community Resource Centre',
+      pincode: 'K2G 4V3',
+      language: 'fr',
+      years: 3,
+      province: 'Quebec',
+      type: 'virtual',
+      territory: 'East',
+      lat: 45.4134,
+      lng: -75.6939,
+      contact: 613-596-5626,
+      address: {
+        street: '1547 Merivale Rd',
+        city: 'Ottawa',
+        state: 'Ontario',
+        country: 'Canada',
+        postalCode: 'K2G 4V3'
       }
     }
     // Add more clinics
   ];
   filteredClinics: Clinic[] = [...this.clinics];
 
-  constructor() {}
+  constructor(private authService: AuthService) {}
 
   applyFilters(filters: { [key: string]: any }) {
     this.filteredClinics = this.clinics.filter((clinic) => {
@@ -74,5 +96,9 @@ export class DashboardComponent {
         matchesTerritory
       );
     });
+  }
+
+  logout():void {
+    this.authService.logout();
   }
 }

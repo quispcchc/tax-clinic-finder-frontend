@@ -7,11 +7,19 @@ import { Clinic } from '../models/clinic.model';
   providedIn: 'root',
 })
 export class ClinicService {
-  private apiUrl = 'http://localhost:3000/api/clinics';
+  // private apiUrl = 'http://localhost:3000/api/clinics';
+
+  // constructor(private http: HttpClient) {}
+
+  // getFilteredClinics(filters: any): Observable<Clinic[]> {
+  //   return this.http.post<Clinic[]>(`${this.apiUrl}/filter`, filters);
+  // }
+
+  private apiUrl = "http://localhost:3000/api/clinics"; // Update with your backend URL
 
   constructor(private http: HttpClient) {}
 
-  getFilteredClinics(filters: any): Observable<Clinic[]> {
-    return this.http.post<Clinic[]>(`${this.apiUrl}/filter`, filters);
+  getClinics(): Observable<any[]> {
+    return this.http.get<any[]>(this.apiUrl);
   }
 }

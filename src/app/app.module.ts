@@ -7,7 +7,6 @@ import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ReactiveFormsModule , FormsModule} from '@angular/forms';
-import { GoogleMapsModule } from '@angular/google-maps';
 import { AppRoutingModule } from './app-routing.module';
 import { LoginComponent } from './components/login/login.component';
 import { FilterComponent } from './components/filter/filter.component';
@@ -42,7 +41,6 @@ export function HttpLoaderFactory(http: HttpClient) {
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
-    GoogleMapsModule,
     HttpClientModule,
     TranslateModule.forRoot({
       loader: {
