@@ -1,15 +1,11 @@
 <div class="modal-overlay">
-    <div class="modal-content">
-      <button class="close-button" (click)="close()">X</button>
-      <h2>{{ clinic?.name }}</h2>
-      <p><strong>{{ 'Postal Code' | translate }}:</strong> {{ clinic?.pincode }}</p>
-      <p><strong>{{ 'Language Preference' | translate }}:</strong> {{ clinic?.language }}</p>
-      <p><strong>{{ 'Tax Years to be Done' | translate }}:</strong> {{ clinic?.years }}</p>
-      <p><strong>{{ 'Province of Residence on Dec 31' | translate }}:</strong> {{ clinic?.province }}</p>
-      <p><strong>{{ 'Type' | translate }}:</strong> {{ clinic?.type }}</p>
-      <p><strong>{{ 'Territory' | translate }}:</strong> {{ clinic?.territory }}</p>
-      <p><strong>{{ 'Latitude' | translate }}:</strong> {{ clinic?.lat }}</p>
-      <p><strong>{{ 'Longitude' | translate }}:</strong> {{ clinic?.lng }}</p>
-      <p><strong>{{ 'Address' | translate }}:</strong> {{ clinic?.address?.street }}, {{ clinic?.address?.city }}, {{ clinic?.address?.state }}, {{ clinic?.address?.country }}, {{ clinic?.address?.postalCode }}</p>
-    </div>
+  <div class="modal-content">
+    <button class="close-button" (click)="close()">X</button>
+    <h2>{{ clinic?.name }}</h2>
+    <p><strong>{{ 'Address' | translate }}:</strong> {{ clinic?.address }}</p>
+    <p><strong>{{ 'Appointment Available' | translate }}:</strong> {{ clinic?.appointmentsAvailable ? 'Yes' : 'No' }}</p>
+    <p><strong>{{ 'Languages' | translate }}:</strong> {{ clinic?.languageRequirements }}</p>
+    <p><strong>{{ 'Population Eligibility' | translate }}:</strong> {{ clinic?.populationEligibility }}</p>
+    <p><strong>{{ 'Required Documents' | translate }}:</strong> {{ clinic?.requiredDocuments }}</p>
+  </div>
 </div>

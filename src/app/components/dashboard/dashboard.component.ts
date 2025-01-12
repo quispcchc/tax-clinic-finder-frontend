@@ -1,104 +1,60 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Clinic } from '../../models/clinic.model';
+import { ClinicService } from '../../services/clinic.service';
 import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-dashboard',
   standalone: false,
-  
   templateUrl: './dashboard.component.html',
-  styleUrl: './dashboard.component.scss'
+  styleUrls: ['./dashboard.component.scss'],
 })
-export class DashboardComponent {
+export class DashboardComponent implements OnInit {
+  clinics: Clinic[] = [];
+  filteredClinics: Clinic[] = [];
 
-  clinics: Clinic[] = [
-    {
-      id: 1,
-      name: 'Carlington Community Health Centre',
-      pincode: 'K1Z 5Z8',
-      language: 'en',
-      years: 5,
-      province: 'Ontario',
-      type: 'in-person',
-      territory: 'North',
-      lat: 45.3936,
-      lng: -75.7446,
-      contact: 613-722-4000,
-      address: {
-        street: '900 Merivale Rd',
-        city: 'Ottawa',
-        state: 'Ontario',
-        country: 'Canada',
-        postalCode: 'K1Z 5Z8'
-      }
-    },
-    {
-      id: 2,
-      name: 'Centretown Community Health Centre',
-      pincode: 'K2P 2N6',
-      language: 'fr',
-      years: 3,
-      province: 'Quebec',
-      type: 'virtual',
-      territory: 'East',
-      lat: 45.4134,
-      lng: -75.6939,
-      contact: 1234567890,
-      address: {
-        street: '420 Cooper St',
-        city: 'Ottawa',
-        state: 'Ontario',
-        country: 'Canada',
-        postalCode: 'K2P 2N6'
-      }
-    },
-    {
-      id: 3,
-      name: 'NROCRC Community Resource Centre',
-      pincode: 'K2G 4V3',
-      language: 'fr',
-      years: 3,
-      province: 'Quebec',
-      type: 'virtual',
-      territory: 'East',
-      lat: 45.4134,
-      lng: -75.6939,
-      contact: 613-596-5626,
-      address: {
-        street: '1547 Merivale Rd',
-        city: 'Ottawa',
-        state: 'Ontario',
-        country: 'Canada',
-        postalCode: 'K2G 4V3'
-      }
-    }
-    // Add more clinics
-  ];
-  filteredClinics: Clinic[] = [...this.clinics];
+  constructor(private clinicService: ClinicService, private authService: AuthService) {}
 
-  constructor(private authService: AuthService) {}
+  ngOnInit(): void {
+    this.loadClinics();
+  }
 
-  applyFilters(filters: { [key: string]: any }) {
+  loadClinics(): void {
+    this.clinicService.getTaxClinics().subscribe(
+      (data: any[]) => {
+        this.clinics = data.map((clinic) => ({
+          id: clinic.id,
+          name: clinic.clinic_name,
+          address: clinic.clinic_address,
+          appointmentsAvailable: clinic.appointments_available,
+          languageRequirements: clinic.language_requirements,
+          appointmentType: clinic.appointment_type,
+          populationEligibility: clinic.population_eligibility,
+          requiredDocuments: clinic.required_documents,
+          createdAt: clinic.created_at,
+          updatedAt: clinic.updated_at,
+        }));
+        this.filteredClinics = [...this.clinics];
+      },
+      (error) => {
+        console.error('Failed to load clinics:', error);
+      }
+    );
+  }
+
+  applyFilters(filters: { [key: string]: any }): void {
     this.filteredClinics = this.clinics.filter((clinic) => {
-      const matchesPincode = filters['pincode'] ? clinic.pincode.includes(filters['pincode']) : true;
-      const matchesLanguage = filters['language'] ? clinic.language === filters['language'] : true;
-      const matchesYears = filters['years'] ? clinic.years >= filters['years'] : true;
-      const matchesProvince = filters['province'] ? clinic.province.toLowerCase().includes(filters['province'].toLowerCase()) : true;
-      const matchesType = filters['type'] ? clinic.type === filters['type'] : true;
-      const matchesTerritory = filters['territory'] ? clinic.territory.toLowerCase().includes(filters['territory'].toLowerCase()) : true;
+      const matchesName = filters['name'] ? clinic.name.toLowerCase().includes(filters['name'].toLowerCase()) : true;
+      const matchesLanguage = filters['language'] ? clinic.languageRequirements.includes(filters['language']) : true;
+      const matchesType = filters['type'] ? clinic.appointmentType.includes(filters['type']) : true;
+      const matchesPopulation = filters['population'] ? clinic.populationEligibility.includes(filters['population']) : true;
+      const matchesDocuments = filters['documents'] ? clinic.requiredDocuments.includes(filters['documents']) : true;
 
-      return (
-        matchesPincode &&
-        matchesLanguage &&
-        matchesYears &&
-        matchesProvince &&
-        matchesType &&
-        matchesTerritory
-      );
+      return matchesName && matchesLanguage && matchesType && matchesPopulation && matchesDocuments;
     });
   }
 
-  logout():void {
+  logout(): void {
     this.authService.logout();
   }
 }

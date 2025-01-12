@@ -1,9 +1,14 @@
 <div class="clinic-list">
-    <div *ngFor="let clinic of clinics" class="clinic-card" (click)="openModal(clinic)">
-      <h3>{{ clinic.name }}</h3>
-      <p>{{ 'Postal Code' | translate }}: {{ clinic.pincode }}</p>
-      <p>{{ 'Years' | translate }}: {{ clinic.years }}</p>
-    </div>
+  <div *ngFor="let clinic of clinics" class="clinic-card" (click)="openModal(clinic)">
+    <h3>{{ clinic.name }}</h3>
+    <p>{{ 'Address' | translate }}: {{ clinic.address }}</p>
+    <p>{{ 'Appointment Available' | translate }}: {{ clinic.appointmentsAvailable ? 'Yes' : 'No' }}</p>
+    <p>{{ 'Languages' | translate }}: {{ clinic.languageRequirements }}</p>
+  </div>
 </div>
 
-<app-clinic-details *ngIf="showModal" [clinic]="selectedClinic" (closeModal)="closeModal()"></app-clinic-details>
+<app-clinic-details
+  *ngIf="showModal"
+  [clinic]="selectedClinic"
+  (closeModal)="closeModal()"
+></app-clinic-details>
