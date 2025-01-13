@@ -48,16 +48,6 @@
         <option value="virtual">{{ "Virtual" | translate }}</option>
       </select>
     </div>
-    <div class="form-group">
-      <label for="territory">{{ "Territory" | translate }}</label>
-      <input
-        type="text"
-        id="territory"
-        [(ngModel)]="filters.territory"
-        name="territory"
-        placeholder="Enter Territory"
-      />
-    </div>
     <button type="submit">{{ "Apply Filters" | translate }}</button>
   </form>
 </div>

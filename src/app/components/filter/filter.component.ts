@@ -16,14 +16,12 @@ export class FilterComponent {
     years?: number;
     province?: string;
     type?: string;
-    territory?: string;
   } = {
     pincode: '',
     language: '',
     years: 0,
     province: '',
-    type: '',
-    territory: ''
+    type: ''
   };
 
   constructor() {}

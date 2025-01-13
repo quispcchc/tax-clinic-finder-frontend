@@ -10,9 +10,10 @@ import axios from 'axios';
   styleUrls: ['./map.component.scss']
 })
 export class MapComponent implements OnInit, OnChanges {
-  @Input() clinics: Clinic[] = []; // Input to receive filtered clinics
-  private map!: L.Map; // Map instance
-  private markers: L.LayerGroup = L.layerGroup(); // Layer group for markers and catchment areas
+  @Input() clinics: Clinic[] = [];
+  private map!: L.Map;
+  private markers: L.LayerGroup = L.layerGroup();
+  public isLoading = false;
 
   ngOnInit(): void {
     this.initializeMap();
@@ -25,26 +26,33 @@ export class MapComponent implements OnInit, OnChanges {
   }
 
   private initializeMap(): void {
-    const defaultLat = 45.424721; // Default latitude (Ottawa, Canada)
-    const defaultLng = -75.695000; // Default longitude
-    const defaultZoom = 12; // Default zoom level
+    const defaultLat = 45.424721;
+    const defaultLng = -75.695000;
+    const defaultZoom = 12;
 
     // Initialize the map
     this.map = L.map('map', {
       center: [defaultLat, defaultLng],
       zoom: defaultZoom,
+      attributionControl: false,
     });
 
     // Add OpenStreetMap tiles
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+      attribution: '',
     }).addTo(this.map);
 
     // Add the marker layer group to the map
     this.markers.addTo(this.map);
+
+    // Ensure map resizes correctly
+    setTimeout(() => {
+      this.map.invalidateSize();
+    }, 0); // Call invalidateSize after map is initialized
   }
 
   private async updateMap(): Promise<void> {
+    this.isLoading = true; 
     if (!this.map) return;
 
     // Clear existing markers and layers
@@ -56,7 +64,7 @@ export class MapComponent implements OnInit, OnChanges {
     for (const clinic of this.clinics) {
       try {
         // Generate full address for geocoding
-        const fullAddress = `${clinic.street}, ${clinic.city}, ${clinic.state} ${clinic.postalcode}`;
+        const fullAddress = `${clinic.street}, ${clinic.city}, ${clinic.state}`;
 
         // Geocode the clinic address to get latitude and longitude
         const { lat, lng } = await this.geocodeAddress(fullAddress);
@@ -71,17 +79,8 @@ export class MapComponent implements OnInit, OnChanges {
           Language: ${clinic.languageRequirements || 'N/A'}
         `);
 
-        // Add catchment area as a circle (5 km radius)
-        const catchmentArea = L.circle(clinicLatLng, {
-          radius: 5000, // 5 km radius
-          color: 'blue',
-          fillColor: '#a3caff',
-          fillOpacity: 0.5,
-        });
-
-        // Add marker and catchment area to the layer group
+        // Add marker to the layer group
         this.markers.addLayer(marker);
-        this.markers.addLayer(catchmentArea);
 
         // Extend map bounds to include this clinic
         bounds.extend(clinicLatLng);
@@ -96,6 +95,8 @@ export class MapComponent implements OnInit, OnChanges {
     } else {
       this.map.setView([45.424721, -75.695000], 12); // Default view if no valid clinics
     }
+
+    this.isLoading = false;
   }
 
   private async geocodeAddress(address: string): Promise<{ lat: number; lng: number }> {
@@ -103,7 +104,7 @@ export class MapComponent implements OnInit, OnChanges {
     const url = `https://nominatim.openstreetmap.org/search?q=${encodedAddress}&format=json&addressdetails=1&limit=1`;
   
     try {
-      console.log('Geocoding URL:', url);  // Log URL for debugging
+      console.log('Geocoding URL:', url);
   
       const response = await axios.get(url);
       if (response.data && response.data.length > 0) {
@@ -120,5 +121,4 @@ export class MapComponent implements OnInit, OnChanges {
       throw error;
     }
   }
-  
 }
