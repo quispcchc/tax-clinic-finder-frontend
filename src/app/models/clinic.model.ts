@@ -1,12 +1,16 @@
 export interface Clinic {
     id: number;
     name: string;
-    address: string;
-    appointmentsAvailable: boolean;
+    street: string;
+    city: string;
+    state: string;
+    postalcode: string;
+    appointmentsAvailable: string;
     languageRequirements: string;
     appointmentType: string;
     populationEligibility: string;
     requiredDocuments: string;
+    website: string;
     createdAt: string;
     updatedAt: string;
   }

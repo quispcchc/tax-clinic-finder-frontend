@@ -55,15 +55,18 @@ export class MapComponent implements OnInit, OnChanges {
 
     for (const clinic of this.clinics) {
       try {
+        // Generate full address for geocoding
+        const fullAddress = `${clinic.street}, ${clinic.city}, ${clinic.state} ${clinic.postalcode}`;
+
         // Geocode the clinic address to get latitude and longitude
-        const { lat, lng } = await this.geocodeAddress(clinic.address);
+        const { lat, lng } = await this.geocodeAddress(fullAddress);
 
         const clinicLatLng = L.latLng(lat, lng);
 
         // Add marker for the clinic
         const marker = L.marker(clinicLatLng).bindPopup(`
           <strong>${clinic.name}</strong><br>
-          ${clinic.address}<br>
+          ${fullAddress}<br>
           Type: ${clinic.appointmentType || 'N/A'}<br>
           Language: ${clinic.languageRequirements || 'N/A'}
         `);
@@ -98,16 +101,24 @@ export class MapComponent implements OnInit, OnChanges {
   private async geocodeAddress(address: string): Promise<{ lat: number; lng: number }> {
     const encodedAddress = encodeURIComponent(address);
     const url = `https://nominatim.openstreetmap.org/search?q=${encodedAddress}&format=json&addressdetails=1&limit=1`;
-
-    const response = await axios.get(url);
-    if (response.data && response.data.length > 0) {
-      const result = response.data[0];
-      return {
-        lat: parseFloat(result.lat),
-        lng: parseFloat(result.lon),
-      };
-    } else {
-      throw new Error('Geocoding failed: No results found');
+  
+    try {
+      console.log('Geocoding URL:', url);  // Log URL for debugging
+  
+      const response = await axios.get(url);
+      if (response.data && response.data.length > 0) {
+        const result = response.data[0];
+        return {
+          lat: parseFloat(result.lat),
+          lng: parseFloat(result.lon),
+        };
+      } else {
+        throw new Error('Geocoding failed: No results found');
+      }
+    } catch (error) {
+      console.error(`Error geocoding address: ${address}`, error);
+      throw error;
     }
   }
+  
 }

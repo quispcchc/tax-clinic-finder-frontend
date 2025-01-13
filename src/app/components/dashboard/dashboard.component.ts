@@ -25,19 +25,23 @@ export class DashboardComponent implements OnInit {
         this.clinics = data.map((clinic) => ({
           id: clinic.id,
           name: clinic.clinic_name,
-          address: clinic.clinic_address,
+          street: clinic.street,
+          city: clinic.city,
+          state: clinic.state,
+          postalcode: clinic.postalcode,
           appointmentsAvailable: clinic.appointments_available,
           languageRequirements: clinic.language_requirements,
           appointmentType: clinic.appointment_type,
           populationEligibility: clinic.population_eligibility,
           requiredDocuments: clinic.required_documents,
+          website: clinic.website,
           createdAt: clinic.created_at,
           updatedAt: clinic.updated_at,
         }));
         this.filteredClinics = [...this.clinics];
       },
       (error) => {
-        console.error('Failed to load clinics:', error);
+        console.error('Failed to load tax clinics:', error);
       }
     );
   }
