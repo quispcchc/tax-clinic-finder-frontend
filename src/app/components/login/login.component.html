@@ -1,46 +1,95 @@
-<h2>{{ 'Welcome' | translate }}</h2>
-<div class="card">
-    <form class="login__form" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-        <div class="input-group">
-            <label for="email">{{ 'Email' | translate}}</label>
-            <input id="email" formControlName="email" type="text" [placeholder]=" 'Enter your Email' | translate"
-                autocomplete="off"
-                [ngClass]="email && email.value !== '' && email.invalid ? 'error-border' : ''"/>
-            <div *ngIf="email && email?.value !== '' && email.invalid && (email.dirty || email.touched)"
-            class="error-message">
-                <p *ngIf="email.errors?.['required']">{{ 'Email is required.' | translate }}</p>
-                <p *ngIf="email?.errors?.['email']">{{ 'Invalid email address' | translate }}</p>
-            </div>
+<div class="login-container">
+  <div class="login-card">
+    <div class="language-toggle">
+      <app-language-selector
+        (languageChanged)="switchLanguage($event)"
+      ></app-language-selector>
+    </div>
+    <div class="logo-section">
+      <img
+        src="assets/images/login-logo.svg"
+        alt="Taxinics Logo"
+        class="logo"
+      />
+    </div>
+    <h2>{{'Login to your account' | translate}}</h2>
+    <form class="login-form" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <label for="email">{{'Email Address' | translate}}</label>
+        <input
+          id="email"
+          formControlName="email"
+          type="text"
+          [placeholder]="'Enter Email' | translate"
+          autocomplete="off"
+          [ngClass]="
+            email && email.value !== '' && email.invalid ? 'error-border' : ''
+          "
+        />
+        <div
+          *ngIf="
+            email &&
+            email?.value !== '' &&
+            email.invalid &&
+            (email.dirty || email.touched)
+          "
+          class="error-message"
+        >
+          <p *ngIf="email.errors?.['required']">
+            {{ "Email is required." | translate }}
+          </p>
+          <p *ngIf="email?.errors?.['email']">
+            {{ "Invalid email address" | translate }}
+          </p>
         </div>
-
-        <div class="input-group">
-            <label for="password">{{ 'Password' | translate}}</label>
-            <input id="password" formControlName="password" type="password" [placeholder]=" 'Enter your Password' | translate"
-                autocomplete="off"
-                [ngClass]="password && password.value !== '' && password.invalid ? 'error-border': ''"/>
-            <div *ngIf="password && password.value !== '' && password.invalid && (password.dirty || password.touched)"
-            class="error-message">
-                <p *ngIf="password.errors?.['required']">{{ 'Password is required.' | translate }}</p>
-                <p *ngIf="password.errors?.['minlength']">{{ 'Password must be at least 6 characters long.' | translate }}</p>
-                <p *ngIf="password?.errors?.['pattern']">{{ 'Password must contain at least one special character, one
-                    uppercase letter, one lowercase letter, and one number.' | translate }}    
-                </p>
-            </div>
+      </div>
+      <div class="form-group">
+        <label for="password">{{'Password' | translate}}</label>
+        <div class="password-input-container">
+          <input
+            id="password"
+            formControlName="password"
+            [type]="isPasswordVisible ? 'text' : 'password'"
+            [placeholder]="'Enter Password' | translate"
+            [ngClass]="
+              password && password.value !== '' && password.invalid
+                ? 'error-border'
+                : ''
+            "
+          />
         </div>
-
-        <div *ngIf="errorMessage" class="error-message alert">
-            {{ errorMessage }}
+        <div
+          *ngIf="
+            password &&
+            password.value !== '' &&
+            password.invalid &&
+            (password.dirty || password.touched)
+          "
+          class="error-message"
+        >
+          <p *ngIf="password.errors?.['required']">
+            {{ "Password is required." | translate }}
+          </p>
+          <p *ngIf="password.errors?.['minlength']">
+            {{ "Password must be at least 6 characters long." | translate }}
+          </p>
+          <p *ngIf="password?.errors?.['pattern']">
+            {{
+              "Password must contain at least one special character, one
+              uppercase letter, one lowercase letter, and one number."
+                | translate
+            }}
+          </p>
         </div>
-
-        <div class="login__actions">
-            <button class="login__btn" type="submit"
-                [disabled]="loginForm.invalid || errorMessage">
-                {{ 'Login' | translate}}
-            </button>
-            <button class="forgot-password-btn" type="button"
-            (click)="resetPassword()">
-                {{ 'Forgot Password' | translate }}
-            </button>
-        </div>
+      </div>
+      <div class="form-actions">
+        <label>
+          <input type="checkbox" formControlName="rememberMe" />
+          {{'Remember me' | translate}}
+        </label>
+        <a (click)="resetPassword()">{{'Forgotten Password?' | translate}}</a>
+      </div>
+      <button type="submit" [disabled]="loginForm.invalid">{{'Log in'| translate}}</button>
     </form>
+  </div>
 </div>

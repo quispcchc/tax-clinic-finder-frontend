@@ -1,6 +1,18 @@
-<div class="language-selector">
-    <select (change)="changeLanguage($event)">
-      <option value="en">{{ 'english' | translate }}</option>
-      <option value="fr">{{ 'french' | translate }}</option>
-    </select>
+<div class="language-toggle">
+  <div class="toggle-wrapper">
+    <button
+      class="language-btn"
+      [class.selected]="currentLanguage === 'en'"
+      (click)="switchLanguage('en')"
+    >
+      English
+    </button>
+    <button
+      class="language-btn"
+      [class.selected]="currentLanguage === 'fr'"
+      (click)="switchLanguage('fr')"
+    >
+      French
+    </button>
+  </div>
 </div>

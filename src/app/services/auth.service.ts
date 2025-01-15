@@ -35,7 +35,9 @@ export class AuthService {
   logout(): void {
     if (isPlatformBrowser(this.platformId)) {
       localStorage.removeItem('authToken');
-      this.router.navigate(['/login']);
+      localStorage.removeItem('email');
+      localStorage.removeItem('password');
+      this.router.navigate(['/login']); 
     }
   }
 

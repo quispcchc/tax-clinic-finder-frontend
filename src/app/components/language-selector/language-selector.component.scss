@@ -1,15 +1,39 @@
-.language-selector {
-    margin: 10px;
-    select {
-      padding: 10px;
-      font-size: 14px;
-      border: 1px solid #ccc;
-      border-radius: 5px;
-      cursor: pointer;
-  
-      &:focus {
-        border-color: #4CAF50;
-        outline: none;
-      }
-    }
+.language-toggle {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.toggle-wrapper {
+  display: flex;
+  border: 1px solid white;
+  border-radius: 30px;
+  padding: 4px;
+}
+
+.language-btn {
+  background-color: white;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: bold;
+  color: #2B2B2B;
+  border-radius: 20px;
+  transition: all 0.3s ease;
+  margin: 0;
+  flex: 1;
+}
+
+.language-btn.selected {
+  background-color: #AADCE5;
+  color: #2B2B2B;
+}
+
+.language-btn:hover {
+  background-color: #f0f0f0;
+}
+
+.language-btn.selected:hover {
+  background-color: #AADCE5;
 }

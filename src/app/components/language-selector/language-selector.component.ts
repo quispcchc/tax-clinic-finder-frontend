@@ -8,16 +8,17 @@ import { TranslateService } from '@ngx-translate/core';
   styleUrls: ['./language-selector.component.scss']
 })
 export class LanguageSelectorComponent {
-  @Output() languageChange = new EventEmitter<string>();
+
+  currentLanguage: string = 'en';
+  @Output() languageChanged = new EventEmitter<string>();
 
   constructor(private translate: TranslateService) {
-    this.translate.setDefaultLang('en');
+   this.translate.setDefaultLang('en');
   }
 
-  changeLanguage(event: Event) {
-    const selectElement = event.target as HTMLSelectElement;
-    const language = selectElement.value;
-    this.translate.use(language);
-    this.languageChange.emit(language);
+  switchLanguage(language: string): void {
+    this.currentLanguage = language;
+    this.translate.use(this.currentLanguage);
+    this.languageChanged.emit(this.currentLanguage);
   }
 }

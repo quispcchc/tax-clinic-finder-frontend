@@ -2,67 +2,99 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-login',
   standalone: false,
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss']
+  styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent implements OnInit {
+  loginForm!: FormGroup;
+  errorMessage: string | null = null;
+  isPasswordVisible: boolean = false;
+  currentLanguage: string = 'en';
 
-    loginForm!: FormGroup;
-    errorMessage: string | null = null;
+  constructor(
+    private fb: FormBuilder,
+    private authService: AuthService,
+    private router: Router,
+    private translate: TranslateService
+  ) {
+    this.translate.setDefaultLang(this.currentLanguage);
+  }
 
-    constructor(private fb: FormBuilder,
-        private authService: AuthService,
-        private router: Router) { }
+  ngOnInit(): void {
+    this.loginForm = this.fb.group({
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', [Validators.required, Validators.minLength(6)]],
+      rememberMe: [false],
+    });
 
-    ngOnInit(): void {
-        this.loginForm = this.fb.group({
-            email: ['', [Validators.required, Validators.email]],
-            password: ['', [Validators.required, Validators.minLength(6),
-                this.authService.passwordValidator.bind(this)
-            ]]
-        });
-
-        this.loginForm.get('email')?.valueChanges.subscribe(() => {
-            this.clearError();
-        });
-
-        this.loginForm.get('password')?.valueChanges.subscribe(() => {
-            this.clearError();
-        });
+    const storedEmail = localStorage.getItem('email');
+    const storedPassword = localStorage.getItem('password');
+    if (storedEmail && storedPassword) {
+      this.loginForm.patchValue({
+        email: storedEmail,
+        password: storedPassword,
+        rememberMe: true,
+      });
     }
 
-    get email() {
-        return this.loginForm.get('email');
-    }
+    this.loginForm.valueChanges.subscribe(() => this.clearError());
+  }
 
-    get password() {
-        return this.loginForm.get('password');
-    }
+  get email() {
+    return this.loginForm.get('email');
+  }
 
-    onSubmit() {
-        if (this.loginForm.valid) {
-            const { email, password } = this.loginForm.value;
+  get password() {
+    return this.loginForm.get('password');
+  }
 
-            this.authService.login(email, password).subscribe(success => {
-                if (success) {
-                    this.router.navigate(['/dashboard']);
-                    this.loginForm.reset();
-                } else {
-                    this.errorMessage = 'Invalid email or password';
-                }
-            });
+  onSubmit(): void {
+    if (this.loginForm.valid) {
+      const { email, password, rememberMe } = this.loginForm.value;
+
+      this.authService.login(email, password).subscribe(
+        (success) => {
+          if (success) {
+            if (rememberMe) {
+              localStorage.setItem('email', email);
+              localStorage.setItem('password', password);
+            } else {
+              localStorage.removeItem('email');
+              localStorage.removeItem('password');
+            }
+
+            this.router.navigate(['/dashboard']);
+            this.loginForm.reset();
+          } else {
+            this.errorMessage = 'Invalid email or password';
+          }
+        },
+        (error) => {
+          this.errorMessage = error?.message || 'An unexpected error occurred';
         }
+      );
     }
+  }
 
-    clearError() {
-        this.errorMessage = null;
-    }
+  clearError(): void {
+    this.errorMessage = null;
+  }
 
-    resetPassword() {
-        this.router.navigate(['/forgot-password']);
-    }
+  resetPassword(): void {
+    this.router.navigate(['/forgot-password']);
+  }
+
+  togglePasswordVisibility(): void {
+    this.isPasswordVisible = !this.isPasswordVisible;
+  }
+
+  switchLanguage(language: string): void {
+    this.currentLanguage = language;
+    this.translate.use(language);
+  }
 }
