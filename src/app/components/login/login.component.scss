@@ -141,8 +141,8 @@ h2 {
   }
 
   button {
-    background: #80cbd8;
-    color: #2b2b2b;
+    background: #80CBD8;
+    color: #2B2B2B;
     padding: 0.75rem;
     font-size: 1rem;
     border: none;
@@ -150,23 +150,13 @@ h2 {
     cursor: pointer;
     font-weight: bold;
 
-    &:disabled {
-      background: #80cbd8;
-      cursor: not-allowed;
-    }
-  }
-}
-
-.signup-link {
-  margin-top: 1.5rem;
-  text-align: center;
-
-  a {
-    color: #007bff;
-    font-weight: bold;
-
     &:hover {
-      text-decoration: underline;
+      background: #007E94;
+      color: #ffffff;
+    }
+  
+    &:disabled {
+      cursor: not-allowed;
     }
   }
 }

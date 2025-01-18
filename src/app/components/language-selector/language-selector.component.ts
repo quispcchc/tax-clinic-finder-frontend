@@ -1,24 +1,22 @@
-import { Component, Output, EventEmitter } from '@angular/core';
-import { TranslateService } from '@ngx-translate/core';
+import { Component, EventEmitter, Output } from '@angular/core';
+import { LanguageService } from '../../services/language.service';
 
 @Component({
   selector: 'app-language-selector',
   standalone: false,
   templateUrl: './language-selector.component.html',
-  styleUrls: ['./language-selector.component.scss']
+  styleUrls: ['./language-selector.component.scss'],
 })
 export class LanguageSelectorComponent {
-
-  currentLanguage: string = 'en';
+  currentLanguage: string;
   @Output() languageChanged = new EventEmitter<string>();
 
-  constructor(private translate: TranslateService) {
-   this.translate.setDefaultLang('en');
+  constructor(private languageService: LanguageService) {
+    this.currentLanguage = this.languageService.getLanguage();
   }
 
   switchLanguage(language: string): void {
+    this.languageService.setLanguage(language);
     this.currentLanguage = language;
-    this.translate.use(this.currentLanguage);
-    this.languageChanged.emit(this.currentLanguage);
   }
 }

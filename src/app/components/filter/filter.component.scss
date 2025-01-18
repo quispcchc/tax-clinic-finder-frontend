@@ -1,8 +1,13 @@
 .filter {
-  background-color: #f8f8f8;
+  background-color: #ffffff;
   padding: 20px;
-  border-radius: 8px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+
+  h2 {
+    margin-bottom: 20px;
+    font-size: 1.5rem;
+    color: #333;
+  }
 
   .form-group {
     margin-bottom: 20px;
@@ -14,7 +19,8 @@
       margin-bottom: 5px;
     }
 
-    input, select {
+    input,
+    select {
       width: 100%;
       padding: 10px;
       font-size: 1rem;
@@ -40,6 +46,30 @@
 
     &:hover {
       background-color: #0056b3;
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .filter {
+    padding: 10px;
+
+    h2 {
+      font-size: 1.2rem;
+    }
+
+    .form-group label {
+      font-size: 0.9rem;
+    }
+
+    .form-group input,
+    .form-group select {
+      font-size: 0.9rem;
+    }
+
+    button {
+      font-size: 0.9rem;
+      padding: 10px 15px;
     }
   }
 }

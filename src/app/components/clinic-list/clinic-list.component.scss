@@ -1,13 +1,11 @@
 .clinic-list {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-  gap: 20px;
 }
 
 .clinic-card {
   background: #fff;
   padding: 15px;
-  border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   cursor: pointer;
 }
@@ -15,3 +13,9 @@
 .clinic-card:hover {
   background-color: #f9f9f9;
 }
+
+.clinic-link {
+  color: #007E94;
+  text-decoration: none;
+}
+

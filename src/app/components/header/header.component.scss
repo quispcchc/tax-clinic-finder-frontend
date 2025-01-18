@@ -1,0 +1,40 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  background-color: #ffffff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  z-index: 10;
+
+  .logo {
+    img {
+      //height: 40px; // Adjust height as needed
+    }
+  }
+
+  .language-selector {
+    display: flex;
+    align-items: center;
+
+    app-language-selector {
+      margin-left: 10px;
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .header {
+    padding: 10px;
+
+    .logo img {
+      height: 30px;
+    }
+
+    .language-selector {
+      app-language-selector {
+        margin-left: 5px;
+      }
+    }
+  }
+}

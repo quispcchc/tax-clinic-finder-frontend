@@ -2,8 +2,11 @@
   <div *ngFor="let clinic of clinics" class="clinic-card" (click)="openModal(clinic)">
     <h3>{{ clinic.name }}</h3>
     <p>{{ 'Address' | translate }}: {{ clinic.street }}, {{ clinic.city }},  {{ clinic.state }},  {{ clinic.postalcode }}</p>
-    <p>{{ 'Appointment Available' | translate }}: {{ clinic.appointmentsAvailable}}</p>
-    <p>{{ 'Languages' | translate }}: {{ clinic.languageRequirements }}</p>
+    <p>{{ 'Website' | translate }}: 
+      <a [href]="clinic.website" target="_blank" rel="noopener noreferrer" class="clinic-link">
+        {{ clinic.website }}
+      </a>
+    </p>
   </div>
 </div>
 

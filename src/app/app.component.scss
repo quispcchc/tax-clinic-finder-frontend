@@ -1,6 +1,16 @@
-.app-layout{
-    margin: 0;
-    padding: 0;
-    height: 100vh;
-    overflow: hidden;
+html,
+body {
+  height: 100vh;
+  margin: 0;
+}
+
+.app-container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+.main-content {
+  flex: 1;
+  display: flex;
 }

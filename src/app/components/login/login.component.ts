@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
+import { LanguageService } from '../../services/language.service';
 
 @Component({
   selector: 'app-login',
@@ -20,10 +21,9 @@ export class LoginComponent implements OnInit {
     private fb: FormBuilder,
     private authService: AuthService,
     private router: Router,
-    private translate: TranslateService
-  ) {
-    this.translate.setDefaultLang(this.currentLanguage);
-  }
+    private translate: TranslateService,
+    private languageService: LanguageService
+  ) {}
 
   ngOnInit(): void {
     this.loginForm = this.fb.group({
@@ -94,7 +94,6 @@ export class LoginComponent implements OnInit {
   }
 
   switchLanguage(language: string): void {
-    this.currentLanguage = language;
-    this.translate.use(language);
+    this.languageService.setLanguage(language);
   }
 }

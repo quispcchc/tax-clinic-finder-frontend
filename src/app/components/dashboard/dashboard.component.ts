@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Clinic } from '../../models/clinic.model';
 import { ClinicService } from '../../services/clinic.service';
 import { AuthService } from '../../services/auth.service';
+import { LanguageService } from '../../services/language.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -12,11 +13,20 @@ import { AuthService } from '../../services/auth.service';
 export class DashboardComponent implements OnInit {
   clinics: Clinic[] = [];
   filteredClinics: Clinic[] = [];
+  selectedTab: string = 'Access Filter';
+  currentLanguage: string;
 
-  constructor(private clinicService: ClinicService, private authService: AuthService) {}
+  constructor(private clinicService: ClinicService, private authService: AuthService,
+    private languageService: LanguageService) {
+      this.currentLanguage = this.languageService.getLanguage();
+    }
 
   ngOnInit(): void {
     this.loadClinics();
+  }
+
+  changeTab(tab: string): void {
+    this.selectedTab = tab;
   }
 
   loadClinics(): void {
@@ -56,6 +66,10 @@ export class DashboardComponent implements OnInit {
 
       return matchesName && matchesLanguage && matchesType && matchesPopulation && matchesDocuments;
     });
+  }
+
+  onLanguageChange(language: string): void {
+    this.currentLanguage = language;
   }
 
   logout(): void {

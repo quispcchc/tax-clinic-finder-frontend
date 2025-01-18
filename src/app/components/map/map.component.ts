@@ -16,7 +16,14 @@ export class MapComponent implements OnInit, OnChanges {
   public isLoading = false;
 
   ngOnInit(): void {
-    this.initializeMap();
+    // Any initialization logic that doesn't require the DOM to be fully loaded
+  }
+
+  ngAfterViewInit(): void {
+    // Initialize the map after the DOM is fully rendered
+    setTimeout(() => {
+      this.initializeMap();
+    }, 0);
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -45,14 +52,14 @@ export class MapComponent implements OnInit, OnChanges {
     // Add the marker layer group to the map
     this.markers.addTo(this.map);
 
-    // Ensure map resizes correctly
+    // Ensure the map resizes correctly
     setTimeout(() => {
       this.map.invalidateSize();
-    }, 0); // Call invalidateSize after map is initialized
+    }, 0);
   }
 
   private async updateMap(): Promise<void> {
-    this.isLoading = true; 
+    this.isLoading = true;
     if (!this.map) return;
 
     // Clear existing markers and layers
@@ -102,10 +109,10 @@ export class MapComponent implements OnInit, OnChanges {
   private async geocodeAddress(address: string): Promise<{ lat: number; lng: number }> {
     const encodedAddress = encodeURIComponent(address);
     const url = `https://nominatim.openstreetmap.org/search?q=${encodedAddress}&format=json&addressdetails=1&limit=1`;
-  
+
     try {
       console.log('Geocoding URL:', url);
-  
+
       const response = await axios.get(url);
       if (response.data && response.data.length > 0) {
         const result = response.data[0];

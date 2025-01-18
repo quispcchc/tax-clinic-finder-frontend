@@ -10,6 +10,8 @@ import { Clinic } from '../../models/clinic.model';
 export class ClinicListComponent {
 
   @Input() clinics: Clinic[] = [];
+  @Input() language!: string;
+  
   showModal: boolean = false;
   selectedClinic: Clinic | undefined;
 

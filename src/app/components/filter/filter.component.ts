@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
   selector: 'app-filter',
@@ -9,6 +9,7 @@ import { Component, EventEmitter, Output } from '@angular/core';
 export class FilterComponent {
 
   @Output() filterChange = new EventEmitter<{ [key: string]: any }>();
+  @Input() language!: string;
 
   filters: {
     pincode?: string;

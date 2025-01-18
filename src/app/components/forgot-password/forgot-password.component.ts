@@ -13,6 +13,8 @@ export class ForgotPasswordComponent implements OnInit {
   resetPasswordForm!: FormGroup;
   message: string | null = null;
   isSuccess: boolean = false;
+  loginForm!: FormGroup;
+  errorMessage: string | null = null;
 
   constructor(private fb: FormBuilder, private authService: AuthService) { }
 
@@ -34,4 +36,9 @@ export class ForgotPasswordComponent implements OnInit {
       });
     }
   }
+
+  // switchLanguage(language: string): void {
+  //   this.currentLanguage = language;
+  //   this.translate.use(language);
+  // }
 }
