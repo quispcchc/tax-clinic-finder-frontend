@@ -16,10 +16,13 @@ export class DashboardComponent implements OnInit {
   selectedTab: string = 'Access Filter';
   currentLanguage: string;
 
-  constructor(private clinicService: ClinicService, private authService: AuthService,
-    private languageService: LanguageService) {
-      this.currentLanguage = this.languageService.getLanguage();
-    }
+  constructor(
+    private clinicService: ClinicService,
+    private authService: AuthService,
+    private languageService: LanguageService
+  ) {
+    this.currentLanguage = this.languageService.getLanguage();
+  }
 
   ngOnInit(): void {
     this.loadClinics();
@@ -58,13 +61,29 @@ export class DashboardComponent implements OnInit {
 
   applyFilters(filters: { [key: string]: any }): void {
     this.filteredClinics = this.clinics.filter((clinic) => {
-      const matchesName = filters['name'] ? clinic.name.toLowerCase().includes(filters['name'].toLowerCase()) : true;
-      const matchesLanguage = filters['language'] ? clinic.languageRequirements.includes(filters['language']) : true;
-      const matchesType = filters['type'] ? clinic.appointmentType.includes(filters['type']) : true;
-      const matchesPopulation = filters['population'] ? clinic.populationEligibility.includes(filters['population']) : true;
-      const matchesDocuments = filters['documents'] ? clinic.requiredDocuments.includes(filters['documents']) : true;
+      const matchesName = filters['name']
+        ? clinic.name.toLowerCase().includes(filters['name'].toLowerCase())
+        : true;
+      const matchesLanguage = filters['language']
+        ? clinic.languageRequirements.includes(filters['language'])
+        : true;
+      const matchesType = filters['type']
+        ? clinic.appointmentType.includes(filters['type'])
+        : true;
+      const matchesPopulation = filters['population']
+        ? clinic.populationEligibility.includes(filters['population'])
+        : true;
+      const matchesDocuments = filters['documents']
+        ? clinic.requiredDocuments.includes(filters['documents'])
+        : true;
 
-      return matchesName && matchesLanguage && matchesType && matchesPopulation && matchesDocuments;
+      return (
+        matchesName &&
+        matchesLanguage &&
+        matchesType &&
+        matchesPopulation &&
+        matchesDocuments
+      );
     });
   }
 

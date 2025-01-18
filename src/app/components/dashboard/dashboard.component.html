@@ -1,10 +1,20 @@
-<app-header [selectedTab]="selectedTab" (changeTab)="changeTab($event)" (languageChanged)="onLanguageChange($event)"></app-header>
+<app-header
+  [selectedTab]="selectedTab"
+  (changeTab)="changeTab($event)"
+  (languageChanged)="onLanguageChange($event)"
+></app-header>
 <div class="main-container">
   <div class="filter-section">
-    <app-filter [language]="currentLanguage" (filterChange)="applyFilters($event)"></app-filter>
+    <app-filter
+      [language]="currentLanguage"
+      (filterChange)="applyFilters($event)"
+    ></app-filter>
   </div>
   <div class="clinic-section">
-    <app-clinic-list [clinics]="filteredClinics" [language]="currentLanguage"></app-clinic-list>
+    <app-clinic-list
+      [clinics]="filteredClinics"
+      [language]="currentLanguage"
+    ></app-clinic-list>
   </div>
   <div class="map-section">
     <app-map [clinics]="filteredClinics"></app-map>

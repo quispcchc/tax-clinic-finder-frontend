@@ -4,10 +4,9 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
   selector: 'app-filter',
   standalone: false,
   templateUrl: './filter.component.html',
-  styleUrls: ['./filter.component.scss']
+  styleUrls: ['./filter.component.scss'],
 })
 export class FilterComponent {
-
   @Output() filterChange = new EventEmitter<{ [key: string]: any }>();
   @Input() language!: string;
 
@@ -22,7 +21,7 @@ export class FilterComponent {
     language: '',
     years: 0,
     province: '',
-    type: ''
+    type: '',
   };
 
   constructor() {}

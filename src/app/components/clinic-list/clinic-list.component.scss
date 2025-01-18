@@ -1,21 +1,50 @@
 .clinic-list {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 20px;
 }
 
 .clinic-card {
-  background: #fff;
+  background: transparent;
   padding: 15px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  cursor: pointer;
-}
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  border-bottom: 1px solid #cceaf0;
+  position: relative;
 
-.clinic-card:hover {
-  background-color: #f9f9f9;
-}
+  h3 {
+    margin: 0 0 5px 25px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #333;
+  }
 
-.clinic-link {
-  color: #007E94;
-  text-decoration: none;
-}
+  p {
+    margin: 0 0 5px 25px;
+    font-size: 1rem;
+    color: #666;
+  }
 
+  .clinic-link {
+    color: #007e94;
+    text-decoration: none;
+    font-weight: 500;
+  }
+
+  .clinic-link:hover {
+    text-decoration: underline;
+  }
+
+  &::before {
+    content: "";
+    width: 15px;
+    height: 15px;
+    background-color: #aadce5;
+    border-radius: 50%;
+    position: absolute;
+    top: 15px;
+    left: 0;
+  }
+}
