@@ -8,8 +8,37 @@
     color: #333;
   }
 
+  form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    counter-reset: form-group-counter;
+  }
+
   .form-group {
+    position: relative;
     margin-bottom: 15px;
+    padding-left: 35px;
+
+    &::before {
+      content: counter(form-group-counter);
+      counter-increment: form-group-counter;
+      position: absolute;
+      left: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 1.2rem;
+      font-weight: bold;
+      color: #000000;
+      background-color: #CCEAF0;
+      border: 3px solid #AADCE5;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
 
     label {
       display: block;
@@ -51,6 +80,10 @@
 
     h2 {
       font-size: 1.2rem;
+    }
+
+    .form-group {
+      padding-left: 30px;
     }
 
     .form-group label {

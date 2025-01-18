@@ -4,7 +4,10 @@
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: rgba(0, 0, 0, 0.7);
+    background-image: linear-gradient(to top left, rgba(204, 234, 240, 0.7), transparent 50%), 
+    linear-gradient(to top right, rgba(204, 234, 240, 0.7), transparent 50%), 
+    linear-gradient(to bottom left, rgba(204, 234, 240, 0.7), transparent 50%), 
+    linear-gradient(to bottom right, rgba(204, 234, 240, 0.7), transparent 50%);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -20,6 +23,7 @@
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     text-align: left;
     position: relative;
+    z-index: 10000;
 }
   
 .close-button {
