@@ -2,7 +2,23 @@
   <div class="logo">
     <img src="assets/images/header-logo.svg" alt="Logo" />
   </div>
+  <div class="tabs">
+    <button
+      [class.active]="selectedTab === 'access-filter'"
+      (click)="switchTab('access-filter')"
+    >
+      Access Filter
+    </button>
+    <button
+      [class.active]="selectedTab === 'tax-clinics'"
+      (click)="switchTab('tax-clinics')"
+    >
+      Tax Clinics
+    </button>
+  </div>
   <div class="language-selector">
-    <app-language-selector (languageChanged)="switchLanguage($event)"></app-language-selector>
+    <app-language-selector
+      (languageChanged)="switchLanguage($event)"
+    ></app-language-selector>
   </div>
 </div>

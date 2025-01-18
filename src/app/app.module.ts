@@ -18,6 +18,7 @@ import { ResetPasswordComponent } from './components/reset-password/reset-passwo
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { ClinicDetailsComponent } from './components/clinic-details/clinic-details.component';
 import { HeaderComponent } from './components/header/header.component';
+import { TaxClinicsComponent } from './components/tax-clinics/tax-clinics.component';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -35,7 +36,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     ResetPasswordComponent,
     DashboardComponent,
     ClinicDetailsComponent,
-    HeaderComponent
+    HeaderComponent,
+    TaxClinicsComponent
   ],
   imports: [
     BrowserModule,

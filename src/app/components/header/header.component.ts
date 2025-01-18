@@ -9,12 +9,17 @@ import { LanguageService } from '../../services/language.service';
 })
 export class HeaderComponent {
   @Input() selectedTab!: string;
-  @Output() changeTab = new EventEmitter<string>();
   @Output() languageChanged = new EventEmitter<string>();
+  @Output() tabChanged = new EventEmitter<string>();
   currentLanguage: string;
 
   constructor(private languageService: LanguageService) {
     this.currentLanguage = this.languageService.getLanguage();
+  }
+
+  switchTab(tab: string) {
+    this.selectedTab = tab;
+    this.tabChanged.emit(tab); // Emit the selected tab to the parent
   }
 
   switchLanguage(language: string): void {

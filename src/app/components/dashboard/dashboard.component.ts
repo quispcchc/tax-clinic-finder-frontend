@@ -13,7 +13,7 @@ import { LanguageService } from '../../services/language.service';
 export class DashboardComponent implements OnInit {
   clinics: Clinic[] = [];
   filteredClinics: Clinic[] = [];
-  selectedTab: string = 'Access Filter';
+  activeTab: string = 'access-filter';
   currentLanguage: string;
 
   constructor(
@@ -28,8 +28,8 @@ export class DashboardComponent implements OnInit {
     this.loadClinics();
   }
 
-  changeTab(tab: string): void {
-    this.selectedTab = tab;
+  onTabChange(tab: string) {
+    this.activeTab = tab;
   }
 
   loadClinics(): void {

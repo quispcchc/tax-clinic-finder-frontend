@@ -23,6 +23,29 @@
   }
 }
 
+.tabs {
+  display: flex;
+  gap: 10px;
+
+  button {
+    background-color: transparent;
+    border: none;
+    padding: 10px 20px;
+    font-size: 1rem;
+    cursor: pointer;
+    color: black;
+    transition: color 0.3s ease;
+  }
+
+  button:hover {
+    color: #007e94;
+  }
+
+  button.active {
+    color: #55bacc;
+  }
+}
+
 @media (max-width: 768px) {
   .header {
     padding: 10px;
@@ -33,6 +56,11 @@
 
     .language-selector app-language-selector {
       margin-left: 5px;
+    }
+
+    .tabs button {
+      font-size: 0.9rem;
+      padding: 8px 16px;
     }
   }
 }

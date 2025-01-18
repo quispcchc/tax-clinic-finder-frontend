@@ -1,0 +1,79 @@
+.tax-clinics {
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  height: 100vh;
+  background: #f5f5f5;
+  background: url("/assets/images/taxinics-bg.svg") no-repeat center center;
+  background-size: cover;
+
+  .clinic-list {
+    flex: 0 0 25%;
+    padding: 20px;
+    overflow-y: auto;
+    background-color: rgba(255, 255, 255, 0.9);
+    box-shadow: 4px 0 6px rgba(0, 0, 0, 0.15);
+    height: calc(100vh - 60px);
+    position: fixed;
+    top: 60px;
+    left: 0;
+    z-index: 1;
+  }
+
+  .clinic-card {
+    background: #ffffff;
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    border-bottom: 1px solid #cceaf0;
+    position: relative;
+
+    h3 {
+      margin: 0 0 5px 25px;
+      font-size: 1.2rem;
+      font-weight: bold;
+      color: #333;
+    }
+
+    p {
+      margin: 0 0 5px 25px;
+      font-size: 1rem;
+      color: #666;
+    }
+
+    .clinic-link {
+      color: #007e94;
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    .clinic-link:hover {
+      text-decoration: underline;
+    }
+
+    &::before {
+      content: "";
+      width: 15px;
+      height: 15px;
+      background-color: #aadce5;
+      border-radius: 50%;
+      position: absolute;
+      top: 15px;
+      left: 0;
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .tax-clinics {
+    flex-direction: column;
+  }
+
+  .clinic-list {
+    flex: 1 1 100%;
+    position: relative;
+    height: auto;
+    top: 0;
+  }
+}

@@ -1,0 +1,22 @@
+<div class="tax-clinics">
+  <div class="clinic-list">
+    <div *ngFor="let clinic of clinics" class="clinic-card">
+      <h3>{{ clinic.name }}</h3>
+      <p>
+        {{ "Address" | translate }}: {{ clinic.street }}, {{ clinic.city }},
+        {{ clinic.state }}, {{ clinic.postalcode }}
+      </p>
+      <p>
+        {{ "Website" | translate }}:
+        <a
+          [href]="clinic.website"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="clinic-link"
+        >
+          {{ clinic.website }}
+        </a>
+      </p>
+    </div>
+  </div>
+</div>
