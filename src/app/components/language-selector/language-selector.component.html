@@ -5,14 +5,16 @@
       [class.selected]="currentLanguage === 'en'"
       (click)="switchLanguage('en')"
     >
-      English
+      <img src="/assets/images/us-flag.svg" alt="English" class="flag-icon" />
+      En
     </button>
     <button
       class="language-btn"
       [class.selected]="currentLanguage === 'fr'"
       (click)="switchLanguage('fr')"
     >
-      French
+      <img src="/assets/images/French-flag.svg" alt="French" class="flag-icon" />
+      Fr
     </button>
   </div>
 </div>

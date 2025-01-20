@@ -14,15 +14,17 @@
 .language-btn {
   background-color: white;
   border: none;
-  padding: 10px 20px;
+  padding: 5px 5px;
   cursor: pointer;
-  font-size: 14px;
-  font-weight: bold;
   color: #2B2B2B;
   border-radius: 20px;
   transition: all 0.3s ease;
   margin: 0;
   flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
 }
 
 .language-btn.selected {
@@ -36,4 +38,9 @@
 
 .language-btn.selected:hover {
   background-color: #AADCE5;
+}
+
+.flag-icon {
+  height: auto;
+  display: inline-block;
 }
