@@ -15,6 +15,7 @@ export class DashboardComponent implements OnInit {
   filteredClinics: Clinic[] = [];
   activeTab: string = 'access-filter';
   currentLanguage: string;
+  isSidebarOpen: boolean = true;
 
   constructor(
     private clinicService: ClinicService,
@@ -26,6 +27,7 @@ export class DashboardComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadClinics();
+    this.onTabChange(this.activeTab);
   }
 
   onTabChange(tab: string) {
@@ -89,6 +91,10 @@ export class DashboardComponent implements OnInit {
 
   onLanguageChange(language: string): void {
     this.currentLanguage = language;
+  }
+
+  onFilterSidebarToggle() {
+    this.isSidebarOpen = !this.isSidebarOpen;
   }
 
   logout(): void {

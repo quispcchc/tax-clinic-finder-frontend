@@ -8,7 +8,7 @@ import { LanguageService } from '../../services/language.service';
   styleUrl: './header.component.scss'
 })
 export class HeaderComponent {
-  @Input() selectedTab!: string;
+  @Input() selectedTab: string = 'access-filter'; 
   @Output() languageChanged = new EventEmitter<string>();
   @Output() tabChanged = new EventEmitter<string>();
   currentLanguage: string;
@@ -19,7 +19,7 @@ export class HeaderComponent {
 
   switchTab(tab: string) {
     this.selectedTab = tab;
-    this.tabChanged.emit(tab); // Emit the selected tab to the parent
+    this.tabChanged.emit(tab);
   }
 
   switchLanguage(language: string): void {

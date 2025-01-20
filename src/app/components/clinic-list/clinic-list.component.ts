@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Clinic } from '../../models/clinic.model';
 
 @Component({
@@ -11,9 +11,16 @@ export class ClinicListComponent {
 
   @Input() clinics: Clinic[] = [];
   @Input() language!: string;
+  @Output() toggleSidebarEvent = new EventEmitter<void>();
+  @Input() isSidebarOpen: boolean = true;
   
   showModal: boolean = false;
   selectedClinic: Clinic | undefined;
+
+
+  toggleFilterSidebar() {
+    this.toggleSidebarEvent.emit();
+  }
 
   openModal(clinic: Clinic): void {
     this.selectedClinic = clinic;

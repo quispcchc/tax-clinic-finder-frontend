@@ -1,4 +1,12 @@
 <div class="clinic-list">
+  <button *ngIf="!isSidebarOpen" class="find-clinic-btn" (click)="toggleFilterSidebar()">
+    <img
+      src="assets/images/filter-hamberger.svg"
+      alt="Find Clinic"
+      class="find-clinic-icon"
+    />
+    {{ "Find your Tax Clinic" | translate }}
+  </button>
   <div
     *ngFor="let clinic of clinics"
     class="clinic-card"
