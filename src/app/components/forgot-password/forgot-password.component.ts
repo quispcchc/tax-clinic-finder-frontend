@@ -36,9 +36,4 @@ export class ForgotPasswordComponent implements OnInit {
       });
     }
   }
-
-  // switchLanguage(language: string): void {
-  //   this.currentLanguage = language;
-  //   this.translate.use(language);
-  // }
 }
