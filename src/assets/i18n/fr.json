@@ -12,7 +12,13 @@
     "Password is required.": "Le mot de passe est requis.",
     "Password must be at least 6 characters long.": "Le mot de passe doit comporter au moins 6 caractères.",
     "Password must contain at least one special character, one uppercase letter, one lowercase letter, and one number.": "Le mot de passe doit contenir au moins un caractère spécial, une lettre majuscule, une lettre minuscule et un chiffre.",
-    
+    "Find your Tax Clinic": "Trouvez votre clinique fiscale",
+    "Tax Clinics": "Cliniques fiscales",
+    "Address": "Adresse",
+    "INVALID_EMAIL_OR_PASSWORD": "Email ou mot de passe invalide",
+    "UNEXPECTED_ERROR": "Une erreur inattendue s'est produite. Veuillez réessayer plus tard.",
+
+
     "Send Reset Link to Email": "Envoyer le lien de réinitialisation à l'e-mail",
     "A password link has been sent to your email.": "Un lien de réinitialisation du mot de passe a été envoyé à votre e-mail.",
     "Please check it to update your password.": "Veuillez le vérifier pour mettre à jour votre mot de passe.",

@@ -92,6 +92,17 @@ h2 {
     }
   }
 
+      .error-message {
+      color: #e74c3c;
+      font-size: 0.75rem;
+      margin: 0.5rem 0;
+    }
+    
+    .error-message.alert {
+      text-align: center;
+      padding-block: 1rem;
+    }
+
   .password-input-container {
     display: flex;
     align-items: center;

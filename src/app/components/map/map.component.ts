@@ -11,23 +11,36 @@ import axios from 'axios';
 })
 export class MapComponent implements OnInit, OnChanges {
   @Input() clinics: Clinic[] = [];
+  @Input() selectedTab!: string;
   private map!: L.Map;
   private markers: L.LayerGroup = L.layerGroup();
   public isLoading = false;
+  private isMapInitialized = false;
+
+  //private readonly GOOGLE_MAPS_API_KEY = 'AIzaSyBc3mEkYs8ZzYf5onUt4vi5jjsQ6cogV40';
+  private readonly GOOGLE_MAPS_API_KEY = 'YOUR_API_KEY_HERE';
 
   ngOnInit(): void {
     // Any initialization logic that doesn't require the DOM to be fully loaded
   }
 
   ngAfterViewInit(): void {
-    // Initialize the map after the DOM is fully rendered
     setTimeout(() => {
       this.initializeMap();
+      this.isMapInitialized = true;
+      this.updateMap();
     }, 0);
   }
 
   ngOnChanges(changes: SimpleChanges): void {
+
+    if (!this.isMapInitialized) return;
+
     if (changes['clinics']) {
+      this.updateMap();
+    }
+
+    if (changes['selectedTab'] && this.selectedTab === 'access-filter') {
       this.updateMap();
     }
   }
@@ -71,7 +84,7 @@ export class MapComponent implements OnInit, OnChanges {
     for (const clinic of this.clinics) {
       try {
         // Generate full address for geocoding
-        const fullAddress = `${clinic.street}, ${clinic.city}, ${clinic.state}`;
+        const fullAddress = `${clinic.street}, ${clinic.city}, ${clinic.state}, ${clinic.postalcode}`;
 
         // Geocode the clinic address to get latitude and longitude
         const { lat, lng } = await this.geocodeAddress(fullAddress);
@@ -108,20 +121,18 @@ export class MapComponent implements OnInit, OnChanges {
 
   private async geocodeAddress(address: string): Promise<{ lat: number; lng: number }> {
     const encodedAddress = encodeURIComponent(address);
-    const url = `https://nominatim.openstreetmap.org/search?q=${encodedAddress}&format=json&addressdetails=1&limit=1`;
+    const url = `https://maps.googleapis.com/maps/api/geocode/json?address=${encodedAddress}&key=${this.GOOGLE_MAPS_API_KEY}`;
 
     try {
-      console.log('Geocoding URL:', url);
-
       const response = await axios.get(url);
-      if (response.data && response.data.length > 0) {
-        const result = response.data[0];
+      if (response.data.status === 'OK' && response.data.results.length > 0) {
+        const result = response.data.results[0].geometry.location;
         return {
-          lat: parseFloat(result.lat),
-          lng: parseFloat(result.lon),
+          lat: result.lat,
+          lng: result.lng,
         };
       } else {
-        throw new Error('Geocoding failed: No results found');
+        throw new Error(`Geocoding failed: ${response.data.status}`);
       }
     } catch (error) {
       console.error(`Error geocoding address: ${address}`, error);

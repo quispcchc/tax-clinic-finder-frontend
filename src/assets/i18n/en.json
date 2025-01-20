@@ -12,6 +12,12 @@
     "Password is required.": "Password is required.",
     "Password must be at least 6 characters long.": "Password must be at least 6 characters long.",
     "Password must contain at least one special character, one uppercase letter, one lowercase letter, and one number.": "Password must contain at least one special character, one uppercase letter, one lowercase letter, and one number.",
+    "Find your Tax Clinic": "Find your Tax Clinic",
+    "Tax Clinics":"Tax Clinics",
+    "Address": "Address",
+    "INVALID_EMAIL_OR_PASSWORD": "Invalid email or password",
+    "UNEXPECTED_ERROR": "An unexpected error occurred. Please try again later.",
+
 
 
     "Send Reset Link to Email": "Send Reset Link to Email",

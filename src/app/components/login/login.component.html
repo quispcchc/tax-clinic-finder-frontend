@@ -82,6 +82,9 @@
           </p>
         </div>
       </div>
+      <div *ngIf="errorMessage" class="error-message alert">
+        {{ errorMessage }}
+      </div>
       <div class="form-actions">
         <label>
           <input type="checkbox" formControlName="rememberMe" />

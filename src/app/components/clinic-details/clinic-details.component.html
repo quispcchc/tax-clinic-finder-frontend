@@ -1,17 +1,59 @@
 <div class="modal-overlay">
   <div class="modal-content">
-    <button class="close-button" (click)="close()">X</button>
-    <h2>{{ clinic?.name }}</h2>
-    <p><strong>{{ 'Address' | translate }}:</strong> {{ clinic?.street }}, {{ clinic?.city }}, {{ clinic?.state }}, {{ clinic?.postalcode }}</p>
-    <p><strong>{{ 'Appointment Available' | translate }}:</strong> {{ clinic?.appointmentsAvailable }}</p>
-    <p><strong>{{ 'Languages' | translate }}:</strong> {{ clinic?.languageRequirements }}</p>
-    <p><strong>{{ 'Appointment Type' | translate }}:</strong> {{ clinic?.appointmentType }}</p>
-    <p><strong>{{ 'Population Eligibility' | translate }}:</strong> {{ clinic?.populationEligibility }}</p>
-    <p><strong>{{ 'Required Documents' | translate }}:</strong> {{ clinic?.requiredDocuments }}</p>
-    <p><strong>{{ 'Website' | translate }}: </strong>
-      <a [href]="clinic?.website" target="_blank" rel="noopener noreferrer" class="clinic-link">
-        {{ clinic?.website }}
-      </a>
-    </p>
+    <div class="header">
+      <div class="clinic-header-left">
+        <a [href]="clinic?.website" target="_blank" class="clinic-website-link">
+          <img
+            src="assets/images/header-logo.svg"
+            alt="Website"
+            class="website-icon"
+          />
+        </a>
+      </div>
+      <button class="close-button" (click)="close()">X</button>
+    </div>
+
+    <div class="clinic-details-container">
+      <div class="clinic-details">
+        <h3>{{ clinic?.name }}</h3>
+        <p>
+          <strong>{{ "Address" | translate }}:</strong> {{ clinic?.street }},
+          {{ clinic?.city }}, {{ clinic?.state }}, {{ clinic?.postalcode }}
+        </p>
+        <p>
+          <strong>{{ "Appointment Available" | translate }}:</strong>
+          {{ clinic?.appointmentsAvailable }}
+        </p>
+        <p>
+          <strong>{{ "Languages" | translate }}:</strong>
+          {{ clinic?.languageRequirements }}
+        </p>
+        <p>
+          <strong>{{ "Appointment Type" | translate }}:</strong>
+          {{ clinic?.appointmentType }}
+        </p>
+        <p>
+          <strong>{{ "Population Eligibility" | translate }}:</strong>
+          {{ clinic?.populationEligibility }}
+        </p>
+        <p>
+          <strong>{{ "Required Documents" | translate }}:</strong>
+          {{ clinic?.requiredDocuments }}
+        </p>
+        <p>
+          <strong>{{ "Website" | translate }}: </strong>
+          <a
+            [href]="clinic?.website"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="clinic-link"
+          >
+            {{ clinic?.website }}
+          </a>
+        </p>
+      </div>
+
+      <div class="clinic-map" id="clinic-map"></div>
+    </div>
   </div>
 </div>

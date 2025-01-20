@@ -71,11 +71,18 @@ export class LoginComponent implements OnInit {
             this.router.navigate(['/dashboard']);
             this.loginForm.reset();
           } else {
-            this.errorMessage = 'Invalid email or password';
+            this.translate
+            .get('INVALID_EMAIL_OR_PASSWORD')
+            .subscribe((translation) => {
+              this.errorMessage = translation;
+            });
           }
         },
         (error) => {
-          this.errorMessage = error?.message || 'An unexpected error occurred';
+          const errorKey = error?.code || 'UNEXPECTED_ERROR';
+          this.translate.get(errorKey).subscribe((translation) => {
+            this.errorMessage = translation;
+          });
         }
       );
     }
