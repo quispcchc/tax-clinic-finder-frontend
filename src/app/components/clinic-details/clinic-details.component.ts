@@ -33,7 +33,14 @@ export class ClinicDetailsComponent implements OnInit, AfterViewInit {
     setTimeout(() => {
       this.initializeMap();
       this.updateClinicLocation();
+      this.map.invalidateSize();
     }, 0);
+
+    window.addEventListener('resize', () => {
+      if (this.map) {
+        this.map.invalidateSize();
+      }
+    });
   }
 
   close(): void {

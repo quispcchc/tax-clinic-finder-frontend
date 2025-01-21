@@ -4,14 +4,9 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background-image: linear-gradient(
-      to top left,
-      rgba(204, 234, 240, 0.7),
-      transparent 50%
-    ),
-    linear-gradient(to top right, rgba(204, 234, 240, 0.7), transparent 50%),
-    linear-gradient(to bottom left, rgba(204, 234, 240, 0.7), transparent 50%),
-    linear-gradient(to bottom right, rgba(204, 234, 240, 0.7), transparent 50%);
+  background: url('/assets/images/modal-gradient.svg') no-repeat center center;
+  background-size: cover;
+  background-position: center;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -85,7 +80,7 @@ h2 {
 
 .clinic-map {
   flex: 1;
-  height: 300px;
+  height: 400px;
   min-width: 300px;
   border-radius: 8px;
 }
@@ -96,7 +91,22 @@ h2 {
 }
 
 strong {
-  color: #007bff;
+  color: #2B2B2B;
+}
+
+dl {
+  margin: 0;
+}
+
+dt {
+  font-weight: bold;
+  margin-top: 10px;
+  color: #2b2b2b;
+}
+
+dd {
+  margin: 0 0 10px 0;
+  color: #555;
 }
 
 @media (max-width: 768px) {

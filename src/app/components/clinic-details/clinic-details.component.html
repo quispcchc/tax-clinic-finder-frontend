@@ -16,43 +16,49 @@
     <div class="clinic-details-container">
       <div class="clinic-details">
         <h3>{{ clinic?.name }}</h3>
-        <p>
-          <strong>{{ "Address" | translate }}:</strong> {{ clinic?.street }},
-          {{ clinic?.city }}, {{ clinic?.state }}, {{ clinic?.postalcode }}
-        </p>
-        <p>
-          <strong>{{ "Appointment Available" | translate }}:</strong>
-          {{ clinic?.appointmentsAvailable }}
-        </p>
-        <p>
-          <strong>{{ "Languages" | translate }}:</strong>
-          {{ clinic?.languageRequirements }}
-        </p>
-        <p>
-          <strong>{{ "Appointment Type" | translate }}:</strong>
-          {{ clinic?.appointmentType }}
-        </p>
-        <p>
-          <strong>{{ "Population Eligibility" | translate }}:</strong>
-          {{ clinic?.populationEligibility }}
-        </p>
-        <p>
-          <strong>{{ "Required Documents" | translate }}:</strong>
-          {{ clinic?.requiredDocuments }}
-        </p>
-        <p>
-          <strong>{{ "Website" | translate }}: </strong>
-          <a
-            [href]="clinic?.website"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="clinic-link"
-          >
-            {{ clinic?.website }}
-          </a>
-        </p>
+        <dl>
+          <dt>
+            <strong>{{ "Address" | translate }}:</strong>
+          </dt>
+          <dd>
+            {{ clinic?.street }}, {{ clinic?.city }}, {{ clinic?.state }},
+            {{ clinic?.postalcode }}
+          </dd>
+          <dt>
+            <strong>{{ "Appointment Available" | translate }}:</strong>
+          </dt>
+          <dd>{{ clinic?.appointmentsAvailable }}</dd>
+          <dt>
+            <strong>{{ "Languages" | translate }}:</strong>
+          </dt>
+          <dd>{{ clinic?.languageRequirements }}</dd>
+          <dt>
+            <strong>{{ "Appointment Type" | translate }}:</strong>
+          </dt>
+          <dd>{{ clinic?.appointmentType }}</dd>
+          <dt>
+            <strong>{{ "Population Eligibility" | translate }}:</strong>
+          </dt>
+          <dd>{{ clinic?.populationEligibility }}</dd>
+          <dt>
+            <strong>{{ "Required Documents" | translate }}:</strong>
+          </dt>
+          <dd>{{ clinic?.requiredDocuments }}</dd>
+          <dt>
+            <strong>{{ "WEBSITE" | translate }}:</strong>
+          </dt>
+          <dd>
+            <a
+              [href]="clinic?.website"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="clinic-link"
+            >
+              {{ clinic?.website }}
+            </a>
+          </dd>
+        </dl>
       </div>
-
       <div class="clinic-map" id="clinic-map"></div>
     </div>
   </div>

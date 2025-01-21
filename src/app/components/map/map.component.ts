@@ -30,6 +30,12 @@ export class MapComponent implements OnInit, OnChanges {
       this.isMapInitialized = true;
       this.updateMap();
     }, 0);
+
+    window.addEventListener('resize', () => {
+      if (this.map) {
+        this.map.invalidateSize();
+      }
+    });
   }
 
   ngOnChanges(changes: SimpleChanges): void {
