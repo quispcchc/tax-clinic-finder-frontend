@@ -5,6 +5,13 @@
   padding: 20px;
 }
 
+.directory-header {
+  font-size: 1.3rem;
+  font-weight: bold;
+  color: #333;
+   margin-top: 0px;
+}
+
 .find-clinic-btn {
   width: 35%;
   text-align: left;
@@ -45,9 +52,8 @@
     border-bottom: none;
   }
 
-  h3 {
+  h4 {
     margin: 0 0 5px 25px;
-    font-size: 1.2rem;
     font-weight: bold;
     color: #333;
   }
