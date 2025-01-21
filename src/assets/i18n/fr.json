@@ -37,5 +37,6 @@
     "Enter your new password": "Entrez votre nouveau mot de passe",
     "Reset Password": "Réinitialiser le mot de passe",
     "Password successfully reset": "Mot de passe réinitialisé avec succès",
-    "Back to Login": "Retour à la connexion"
+    "Back to Login": "Retour à la connexion",
+    "Password has been reset": "Le mot de passe a été réinitialisé"
 }
