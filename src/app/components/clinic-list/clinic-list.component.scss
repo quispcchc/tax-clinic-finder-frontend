@@ -41,6 +41,10 @@
   border-bottom: 1px solid #cceaf0;
   position: relative;
 
+  &:last-child {
+    border-bottom: none;
+  }
+
   h3 {
     margin: 0 0 5px 25px;
     font-size: 1.2rem;

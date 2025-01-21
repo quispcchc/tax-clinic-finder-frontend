@@ -13,7 +13,6 @@
   "Password must be at least 6 characters long.": "Password must be at least 6 characters long.",
   "Password must contain at least one special character, one uppercase letter, one lowercase letter, and one number.": "Password must contain at least one special character, one uppercase letter, one lowercase letter, and one number.",
   "Find your Tax Clinic": "Find your Tax Clinic",
-  "Tax Clinics": "Tax Clinics",
   "Address": "Address",
   "INVALID_EMAIL_OR_PASSWORD": "Invalid email or password",
   "UNEXPECTED_ERROR": "An unexpected error occurred. Please try again later.",
@@ -38,6 +37,12 @@
   "Reset Password": "Reset Password",
   "Password successfully reset": "Password successfully reset",
   "Back to Login": "Back to Login",
-  "Password has been reset": "Password has been reset"
+  "Password has been reset": "Password has been reset",
+  "Access Filter": "Access Filter",
+  "Tax Clinics": "Tax Clinics",
+  "My Profile": "My Profile",
+  "User Management": "User Management",
+  "Tax Clinic Management": "Tax Clinic Management",
+  "Tax Clinics Directory": "Tax Clinics Directory"
 }
 

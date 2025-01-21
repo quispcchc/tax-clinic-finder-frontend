@@ -1,7 +1,9 @@
 <div class="tax-clinics">
   <div class="clinic-list">
+    <h2 class="directory-header">{{ "Tax Clinics Directory" | translate }}</h2>
+
     <div *ngFor="let clinic of clinics" class="clinic-card">
-      <h3>{{ clinic.name }}</h3>
+      <h4>{{ clinic.name }}</h4>
       <p>
         {{ "Address" | translate }}: {{ clinic.street }}, {{ clinic.city }},
         {{ clinic.state }}, {{ clinic.postalcode }}

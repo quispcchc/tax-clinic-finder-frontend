@@ -13,7 +13,6 @@
     "Password must be at least 6 characters long.": "Le mot de passe doit comporter au moins 6 caractères.",
     "Password must contain at least one special character, one uppercase letter, one lowercase letter, and one number.": "Le mot de passe doit contenir au moins un caractère spécial, une lettre majuscule, une lettre minuscule et un chiffre.",
     "Find your Tax Clinic": "Trouvez votre clinique fiscale",
-    "Tax Clinics": "Cliniques fiscales",
     "Address": "Adresse",
     "INVALID_EMAIL_OR_PASSWORD": "Email ou mot de passe invalide",
     "UNEXPECTED_ERROR": "Une erreur inattendue est survenue. Veuillez réessayer plus tard.",
@@ -38,5 +37,11 @@
     "Reset Password": "Réinitialiser le mot de passe",
     "Password successfully reset": "Mot de passe réinitialisé avec succès",
     "Back to Login": "Retour à la connexion",
-    "Password has been reset": "Le mot de passe a été réinitialisé"
+    "Password has been reset": "Le mot de passe a été réinitialisé",
+    "Access Filter": "Filtre d'accès",
+    "Tax Clinics": "Cliniques d'impôts",
+    "My Profile": "Mon Profil",
+    "User Management": "Gestion des Utilisateurs",
+    "Tax Clinic Management": "Gestion de la Clinique Fiscale",
+    "Tax Clinics Directory": "Annuaire des Cliniques Fiscales"
 }

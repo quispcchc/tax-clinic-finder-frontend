@@ -1,24 +1,42 @@
 <div class="header">
-  <div class="logo">
-    <img src="assets/images/header-logo.svg" alt="Logo" />
+  <div class="logo-and-language">
+    <div class="logo">
+      <img src="assets/images/header-logo.svg" alt="Logo" />
+    </div>
+    <div class="language-selector">
+      <app-language-selector
+        (languageChanged)="switchLanguage($event)"
+      ></app-language-selector>
+    </div>
   </div>
+
   <div class="tabs">
     <button
       [class.active]="selectedTab === 'access-filter'"
       (click)="switchTab('access-filter')"
     >
-      {{"Access Filter" | translate}}
+      {{ "Access Filter" | translate }}
     </button>
     <button
       [class.active]="selectedTab === 'tax-clinics'"
       (click)="switchTab('tax-clinics')"
     >
-      {{"Tax Clinics" | translate}}
+      {{ "Tax Clinics" | translate }}
     </button>
   </div>
-  <div class="language-selector">
-    <app-language-selector
-      (languageChanged)="switchLanguage($event)"
-    ></app-language-selector>
+
+  <div class="menu-icons">
+    <button class="menu-button" (click)="toggleMenu()">
+      <img src="assets/images/menu-hamberger.svg" alt="Menu" />
+    </button>
+    <img src="assets/images/user-icon.svg" alt="User" class="user-icon" />
+    <div class="menu-dropdown" *ngIf="menuOpen">
+      <button (click)="navigateTo('profile')">{{"My Profile" | translate}}</button>
+      <button (click)="navigateTo('user-management')">{{"User Management" | translate}}</button>
+      <button (click)="navigateTo('tax-clinic-management')">
+        {{"Tax Clinic Management" | translate}}
+      </button>
+      <button (click)="logout()">Logout</button>
+    </div>
   </div>
 </div>

@@ -19,7 +19,6 @@ export class DashboardComponent implements OnInit {
 
   constructor(
     private clinicService: ClinicService,
-    private authService: AuthService,
     private languageService: LanguageService
   ) {
     this.currentLanguage = this.languageService.getLanguage();
@@ -95,9 +94,5 @@ export class DashboardComponent implements OnInit {
 
   onFilterSidebarToggle() {
     this.isSidebarOpen = !this.isSidebarOpen;
-  }
-
-  logout(): void {
-    this.authService.logout();
   }
 }

@@ -18,6 +18,14 @@
     top: 60px;
     left: 0;
     z-index: 1;
+
+    .directory-header {
+      font-size: 1.4rem;
+      font-weight: bold;
+      color: #333;
+      margin-bottom: 30px;
+      margin-top:30px;
+    }
   }
 
   .clinic-card {
@@ -29,9 +37,12 @@
     border-bottom: 1px solid #cceaf0;
     position: relative;
 
-    h3 {
+    &:last-child {
+      border-bottom: none;
+    }
+
+    h4 {
       margin: 0 0 5px 25px;
-      font-size: 1.2rem;
       font-weight: bold;
       color: #333;
     }
@@ -75,5 +86,9 @@
     position: relative;
     height: auto;
     top: 0;
+  }
+
+  .directory-header {
+    font-size: 1.2rem;
   }
 }

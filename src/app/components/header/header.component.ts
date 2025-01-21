@@ -1,5 +1,7 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, HostListener, Input, Output } from '@angular/core';
 import { LanguageService } from '../../services/language.service';
+import { Router } from '@angular/router';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-header',
@@ -12,8 +14,9 @@ export class HeaderComponent {
   @Output() languageChanged = new EventEmitter<string>();
   @Output() tabChanged = new EventEmitter<string>();
   currentLanguage: string;
+  menuOpen: boolean = false;
 
-  constructor(private languageService: LanguageService) {
+  constructor(private languageService: LanguageService,     private authService: AuthService, private router: Router) {
     this.currentLanguage = this.languageService.getLanguage();
   }
 
@@ -26,5 +29,31 @@ export class HeaderComponent {
     this.languageService.setLanguage(language);
     this.currentLanguage = language;
     this.languageChanged.emit(language);
+  }
+
+  toggleMenu(): void {
+    this.menuOpen = !this.menuOpen;
+  }
+
+  @HostListener('document:click', ['$event'])
+  onDocumentClick(event: MouseEvent) {
+    const menuElement = document.querySelector('.menu-dropdown');
+    const menuButtonElement = document.querySelector('.menu-button');
+
+    if (
+      menuElement && !menuElement.contains(event.target as Node) &&
+      menuButtonElement && !menuButtonElement.contains(event.target as Node)
+    ) {
+      this.menuOpen = false;
+    }
+  }
+
+  navigateTo(route: string): void {
+    this.menuOpen = false;
+    this.router.navigate([route]);
+  }
+
+  logout(): void {
+    this.authService.logout();
   }
 }
