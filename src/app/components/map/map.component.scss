@@ -1,6 +1,6 @@
 #map {
     width: 100%;
-    height: 100vh;
+    //height: 100vh;
     height: calc(100vh - 20px); 
 }
 
@@ -18,5 +18,6 @@
 @media (max-width: 768px) {
     #map {
       height: 100%;
+      width: 100%;
     }
 }

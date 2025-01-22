@@ -38,6 +38,12 @@ export class MapComponent implements OnInit, OnChanges {
     });
   }
 
+  ngAfterViewChecked(): void {
+    if (this.map) {
+      this.map.invalidateSize();
+    }
+  }
+
   ngOnChanges(changes: SimpleChanges): void {
 
     if (!this.isMapInitialized) return;

@@ -43,6 +43,12 @@ export class ClinicDetailsComponent implements OnInit, AfterViewInit {
     });
   }
 
+  ngAfterViewChecked(): void {
+    if (this.map) {
+      this.map.invalidateSize();
+    }
+  }
+
   close(): void {
     this.closeModal.emit();
   }
