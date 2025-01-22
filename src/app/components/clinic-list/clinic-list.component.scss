@@ -6,7 +6,7 @@
 }
 
 .directory-header {
-  font-size: 1.3rem;
+  font-size: 1.17em;
   font-weight: bold;
   color: #333;
    margin-top: 0px;
@@ -52,15 +52,16 @@
     border-bottom: none;
   }
 
-  h4 {
+  label {
     margin: 0 0 5px 25px;
-    font-weight: bold;
+    font-size: 1rem;
     color: #333;
+    font-weight: 500;
   }
 
   p {
     margin: 0 0 5px 25px;
-    font-size: 1rem;
+    font-size: 0.95rem;
     color: #666;
   }
 

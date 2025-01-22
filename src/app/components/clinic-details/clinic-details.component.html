@@ -2,61 +2,57 @@
   <div class="modal-content">
     <div class="header">
       <div class="clinic-header-left">
-        <a [href]="clinic?.website" target="_blank" class="clinic-website-link">
-          <img
-            src="assets/images/header-logo.svg"
-            alt="Website"
-            class="website-icon"
-          />
-        </a>
+        <img
+          src="assets/images/modal-logo.svg"
+          alt="Website"
+          class="website-icon"
+        />
+        <h3>Tax Clinics In This Axis</h3>
       </div>
       <button class="close-button" (click)="close()">X</button>
     </div>
 
     <div class="clinic-details-container">
       <div class="clinic-details">
-        <h3>{{ clinic?.name }}</h3>
+        <label>{{ clinic?.name }}</label>
         <dl>
-          <dt>
-            <strong>{{ "Address" | translate }}:</strong>
-          </dt>
-          <dd>
-            {{ clinic?.street }}, {{ clinic?.city }}, {{ clinic?.state }},
-            {{ clinic?.postalcode }}
-          </dd>
-          <dt>
-            <strong>{{ "Appointment Available" | translate }}:</strong>
-          </dt>
-          <dd>{{ clinic?.appointmentsAvailable }}</dd>
-          <dt>
-            <strong>{{ "Languages" | translate }}:</strong>
-          </dt>
-          <dd>{{ clinic?.languageRequirements }}</dd>
-          <dt>
-            <strong>{{ "Appointment Type" | translate }}:</strong>
-          </dt>
-          <dd>{{ clinic?.appointmentType }}</dd>
-          <dt>
-            <strong>{{ "Population Eligibility" | translate }}:</strong>
-          </dt>
-          <dd>{{ clinic?.populationEligibility }}</dd>
-          <dt>
-            <strong>{{ "Required Documents" | translate }}:</strong>
-          </dt>
-          <dd>{{ clinic?.requiredDocuments }}</dd>
-          <dt>
-            <strong>{{ "WEBSITE" | translate }}:</strong>
-          </dt>
-          <dd>
-            <a
-              [href]="clinic?.website"
-              target="_blank"
-              rel="noopener noreferrer"
-              class="clinic-link"
-            >
-              {{ clinic?.website }}
-            </a>
-          </dd>
+          <div class="clinic-info">
+            <dt>{{ "Address" | translate }}:</dt>
+            <dd>{{ clinic?.street }}, {{ clinic?.city }}, {{ clinic?.state }}, {{ clinic?.postalcode }}</dd>
+          </div>
+          <div class="clinic-info">
+            <dt>{{ "Appointment Available" | translate }}:</dt>
+            <dd>{{ clinic?.appointmentsAvailable }}</dd>
+          </div>
+          <div class="clinic-info">
+            <dt>{{ "Languages" | translate }}:</dt>
+            <dd>{{ clinic?.languageRequirements }}</dd>
+          </div>
+          <div class="clinic-info">
+            <dt>{{ "Appointment Type" | translate }}:</dt>
+            <dd>{{ clinic?.appointmentType }}</dd>
+          </div>
+          <div class="clinic-info">
+            <dt>{{ "Population Eligibility" | translate }}:</dt>
+            <dd>{{ clinic?.populationEligibility }}</dd>
+          </div>
+          <div class="clinic-info">
+            <dt>{{ "Required Documents" | translate }}:</dt>
+            <dd>{{ clinic?.requiredDocuments }}</dd>
+          </div>
+          <div class="clinic-info">
+            <dt>{{ "Website" | translate }}:</dt>
+            <dd>
+              <a
+                [href]="clinic?.website"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="clinic-link"
+              >
+                {{ clinic?.website }}
+              </a>
+            </dd>
+          </div>
         </dl>
       </div>
       <div class="clinic-map" id="clinic-map"></div>

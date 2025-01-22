@@ -13,7 +13,7 @@
     class="clinic-card"
     (click)="openModal(clinic)"
   >
-    <h4>{{ clinic.name }}</h4>
+    <label>{{ clinic.name }}</label>
     <p>
       {{ "Address" | translate }}: {{ clinic.street }}, {{ clinic.city }},
       {{ clinic.state }}, {{ clinic.postalcode }}

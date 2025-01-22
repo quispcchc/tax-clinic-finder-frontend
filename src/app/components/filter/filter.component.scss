@@ -7,7 +7,7 @@
   .header {
     display: flex;
     align-items: center;
-    gap: 10px; 
+    gap: 10px;
 
     .hamburger-img {
       cursor: pointer;
@@ -16,9 +16,7 @@
     }
 
     h3 {
-      //font-size: 1.5rem;
       color: #333;
-      //margin: 0;
     }
   }
 
@@ -38,50 +36,68 @@
       content: counter(form-group-counter);
       counter-increment: form-group-counter;
       position: absolute;
-      left: 10px;
-      top: 50%;
+      left: 4px;
+      top: 10%;
       transform: translateY(-50%);
-      font-size: 1.2rem;
-      font-weight: bold;
+      font-size: 0.85rem;
       color: #000000;
       background-color: #CCEAF0;
-      border: 3px solid #AADCE5;
-      width: 20px;
-      height: 20px;
+      border: 2px solid #AADCE5;
+      width: 15px;
+      height: 15px;
       border-radius: 50%;
       display: flex;
       justify-content: center;
       align-items: center;
     }
 
-    label {
-      display: block;
-      font-size: 1rem;
-      color: #333;
-      margin-bottom: 5px;
-    }
+    .form-group-label {
+      display: flex;
+      flex-direction: column;
 
-    input,
-    select {
-      width: 100%;
-      padding: 10px;
-      font-size: 1rem;
-      border: 1px solid #ddd;
-      border-radius: 4px;
-      box-sizing: border-box;
+      label {
+        font-size: 1rem;
+        color: #333;
+        font-weight: 500;
+      }
+
+      .subtitle {
+        font-size: 0.8rem;
+        color: #666;
+        margin-top: 15px;
+        margin-bottom: 15px;
+      }
     }
 
     .radio-group {
       display: flex;
-      gap: 15px;
-  
+      flex-direction: column;
+      gap: 10px;
+
       label {
         display: flex;
         align-items: center;
         font-size: 1rem;
         color: #333;
-  
+
         input[type="radio"] {
+          margin-right: 10px;
+        }
+      }
+    }
+
+    .checkbox-group {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+
+      label {
+        display: flex;
+        align-items: center;
+        font-size: 1rem;
+        color: #333;
+
+        input[type="checkbox"] {
           margin-right: 10px;
         }
       }
@@ -89,17 +105,19 @@
   }
 
   button {
-    background-color: #007bff;
-    color: #ffffff;
+    background-color: #80CBD8;
+    color: #2B2B2B;
     padding: 12px 20px;
     font-size: 1rem;
     border: none;
     border-radius: 5px;
     cursor: pointer;
     transition: background-color 0.3s;
+    margin-bottom: 20px;
 
     &:hover {
-      background-color: #0056b3;
+      background-color: #007E94;
+      color: #FFFFFF;
     }
   }
 }
