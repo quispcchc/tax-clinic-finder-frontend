@@ -3,20 +3,22 @@
     <h2 class="directory-header">{{ "Tax Clinics Directory" | translate }}</h2>
 
     <div *ngFor="let clinic of clinics" class="clinic-card">
-      <h4>{{ clinic.name }}</h4>
-      <p>
-        {{ "Address" | translate }}: {{ clinic.street }}, {{ clinic.city }},
-        {{ clinic.state }}, {{ clinic.postalcode }}
-      </p>
+      <h4>{{ clinic.organizationName }}</h4>
+      <div *ngFor="let location of clinic.locations">
+        <p>
+          {{ "Address" | translate }}: {{ location.street }}, {{ location.city }},
+          {{ location.state }}, {{ location.postalCode }}
+        </p>
+      </div>
       <p>
         {{ "Website" | translate }}:
         <a
-          [href]="clinic.website"
+          [href]="clinic.organizationContact"
           target="_blank"
           rel="noopener noreferrer"
           class="clinic-link"
         >
-          {{ clinic.website }}
+          {{ clinic.organizationContact }}
         </a>
       </p>
     </div>

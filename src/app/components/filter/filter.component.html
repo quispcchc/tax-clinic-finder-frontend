@@ -1,4 +1,5 @@
 <div class="filter" [class.open]="isSidebarOpen">
+  <button class="reset-button" (click)="resetFilters()">{{ "Reset Filters" | translate }}</button>
   <div class="header">
     <img 
       class="hamburger-img" 
@@ -450,6 +451,6 @@
         </label>
       </div>
     </div>
-    <button type="submit">{{ "Apply Filters" | translate }}</button>
+    <button type="submit" class="filters-button">{{ "Apply Filters" | translate }}</button>
   </form>
 </div>

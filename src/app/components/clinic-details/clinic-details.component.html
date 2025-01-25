@@ -14,27 +14,11 @@
 
     <div class="clinic-details-container">
       <div class="clinic-details">
-        <label>{{ clinic?.name }}</label>
+        <label>{{ clinic?.organizationName }}</label>
         <dl>
-          <div class="clinic-info">
+          <div class="clinic-info"  *ngFor="let location of clinic?.locations">
             <dt>{{ "Address" | translate }}:</dt>
-            <dd>{{ clinic?.street }}, {{ clinic?.city }}, {{ clinic?.state }}, {{ clinic?.postalcode }}</dd>
-          </div>
-          <div class="clinic-info">
-            <dt>{{ "Appointment Available" | translate }}:</dt>
-            <dd>{{ clinic?.appointmentsAvailable }}</dd>
-          </div>
-          <div class="clinic-info">
-            <dt>{{ "Languages" | translate }}:</dt>
-            <dd>{{ clinic?.languageRequirements }}</dd>
-          </div>
-          <div class="clinic-info">
-            <dt>{{ "Appointment Type" | translate }}:</dt>
-            <dd>{{ clinic?.appointmentType }}</dd>
-          </div>
-          <div class="clinic-info">
-            <dt>{{ "Population Eligibility" | translate }}:</dt>
-            <dd>{{ clinic?.populationEligibility }}</dd>
+            <dd>{{ location?.street }}, {{ location?.city }}, {{ location?.state }}, {{ location?.postalCode }}</dd>
           </div>
           <div class="clinic-info">
             <dt>{{ "Required Documents" | translate }}:</dt>
@@ -44,12 +28,12 @@
             <dt>{{ "Website" | translate }}:</dt>
             <dd>
               <a
-                [href]="clinic?.website"
+                [href]="clinic?.organizationContact"
                 target="_blank"
                 rel="noopener noreferrer"
                 class="clinic-link"
               >
-                {{ clinic?.website }}
+                {{ clinic?.organizationContact }}
               </a>
             </dd>
           </div>

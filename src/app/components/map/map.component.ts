@@ -95,8 +95,10 @@ export class MapComponent implements OnInit, OnChanges {
 
     for (const clinic of this.clinics) {
       try {
+
+        const location = clinic.locations[0];
         // Generate full address for geocoding
-        const fullAddress = `${clinic.street}, ${clinic.city}, ${clinic.state}, ${clinic.postalcode}`;
+        const fullAddress = `${location.street}, ${location.city}, ${location.state}, ${location.postalCode}`;
 
         // Geocode the clinic address to get latitude and longitude
         const { lat, lng } = await this.geocodeAddress(fullAddress);
@@ -105,10 +107,10 @@ export class MapComponent implements OnInit, OnChanges {
 
         // Add marker for the clinic
         const marker = L.marker(clinicLatLng).bindPopup(`
-          <strong>${clinic.name}</strong><br>
+          <strong>${clinic.organizationName}</strong><br>
           ${fullAddress}<br>
-          Type: ${clinic.appointmentType || 'N/A'}<br>
-          Language: ${clinic.languageRequirements || 'N/A'}
+          Type: ${clinic.clinicTypes || 'N/A'}<br>
+          Language: ${clinic.serviceLanguages || 'N/A'}
         `);
 
         // Add marker to the layer group
@@ -117,7 +119,7 @@ export class MapComponent implements OnInit, OnChanges {
         // Extend map bounds to include this clinic
         bounds.extend(clinicLatLng);
       } catch (error) {
-        console.error(`Failed to geocode address for clinic "${clinic.name}":`, error);
+        console.error(`Failed to geocode address for clinic "${clinic.organizationName}":`, error);
       }
     }
 

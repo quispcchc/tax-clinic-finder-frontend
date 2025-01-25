@@ -134,6 +134,72 @@ export class FilterComponent {
     this.filterChange.emit(this.filters);
   }
 
+  resetFilters() {
+    this.filters = {
+      appointmentType: '',
+      supportedTaxYears: {
+        lastYear: false,
+        lastTwoYears: false,
+        lastThreeYears: false,
+        all: false,
+      },
+      provinces: {
+        AB: false,
+        BC: false,
+        MB: false,
+        NB: false,
+        ON: false,
+      },
+      specialTaxCases: {
+        selfEmployed: false,
+        deceased: false,
+        bankruptcy: false,
+        imprisoned: false,
+      },
+      incomeLevelRestrictions: {
+        hasRestriction: false,
+        incomeLevel: '',
+      },
+      languageOptions: {
+        french: false,
+        english: false,
+        arabic: false,
+        other: false,
+        otherLanguage: '',
+      },
+      serviceDeliveryModes: {
+        inPerson: false,
+        virtual: false,
+        byAppointment: false,
+        walkIn: false,
+      },
+      clientCategories: {
+        newcomers: false,
+        students: false,
+        indigenousClients: false,
+      },
+      catchmentArea: {
+        hasCatchmentArea: false,
+        postalCode: '',
+      },
+      appointmentBooking: {
+        onlineAppointment: false,
+        call: false,
+        inPerson: false,
+      },
+      serviceDays: {
+        weekdays: false,
+        weekends: false,
+      },
+      serviceHours: {
+        workHours: false,
+        afterHours: false,
+      },
+    };
+    this.filterChange.emit(this.filters);
+  }
+  
+
   closeFilterSidebar() {
     this.toggleSidebarEvent.emit();
   }

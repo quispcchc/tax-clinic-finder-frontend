@@ -72,9 +72,11 @@ export class ClinicDetailsComponent implements OnInit, AfterViewInit {
   }
 
   private async updateClinicLocation(): Promise<void> {
-    if (!this.clinic) return;
+    if (!this.clinic || this.clinic.locations.length === 0) return;
 
-    const fullAddress = `${this.clinic.street}, ${this.clinic.city}, ${this.clinic.state}, ${this.clinic.postalcode}`;
+    const location = this.clinic.locations[0];
+
+    const fullAddress = `${location.street}, ${location.city}, ${location.state}, ${location.postalCode}`;
 
     try {
       const { lat, lng } = await this.geocodeAddress(fullAddress);
@@ -85,16 +87,16 @@ export class ClinicDetailsComponent implements OnInit, AfterViewInit {
       this.markers.clearLayers();
 
       L.marker(clinicLatLng).addTo(this.map).bindPopup(`
-          <strong>${this.clinic.name}</strong><br>
+          <strong>${this.clinic.organizationName}</strong><br>
           ${fullAddress}<br>
-          Type: ${this.clinic.appointmentType || 'N/A'}<br>
-          Language: ${this.clinic.languageRequirements || 'N/A'}
+          Type: ${this.clinic.clinicTypes || 'N/A'}<br>
+          Language: ${this.clinic.serviceLanguages || 'N/A'}
         `);
 
       const circle = L.circle(clinicLatLng, { radius: 5000 }).addTo(this.map);
     } catch (error) {
       console.error(
-        `Error geocoding clinic address for "${this.clinic?.name}":`,
+        `Error geocoding clinic address for "${this.clinic?.organizationName}":`,
         error
       );
     }

@@ -104,7 +104,7 @@
     }
   }
 
-  button {
+  .filters-button {
     background-color: #80CBD8;
     color: #2B2B2B;
     padding: 12px 20px;
@@ -120,6 +120,22 @@
       color: #FFFFFF;
     }
   }
+
+  .reset-button {
+    margin-left: 63%;
+    padding: 11px 10px;
+    background-color: #ffffff;
+    color: #2B2B2B;
+    border: 1px solid #0097B2;
+    border-radius: 16px;
+    cursor: pointer;
+
+    &:hover {
+      background-color: #AADCE5;
+      color: #2B2B2B;
+    }
+  } 
+
 }
 
 @media (max-width: 768px) {
