@@ -1,0 +1,74 @@
+.main-container {
+  display: flex;
+  flex-direction: row;
+  height: calc(100vh - 70px);
+  position: relative;
+  z-index: 1;
+
+  .filter-section {
+    transition: all 0.3s ease-in-out;
+    background-color: #ffffff;
+    overflow-y: auto;
+    padding: 20px;
+    box-shadow: 0px 0 6px rgba(0, 0, 0, 0.15);
+    scrollbar-color: #80cbd8 #f0f0f0;
+    scrollbar-width: thin;
+
+    &.open {
+      //flex: 2;
+      width: 22%;
+      display: block;
+    }
+
+    &.closed {
+      flex: 0;
+      display: none;
+    }
+  }
+
+  .clinic-section {
+    flex: 2;
+    overflow-y: auto;
+    padding: 20px;
+    background-color: #ffffff;
+    box-shadow: 0px 0 6px rgba(0, 0, 0, 0.15);
+    scrollbar-color: #80cbd8 #f0f0f0;
+    scrollbar-width: thin;
+  }
+
+  .map-section {
+    flex: 3;
+    height: 100%;
+    position: relative;
+    z-index: 1;
+  }
+}
+
+@media (max-width: 768px) {
+  .main-container {
+    flex-direction: column;
+
+    .filter-section,
+    .clinic-section,
+    .map-section {
+      flex: none;
+      width: 100%;
+      display: none;
+    }
+
+    .filter-section {
+      flex: none;
+      width: 100%;
+      display: none;
+
+      &.open {
+        display: block;
+      }
+    }
+
+    .map-section {
+      height: 300px;
+      width: 100%;
+    }
+  }
+}

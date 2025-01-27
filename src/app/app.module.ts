@@ -19,6 +19,10 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { ClinicDetailsComponent } from './components/clinic-details/clinic-details.component';
 import { HeaderComponent } from './components/header/header.component';
 import { TaxClinicsComponent } from './components/tax-clinics/tax-clinics.component';
+import { MyProfileComponent } from './components/my-profile/my-profile.component';
+import { UserManagementComponent } from './components/user-management/user-management.component';
+import { TaxClinicManagementComponent } from './components/tax-clinic-management/tax-clinic-management.component';
+import { DashboardMainComponent } from './components/dashboard-main/dashboard-main.component';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -37,7 +41,11 @@ export function HttpLoaderFactory(http: HttpClient) {
     DashboardComponent,
     ClinicDetailsComponent,
     HeaderComponent,
-    TaxClinicsComponent
+    TaxClinicsComponent,
+    MyProfileComponent,
+    UserManagementComponent,
+    TaxClinicManagementComponent,
+    DashboardMainComponent
   ],
   imports: [
     BrowserModule,

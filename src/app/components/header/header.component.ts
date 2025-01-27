@@ -50,7 +50,7 @@ export class HeaderComponent {
 
   navigateTo(route: string): void {
     this.menuOpen = false;
-    this.router.navigate([route]);
+    this.router.navigate(['/dashboard', route]);
   }
 
   logout(): void {

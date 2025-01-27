@@ -1,39 +1,7 @@
 <app-header
+  [selectedTab]="selectedTab"
   (tabChanged)="onTabChange($event)"
-  (languageChanged)="onLanguageChange($event)"
-  [selectedTab]="activeTab"
 ></app-header>
-
-<div *ngIf="activeTab === 'access-filter'" class="main-container">
-  <div
-    class="filter-section"
-    [class.open]="isSidebarOpen"
-    [class.closed]="!isSidebarOpen"
-  >
-    <app-filter
-      [language]="currentLanguage"
-      [isSidebarOpen]="isSidebarOpen"
-      (filterChange)="applyFilters($event)"
-      (toggleSidebarEvent)="onFilterSidebarToggle()"
-    ></app-filter>
-  </div>
-
-  <div class="clinic-section">
-    <app-clinic-list
-      [clinics]="filteredClinics"
-      [language]="currentLanguage"
-      [isSidebarOpen]="isSidebarOpen"
-      (toggleSidebarEvent)="onFilterSidebarToggle()"
-    ></app-clinic-list>
-  </div>
-
-  <div class="map-section">
-    <app-map [clinics]="filteredClinics" [selectedTab]="activeTab"></app-map>
-  </div>
+<div>
+  <router-outlet></router-outlet>
 </div>
-
-<app-tax-clinics
-  *ngIf="activeTab === 'tax-clinics'"
-  [clinics]="filteredClinics"
-  [language]="currentLanguage"
-></app-tax-clinics>
