@@ -50,6 +50,8 @@ export class HeaderComponent {
 
   navigateTo(route: string): void {
     this.menuOpen = false;
+    this.selectedTab = '';
+    this.tabChanged.emit('');
     this.router.navigate(['/dashboard', route]);
   }
 

@@ -18,7 +18,7 @@ body {
 
 .login-card {
   position: relative;
-  max-width: 400px;
+  max-width: 30%;
   width: 100%;
   padding: 3rem;
   background: #ffffff;
@@ -28,7 +28,7 @@ body {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: 88%;
+  height: 90%;
 }
 
 .language-toggle {
@@ -44,7 +44,8 @@ body {
   text-align: center;
 
   .logo {
-    max-width: 85%;
+    max-width: 45%;
+    margin:25px;
   }
 }
 

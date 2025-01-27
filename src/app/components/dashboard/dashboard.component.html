@@ -2,6 +2,11 @@
   [selectedTab]="selectedTab"
   (tabChanged)="onTabChange($event)"
 ></app-header>
-<div>
-  <router-outlet></router-outlet>
+
+<div *ngIf="selectedTab; else menuContent">
+  <app-dashboard-main></app-dashboard-main>
 </div>
+
+<ng-template #menuContent>
+  <router-outlet></router-outlet>
+</ng-template>
