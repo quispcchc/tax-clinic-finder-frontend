@@ -23,6 +23,7 @@ import { MyProfileComponent } from './components/my-profile/my-profile.component
 import { UserManagementComponent } from './components/user-management/user-management.component';
 import { TaxClinicManagementComponent } from './components/tax-clinic-management/tax-clinic-management.component';
 import { DashboardMainComponent } from './components/dashboard-main/dashboard-main.component';
+import { TaxClinicDetailsComponent } from './components/tax-clinic-details/tax-clinic-details.component';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -45,7 +46,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     MyProfileComponent,
     UserManagementComponent,
     TaxClinicManagementComponent,
-    DashboardMainComponent
+    DashboardMainComponent,
+    TaxClinicDetailsComponent
   ],
   imports: [
     BrowserModule,

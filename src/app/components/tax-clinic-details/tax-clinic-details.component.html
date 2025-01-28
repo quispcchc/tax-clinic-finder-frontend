@@ -7,18 +7,21 @@
           alt="Website"
           class="website-icon"
         />
-        <h3>Tax Clinics In This Axis</h3>
+        <h3>{{ "Tax Clinic Details" | translate }}</h3>
       </div>
       <button class="close-button" (click)="close()">X</button>
     </div>
-
     <div class="clinic-details-container">
       <div class="clinic-details">
         <label>{{ clinic?.organizationName }}</label>
         <dl>
-          <div class="clinic-info"  *ngFor="let location of clinic?.locations">
+          <div class="clinic-info" *ngFor="let location of clinic?.locations">
             <dt>{{ "Address" | translate }}:</dt>
-            <dd>{{ location?.street }}, {{ location?.city }}, {{ location?.state }}, {{ location?.postalCode }}</dd>
+            <dd>
+              {{ location?.street }}, {{ location?.city }},
+              {{ location?.state }},
+              {{ location?.postalCode }}
+            </dd>
           </div>
           <div class="clinic-info">
             <dt>{{ "Website" | translate }}:</dt>
@@ -175,7 +178,6 @@
           </div>
         </dl>
       </div>
-      <div class="clinic-map" id="clinic-map"></div>
     </div>
   </div>
 </div>

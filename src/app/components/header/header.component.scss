@@ -5,7 +5,6 @@
   padding: 10px 20px;
   background-color: #ffffff;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15), 0 2px 4px rgba(0, 0, 0, 0.1); 
-  //position: sticky;
   top: 0;
   z-index: 10;
 
@@ -29,12 +28,16 @@
       border: none;
       padding: 10px 20px;
       font-size: 1rem;
+      font-weight: 500;
       cursor: pointer;
       color: black;
       transition: color 0.3s ease;
 
       &.active {
-        color: #55bacc;
+        color: #006577;
+        font-weight: 600;
+        border-bottom: 1px solid #006577;
+        border-radius: 15px;
       }
 
       &:hover {

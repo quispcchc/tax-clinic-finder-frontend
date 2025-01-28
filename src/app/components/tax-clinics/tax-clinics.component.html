@@ -1,13 +1,26 @@
 <div class="tax-clinics">
   <div class="clinic-list">
+    <div class="search-bar">
+      <input
+        type="text"
+        [(ngModel)]="searchTerm"
+        (input)="filterClinics()"
+        placeholder="{{ 'Search Tax Clinic Directory' | translate }}"
+        class="search-input"
+      />
+    </div>
     <h2 class="directory-header">{{ "Tax Clinics Directory" | translate }}</h2>
 
-    <div *ngFor="let clinic of clinics" class="clinic-card">
+    <div
+      *ngFor="let clinic of filteredClinics"
+      class="clinic-card"
+      (click)="openModal(clinic)"
+    >
       <h4>{{ clinic.organizationName }}</h4>
       <div *ngFor="let location of clinic.locations">
         <p>
-          {{ "Address" | translate }}: {{ location.street }}, {{ location.city }},
-          {{ location.state }}, {{ location.postalCode }}
+          {{ "Address" | translate }}: {{ location.street }},
+          {{ location.city }}, {{ location.state }}, {{ location.postalCode }}
         </p>
       </div>
       <p>
@@ -23,4 +36,9 @@
       </p>
     </div>
   </div>
+  <app-tax-clinic-details
+    *ngIf="showModal"
+    [clinic]="selectedClinic"
+    (closeModal)="closeModal()"
+  ></app-tax-clinic-details>
 </div>

@@ -10,6 +10,7 @@ export interface Clinic {
   visibleOnNceo: string;
   alternateContactName?: string;
   alternateContactEmail?: string;
+  alternateContactTitle?: string;
   alternateContactPhone?: string;
   publicInfo: string;
   clinicTypes: string;
@@ -24,7 +25,7 @@ export interface Clinic {
   taxYearsPrepared: string;
   residencyTaxYear: string;
   servePeople: string;
-  specialServices?: string;
+  eligibilityCriteriaWebpage?: string;
   bookingProcess: string;
   bookingDaysHours: string;
   bookingContactPhone?: string;
