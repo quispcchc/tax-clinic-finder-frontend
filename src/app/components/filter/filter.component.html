@@ -1,18 +1,23 @@
 <div class="filter" [class.open]="isSidebarOpen">
-  <button class="reset-button" (click)="resetFilters()">{{ "Reset Filters" | translate }}</button>
+  <button class="reset-button" (click)="resetFilters()">
+    {{ "Reset Filters" | translate }}
+  </button>
   <div class="header">
-    <img 
-      class="hamburger-img" 
-      (click)="closeFilterSidebar()" 
-      src="assets/images/filter-hamberger.svg" 
-      alt="Toggle Sidebar" />
+    <img
+      class="hamburger-img"
+      (click)="closeFilterSidebar()"
+      src="assets/images/filter-hamberger.svg"
+      alt="Toggle Sidebar"
+    />
     <h3>{{ "Find your Tax Clinic" | translate }}</h3>
   </div>
   <form (ngSubmit)="applyFilters()">
     <div class="form-group">
       <div class="form-group-label">
         <label>{{ "Appointment Type" | translate }}</label>
-        <small class="subtitle">{{ "Do you have appointments available?" | translate }}</small>
+        <small class="subtitle">{{
+          "Do you have appointments available?" | translate
+        }}</small>
       </div>
       <div class="radio-group">
         <label>
@@ -44,99 +49,267 @@
         </label>
       </div>
     </div>
-
+    <div class="form-group">
+      <div class="form-group-label">
+        <label>{{ "Service Delivery Modes" | translate }}</label>
+        <small class="subtitle">{{
+          "Do you offer services in the following modes?" | translate
+        }}</small>
+      </div>
+      <div class="checkbox-group">
+        <label>
+          <input
+            type="checkbox"
+            name="inPerson"
+            [(ngModel)]="filters.serviceDeliveryModes.inPerson"
+          />
+          {{ "In-person" | translate }}
+        </label>
+        <label>
+          <input
+            type="checkbox"
+            name="virtual"
+            [(ngModel)]="filters.serviceDeliveryModes.virtual"
+          />
+          {{ "Virtual" | translate }}
+        </label>
+        <label>
+          <input
+            type="checkbox"
+            name="byAppointment"
+            [(ngModel)]="filters.serviceDeliveryModes.byAppointment"
+          />
+          {{ "By appointment" | translate }}
+        </label>
+        <label>
+          <input
+            type="checkbox"
+            name="walkIn"
+            [(ngModel)]="filters.serviceDeliveryModes.walkIn"
+          />
+          {{ "Walk-in" | translate }}
+        </label>
+        <label>
+          <input
+            type="checkbox"
+            name="dropOff"
+            [(ngModel)]="filters.serviceDeliveryModes.dropOff"
+          />
+          {{ "Drop-off" | translate }}
+        </label>
+      </div>
+    </div>
     <div class="form-group">
       <div class="form-group-label">
         <label>{{ "Supported Tax Years" | translate }}</label>
-        <small class="subtitle">{{ "Which tax years’ income tax returns do you file?" | translate }}</small>
+        <small class="subtitle">{{
+          "Which tax years’ income tax returns do you file?" | translate
+        }}</small>
       </div>
       <div class="checkbox-group">
         <label>
           <input
             type="checkbox"
-            name="lastYear"
-            [(ngModel)]="filters.supportedTaxYears!.lastYear"
+            name="currentYear"
+            [(ngModel)]="filters.supportedTaxYears!.currentYear"
           />
-          {{ "Last year only" | translate }}
+          {{ "Only current year" | translate }}
         </label>
         <label>
           <input
             type="checkbox"
-            name="lastTwoYears"
-            [(ngModel)]="filters.supportedTaxYears!.lastTwoYears"
+            name="currentLastYears"
+            [(ngModel)]="filters.supportedTaxYears!.currentLastYears"
           />
-          {{ "The last two years" | translate }}
+          {{ "Current and last year" | translate }}
         </label>
         <label>
           <input
             type="checkbox"
-            name="lastThreeYears"
-            [(ngModel)]="filters.supportedTaxYears!.lastThreeYears"
+            name="multipleYears"
+            [(ngModel)]="filters.supportedTaxYears!.multipleYears"
           />
-          {{ "The last three years" | translate }}
-        </label>
-        <label>
-          <input
-            type="checkbox"
-            name="all"
-            [(ngModel)]="filters.supportedTaxYears!.all"
-          />
-          {{ "All" | translate }}
+          {{ "Multiple years" | translate }}
         </label>
       </div>
-    </div>  
+    </div>
     <div class="form-group">
       <div class="form-group-label">
         <label>{{ "Province of Residence" | translate }}</label>
-        <small class="subtitle">{{ "What province of residence on December 31 of tax year do you accept?" | translate }}</small>
+        <small class="subtitle">{{
+          "What province of residence on December 31 of tax year do you accept?"
+            | translate
+        }}</small>
       </div>
       <div class="checkbox-group">
         <label>
           <input
             type="checkbox"
-            name="AB"
-            [(ngModel)]="filters.provinces['AB']"
+            name="Ontario"
+            [(ngModel)]="filters.provinces['Ontario']"
           />
-          AB
+          Ontario
         </label>
         <label>
           <input
             type="checkbox"
-            name="BC"
-            [(ngModel)]="filters.provinces['BC']"
+            name="Quebec"
+            [(ngModel)]="filters.provinces['Quebec']"
           />
-          BC
+          Quebec
         </label>
         <label>
           <input
             type="checkbox"
-            name="MB"
-            [(ngModel)]="filters.provinces['MB']"
+            name="Other"
+            [(ngModel)]="filters.provinces['Other']"
           />
-          MB
+          Other than Ontario and Quebec
+        </label>
+      </div>
+    </div>
+    <div class="form-group">
+      <div class="form-group-label">
+        <label>{{ "Language Options" | translate }}</label>
+        <small class="subtitle">{{
+          "Are you offering services in the following languages?" | translate
+        }}</small>
+      </div>
+      <div class="checkbox-group">
+        <label>
+          <input
+            type="checkbox"
+            name="french"
+            [(ngModel)]="filters.languageOptions.french"
+          />
+          {{ "French" | translate }}
         </label>
         <label>
           <input
             type="checkbox"
-            name="NB"
-            [(ngModel)]="filters.provinces['NB']"
+            name="english"
+            [(ngModel)]="filters.languageOptions.english"
           />
-          NB
+          {{ "English" | translate }}
         </label>
         <label>
           <input
             type="checkbox"
-            name="ON"
-            [(ngModel)]="filters.provinces['ON']"
+            name="arabic"
+            [(ngModel)]="filters.languageOptions.arabic"
           />
-          ON
+          {{ "Arabic" | translate }}
+        </label>
+        <label>
+          <input
+            type="checkbox"
+            name="other"
+            [(ngModel)]="filters.languageOptions.other"
+          />
+          {{ "Other" | translate }}
+        </label>
+      </div>
+      <div *ngIf="filters.languageOptions.other">
+        <input
+          class="input-filter"
+          type="text"
+          id="otherLanguage"
+          [(ngModel)]="filters.languageOptions.otherLanguage"
+          name="otherLanguage"
+          placeholder="{{ 'Enter language' | translate }}"
+        />
+      </div>
+    </div>
+    <div class="form-group">
+      <div class="form-group-label">
+        <label>{{ "Client Categories" | translate }}</label>
+        <small class="subtitle">{{
+          "Are you accepting the following client types?" | translate
+        }}</small>
+      </div>
+      <div class="checkbox-group">
+        <label>
+          <input
+            type="checkbox"
+            name="newcomers"
+            [(ngModel)]="filters.clientCategories.newcomers"
+          />
+          {{ "Newcomers" | translate }}
+        </label>
+        <label>
+          <input
+            type="checkbox"
+            name="seniors"
+            [(ngModel)]="filters.clientCategories.seniors"
+          />
+          {{ "Seniors" | translate }}
+        </label>
+        <label>
+          <input
+            type="checkbox"
+            name="students"
+            [(ngModel)]="filters.clientCategories.students"
+          />
+          {{ "Students" | translate }}
+        </label>
+        <label>
+          <input
+            type="checkbox"
+            name="indigenousClients"
+            [(ngModel)]="filters.clientCategories.indigenousClients"
+          />
+          {{ "Indigenous clients" | translate }}
+        </label>
+        <label>
+          <input
+            type="checkbox"
+            name="disabilities"
+            [(ngModel)]="filters.clientCategories.disabilities"
+          />
+          {{ "Persons with disabilities" | translate }}
+        </label>
+      </div>
+    </div>
+    <div class="form-group">
+      <div class="form-group-label">
+        <label>{{ "Access Documents" | translate }}</label>
+        <small class="subtitle">{{
+          "Do you help client access their documents?" | translate
+        }}</small>
+      </div>
+      <div class="checkbox-group">
+        <label>
+          <input
+            type="checkbox"
+            name="allDocuments"
+            [(ngModel)]="filters.accessDocuments.allDocuments"
+          />
+          {{ "Yes for CRA documents with Autofill/repid" | translate }}
+        </label>
+        <label>
+          <input
+            type="checkbox"
+            name="someDocuments"
+            [(ngModel)]="filters.accessDocuments.someDocuments"
+          />
+          {{ "Yes with help from staff or volunteer for some documentation" | translate }}
+        </label>
+        <label>
+          <input
+            type="checkbox"
+            name="noDocuments"
+            [(ngModel)]="filters.accessDocuments.noDocuments"
+          />
+          {{ "No client must have all their documents ready" | translate }}
         </label>
       </div>
     </div>
     <div class="form-group">
       <div class="form-group-label">
         <label>{{ "Special Tax Return Cases" | translate }}</label>
-        <small class="subtitle">{{ "Do you file tax returns for the following cases?" | translate }}</small>
+        <small class="subtitle">{{
+          "Do you file tax returns for the following cases?" | translate
+        }}</small>
       </div>
       <div class="checkbox-group">
         <label>
@@ -175,168 +348,44 @@
     </div>
     <div class="form-group">
       <div class="form-group-label">
-        <label>{{ "Income Level Restrictions" | translate }}</label>
-        <small class="subtitle">{{ "Do you have income level restrictions?" | translate }}</small>
-      </div>
-      <div class="radio-group">
-        <label>
-          <input
-            type="radio"
-            name="incomeLevelRestriction"
-            value="yes"
-            [(ngModel)]="filters.incomeLevelRestrictions.hasRestriction"
-            [checked]="filters.incomeLevelRestrictions.hasRestriction === true"
-          />
-          {{ "Yes" | translate }}
-        </label>
-        <label>
-          <input
-            type="radio"
-            name="incomeLevelRestriction"
-            value="no"
-            [(ngModel)]="filters.incomeLevelRestrictions.hasRestriction"
-            [checked]="filters.incomeLevelRestrictions.hasRestriction === false"
-          />
-          {{ "No" | translate }}
-        </label>
-      </div>
-      <div *ngIf="filters.incomeLevelRestrictions.hasRestriction">
-        <label for="incomeLevel">{{ "Specify Income Level" | translate }}</label>
-        <input
-          type="text"
-          id="incomeLevel"
-          [(ngModel)]="filters.incomeLevelRestrictions.incomeLevel"
-          name="incomeLevel"
-          placeholder="{{ 'Enter income level' | translate }}"
-        />
-      </div>
-    </div>
-    <div class="form-group">
-      <div class="form-group-label">
-        <label>{{ "Language Options" | translate }}</label>
-        <small class="subtitle">{{ "Are you offering services in the following languages?" | translate }}</small>
+        <label>{{ "Appointment Booking" | translate }}</label>
+        <small class="subtitle">{{
+          "How do you book appointments?" | translate
+        }}</small>
       </div>
       <div class="checkbox-group">
         <label>
           <input
             type="checkbox"
-            name="french"
-            [(ngModel)]="filters.languageOptions.french"
+            name="onlineAppointment"
+            [(ngModel)]="filters.appointmentBooking.onlineAppointment"
           />
-          {{ "French" | translate }}
+          {{ "Online appointment" | translate }}
         </label>
         <label>
           <input
             type="checkbox"
-            name="english"
-            [(ngModel)]="filters.languageOptions.english"
+            name="phone"
+            [(ngModel)]="filters.appointmentBooking.phone"
           />
-          {{ "English" | translate }}
+          {{ "By phone" | translate }}
         </label>
-        <label>
-          <input
-            type="checkbox"
-            name="arabic"
-            [(ngModel)]="filters.languageOptions.arabic"
-          />
-          {{ "Arabic" | translate }}
-        </label>
-        <label>
-          <input
-            type="checkbox"
-            name="other"
-            [(ngModel)]="filters.languageOptions.other"
-          />
-          {{ "Other" | translate }}
-        </label>
-      </div>
-      <div *ngIf="filters.languageOptions.other">
-        <label for="otherLanguage">{{ "Specify Language" | translate }}</label>
-        <input
-          type="text"
-          id="otherLanguage"
-          [(ngModel)]="filters.languageOptions.otherLanguage"
-          name="otherLanguage"
-          placeholder="{{ 'Enter language' | translate }}"
-        />
-      </div>
-    </div>
-    <div class="form-group">
-      <div class="form-group-label">
-        <label>{{ "Service Delivery Modes" | translate }}</label>
-        <small class="subtitle">{{ "Do you offer services in the following modes?" | translate }}</small>
-      </div>
-      <div class="checkbox-group">
         <label>
           <input
             type="checkbox"
             name="inPerson"
-            [(ngModel)]="filters.serviceDeliveryModes.inPerson"
+            [(ngModel)]="filters.appointmentBooking.inPerson"
           />
-          {{ "In-person" | translate }}
-        </label>
-        <label>
-          <input
-            type="checkbox"
-            name="virtual"
-            [(ngModel)]="filters.serviceDeliveryModes.virtual"
-          />
-          {{ "Virtual" | translate }}
-        </label>
-        <label>
-          <input
-            type="checkbox"
-            name="byAppointment"
-            [(ngModel)]="filters.serviceDeliveryModes.byAppointment"
-          />
-          {{ "By appointment" | translate }}
-        </label>
-        <label>
-          <input
-            type="checkbox"
-            name="walkIn"
-            [(ngModel)]="filters.serviceDeliveryModes.walkIn"
-          />
-          {{ "Walk-in" | translate }}
-        </label>
-      </div>
-    </div>
-    <div class="form-group">
-      <div class="form-group-label">
-        <label>{{ "Client Categories" | translate }}</label>
-        <small class="subtitle">{{ "Are you accepting the following client types?" | translate }}</small>
-      </div>
-      <div class="checkbox-group">
-        <label>
-          <input
-            type="checkbox"
-            name="newcomers"
-            [(ngModel)]="filters.clientCategories.newcomers"
-          />
-          {{ "Newcomers" | translate }}
-        </label>
-        <label>
-          <input
-            type="checkbox"
-            name="students"
-            [(ngModel)]="filters.clientCategories.students"
-          />
-          {{ "Students" | translate }}
-        </label>
-        <label>
-          <input
-            type="checkbox"
-            name="indigenousClients"
-            [(ngModel)]="filters.clientCategories.indigenousClients"
-          />
-          {{ "Indigenous clients" | translate }}
+          {{ "In person" | translate }}
         </label>
       </div>
     </div>
     <div class="form-group">
       <div class="form-group-label">
         <label>{{ "Catchment Area" | translate }}</label>
-        <small class="subtitle">{{ "Do you have a defined catchment area?" | translate }}</small>
+        <small class="subtitle">{{
+          "Do you have a defined catchment area?" | translate
+        }}</small>
       </div>
       <div class="radio-group">
         <label>
@@ -373,40 +422,10 @@
     </div>
     <div class="form-group">
       <div class="form-group-label">
-        <label>{{ "Appointment Booking" | translate }}</label>
-        <small class="subtitle">{{ "How do you book appointments?" | translate }}</small>
-      </div>
-      <div class="checkbox-group">
-        <label>
-          <input
-            type="checkbox"
-            name="onlineAppointment"
-            [(ngModel)]="filters.appointmentBooking.onlineAppointment"
-          />
-          {{ "Online appointment" | translate }}
-        </label>
-        <label>
-          <input
-            type="checkbox"
-            name="call"
-            [(ngModel)]="filters.appointmentBooking.call"
-          />
-          {{ "Call" | translate }}
-        </label>
-        <label>
-          <input
-            type="checkbox"
-            name="inPerson"
-            [(ngModel)]="filters.appointmentBooking.inPerson"
-          />
-          {{ "In-person" | translate }}
-        </label>
-      </div>
-    </div>
-    <div class="form-group">
-      <div class="form-group-label">
         <label>{{ "Service Days" | translate }}</label>
-        <small class="subtitle">{{ "When do you see clients?" | translate }}</small>
+        <small class="subtitle">{{
+          "When do you see clients?" | translate
+        }}</small>
       </div>
       <div class="checkbox-group">
         <label>
@@ -430,7 +449,9 @@
     <div class="form-group">
       <div class="form-group-label">
         <label>{{ "Service Hours" | translate }}</label>
-        <small class="subtitle">{{ "What times do you see clients?" | translate }}</small>
+        <small class="subtitle">{{
+          "What times do you see clients?" | translate
+        }}</small>
       </div>
       <div class="checkbox-group">
         <label>
@@ -451,6 +472,8 @@
         </label>
       </div>
     </div>
-    <button type="submit" class="filters-button">{{ "Apply Filters" | translate }}</button>
+    <button type="submit" class="filters-button">
+      {{ "Apply Filters" | translate }}
+    </button>
   </form>
 </div>

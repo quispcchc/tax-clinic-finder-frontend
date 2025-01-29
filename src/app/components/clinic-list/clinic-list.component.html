@@ -32,6 +32,9 @@
       </a>
     </p>
   </div>
+  <div *ngIf="clinics.length == 0" class="clinic-not-found">
+    <h3>{{ "No Tax Clinic Found" | translate }}</h3>
+  </div>
 </div>
 
 <app-clinic-details

@@ -15,10 +15,9 @@ export class FilterComponent {
   filters: {
     appointmentType?: string;
     supportedTaxYears: {
-      lastYear?: boolean;
-      lastTwoYears?: boolean;
-      lastThreeYears?: boolean;
-      all?: boolean;
+      currentYear?: boolean;
+      currentLastYears?: boolean;
+      multipleYears?: boolean;
     };
     provinces: { [key: string]: boolean };
     specialTaxCases: {
@@ -26,10 +25,6 @@ export class FilterComponent {
       deceased?: boolean;
       bankruptcy?: boolean;
       imprisoned?: boolean;
-    };
-    incomeLevelRestrictions: {
-      hasRestriction?: boolean;
-      incomeLevel?: string;
     };
     languageOptions: {
       french?: boolean;
@@ -43,11 +38,19 @@ export class FilterComponent {
       virtual?: boolean;
       byAppointment?: boolean;
       walkIn?: boolean;
+      dropOff?: boolean;
     };
     clientCategories: {
       newcomers?: boolean;
       students?: boolean;
       indigenousClients?: boolean;
+      seniors?: boolean;
+      disabilities?: boolean;
+    };
+    accessDocuments: {
+      allDocuments?: boolean;
+      someDocuments?: boolean;
+      noDocuments?: boolean;
     };
     catchmentArea: {
       hasCatchmentArea?: boolean;
@@ -55,7 +58,7 @@ export class FilterComponent {
     };
     appointmentBooking: {
       onlineAppointment?: boolean;
-      call?: boolean;
+      phone?: boolean;
       inPerson?: boolean;
     };
     serviceDays: {
@@ -69,27 +72,20 @@ export class FilterComponent {
   } = {
     appointmentType: '',
     supportedTaxYears: {
-      lastYear: false,
-      lastTwoYears: false,
-      lastThreeYears: false,
-      all: false,
+      currentYear: false,
+      currentLastYears: false,
+      multipleYears: false,
     },
     provinces: {
-      AB: false,
-      BC: false,
-      MB: false,
-      NB: false,
-      ON: false
+      Ontario: false,
+      Quebec: false,
+      Other: false
     },
     specialTaxCases: {
       selfEmployed: false,
       deceased: false,
       bankruptcy: false,
       imprisoned: false,
-    },
-    incomeLevelRestrictions: {
-      hasRestriction: false,
-      incomeLevel: '',
     },
     languageOptions: {
       french: false,
@@ -103,11 +99,19 @@ export class FilterComponent {
       virtual: false,
       byAppointment: false,
       walkIn: false,
+      dropOff: false,
     },
     clientCategories: {
       newcomers: false,
       students: false,
       indigenousClients: false,
+      seniors: false,
+      disabilities: false,
+    },
+    accessDocuments: {
+      allDocuments: false,
+      someDocuments: false,
+      noDocuments: false,
     },
     catchmentArea: {
       hasCatchmentArea: false,
@@ -115,7 +119,7 @@ export class FilterComponent {
     },
     appointmentBooking: {
       onlineAppointment: false,
-      call: false,
+      phone: false,
       inPerson: false,
     },
     serviceDays: {
@@ -138,27 +142,20 @@ export class FilterComponent {
     this.filters = {
       appointmentType: '',
       supportedTaxYears: {
-        lastYear: false,
-        lastTwoYears: false,
-        lastThreeYears: false,
-        all: false,
+        currentYear: false,
+        currentLastYears: false,
+        multipleYears: false,
       },
       provinces: {
-        AB: false,
-        BC: false,
-        MB: false,
-        NB: false,
-        ON: false,
+        Ontario: false,
+        Quebec: false,
+        Other: false
       },
       specialTaxCases: {
         selfEmployed: false,
         deceased: false,
         bankruptcy: false,
         imprisoned: false,
-      },
-      incomeLevelRestrictions: {
-        hasRestriction: false,
-        incomeLevel: '',
       },
       languageOptions: {
         french: false,
@@ -172,11 +169,19 @@ export class FilterComponent {
         virtual: false,
         byAppointment: false,
         walkIn: false,
+        dropOff: false,
       },
       clientCategories: {
         newcomers: false,
         students: false,
         indigenousClients: false,
+        seniors: false,
+        disabilities: false,
+      },
+      accessDocuments: {
+        allDocuments: false,
+        someDocuments: false,
+        noDocuments: false,
       },
       catchmentArea: {
         hasCatchmentArea: false,
@@ -184,7 +189,7 @@ export class FilterComponent {
       },
       appointmentBooking: {
         onlineAppointment: false,
-        call: false,
+        phone: false,
         inPerson: false,
       },
       serviceDays: {
