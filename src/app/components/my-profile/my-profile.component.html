@@ -1,1 +1,28 @@
-<p>my-profile works!</p>
+<div class="my-profile-container">
+  <div class="my-profile-card">
+    <h2 class="profile-heading">My Profile</h2>
+    <div class="profile-picture">
+      <img src="/assets/images/user-icon.svg" alt="Profile Picture" />
+    </div>
+    <div class="profile-info">
+      <dl>
+        <div class="profile-details">
+          <dt>{{ "Name" | translate }}:</dt>
+          <dd>{{ userProfile.userName }}</dd>
+        </div>
+        <div class="profile-details">
+          <dt>{{ "Email" | translate }}:</dt>
+          <dd>{{ userProfile.userEmail }}</dd>
+        </div>
+        <div class="profile-details">
+          <dt>{{ "Role" | translate }}:</dt>
+          <dd>{{ userProfile.userRole }}</dd>
+        </div>
+      </dl>
+    </div>
+    <div class="profile-actions">
+      <button class="btn edit-btn">Edit Profile</button>
+      <button class="btn settings-btn">Settings</button>
+    </div>
+  </div>
+</div>

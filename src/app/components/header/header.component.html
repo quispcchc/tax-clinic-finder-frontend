@@ -32,8 +32,8 @@
     <img src="assets/images/user-icon.svg" alt="User" class="user-icon" />
     <div class="menu-dropdown" *ngIf="menuOpen">
       <button (click)="navigateTo('my-profile')">{{"My Profile" | translate}}</button>
-      <button (click)="navigateTo('user-management')">{{"User Management" | translate}}</button>
-      <button (click)="navigateTo('tax-clinic-management')">
+      <button *ngIf="isAdmin" (click)="navigateTo('user-management')">{{"User Management" | translate}}</button>
+      <button *ngIf="isAdmin" (click)="navigateTo('tax-clinic-management')">
         {{"Tax Clinic Management" | translate}}
       </button>
       <button (click)="logout()">{{"Logout" | translate}}</button>

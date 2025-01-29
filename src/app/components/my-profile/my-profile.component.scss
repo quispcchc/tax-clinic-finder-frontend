@@ -1,0 +1,134 @@
+.my-profile-container {
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  height: 88vh;
+  background: #f5f5f5;
+  background: url("/assets/images/taxinics-bg.svg") no-repeat center center;
+  background-size: cover;
+
+  .my-profile-card {
+    flex: 0 0 31%;
+    padding: 25px;
+    overflow-y: auto;
+    background-color: rgba(255, 255, 255, 0.9);
+    box-shadow: 4px 0 6px rgba(0, 0, 0, 0.15);
+    height: 93%;
+    top: 60px;
+    left: 0;
+    z-index: 1;
+
+    .profile-heading {
+      font-size: 1.5rem;
+      font-weight: 600;
+      margin-bottom: 20px;
+      color: #000000;
+    }
+
+    .profile-picture {
+      text-align: center;
+      margin-bottom: 20px;
+
+      img {
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 2px solid #ccc;
+      }
+    }
+
+    .profile-info {
+      justify-content: space-between;
+      gap: 20px;
+      width: 100%;
+      margin: 5px;
+
+      p {
+        font-size: 1rem;
+        margin: 5px 0;
+        color: #333;
+
+        strong {
+          color: #000000;
+        }
+      }
+    }
+
+    dt {
+      font-weight: 500;
+      margin-top: 15px;
+      color: #2b2b2b;
+      flex: 0 0 35%;
+    }
+
+    dd {
+      margin: 10px 0 10px 0;
+      color: #555;
+      flex: 1;
+    }
+
+    .profile-details {
+      display: flex;
+      flex-wrap: wrap;
+    }
+
+    .profile-actions {
+        margin-top: 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+      
+        .btn {
+          padding: 10px 15px;
+          border: none;
+          border-radius: 5px;
+          cursor: pointer;
+          font-size: 0.9rem;
+          width: 100%;
+      
+          &.edit-btn {
+            background-color: #80cbd8;
+            color: #2b2b2b;
+            border-radius: 16px;
+            width: 65%;
+            margin-right: 150px;
+      
+            &:hover {
+              background-color: #007e94;
+              color: #ffffff;
+            }
+          }
+      
+          &.settings-btn {
+            background-color: #ffffff;
+            color: #2b2b2b;
+            border: 1px solid #0097B2;
+            border-radius: 16px;
+            width: 65%;
+            margin-right: 150px;
+      
+            &:hover {
+              background-color: #AADCE5;
+              border: 1px solid #0097B2;
+            }
+          }
+        }
+      }  
+  }
+}
+
+@media (max-width: 768px) {
+  .my-profile-container {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .my-profile-card {
+    flex: 1 1 100%;
+    position: relative;
+    height: auto;
+    top: 0;
+  }
+}

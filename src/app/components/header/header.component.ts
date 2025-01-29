@@ -1,4 +1,4 @@
-import { Component, EventEmitter, HostListener, Input, Output } from '@angular/core';
+import { Component, EventEmitter, HostListener, Input, OnInit, Output } from '@angular/core';
 import { LanguageService } from '../../services/language.service';
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
@@ -9,15 +9,21 @@ import { AuthService } from '../../services/auth.service';
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss'
 })
-export class HeaderComponent {
+export class HeaderComponent implements OnInit {
   @Input() selectedTab: string = 'access-filter'; 
   @Output() languageChanged = new EventEmitter<string>();
   @Output() tabChanged = new EventEmitter<string>();
   currentLanguage: string;
   menuOpen: boolean = false;
+  isAdmin: boolean = false;
 
   constructor(private languageService: LanguageService,     private authService: AuthService, private router: Router) {
     this.currentLanguage = this.languageService.getLanguage();
+  }
+
+  ngOnInit(): void {
+    const userRole = localStorage.getItem('userRole');
+    this.isAdmin = userRole === 'Admin';
   }
 
   switchTab(tab: string) {

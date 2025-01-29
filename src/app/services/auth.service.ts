@@ -20,11 +20,18 @@ export class AuthService {
   constructor(private http: HttpClient, @Inject(PLATFORM_ID) private platformId: Object, private router: Router) { }
 
   login(email: string, password: string): Observable<boolean> {
-    return this.http.post<{ token: string, userName: string, userRole: string, userEmail: string }>(this.loginUrl, { email, password })
+    return this.http.post<{ token: string, id: string, userName: string, role: string, email: string }>(this.loginUrl, { email, password })
       .pipe(
         map(response => {
           if (isPlatformBrowser(this.platformId)) {
             localStorage.setItem('authToken', response.token);
+            localStorage.setItem('userProfile', JSON.stringify({
+              userName: response.userName,
+              userEmail: response.email,
+              userRole: response.role,
+              userId: response.id
+            }));
+            localStorage.setItem('userRole', response.role);
           }
           return true;
         }),
@@ -34,9 +41,7 @@ export class AuthService {
 
   logout(): void {
     if (isPlatformBrowser(this.platformId)) {
-      localStorage.removeItem('authToken');
-      localStorage.removeItem('email');
-      localStorage.removeItem('password');
+      localStorage.clear();
       this.router.navigate(['/login']); 
     }
   }

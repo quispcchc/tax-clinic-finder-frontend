@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-my-profile',
@@ -7,6 +7,14 @@ import { Component } from '@angular/core';
   templateUrl: './my-profile.component.html',
   styleUrl: './my-profile.component.scss'
 })
-export class MyProfileComponent {
+export class MyProfileComponent implements OnInit {
 
+  userProfile: any = {};
+
+  ngOnInit(): void {
+    const storedProfile = localStorage.getItem('userProfile');
+    if (storedProfile) {
+      this.userProfile = JSON.parse(storedProfile);
+    }
+  }
 }
