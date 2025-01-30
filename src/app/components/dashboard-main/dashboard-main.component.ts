@@ -114,7 +114,7 @@ export class DashboardMainComponent implements OnInit {
     this.filteredClinics = this.clinics.filter((clinic) => {
       const matchesServiceDelivery =
         (filters['serviceDeliveryModes']?.inPerson &&
-          clinic.clinicTypes?.includes('In person')) ||
+          clinic.clinicTypes?.includes('In Person')) ||
         (filters['serviceDeliveryModes']?.virtual &&
           clinic.clinicTypes?.includes('Virtual')) ||
         (filters['serviceDeliveryModes']?.byAppointment &&

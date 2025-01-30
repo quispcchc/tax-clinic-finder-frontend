@@ -18,8 +18,8 @@ export class TaxClinicsComponent {
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['clinics'] && changes['clinics'].currentValue) {
-      this.filteredClinics = [...this.clinics]; // Initialize the filtered list when clinics are updated
-      this.filterClinics(); // Apply filtering if searchTerm exists
+      this.filteredClinics = [...this.clinics];
+      this.filterClinics();
     }
   }
 

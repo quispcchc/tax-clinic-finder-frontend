@@ -27,7 +27,7 @@
 
   <div class="menu-icons">
     <button class="menu-button" (click)="toggleMenu()">
-      <img src="assets/images/menu-hamberger.svg" alt="Menu" />
+      <img src="assets/images/hamberger.svg" alt="Menu" [class.active]="menuOpen" />
     </button>
     <img src="assets/images/user-icon.svg" alt="User" class="user-icon" />
     <div class="menu-dropdown" *ngIf="menuOpen">

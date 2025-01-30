@@ -118,7 +118,16 @@
           </div>
           <div class="clinic-info">
             <dt>{{ "Webpage detailing the eligibility criteria" | translate }}:</dt>
-            <dd>{{ clinic?.eligibilityCriteriaWebpage }}</dd>
+            <dd>
+              <a
+                [href]="clinic?.eligibilityCriteriaWebpage"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="clinic-link"
+              >
+                {{ clinic?.eligibilityCriteriaWebpage }}
+              </a>
+            </dd>
           </div>
           <div class="clinic-info">
             <dt>{{ "Booking process for an appointment" | translate }}:</dt>
@@ -138,7 +147,16 @@
           </div>
           <div class="clinic-info">
             <dt>{{ "Appointment booking Link" | translate }}:</dt>
-            <dd>{{ clinic?.onlineBookingLink }}</dd>
+            <dd>
+              <a
+                [href]="clinic?.onlineBookingLink"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="clinic-link"
+              >
+                {{ clinic?.onlineBookingLink }}
+              </a>
+            </dd>
           </div>
           <div class="clinic-info">
             <dt>{{ "Would an online booking system be useful to clinic?" | translate }}:</dt>
