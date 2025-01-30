@@ -4,7 +4,7 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background: url('/assets/images/modal-gradient.svg') no-repeat center center;
+  background: url("/assets/images/modal-gradient.svg") no-repeat center center;
   background-size: cover;
   background-position: center;
   display: flex;
@@ -58,7 +58,6 @@ label {
   font-weight: 500;
   margin-top: 20px;
   margin-bottom: 20px;
-
 }
 
 .close-button {
@@ -79,7 +78,7 @@ label {
   gap: 20px;
   flex: 1;
   overflow-y: auto;
-  scrollbar-color: #80CBD8 #f0f0f0;
+  scrollbar-color: #80cbd8 #f0f0f0;
   scrollbar-width: thin;
 }
 
@@ -97,11 +96,7 @@ label {
 }
 
 strong {
-  color: #2B2B2B;
-}
-
-dl {
-  //margin: 0;
+  color: #2b2b2b;
 }
 
 .clinic-info {
@@ -121,6 +116,24 @@ dd {
   margin: 10px 0 10px 0;
   color: #555;
   flex: 1;
+}
+
+.save-button {
+  padding: 11px 10px;
+  background-color: #ffffff;
+  color: #2b2b2b;
+  border: 1px solid #0097b2;
+  border-radius: 16px;
+  cursor: pointer;
+
+  &:hover {
+    background-color: #aadce5;
+    color: #2b2b2b;
+  }
+}
+
+input[type="radio"] {
+  accent-color: #0097b2;
 }
 
 @media (max-width: 768px) {

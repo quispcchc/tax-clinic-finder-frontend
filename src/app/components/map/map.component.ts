@@ -1,4 +1,10 @@
-import { Component, Input, OnInit, OnChanges, SimpleChanges } from '@angular/core';
+import {
+  Component,
+  Input,
+  OnInit,
+  OnChanges,
+  SimpleChanges,
+} from '@angular/core';
 import { Clinic } from '../../models/clinic.model';
 import * as L from 'leaflet';
 import axios from 'axios';
@@ -7,7 +13,7 @@ import axios from 'axios';
   selector: 'app-map',
   standalone: false,
   templateUrl: './map.component.html',
-  styleUrls: ['./map.component.scss']
+  styleUrls: ['./map.component.scss'],
 })
 export class MapComponent implements OnInit, OnChanges {
   @Input() clinics: Clinic[] = [];
@@ -20,9 +26,7 @@ export class MapComponent implements OnInit, OnChanges {
   //private readonly GOOGLE_MAPS_API_KEY = 'AIzaSyBc3mEkYs8ZzYf5onUt4vi5jjsQ6cogV40';
   private readonly GOOGLE_MAPS_API_KEY = 'YOUR_API_KEY_HERE';
 
-  ngOnInit(): void {
-    // Any initialization logic that doesn't require the DOM to be fully loaded
-  }
+  ngOnInit(): void {}
 
   ngAfterViewInit(): void {
     setTimeout(() => {
@@ -45,7 +49,6 @@ export class MapComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-
     if (!this.isMapInitialized) return;
 
     if (changes['clinics']) {
@@ -59,7 +62,7 @@ export class MapComponent implements OnInit, OnChanges {
 
   private initializeMap(): void {
     const defaultLat = 45.424721;
-    const defaultLng = -75.695000;
+    const defaultLng = -75.695;
     const defaultZoom = 12;
 
     // Initialize the map
@@ -95,7 +98,6 @@ export class MapComponent implements OnInit, OnChanges {
 
     for (const clinic of this.clinics) {
       try {
-
         const location = clinic.locations[0];
         // Generate full address for geocoding
         const fullAddress = `${location.street}, ${location.city}, ${location.state}, ${location.postalCode}`;
@@ -119,7 +121,10 @@ export class MapComponent implements OnInit, OnChanges {
         // Extend map bounds to include this clinic
         bounds.extend(clinicLatLng);
       } catch (error) {
-        console.error(`Failed to geocode address for clinic "${clinic.organizationName}":`, error);
+        console.error(
+          `Failed to geocode address for clinic "${clinic.organizationName}":`,
+          error
+        );
       }
     }
 
@@ -127,13 +132,15 @@ export class MapComponent implements OnInit, OnChanges {
     if (bounds.isValid()) {
       this.map.fitBounds(bounds, { padding: [20, 20] });
     } else {
-      this.map.setView([45.424721, -75.695000], 12); // Default view if no valid clinics
+      this.map.setView([45.424721, -75.695], 12); // Default view if no valid clinics
     }
 
     this.isLoading = false;
   }
 
-  private async geocodeAddress(address: string): Promise<{ lat: number; lng: number }> {
+  private async geocodeAddress(
+    address: string
+  ): Promise<{ lat: number; lng: number }> {
     const encodedAddress = encodeURIComponent(address);
     const url = `https://maps.googleapis.com/maps/api/geocode/json?address=${encodedAddress}&key=${this.GOOGLE_MAPS_API_KEY}`;
 

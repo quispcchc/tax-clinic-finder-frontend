@@ -12,10 +12,10 @@
         class="logo"
       />
     </div>
-    <h2>{{'Login to your account' | translate}}</h2>
+    <h2>{{ "Login to your account" | translate }}</h2>
     <form class="login-form" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
       <div class="form-group">
-        <label for="email">{{'Email Address' | translate}}</label>
+        <label for="email">{{ "Email Address" | translate }}</label>
         <input
           id="email"
           formControlName="email"
@@ -44,7 +44,7 @@
         </div>
       </div>
       <div class="form-group">
-        <label for="password">{{'Password' | translate}}</label>
+        <label for="password">{{ "Password" | translate }}</label>
         <div class="password-input-container">
           <input
             id="password"
@@ -88,11 +88,15 @@
       <div class="form-actions">
         <label>
           <input type="checkbox" formControlName="rememberMe" />
-          {{'Remember me' | translate}}
+          {{ "Remember me" | translate }}
         </label>
-        <a (click)="resetPassword()" style="font-size: 0.875rem;">{{'Forgot Password?' | translate}}</a>
+        <a (click)="resetPassword()" style="font-size: 0.875rem">{{
+          "Forgot Password?" | translate
+        }}</a>
       </div>
-      <button type="submit" [disabled]="loginForm.invalid">{{'Log in'| translate}}</button>
+      <button type="submit" [disabled]="loginForm.invalid">
+        {{ "Log in" | translate }}
+      </button>
     </form>
   </div>
 </div>

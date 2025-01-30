@@ -8,29 +8,43 @@ import { environment } from '../../environments/environment.development';
 import { Router } from '@angular/router';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AuthService {
   private API_URL = environment.apiUrl;
 
-  private loginUrl = `${this.API_URL}/login`; 
+  private loginUrl = `${this.API_URL}/login`;
   private resetPasswordUrl = `${this.API_URL}/reset-password`;
   private resetPasswordWithTokenUrl = `${this.API_URL}/reset-password`;
 
-  constructor(private http: HttpClient, @Inject(PLATFORM_ID) private platformId: Object, private router: Router) { }
+  constructor(
+    private http: HttpClient,
+    @Inject(PLATFORM_ID) private platformId: Object,
+    private router: Router
+  ) {}
 
   login(email: string, password: string): Observable<boolean> {
-    return this.http.post<{ token: string, id: string, userName: string, role: string, email: string }>(this.loginUrl, { email, password })
+    return this.http
+      .post<{
+        token: string;
+        id: string;
+        userName: string;
+        role: string;
+        email: string;
+      }>(this.loginUrl, { email, password })
       .pipe(
-        map(response => {
+        map((response) => {
           if (isPlatformBrowser(this.platformId)) {
             localStorage.setItem('authToken', response.token);
-            localStorage.setItem('userProfile', JSON.stringify({
-              userName: response.userName,
-              userEmail: response.email,
-              userRole: response.role,
-              userId: response.id
-            }));
+            localStorage.setItem(
+              'userProfile',
+              JSON.stringify({
+                userName: response.userName,
+                userEmail: response.email,
+                userRole: response.role,
+                userId: response.id,
+              })
+            );
             localStorage.setItem('userRole', response.role);
           }
           return true;
@@ -42,7 +56,7 @@ export class AuthService {
   logout(): void {
     if (isPlatformBrowser(this.platformId)) {
       localStorage.clear();
-      this.router.navigate(['/login']); 
+      this.router.navigate(['/login']);
     }
   }
 
@@ -53,69 +67,66 @@ export class AuthService {
     return false;
   }
 
-  // Request password reset link
   requestPasswordReset(email: string): Observable<{ success: boolean }> {
-    return this.http.post<{ success: boolean }>(this.resetPasswordUrl, { email })
-      .pipe(
-        catchError(() => of({ success: false }))
-      );
+    return this.http
+      .post<{ success: boolean }>(this.resetPasswordUrl, { email })
+      .pipe(catchError(() => of({ success: false })));
   }
 
-  // Reset password with the provided token
-  resetPasswordWithToken(token: string, newPassword: string): Observable<{ message: string }> {
-    return this.http.post<{ message: string }>(`${this.resetPasswordWithTokenUrl}/${token}`, { password: newPassword })
-      .pipe(
-        catchError(() => of({ message: 'Failed to reset password' }))
-      );
+  resetPasswordWithToken(
+    token: string,
+    newPassword: string
+  ): Observable<{ message: string }> {
+    return this.http
+      .post<{ message: string }>(`${this.resetPasswordWithTokenUrl}/${token}`, {
+        password: newPassword,
+      })
+      .pipe(catchError(() => of({ message: 'Failed to reset password' })));
   }
 
-  // Validate password
   passwordValidator(control: FormControl) {
     const passwordInput = control?.value;
-    const errorObj = { 
-      pattern: { 
+    const errorObj = {
+      pattern: {
         invalid: false,
         special: false,
         uppercase: false,
         lowercase: false,
-        number: false 
-      }
+        number: false,
+      },
     };
 
     if (passwordInput?.length >= 6) {
-
       let pattern = /[$@$!%*#?&]/;
 
       if (!pattern.test(passwordInput)) {
         errorObj.pattern.invalid = true;
         errorObj.pattern.special = true;
-      };
+      }
 
       pattern = /[A-Z]/;
 
       if (!pattern.test(passwordInput)) {
         errorObj.pattern.invalid = true;
         errorObj.pattern.uppercase = true;
-      };
+      }
 
       pattern = /[a-z]/;
 
       if (!pattern.test(passwordInput)) {
         errorObj.pattern.invalid = true;
         errorObj.pattern.lowercase = true;
-      };
+      }
 
       pattern = /[0-9]/;
 
       if (!pattern.test(passwordInput)) {
         errorObj.pattern.invalid = true;
         errorObj.pattern.number = true;
-      };
-
+      }
     }
 
     if (errorObj.pattern.invalid === false) return null;
     return errorObj;
   }
-
 }

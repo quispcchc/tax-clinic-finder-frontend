@@ -25,9 +25,7 @@ export class ClinicDetailsComponent implements OnInit, AfterViewInit {
   //private readonly GOOGLE_MAPS_API_KEY = 'AIzaSyBc3mEkYs8ZzYf5onUt4vi5jjsQ6cogV40';
   private readonly GOOGLE_MAPS_API_KEY = 'YOUR_API_KEY_HERE';
 
-  ngOnInit(): void {
-    // Initialization logic if needed
-  }
+  ngOnInit(): void {}
 
   ngAfterViewInit(): void {
     setTimeout(() => {

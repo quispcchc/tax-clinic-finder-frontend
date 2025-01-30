@@ -22,7 +22,10 @@ const routes: Routes = [
       { path: '', component: DashboardMainComponent },
       { path: 'my-profile', component: MyProfileComponent },
       { path: 'user-management', component: UserManagementComponent },
-      { path: 'tax-clinic-management', component: TaxClinicManagementComponent },
+      {
+        path: 'tax-clinic-management',
+        component: TaxClinicManagementComponent,
+      },
     ],
   },
   { path: '', redirectTo: '/login', pathMatch: 'full' },

@@ -7,7 +7,7 @@ import { AuthService } from '../../services/auth.service';
   selector: 'app-reset-password',
   standalone: false,
   templateUrl: './reset-password.component.html',
-  styleUrls: ['./reset-password.component.scss']
+  styleUrls: ['./reset-password.component.scss'],
 })
 export class ResetPasswordComponent implements OnInit {
   resetPasswordForm!: FormGroup;
@@ -30,9 +30,9 @@ export class ResetPasswordComponent implements OnInit {
         [
           Validators.required,
           Validators.minLength(6),
-          this.authService.passwordValidator.bind(this)
-        ]
-      ]
+          this.authService.passwordValidator.bind(this),
+        ],
+      ],
     });
 
     this.route.paramMap.subscribe((params) => {
@@ -47,7 +47,10 @@ export class ResetPasswordComponent implements OnInit {
   onSubmit() {
     if (this.resetPasswordForm.valid && this.token) {
       this.authService
-        .resetPasswordWithToken(this.token, this.resetPasswordForm.value.password)
+        .resetPasswordWithToken(
+          this.token,
+          this.resetPasswordForm.value.password
+        )
         .subscribe(
           (response) => {
             this.message = response.message;
@@ -64,5 +67,5 @@ export class ResetPasswordComponent implements OnInit {
 
   returnToLogin = () => {
     this.router.navigateByUrl('/login');
-  }
+  };
 }

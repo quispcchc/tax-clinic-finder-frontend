@@ -1,5 +1,9 @@
 <div class="clinic-list">
-  <button *ngIf="!isSidebarOpen" class="find-clinic-btn" (click)="toggleFilterSidebar()">
+  <button
+    *ngIf="!isSidebarOpen"
+    class="find-clinic-btn"
+    (click)="toggleFilterSidebar()"
+  >
     <img
       src="assets/images/filter-hamberger.svg"
       alt="Find Clinic"
@@ -30,6 +34,10 @@
       >
         {{ clinic.organizationContact }}
       </a>
+    </p>
+    <p>
+      {{ "Appointment Availability" | translate }}:
+      {{ clinic.appointmentAvailability }}
     </p>
   </div>
   <div *ngIf="clinics.length == 0" class="clinic-not-found">

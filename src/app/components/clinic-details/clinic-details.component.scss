@@ -4,7 +4,7 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background: url('/assets/images/modal-gradient.svg') no-repeat center center;
+  background: url("/assets/images/modal-gradient.svg") no-repeat center center;
   background-size: cover;
   background-position: center;
   display: flex;
@@ -58,7 +58,6 @@ label {
   font-weight: 500;
   margin-top: 20px;
   margin-bottom: 20px;
-
 }
 
 .close-button {
@@ -102,7 +101,7 @@ label {
 }
 
 strong {
-  color: #2B2B2B;
+  color: #2b2b2b;
 }
 
 dl {

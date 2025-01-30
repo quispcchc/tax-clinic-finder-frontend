@@ -6,6 +6,7 @@ export interface Clinic {
   contactPersonName: string;
   contactPersonTitle: string;
   contactEmail: string;
+  appointmentAvailability: string;
   listedOnCra: string;
   visibleOnNceo: string;
   alternateContactName?: string;
@@ -44,4 +45,3 @@ export interface Clinic {
   updatedDate: string;
   locations: Location[];
 }
-

@@ -51,6 +51,7 @@ export class DashboardMainComponent implements OnInit {
           contactPersonName: clinic.contact_person_name,
           contactPersonTitle: clinic.contact_person_title,
           contactEmail: clinic.contact_email,
+          appointmentAvailability: clinic.appointment_available,
           listedOnCra: clinic.listed_on_cra,
           visibleOnNceo: clinic.visible_on_nceo,
           alternateContactName: clinic.alternate_contact_name,
@@ -183,11 +184,17 @@ export class DashboardMainComponent implements OnInit {
 
       const matchesAccessDocuments =
         (filters['accessDocuments']?.allDocuments &&
-          clinic.helpWithMissingDocs?.includes('Yes for CRA documents with Autofill/repid')) ||
+          clinic.helpWithMissingDocs?.includes(
+            'Yes for CRA documents with Autofill/repid'
+          )) ||
         (filters['accessDocuments']?.someDocuments &&
-          clinic.helpWithMissingDocs?.includes('Yes with help from staff or volunteer for some documentation')) ||
+          clinic.helpWithMissingDocs?.includes(
+            'Yes with help from staff or volunteer for some documentation'
+          )) ||
         (filters['accessDocuments']?.noDocuments &&
-          clinic.helpWithMissingDocs?.includes('No client must have all their documents ready')) ||
+          clinic.helpWithMissingDocs?.includes(
+            'No client must have all their documents ready'
+          )) ||
         (!filters['accessDocuments']?.allDocuments &&
           !filters['accessDocuments']?.someDocuments &&
           !filters['accessDocuments']?.noDocuments);
@@ -211,28 +218,6 @@ export class DashboardMainComponent implements OnInit {
         (!filters['appointmentBooking']?.onlineAppointment &&
           !filters['appointmentBooking']?.phone &&
           !filters['appointmentBooking']?.inPerson);
-
-      // const matchesCatchmentArea =
-      //   filters.catchmentArea?.hasCatchmentArea === false ||
-      //   (filters.catchmentArea?.hasCatchmentArea &&
-      //     clinic.catchmentArea
-      //       ?.toLowerCase()
-      //       .includes(filters.catchmentArea?.postalCode?.toLowerCase()));
-
-      // const matchesServiceDays =
-      //   (filters.serviceDays?.weekdays &&
-      //     clinic.hoursOfOperation?.includes('Weekdays')) ||
-      //   (filters.serviceDays?.weekends &&
-      //     clinic.hoursOfOperation?.includes('Weekends')) ||
-      //   (!filters.serviceDays?.weekdays && !filters.serviceDays?.weekends); // Include all if no service days filter is applied.
-
-      // const matchesServiceHours =
-      //   (filters.serviceHours?.workHours &&
-      //     clinic.hoursOfOperation?.includes('Work hours')) ||
-      //   (filters.serviceHours?.afterHours &&
-      //     clinic.hoursOfOperation?.includes('After hours')) ||
-      //   (!filters.serviceHours?.workHours && !filters.serviceHours?.afterHours); // Include all if no service hours filter is applied.
-
       return (
         matchesSupportedTaxYears &&
         matchesProvinces &&

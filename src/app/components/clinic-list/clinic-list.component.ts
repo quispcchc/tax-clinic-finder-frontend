@@ -5,18 +5,16 @@ import { Clinic } from '../../models/clinic.model';
   selector: 'app-clinic-list',
   standalone: false,
   templateUrl: './clinic-list.component.html',
-  styleUrls: ['./clinic-list.component.scss']
+  styleUrls: ['./clinic-list.component.scss'],
 })
 export class ClinicListComponent {
-
   @Input() clinics: Clinic[] = [];
   @Input() language!: string;
   @Output() toggleSidebarEvent = new EventEmitter<void>();
   @Input() isSidebarOpen: boolean = true;
-  
+
   showModal: boolean = false;
   selectedClinic: Clinic | undefined;
-
 
   toggleFilterSidebar() {
     this.toggleSidebarEvent.emit();

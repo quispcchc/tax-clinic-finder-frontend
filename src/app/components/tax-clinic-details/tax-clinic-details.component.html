@@ -37,6 +37,44 @@
             </dd>
           </div>
           <div class="clinic-info">
+            <dt>{{ "Appointment Availability" | translate }}:</dt>
+            <dd>
+              <p>
+                <input
+                  type="radio"
+                  name="appointmentAvailability"
+                  value="Yes"
+                  [(ngModel)]="appointmentAvailability"
+                />
+                {{ "Yes" | translate }}
+              </p>
+              <p>
+                <input
+                  type="radio"
+                  name="appointmentAvailability"
+                  value="No"
+                  [(ngModel)]="appointmentAvailability"
+                />
+                {{ "No" | translate }}
+              </p>
+              <p>
+                <input
+                  type="radio"
+                  name="appointmentAvailability"
+                  value="Not Sure"
+                  [(ngModel)]="appointmentAvailability"
+                />
+                {{ "Not Sure" | translate }}
+              </p>
+              <button
+                (click)="updateAppointmentAvailability()"
+                class="save-button"
+              >
+                {{ "Save" | translate }}
+              </button>
+            </dd>
+          </div>
+          <div class="clinic-info">
             <dt>{{ "Contact Person" | translate }}:</dt>
             <dd>{{ clinic?.contactPersonName }}</dd>
           </div>
@@ -65,11 +103,21 @@
             <dd>{{ clinic?.listedOnCra }}</dd>
           </div>
           <div class="clinic-info">
-            <dt>{{ "Visible on the Community Navigation of Eastern Ontario web site" | translate }}:</dt>
+            <dt>
+              {{
+                "Visible on the Community Navigation of Eastern Ontario web site"
+                  | translate
+              }}:
+            </dt>
             <dd>{{ clinic?.visibleOnNceo }}</dd>
           </div>
           <div class="clinic-info">
-            <dt>{{ "Would you like the information about your clinic(s) to be public?" | translate }}:</dt>
+            <dt>
+              {{
+                "Would you like the information about your clinic(s) to be public?"
+                  | translate
+              }}:
+            </dt>
             <dd>{{ clinic?.publicInfo }}</dd>
           </div>
           <div class="clinic-info">
@@ -89,11 +137,21 @@
             <dd>{{ clinic?.monthsOffered }}</dd>
           </div>
           <div class="clinic-info">
-            <dt>{{ "Hours of operation or Date and time of tax clinics " | translate }}:</dt>
+            <dt>
+              {{
+                "Hours of operation or Date and time of tax clinics "
+                  | translate
+              }}:
+            </dt>
             <dd>{{ clinic?.hoursOfOperation }}</dd>
           </div>
           <div class="clinic-info">
-            <dt>{{ "Offer income tax services year round outside of tax season?" | translate }}:</dt>
+            <dt>
+              {{
+                "Offer income tax services year round outside of tax season?"
+                  | translate
+              }}:
+            </dt>
             <dd>{{ clinic?.yearRoundService }}</dd>
           </div>
           <div class="clinic-info">
@@ -109,7 +167,12 @@
             <dd>{{ clinic?.taxYearsPrepared }}</dd>
           </div>
           <div class="clinic-info">
-            <dt>{{ "Do you help with tax year for which a client was a resident of?" | translate }}:</dt>
+            <dt>
+              {{
+                "Do you help with tax year for which a client was a resident of?"
+                  | translate
+              }}:
+            </dt>
             <dd>{{ clinic?.residencyTaxYear }}</dd>
           </div>
           <div class="clinic-info">
@@ -117,7 +180,9 @@
             <dd>{{ clinic?.servePeople }}</dd>
           </div>
           <div class="clinic-info">
-            <dt>{{ "Webpage detailing the eligibility criteria" | translate }}:</dt>
+            <dt>
+              {{ "Webpage detailing the eligibility criteria" | translate }}:
+            </dt>
             <dd>
               <a
                 [href]="clinic?.eligibilityCriteriaWebpage"
@@ -134,7 +199,12 @@
             <dd>{{ clinic?.bookingProcess }}</dd>
           </div>
           <div class="clinic-info">
-            <dt>{{ "Working days and working hours for appointment booking" | translate }}:</dt>
+            <dt>
+              {{
+                "Working days and working hours for appointment booking"
+                  | translate
+              }}:
+            </dt>
             <dd>{{ clinic?.bookingDaysHours }}</dd>
           </div>
           <div class="clinic-info">
@@ -159,7 +229,12 @@
             </dd>
           </div>
           <div class="clinic-info">
-            <dt>{{ "Would an online booking system be useful to clinic?" | translate }}:</dt>
+            <dt>
+              {{
+                "Would an online booking system be useful to clinic?"
+                  | translate
+              }}:
+            </dt>
             <dd>{{ clinic?.usefulOnlineBooking }}</dd>
           </div>
           <div class="clinic-info">
@@ -167,7 +242,12 @@
             <dd>{{ clinic?.requiredDocuments }}</dd>
           </div>
           <div class="clinic-info">
-            <dt>{{ "If client do not have all their documentation, can you help them find it?" | translate }}:</dt>
+            <dt>
+              {{
+                "If client do not have all their documentation, can you help them find it?"
+                  | translate
+              }}:
+            </dt>
             <dd>{{ clinic?.helpWithMissingDocs }}</dd>
           </div>
           <div class="clinic-info">
@@ -183,11 +263,15 @@
             <dd>{{ clinic?.volunteerRoles }}</dd>
           </div>
           <div class="clinic-info">
-            <dt>{{ "Capacity of tax clinic during the tax season" | translate }}:</dt>
+            <dt>
+              {{ "Capacity of tax clinic during the tax season" | translate }}:
+            </dt>
             <dd>{{ clinic?.clinicCapacity }}</dd>
           </div>
           <div class="clinic-info">
-            <dt>{{ "Would you benefit from additional support?" | translate }}:</dt>
+            <dt>
+              {{ "Would you benefit from additional support?" | translate }}:
+            </dt>
             <dd>{{ clinic?.additionalSupport }}</dd>
           </div>
           <div class="clinic-info">

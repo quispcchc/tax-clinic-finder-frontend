@@ -45,13 +45,13 @@ body {
 
   .logo {
     max-width: 45%;
-    margin:25px;
+    margin: 25px;
   }
 }
 
 h2 {
   font-size: 1.55rem;
-  color: #2B2B2B;
+  color: #2b2b2b;
   margin-bottom: 2rem;
   margin-top: 0px;
 }
@@ -93,16 +93,16 @@ h2 {
     }
   }
 
-      .error-message {
-      color: #e74c3c;
-      font-size: 0.75rem;
-      margin: 0.5rem 0;
-    }
-    
-    .error-message.alert {
-      text-align: center;
-      padding-block: 1rem;
-    }
+  .error-message {
+    color: #e74c3c;
+    font-size: 0.75rem;
+    margin: 0.5rem 0;
+  }
+
+  .error-message.alert {
+    text-align: center;
+    padding-block: 1rem;
+  }
 
   .password-input-container {
     display: flex;
@@ -153,8 +153,8 @@ h2 {
   }
 
   button {
-    background: #80CBD8;
-    color: #2B2B2B;
+    background: #80cbd8;
+    color: #2b2b2b;
     padding: 0.75rem;
     font-size: 1rem;
     border: none;
@@ -163,10 +163,10 @@ h2 {
     font-weight: bold;
 
     &:hover {
-      background: #007E94;
+      background: #007e94;
       color: #ffffff;
     }
-  
+
     &:disabled {
       cursor: not-allowed;
     }

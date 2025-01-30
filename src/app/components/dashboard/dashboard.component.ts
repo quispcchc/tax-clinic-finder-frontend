@@ -7,8 +7,7 @@ import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss'],
 })
-export class DashboardComponent implements OnInit{
-
+export class DashboardComponent implements OnInit {
   selectedTab: string = 'access-filter';
 
   constructor(private router: Router, private route: ActivatedRoute) {}
@@ -19,7 +18,7 @@ export class DashboardComponent implements OnInit{
         this.selectedTab = params['selectedTab'];
       }
     });
-  
+
     this.router.events.subscribe((event: any) => {
       if (event instanceof NavigationEnd) {
         const url = event.urlAfterRedirects;
@@ -29,15 +28,15 @@ export class DashboardComponent implements OnInit{
           '/dashboard/user-management',
           '/dashboard/tax-clinic-management',
         ];
-  
+
         if (menuPaths.some((path) => url.startsWith(path))) {
           return;
         }
-  
+
         if (url === '/dashboard' || url.startsWith('/dashboard?')) {
           const queryParams = this.route.snapshot.queryParams;
           this.selectedTab = queryParams['selectedTab'] || 'access-filter';
-  
+
           this.router.navigate(['/dashboard'], {
             queryParams: { selectedTab: this.selectedTab },
             replaceUrl: true,
@@ -46,8 +45,8 @@ export class DashboardComponent implements OnInit{
       }
     });
   }
-  
-   onTabChange(tab: string): void {
+
+  onTabChange(tab: string): void {
     this.selectedTab = tab;
 
     this.router.navigate(['/dashboard'], {

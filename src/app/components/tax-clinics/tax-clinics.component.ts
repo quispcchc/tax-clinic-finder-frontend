@@ -5,7 +5,7 @@ import { Clinic } from '../../models/clinic.model';
   selector: 'app-tax-clinics',
   standalone: false,
   templateUrl: './tax-clinics.component.html',
-  styleUrl: './tax-clinics.component.scss'
+  styleUrl: './tax-clinics.component.scss',
 })
 export class TaxClinicsComponent {
   @Input() clinics: Clinic[] = [];

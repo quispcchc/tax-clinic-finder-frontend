@@ -79,7 +79,7 @@ export class FilterComponent {
     provinces: {
       Ontario: false,
       Quebec: false,
-      Other: false
+      Other: false,
     },
     specialTaxCases: {
       selfEmployed: false,
@@ -129,7 +129,7 @@ export class FilterComponent {
     serviceHours: {
       workHours: false,
       afterHours: false,
-    }
+    },
   };
 
   constructor() {}
@@ -149,7 +149,7 @@ export class FilterComponent {
       provinces: {
         Ontario: false,
         Quebec: false,
-        Other: false
+        Other: false,
       },
       specialTaxCases: {
         selfEmployed: false,
@@ -203,7 +203,6 @@ export class FilterComponent {
     };
     this.filterChange.emit(this.filters);
   }
-  
 
   closeFilterSidebar() {
     this.toggleSidebarEvent.emit();

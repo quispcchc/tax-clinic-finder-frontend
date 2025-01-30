@@ -72,10 +72,10 @@ export class LoginComponent implements OnInit {
             this.loginForm.reset();
           } else {
             this.translate
-            .get('INVALID_EMAIL_OR_PASSWORD')
-            .subscribe((translation) => {
-              this.errorMessage = translation;
-            });
+              .get('INVALID_EMAIL_OR_PASSWORD')
+              .subscribe((translation) => {
+                this.errorMessage = translation;
+              });
           }
         },
         (error) => {

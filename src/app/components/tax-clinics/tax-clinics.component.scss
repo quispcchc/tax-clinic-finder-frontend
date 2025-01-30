@@ -17,7 +17,7 @@
     top: 60px;
     left: 0;
     z-index: 1;
-    scrollbar-color: #80CBD8 #f0f0f0;
+    scrollbar-color: #80cbd8 #f0f0f0;
     scrollbar-width: thin;
 
     .directory-header {
@@ -78,7 +78,7 @@
   .search-bar {
     margin-bottom: 25px;
     position: relative;
-  
+
     .search-input {
       width: 75%;
       padding: 10px 35px 10px 40px;
@@ -86,9 +86,9 @@
       border-radius: 20px;
       font-size: 1rem;
       outline: none;
-      background: url('/assets/images/search-icon.svg') no-repeat 10px center;
-      background-size: 20px; 
-  
+      background: url("/assets/images/search-icon.svg") no-repeat 10px center;
+      background-size: 20px;
+
       &:focus {
         border-color: #007e94;
         box-shadow: 0 0 5px rgba(0, 126, 148, 0.5);

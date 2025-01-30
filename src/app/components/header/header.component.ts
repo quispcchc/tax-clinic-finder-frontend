@@ -1,4 +1,11 @@
-import { Component, EventEmitter, HostListener, Input, OnInit, Output } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  HostListener,
+  Input,
+  OnInit,
+  Output,
+} from '@angular/core';
 import { LanguageService } from '../../services/language.service';
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
@@ -7,17 +14,21 @@ import { AuthService } from '../../services/auth.service';
   selector: 'app-header',
   standalone: false,
   templateUrl: './header.component.html',
-  styleUrl: './header.component.scss'
+  styleUrl: './header.component.scss',
 })
 export class HeaderComponent implements OnInit {
-  @Input() selectedTab: string = 'access-filter'; 
+  @Input() selectedTab: string = 'access-filter';
   @Output() languageChanged = new EventEmitter<string>();
   @Output() tabChanged = new EventEmitter<string>();
   currentLanguage: string;
   menuOpen: boolean = false;
   isAdmin: boolean = false;
 
-  constructor(private languageService: LanguageService,     private authService: AuthService, private router: Router) {
+  constructor(
+    private languageService: LanguageService,
+    private authService: AuthService,
+    private router: Router
+  ) {
     this.currentLanguage = this.languageService.getLanguage();
   }
 
@@ -47,8 +58,10 @@ export class HeaderComponent implements OnInit {
     const menuButtonElement = document.querySelector('.menu-button');
 
     if (
-      menuElement && !menuElement.contains(event.target as Node) &&
-      menuButtonElement && !menuButtonElement.contains(event.target as Node)
+      menuElement &&
+      !menuElement.contains(event.target as Node) &&
+      menuButtonElement &&
+      !menuButtonElement.contains(event.target as Node)
     ) {
       this.menuOpen = false;
     }
