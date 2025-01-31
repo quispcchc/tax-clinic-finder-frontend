@@ -1,23 +1,14 @@
 <div class="clinic-list">
-  <button
-    *ngIf="!isSidebarOpen"
-    class="find-clinic-btn"
-    (click)="toggleFilterSidebar()"
-  >
-    <img
-      src="assets/images/filter-hamberger.svg"
-      alt="Find Clinic"
-      class="find-clinic-icon"
-    />
+  <button *ngIf="!isSidebarOpen" class="find-clinic-btn" (click)="toggleFilterSidebar()">
+    <img src="assets/images/filter-hamberger.svg" alt="Find Clinic" class="find-clinic-icon" />
     {{ "Find your Tax Clinic" | translate }}
   </button>
   <p class="directory-header">{{ "Tax clinics in this axis" | translate }}</p>
-  <div
-    *ngFor="let clinic of clinics"
-    class="clinic-card"
-    (click)="openModal(clinic)"
-  >
-    <label>{{ clinic.organizationName }}</label>
+  <div *ngFor="let clinic of clinics" class="clinic-card" (click)="openModal(clinic)">
+    <label>{{ clinic.organizationName }}
+      <span class="availability-dot"
+        [ngStyle]="{ 'background-color': getDotColor(clinic.appointmentAvailability) }"></span>
+    </label>
     <div *ngFor="let location of clinic.locations">
       <p>
         {{ "Address" | translate }}: {{ location.street }}, {{ location.city }},
@@ -26,12 +17,7 @@
     </div>
     <p>
       {{ "Website" | translate }}:
-      <a
-        [href]="clinic.organizationContact"
-        target="_blank"
-        rel="noopener noreferrer"
-        class="clinic-link"
-      >
+      <a [href]="clinic.organizationContact" target="_blank" rel="noopener noreferrer" class="clinic-link">
         {{ clinic.organizationContact }}
       </a>
     </p>
@@ -45,8 +31,4 @@
   </div>
 </div>
 
-<app-clinic-details
-  *ngIf="showModal"
-  [clinic]="selectedClinic"
-  (closeModal)="closeModal()"
-></app-clinic-details>
+<app-clinic-details *ngIf="showModal" [clinic]="selectedClinic" (closeModal)="closeModal()"></app-clinic-details>

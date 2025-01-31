@@ -2,15 +2,13 @@
   <div class="modal-content">
     <div class="header">
       <div class="clinic-header-left">
-        <img
-          src="assets/images/modal-logo.svg"
-          alt="Website"
-          class="website-icon"
-        />
+        <img src="assets/images/modal-logo.svg" alt="Website" class="website-icon" />
         <h3>{{ "Tax Clinic Details" | translate }}</h3>
       </div>
       <button class="close-button" (click)="close()">X</button>
     </div>
+    <app-message-popup [message]="message" [isVisible]="showMessagePopup" [messageType]="messageType">
+    </app-message-popup>
     <div class="clinic-details-container">
       <div class="clinic-details">
         <label>{{ clinic?.organizationName }}</label>
@@ -26,12 +24,7 @@
           <div class="clinic-info">
             <dt>{{ "Website" | translate }}:</dt>
             <dd>
-              <a
-                [href]="clinic?.organizationContact"
-                target="_blank"
-                rel="noopener noreferrer"
-                class="clinic-link"
-              >
+              <a [href]="clinic?.organizationContact" target="_blank" rel="noopener noreferrer" class="clinic-link">
                 {{ clinic?.organizationContact }}
               </a>
             </dd>
@@ -40,36 +33,21 @@
             <dt>{{ "Appointment Availability" | translate }}:</dt>
             <dd>
               <p>
-                <input
-                  type="radio"
-                  name="appointmentAvailability"
-                  value="Yes"
-                  [(ngModel)]="appointmentAvailability"
-                />
+                <input type="radio" name="appointmentAvailability" value="Yes" [(ngModel)]="appointmentAvailability"
+                  (ngModelChange)="onAppointmentAvailabilityChange()" />
                 {{ "Yes" | translate }}
               </p>
               <p>
-                <input
-                  type="radio"
-                  name="appointmentAvailability"
-                  value="No"
-                  [(ngModel)]="appointmentAvailability"
-                />
+                <input type="radio" name="appointmentAvailability" value="No" [(ngModel)]="appointmentAvailability"
+                  (ngModelChange)="onAppointmentAvailabilityChange()" />
                 {{ "No" | translate }}
               </p>
               <p>
-                <input
-                  type="radio"
-                  name="appointmentAvailability"
-                  value="Not Sure"
-                  [(ngModel)]="appointmentAvailability"
-                />
+                <input type="radio" name="appointmentAvailability" value="Not Sure"
+                  [(ngModel)]="appointmentAvailability" (ngModelChange)="onAppointmentAvailabilityChange()" />
                 {{ "Not Sure" | translate }}
               </p>
-              <button
-                (click)="updateAppointmentAvailability()"
-                class="save-button"
-              >
+              <button (click)="updateAppointmentAvailability()" class="save-button" [disabled]="isSaveButtonDisabled">
                 {{ "Save" | translate }}
               </button>
             </dd>
@@ -105,8 +83,8 @@
           <div class="clinic-info">
             <dt>
               {{
-                "Visible on the Community Navigation of Eastern Ontario web site"
-                  | translate
+              "Visible on the Community Navigation of Eastern Ontario web site"
+              | translate
               }}:
             </dt>
             <dd>{{ clinic?.visibleOnNceo }}</dd>
@@ -114,8 +92,8 @@
           <div class="clinic-info">
             <dt>
               {{
-                "Would you like the information about your clinic(s) to be public?"
-                  | translate
+              "Would you like the information about your clinic(s) to be public?"
+              | translate
               }}:
             </dt>
             <dd>{{ clinic?.publicInfo }}</dd>
@@ -139,8 +117,8 @@
           <div class="clinic-info">
             <dt>
               {{
-                "Hours of operation or Date and time of tax clinics "
-                  | translate
+              "Hours of operation or Date and time of tax clinics "
+              | translate
               }}:
             </dt>
             <dd>{{ clinic?.hoursOfOperation }}</dd>
@@ -148,8 +126,8 @@
           <div class="clinic-info">
             <dt>
               {{
-                "Offer income tax services year round outside of tax season?"
-                  | translate
+              "Offer income tax services year round outside of tax season?"
+              | translate
               }}:
             </dt>
             <dd>{{ clinic?.yearRoundService }}</dd>
@@ -169,8 +147,8 @@
           <div class="clinic-info">
             <dt>
               {{
-                "Do you help with tax year for which a client was a resident of?"
-                  | translate
+              "Do you help with tax year for which a client was a resident of?"
+              | translate
               }}:
             </dt>
             <dd>{{ clinic?.residencyTaxYear }}</dd>
@@ -184,12 +162,8 @@
               {{ "Webpage detailing the eligibility criteria" | translate }}:
             </dt>
             <dd>
-              <a
-                [href]="clinic?.eligibilityCriteriaWebpage"
-                target="_blank"
-                rel="noopener noreferrer"
-                class="clinic-link"
-              >
+              <a [href]="clinic?.eligibilityCriteriaWebpage" target="_blank" rel="noopener noreferrer"
+                class="clinic-link">
                 {{ clinic?.eligibilityCriteriaWebpage }}
               </a>
             </dd>
@@ -201,8 +175,8 @@
           <div class="clinic-info">
             <dt>
               {{
-                "Working days and working hours for appointment booking"
-                  | translate
+              "Working days and working hours for appointment booking"
+              | translate
               }}:
             </dt>
             <dd>{{ clinic?.bookingDaysHours }}</dd>
@@ -218,12 +192,7 @@
           <div class="clinic-info">
             <dt>{{ "Appointment booking Link" | translate }}:</dt>
             <dd>
-              <a
-                [href]="clinic?.onlineBookingLink"
-                target="_blank"
-                rel="noopener noreferrer"
-                class="clinic-link"
-              >
+              <a [href]="clinic?.onlineBookingLink" target="_blank" rel="noopener noreferrer" class="clinic-link">
                 {{ clinic?.onlineBookingLink }}
               </a>
             </dd>
@@ -231,8 +200,8 @@
           <div class="clinic-info">
             <dt>
               {{
-                "Would an online booking system be useful to clinic?"
-                  | translate
+              "Would an online booking system be useful to clinic?"
+              | translate
               }}:
             </dt>
             <dd>{{ clinic?.usefulOnlineBooking }}</dd>
@@ -244,8 +213,8 @@
           <div class="clinic-info">
             <dt>
               {{
-                "If client do not have all their documentation, can you help them find it?"
-                  | translate
+              "If client do not have all their documentation, can you help them find it?"
+              | translate
               }}:
             </dt>
             <dd>{{ clinic?.helpWithMissingDocs }}</dd>

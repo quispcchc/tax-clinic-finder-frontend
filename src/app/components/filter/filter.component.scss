@@ -20,6 +20,10 @@
     }
   }
 
+  input[type="checkbox"] {
+    accent-color: #0097b2;
+  }
+
   form {
     display: flex;
     flex-direction: column;

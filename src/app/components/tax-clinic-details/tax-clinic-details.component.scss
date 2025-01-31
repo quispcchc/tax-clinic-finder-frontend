@@ -120,15 +120,19 @@ dd {
 
 .save-button {
   padding: 11px 10px;
-  background-color: #ffffff;
+  background-color: #AADCE5;
   color: #2b2b2b;
-  border: 1px solid #0097b2;
+  border: 1px solid #0097B2;
   border-radius: 16px;
   cursor: pointer;
 
   &:hover {
-    background-color: #aadce5;
-    color: #2b2b2b;
+    background-color: #007E94;
+    color: #ffffff;
+  }
+
+  &:disabled {
+    cursor: not-allowed;
   }
 }
 

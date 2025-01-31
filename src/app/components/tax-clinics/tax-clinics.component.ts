@@ -39,4 +39,17 @@ export class TaxClinicsComponent {
     this.showModal = false;
     this.selectedClinic = undefined;
   }
+
+  getDotColor(appointmentAvailability: string): string {
+    switch (appointmentAvailability) {
+      case 'Yes':
+        return 'green';
+      case 'No':
+        return 'red';
+      case 'Not Sure':
+        return 'orange';
+      default:
+        return 'gray';
+    }
+  }
 }
