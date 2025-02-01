@@ -1,1 +1,58 @@
-<p>tax-clinic-management works!</p>
+<div class="tax-clinic-management">
+    <h2>Tax clinic management</h2>
+
+    <div class="search-bar">
+        <input type="text" placeholder="{{ 'Search Tax Clinics' | translate }}" [(ngModel)]="searchQuery"
+            (input)="filterClinics()" class="search-input" />
+        <button class="add-clinic">Add clinic</button>
+    </div>
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th class="header-serial">S/N</th>
+                    <th>Clinic name</th>
+                    <th>Clinic details</th>
+                    <th>Contact person</th>
+                    <!-- <th>Days</th>
+                    <th>Hours</th> -->
+                    <th></th>
+                    <th class="header-last">Last update</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let clinic of filteredTaxClinics; let i = index">
+                    <td>{{ i + 1 }}</td>
+                    <td>
+                        <p class="clinic-name">{{ clinic.organizationName }}</p>
+                    </td>
+                    <td>
+                        <!-- <p>{{ clinic.address }}</p>
+                        <p>{{ clinic.phone }}</p> -->
+                        <a [href]="clinic.organizationContact" target="_blank">{{ clinic.organizationContact }}</a>
+                        <button class="view-more">View more</button>
+                    </td>
+                    <td>
+                        <span class="contact-name">{{ clinic.contactPersonName }}</span>
+                        <p>{{ clinic.contactEmail }}</p>
+                    </td>
+                    <!-- <td>{{ clinic.days }}</td>
+                    <td>{{ clinic.hours }}</td> -->
+                    <td>
+                        <div class="clinic-actions">
+                            <button class="edit-button">
+                                {{ "Edit clinic" | translate }}
+                            </button>
+                            <button class="delete-button">
+                                {{ "Delete clinic" | translate }}
+                            </button>
+                        </div>
+                    </td>
+                    <td>
+                        <p>{{ clinic.updatedDate | date }}</p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
