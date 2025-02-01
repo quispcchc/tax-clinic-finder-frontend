@@ -86,6 +86,7 @@
 
         input[type="radio"] {
           margin-right: 10px;
+          accent-color: #0097b2;
         }
       }
     }
@@ -103,6 +104,7 @@
 
         input[type="checkbox"] {
           margin-right: 10px;
+          accent-color: #0097b2;
         }
       }
     }
@@ -144,8 +146,20 @@
     border-radius: 16px;
     margin-top: 10px;
     padding: 7px;
-    border: 1px solid #000000;
+    border: 1px solid #ccc;
     width: 70%;
+
+    &:focus {
+      border-color: #007e94;
+      box-shadow: 0 0 5px rgba(0, 126, 148, 0.5);
+    }
+  }
+
+  input[type="text"] {
+    &:focus {
+      border-color: #007e94;
+      box-shadow: 0 0 5px rgba(0, 126, 148, 0.5);
+    }
   }
 }
 

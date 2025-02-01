@@ -201,7 +201,7 @@ export class FilterComponent {
         afterHours: false,
       },
     };
-    this.filterChange.emit(this.filters);
+    this.filterChange.emit();
   }
 
   closeFilterSidebar() {
