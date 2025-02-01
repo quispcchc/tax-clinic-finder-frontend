@@ -20,12 +20,13 @@ export class ClinicDetailsComponent implements OnInit, AfterViewInit {
   @Input() clinic: Clinic | undefined;
   @Output() closeModal = new EventEmitter<void>();
 
-  private postalCodeCache: { [key: string]: [number, number] } = {};
-
+  private postalCodeCache: Map<string, [number, number]> = new Map();
   private map!: L.Map;
   private markers: L.LayerGroup = L.layerGroup();
-  //private readonly GOOGLE_MAPS_API_KEY = 'AIzaSyBc3mEkYs8ZzYf5onUt4vi5jjsQ6cogV40';
-  private readonly GOOGLE_MAPS_API_KEY = 'YOUR_API_KEY_HERE';
+  private boundaryLayer: L.LayerGroup = L.layerGroup();
+  private readonly GOOGLE_MAPS_API_KEY =
+    'AIzaSyBc3mEkYs8ZzYf5onUt4vi5jjsQ6cogV40';
+  //private readonly GOOGLE_MAPS_API_KEY = 'YOUR_API_KEY_HERE';
 
   ngOnInit(): void {}
 
@@ -54,13 +55,9 @@ export class ClinicDetailsComponent implements OnInit, AfterViewInit {
   }
 
   private initializeMap(): void {
-    const defaultLat = 45.424721;
-    const defaultLng = -75.695;
-    const defaultZoom = 12;
-
     this.map = L.map('clinic-map', {
-      center: [defaultLat, defaultLng],
-      zoom: defaultZoom,
+      center: [45.424721, -75.695],
+      zoom: 12,
       attributionControl: false,
     });
 
@@ -69,6 +66,7 @@ export class ClinicDetailsComponent implements OnInit, AfterViewInit {
     }).addTo(this.map);
 
     this.markers.addTo(this.map);
+    this.boundaryLayer.addTo(this.map);
   }
 
   private async updateClinicLocation(): Promise<void> {
@@ -84,7 +82,7 @@ export class ClinicDetailsComponent implements OnInit, AfterViewInit {
       this.map.setView(clinicLatLng, 15);
       this.markers.clearLayers();
 
-      L.marker(clinicLatLng).addTo(this.map).bindPopup(`
+      L.marker(clinicLatLng).addTo(this.markers).bindPopup(`
         <strong>${this.clinic.organizationName}</strong><br>
         ${fullAddress}<br>
         Type: ${this.clinic.clinicTypes || 'N/A'}<br>
@@ -106,21 +104,24 @@ export class ClinicDetailsComponent implements OnInit, AfterViewInit {
     const postalCodes = this.extractPostalCodes(catchmentArea);
     const coordinates = await this.geocodePostalCodes(postalCodes);
 
-    if (coordinates.length === 0) return;
+    if (coordinates.length < 3) return;
 
-    const boundaryPolygon = L.polygon(coordinates, {
+    const boundaryPoints = this.computeConvexHull(coordinates);
+
+    this.boundaryLayer.clearLayers();
+    const boundaryPolygon = L.polygon(boundaryPoints, {
       color: '#007E94',
       fillColor: '#007E94',
       weight: 2,
       fillOpacity: 0.3,
-    }).addTo(this.map);
+    }).addTo(this.boundaryLayer);
 
     this.map.fitBounds(boundaryPolygon.getBounds());
   }
 
   private extractPostalCodes(catchmentArea: string): string[] {
     const match = catchmentArea.match(/([A-Z]\d[A-Z] ?\d[A-Z]\d)/g);
-    return match ? match.map((pc) => pc.replace(/\s/, '')) : [];
+    return match ? [...new Set(match.map((pc) => pc.replace(/\s/, '')))] : [];
   }
 
   private async geocodePostalCodes(
@@ -129,8 +130,8 @@ export class ClinicDetailsComponent implements OnInit, AfterViewInit {
     const coordinates: [number, number][] = [];
 
     for (const postalCode of postalCodes) {
-      if (this.postalCodeCache[postalCode]) {
-        coordinates.push(this.postalCodeCache[postalCode]);
+      if (this.postalCodeCache.has(postalCode)) {
+        coordinates.push(this.postalCodeCache.get(postalCode)!);
         continue;
       }
 
@@ -143,7 +144,7 @@ export class ClinicDetailsComponent implements OnInit, AfterViewInit {
 
         if (response.data.status === 'OK' && response.data.results.length > 0) {
           const { lat, lng } = response.data.results[0].geometry.location;
-          this.postalCodeCache[postalCode] = [lat, lng];
+          this.postalCodeCache.set(postalCode, [lat, lng]);
           coordinates.push([lat, lng]);
         }
       } catch (error) {
@@ -157,17 +158,15 @@ export class ClinicDetailsComponent implements OnInit, AfterViewInit {
   private async geocodeAddress(
     address: string
   ): Promise<{ lat: number; lng: number }> {
-    const encodedAddress = encodeURIComponent(address);
-    const url = `https://maps.googleapis.com/maps/api/geocode/json?address=${encodedAddress}&key=${this.GOOGLE_MAPS_API_KEY}`;
-
     try {
-      const response = await axios.get(url);
+      const response = await axios.get(
+        `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(
+          address
+        )}&key=${this.GOOGLE_MAPS_API_KEY}`
+      );
+
       if (response.data.status === 'OK' && response.data.results.length > 0) {
-        const result = response.data.results[0].geometry.location;
-        return {
-          lat: result.lat,
-          lng: result.lng,
-        };
+        return response.data.results[0].geometry.location;
       } else {
         throw new Error(`Geocoding failed: ${response.data.status}`);
       }
@@ -175,5 +174,28 @@ export class ClinicDetailsComponent implements OnInit, AfterViewInit {
       console.error('Geocoding error:', error);
       throw error;
     }
+  }
+
+  private computeConvexHull(points: [number, number][]): [number, number][] {
+    points.sort(([ax, ay], [bx, by]) => (ax !== bx ? ax - bx : ay - by));
+
+    const crossProduct = (
+      a: [number, number],
+      b: [number, number],
+      c: [number, number]
+    ) => (b[0] - a[0]) * (c[1] - a[1]) - (b[1] - a[1]) * (c[0] - a[0]);
+
+    const hull: [number, number][] = [];
+    for (const point of points) {
+      while (
+        hull.length >= 2 &&
+        crossProduct(hull[hull.length - 2], hull[hull.length - 1], point) <= 0
+      ) {
+        hull.pop();
+      }
+      hull.push(point);
+    }
+
+    return hull;
   }
 }
