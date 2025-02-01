@@ -103,12 +103,31 @@ export class DashboardMainComponent implements OnInit {
         }));
 
         this.filteredClinics = [...this.clinics];
+
+        this.sortClinics();
         console.log('the clinic details are....', this.filteredClinics);
       },
       (error) => {
         console.error('Failed to load tax clinics:', error);
       }
     );
+  }
+
+  sortClinics() {
+    this.filteredClinics.sort((a, b) => {
+      if (
+        a.appointmentAvailability === 'Yes' &&
+        b.appointmentAvailability !== 'Yes'
+      ) {
+        return -1;
+      } else if (
+        b.appointmentAvailability === 'Yes' &&
+        a.appointmentAvailability !== 'Yes'
+      ) {
+        return 1;
+      }
+      return 0;
+    });
   }
 
   applyFilters(filters: { [key: string]: any } | null): void {
@@ -246,6 +265,7 @@ export class DashboardMainComponent implements OnInit {
         );
       });
     }
+    this.sortClinics();
   }
 
   onLanguageChange(language: string): void {

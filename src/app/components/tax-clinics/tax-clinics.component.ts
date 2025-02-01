@@ -18,9 +18,28 @@ export class TaxClinicsComponent {
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['clinics'] && changes['clinics'].currentValue) {
-      this.filteredClinics = [...this.clinics];
+      
+      this.sortClinics();
       this.filterClinics();
     }
+  }
+
+  sortClinics() {
+    this.clinics.sort((a, b) => {
+      if (
+        a.appointmentAvailability === 'Yes' &&
+        b.appointmentAvailability !== 'Yes'
+      ) {
+        return -1;
+      } else if (
+        b.appointmentAvailability === 'Yes' &&
+        a.appointmentAvailability !== 'Yes'
+      ) {
+        return 1;
+      }
+      return 0;
+    });
+    this.filteredClinics = [...this.clinics];
   }
 
   filterClinics(): void {

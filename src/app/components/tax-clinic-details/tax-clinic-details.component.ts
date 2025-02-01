@@ -57,7 +57,7 @@ export class TaxClinicDetailsComponent implements OnInit {
         this.messageType = 'success';
         setTimeout(() => {
           this.showMessagePopup = false;
-        }, 100000);
+        }, 3000);
         this.initialAppointmentAvailability = this.appointmentAvailability;
         this.isSaveButtonDisabled = true;
         if (this.clinic) {
