@@ -9,6 +9,7 @@ import {
 import { Clinic } from '../../models/clinic.model';
 import * as L from 'leaflet';
 import axios from 'axios';
+import { PostalCodeService } from '../../services/postal-code.service';
 
 @Component({
   selector: 'app-clinic-details',
@@ -20,13 +21,11 @@ export class ClinicDetailsComponent implements OnInit, AfterViewInit {
   @Input() clinic: Clinic | undefined;
   @Output() closeModal = new EventEmitter<void>();
 
-  private postalCodeCache: Map<string, [number, number]> = new Map();
   private map!: L.Map;
   private markers: L.LayerGroup = L.layerGroup();
   private boundaryLayer: L.LayerGroup = L.layerGroup();
-  private readonly GOOGLE_MAPS_API_KEY =
-    'AIzaSyBc3mEkYs8ZzYf5onUt4vi5jjsQ6cogV40';
-  //private readonly GOOGLE_MAPS_API_KEY = 'YOUR_API_KEY_HERE';
+
+  constructor(private postalCodeService: PostalCodeService) {}
 
   ngOnInit(): void {}
 
@@ -102,7 +101,9 @@ export class ClinicDetailsComponent implements OnInit, AfterViewInit {
     if (!catchmentArea) return;
 
     const postalCodes = this.extractPostalCodes(catchmentArea);
-    const coordinates = await this.geocodePostalCodes(postalCodes);
+    const coordinates = await this.postalCodeService.geocodePostalCodes(
+      postalCodes
+    ); // Use the service
 
     if (coordinates.length < 3) return;
 
@@ -124,37 +125,6 @@ export class ClinicDetailsComponent implements OnInit, AfterViewInit {
     return match ? [...new Set(match.map((pc) => pc.replace(/\s/, '')))] : [];
   }
 
-  private async geocodePostalCodes(
-    postalCodes: string[]
-  ): Promise<[number, number][]> {
-    const coordinates: [number, number][] = [];
-
-    for (const postalCode of postalCodes) {
-      if (this.postalCodeCache.has(postalCode)) {
-        coordinates.push(this.postalCodeCache.get(postalCode)!);
-        continue;
-      }
-
-      try {
-        const response = await axios.get(
-          `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(
-            postalCode + ', Canada'
-          )}&key=${this.GOOGLE_MAPS_API_KEY}`
-        );
-
-        if (response.data.status === 'OK' && response.data.results.length > 0) {
-          const { lat, lng } = response.data.results[0].geometry.location;
-          this.postalCodeCache.set(postalCode, [lat, lng]);
-          coordinates.push([lat, lng]);
-        }
-      } catch (error) {
-        console.error(`Error geocoding postal code ${postalCode}:`, error);
-      }
-    }
-
-    return coordinates;
-  }
-
   private async geocodeAddress(
     address: string
   ): Promise<{ lat: number; lng: number }> {
@@ -162,7 +132,7 @@ export class ClinicDetailsComponent implements OnInit, AfterViewInit {
       const response = await axios.get(
         `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(
           address
-        )}&key=${this.GOOGLE_MAPS_API_KEY}`
+        )}&key=${this.postalCodeService['GOOGLE_MAPS_API_KEY']}`
       );
 
       if (response.data.status === 'OK' && response.data.results.length > 0) {
