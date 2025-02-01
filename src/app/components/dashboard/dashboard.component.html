@@ -1,12 +1,14 @@
-<app-header
-  [selectedTab]="selectedTab"
-  (tabChanged)="onTabChange($event)"
-></app-header>
+<div class="dashboard-container">
+  <app-header
+    [selectedTab]="selectedTab"
+    (tabChanged)="onTabChange($event)"
+  ></app-header>
 
-<div *ngIf="selectedTab; else menuContent">
-  <app-dashboard-main></app-dashboard-main>
+  <div *ngIf="selectedTab; else menuContent">
+    <app-dashboard-main></app-dashboard-main>
+  </div>
+
+  <ng-template #menuContent>
+    <router-outlet></router-outlet>
+  </ng-template>
 </div>
-
-<ng-template #menuContent>
-  <router-outlet></router-outlet>
-</ng-template>

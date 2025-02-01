@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Clinic } from '../models/clinic.model';
+import { User } from '../models/user.model';
 
 @Injectable({
   providedIn: 'root',
@@ -26,5 +27,13 @@ export class ClinicService {
     });
 
     return this.http.put(`${this.apiUrl}/${data.id}`, data, { headers });
+  }
+
+  getUsers(): Observable<User[]> {
+    const token = localStorage.getItem('authToken');
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`,
+    });
+    return this.http.get<User[]>(`${this.apiUrl}/users`, { headers });
   }
 }

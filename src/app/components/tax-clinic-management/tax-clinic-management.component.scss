@@ -1,11 +1,13 @@
 .tax-clinic-management {
     padding: 20px;
     background-color: #f7fcff;
+    height: calc(90vh - 15px);
 
-    h2 {
-        font-size: 22px;
-        font-weight: bold;
-        margin-bottom: 15px;
+    .clinic-title {
+        font-size: 1.75em;
+        font-weight: 500;
+        margin-bottom: 30px;
+        margin-top: 20px;
     }
 
     .search-bar {
@@ -50,7 +52,8 @@
         overflow-x: auto;
         margin-top: 20px;
         overflow-y: auto;
-        max-height: 73vh;
+        //max-height: 73vh;
+        height: calc(69vh - 30px);
         scrollbar-color: #80cbd8 #f0f0f0;
         scrollbar-width: thin;
     }

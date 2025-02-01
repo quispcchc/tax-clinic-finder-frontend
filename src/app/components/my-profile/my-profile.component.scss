@@ -2,10 +2,10 @@
   display: flex;
   justify-content: flex-start;
   align-items: flex-start;
-  height: 88vh;
   background: #f5f5f5;
   background: url("/assets/images/taxinics-bg.svg") no-repeat center center;
   background-size: cover;
+  height: calc(90vh - 35px);
 
   .my-profile-card {
     flex: 0 0 31%;
