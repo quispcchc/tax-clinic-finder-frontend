@@ -17,7 +17,7 @@ export interface Clinic {
   clinicTypes: string;
   wheelchairAccessible?: boolean;
   servePeopleFrom: string;
-  catchmentArea?: string;
+  catchmentArea: string;
   monthsOffered: string;
   hoursOfOperation?: string;
   yearRoundService: boolean;
