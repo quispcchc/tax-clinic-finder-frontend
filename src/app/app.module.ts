@@ -25,6 +25,7 @@ import { TaxClinicManagementComponent } from './components/tax-clinic-management
 import { DashboardMainComponent } from './components/dashboard-main/dashboard-main.component';
 import { TaxClinicDetailsComponent } from './components/tax-clinic-details/tax-clinic-details.component';
 import { MessagePopupComponent } from './components/message-popup/message-popup.component';
+import { UserModalComponent } from './components/user-modal/user-modal.component';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -49,7 +50,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     TaxClinicManagementComponent,
     DashboardMainComponent,
     TaxClinicDetailsComponent,
-    MessagePopupComponent
+    MessagePopupComponent,
+    UserModalComponent
   ],
   imports: [
     BrowserModule,

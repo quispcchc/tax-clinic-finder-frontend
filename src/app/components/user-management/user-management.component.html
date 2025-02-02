@@ -1,47 +1,64 @@
 <div class="user-management">
-    <p class="user-title">User Management</p>
+  <p class="user-title">User Management</p>
 
-    <div class="search-bar">
-        <input type="text" placeholder="{{ 'Search Users' | translate }}" [(ngModel)]="searchQuery"
-            (input)="filterUsers()" class="search-input" />
-        <button class="add-user">Add User</button>
-    </div>
-    <div class="table-container">
-        <table>
-            <thead>
-                <tr>
-                    <th class="header-serial">S/N</th>
-                    <th>Name</th>
-                    <th>Email</th>
-                    <!-- <th>Position</th> -->
-                    <th>Role</th>
-                    <th class="header-last"></th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr *ngFor="let user of filteredUsers; let i = index">
-                    <td>{{ i + 1 }}</td>
-                    <td>
-                        <p class="user-name">{{ user.username }}</p>
-                    </td>
-                    <td>
-                        <p class="user-name">{{ user.email }}</p>
-                    </td>
-                    <td>
-                        <p class="user-name">{{ user.role }}</p>
-                    </td>
-                    <td>
-                        <div class="user-actions">
-                            <button class="edit-button">
-                                {{ "Edit User" | translate }}
-                            </button>
-                            <button class="delete-button">
-                                {{ "Delete User" | translate }}
-                            </button>
-                        </div>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
+  <div class="search-bar">
+    <input
+      type="text"
+      placeholder="{{ 'Search Users' | translate }}"
+      [(ngModel)]="searchQuery"
+      (input)="filterUsers()"
+      class="search-input"
+    />
+    <button class="add-user" (click)="openAddUserModal()">Add User</button>
+  </div>
+  <div class="table-container">
+    <table>
+      <thead>
+        <tr>
+          <th class="header-serial">S/N</th>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Designation</th>
+          <th>Role</th>
+          <th class="header-last"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let user of filteredUsers; let i = index">
+          <td>{{ i + 1 }}</td>
+          <td>
+            <p class="user-name">{{ user.firstname }} {{ user.lastname }}</p>
+          </td>
+          <td>
+            <p class="user-email">{{ user.email }}</p>
+          </td>
+          <td>
+            <p class="user-designation">{{ user.designation }}</p>
+          </td>
+          <td>
+            <p class="user-name">{{ user.role }}</p>
+          </td>
+          <td>
+            <div class="user-actions">
+              <button class="edit-button" (click)="openEditUserModal(user)">
+                {{ "Edit User" | translate }}
+              </button>
+              <button class="delete-button" (click)="confirmDelete(user.id)">
+                {{ "Delete User" | translate }}
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <app-user-modal
+    [isOpen]="isModalOpen"
+    [user]="selectedUser"
+    [isEditMode]="isEditMode"
+    (close)="closeModal()"
+    (save)="saveUser($event)"
+  >
+  </app-user-modal>
 </div>

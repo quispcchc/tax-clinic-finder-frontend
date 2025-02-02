@@ -1,0 +1,40 @@
+<div class="modal-overlay" *ngIf="isOpen">
+  <div class="modal-content">
+    <div class="header">
+      <div class="user-header-left">
+        <img
+          src="assets/images/modal-logo.svg"
+          alt="Website"
+          class="website-icon"
+        />
+        <h3>{{ isEditMode ? "Edit User" : "Add User" }}</h3>
+      </div>
+      <button class="close-button" (click)="closeModal()">X</button>
+    </div>
+    <div class="user-details-container">
+      <form #userForm="ngForm">
+        <div class="form-group" *ngFor="let field of formFields">
+          <label> {{ field.label }} <span class="required">*</span> </label>
+          <input
+            [type]="field.type"
+            [(ngModel)]="user[field.key]"
+            placeholder="{{ field.placeholder}}"
+            name="{{ field.key }}"
+            required
+            #fieldRef="ngModel"
+          />
+          <div
+            class="error-message"
+            *ngIf="fieldRef.invalid && fieldRef.touched"
+          >
+            {{ field.label }} is required
+          </div>
+        </div>
+        <div class="modal-actions">
+          <button (click)="onSave()" [disabled]="userForm.invalid" class="save-button">Save</button>
+          <button (click)="closeModal()" class="cancel-button">Cancel</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

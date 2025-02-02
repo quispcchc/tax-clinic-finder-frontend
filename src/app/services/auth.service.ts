@@ -28,8 +28,11 @@ export class AuthService {
       .post<{
         token: string;
         id: string;
-        userName: string;
+        firstname: string;
+        lastname: string;
+        username: string;
         role: string;
+        designation: string;
         email: string;
       }>(this.loginUrl, { email, password })
       .pipe(
@@ -39,7 +42,7 @@ export class AuthService {
             localStorage.setItem(
               'userProfile',
               JSON.stringify({
-                userName: response.userName,
+                username: response.username,
                 userEmail: response.email,
                 userRole: response.role,
                 userId: response.id,
