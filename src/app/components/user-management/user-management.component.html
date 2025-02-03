@@ -61,4 +61,11 @@
     (save)="saveUser($event)"
   >
   </app-user-modal>
+
+  <app-confirmation-modal
+    [isOpen]="isDeleteModalOpen"
+    message="Are you sure you want to delete this user?"
+    (confirmAction)="deleteUser()"
+    (cancelAction)="closeDeleteModal()"
+  ></app-confirmation-modal>
 </div>

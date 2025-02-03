@@ -13,6 +13,8 @@ export class TaxClinicManagementComponent implements OnInit {
   taxClinics: Clinic[] = [];
   filteredTaxClinics: Clinic[] = [];
   searchQuery: string = '';
+  showClinicDetailsModal: boolean = false;
+  selectedClinic: Clinic | undefined;
 
   constructor(private clinicService: ClinicService) { }
 
@@ -94,5 +96,15 @@ export class TaxClinicManagementComponent implements OnInit {
     this.filteredTaxClinics = this.taxClinics.filter(clinic =>
       clinic.organizationName.toLowerCase().includes(this.searchQuery.toLowerCase())
     );
+  }
+
+  openClinicDetailsModal(clinic: Clinic): void {
+    this.selectedClinic = clinic;
+    this.showClinicDetailsModal = true;
+  }
+
+  closeClinicDetailsModal(): void {
+    this.showClinicDetailsModal = false;
+    this.selectedClinic = undefined;
   }
 }

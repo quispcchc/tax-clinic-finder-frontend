@@ -13,9 +13,9 @@ import { Router } from '@angular/router';
 export class AuthService {
   private API_URL = environment.apiUrl;
 
-  private loginUrl = `${this.API_URL}/login`;
-  private resetPasswordUrl = `${this.API_URL}/reset-password`;
-  private resetPasswordWithTokenUrl = `${this.API_URL}/reset-password`;
+  private loginUrl = `${this.API_URL}/auth/login`;
+  private resetPasswordUrl = `${this.API_URL}/auth/reset-password`;
+  private resetPasswordWithTokenUrl = `${this.API_URL}/auth/reset-password`;
 
   constructor(
     private http: HttpClient,
@@ -43,6 +43,8 @@ export class AuthService {
               'userProfile',
               JSON.stringify({
                 username: response.username,
+                firstname: response.firstname,
+                lastname: response.lastname,
                 userEmail: response.email,
                 userRole: response.role,
                 userId: response.id,

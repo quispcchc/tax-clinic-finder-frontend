@@ -30,7 +30,7 @@
                         <!-- <p>{{ clinic.address }}</p>
                         <p>{{ clinic.phone }}</p> -->
                         <a [href]="clinic.organizationContact" target="_blank">{{ clinic.organizationContact }}</a>
-                        <button class="view-more">View more</button>
+                        <button class="view-more" (click)="openClinicDetailsModal(clinic)">View more</button>
                     </td>
                     <td>
                         <span class="contact-name">{{ clinic.contactPersonName }}</span>
@@ -55,4 +55,6 @@
             </tbody>
         </table>
     </div>
+    <app-tax-clinic-details *ngIf="showClinicDetailsModal" [clinic]="selectedClinic"
+    (closeModal)="closeClinicDetailsModal()"></app-tax-clinic-details>
 </div>

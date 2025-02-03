@@ -19,6 +19,9 @@ export class UserManagementComponent implements OnInit {
   isEditMode: boolean = false;
   selectedUser: User = { id: 0, firstname: '', lastname: '', username: '', email: '', designation: '', role: '', password: '' };
 
+  isDeleteModalOpen: boolean = false;
+  userToDeleteId: number | null = null;
+
   constructor(private clinicService: ClinicService) {}
 
   ngOnInit(): void {
@@ -118,11 +121,22 @@ export class UserManagementComponent implements OnInit {
   }
 
   confirmDelete(userId: number) {
-    if (confirm('Are you sure you want to delete this user?')) {
-      this.clinicService.deleteUser(userId).subscribe(
+    this.isDeleteModalOpen = true;
+    this.userToDeleteId = userId;
+  }
+
+  closeDeleteModal() {
+    this.isDeleteModalOpen = false;
+    this.userToDeleteId = null;
+  }
+
+  deleteUser() {
+    if (this.userToDeleteId !== null) {
+      this.clinicService.deleteUser(this.userToDeleteId).subscribe(
         () => {
-          this.users = this.users.filter((user) => user.id !== userId);
+          this.users = this.users.filter((user) => user.id !== this.userToDeleteId);
           this.filteredUsers = [...this.users];
+          this.closeDeleteModal();
         },
         (error) => {
           console.error('Error deleting user:', error);
