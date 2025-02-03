@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ClinicService } from '../../services/clinic.service';
 import { User } from '../../models/user.model';
 import { UserCreate } from '../../models/user-create.modal';
+import { LanguageService } from '../../services/language.service';
 
 @Component({
   selector: 'app-user-management',
@@ -14,6 +15,7 @@ export class UserManagementComponent implements OnInit {
   users: User[] = [];
   filteredUsers: User[] = [];
   searchQuery: string = '';
+  currentLanguage: string;
 
   isModalOpen: boolean = false;
   isEditMode: boolean = false;
@@ -22,7 +24,9 @@ export class UserManagementComponent implements OnInit {
   isDeleteModalOpen: boolean = false;
   userToDeleteId: number | null = null;
 
-  constructor(private clinicService: ClinicService) {}
+  constructor(private clinicService: ClinicService, private languageService: LanguageService) {
+    this.currentLanguage = this.languageService.getLanguage();
+  }
 
   ngOnInit(): void {
     this.loadUsers();

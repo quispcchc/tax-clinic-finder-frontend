@@ -1,0 +1,142 @@
+<div class="modal-overlay" *ngIf="isOpen">
+  <div class="modal-content">
+    <div class="header">
+      <div class="clinic-header-left">
+        <img src="assets/images/modal-logo.svg" alt="Website" class="website-icon" />
+        <h3>{{ clinic.id ? "Edit Tax Clinic" : "Add Tax Clinic" }}</h3>
+      </div>
+      <button class="close-button" (click)="closeModal()">X</button>
+    </div>
+
+    <div class="clinic-details-container">
+      <form (ngSubmit)="saveClinic()">
+        <div class="form-group">
+          <label>Tax Clinic Name:</label>
+          <input type="text" [(ngModel)]="clinic.organizationName" name="organizationName" required />
+        </div>
+
+        <div class="form-group">
+          <label>Contact Email:</label>
+          <input type="email" [(ngModel)]="clinic.contactEmail" name="contactEmail" required />
+        </div>
+
+        <div class="form-group">
+          <label>Contact Person:</label>
+          <input type="text" [(ngModel)]="clinic.contactPersonName" name="contactPersonName" required />
+        </div>
+
+        <div class="form-group">
+          <label>Organization Contact:</label>
+          <input type="text" [(ngModel)]="clinic.organizationContact" name="organizationContact" required />
+        </div>
+
+        <div class="form-group">
+          <label>Contact Person Title:</label>
+          <input type="text" [(ngModel)]="clinic.contactPersonTitle" name="contactPersonTitle" />
+        </div>
+
+        <div class="form-group">
+          <label>Appointment Availability:</label>
+          <input type="text" [(ngModel)]="clinic.appointmentAvailability" name="appointmentAvailability" />
+        </div>
+
+        <div class="form-group">
+          <label>Listed on CRA:</label>
+          <select [(ngModel)]="clinic.listedOnCra" name="listedOnCra">
+            <option value="yes">Yes</option>
+            <option value="no">No</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>Visible on NCEO:</label>
+          <select [(ngModel)]="clinic.visibleOnNceo" name="visibleOnNceo">
+            <option value="yes">Yes</option>
+            <option value="no">No</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>Wheelchair Accessible:</label>
+          <select [(ngModel)]="clinic.wheelchairAccessible" name="wheelchairAccessible">
+            <option [ngValue]="true">Yes</option>
+            <option [ngValue]="false">No</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>Serve People From:</label>
+          <input type="text" [(ngModel)]="clinic.servePeopleFrom" name="servePeopleFrom" />
+        </div>
+
+        <div class="form-group">
+          <label>Catchment Area:</label>
+          <input type="text" [(ngModel)]="clinic.catchmentArea" name="catchmentArea" />
+        </div>
+
+        <div class="form-group">
+          <label>Months Offered:</label>
+          <input type="text" [(ngModel)]="clinic.monthsOffered" name="monthsOffered" />
+        </div>
+
+        <div class="form-group">
+          <label>Year-Round Service:</label>
+          <select [(ngModel)]="clinic.yearRoundService" name="yearRoundService">
+            <option [ngValue]="true">Yes</option>
+            <option [ngValue]="false">No</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>Service Languages:</label>
+          <input type="text" [(ngModel)]="clinic.serviceLanguages" name="serviceLanguages" />
+        </div>
+
+        <div class="form-group">
+          <label>Eligibility Criteria Webpage:</label>
+          <input type="text" [(ngModel)]="clinic.eligibilityCriteriaWebpage" name="eligibilityCriteriaWebpage" />
+        </div>
+
+        <div class="form-group">
+          <label>Booking Process:</label>
+          <input type="text" [(ngModel)]="clinic.bookingProcess" name="bookingProcess" />
+        </div>
+
+        <div class="form-group">
+          <label>Booking Contact Phone:</label>
+          <input type="text" [(ngModel)]="clinic.bookingContactPhone" name="bookingContactPhone" />
+        </div>
+
+        <div class="form-group">
+          <label>Booking Contact Email:</label>
+          <input type="text" [(ngModel)]="clinic.bookingContactEmail" name="bookingContactEmail" />
+        </div>
+
+        <div class="form-group">
+          <label>Online Booking Link:</label>
+          <input type="text" [(ngModel)]="clinic.onlineBookingLink" name="onlineBookingLink" />
+        </div>
+
+        <div class="form-group">
+          <label>Required Documents:</label>
+          <textarea [(ngModel)]="clinic.requiredDocuments" name="requiredDocuments"></textarea>
+        </div>
+
+        <div class="form-group">
+          <label>Additional Support:</label>
+          <textarea [(ngModel)]="clinic.additionalSupport" name="additionalSupport"></textarea>
+        </div>
+
+        <div class="form-group">
+          <label>Comments:</label>
+          <textarea [(ngModel)]="clinic.comments" name="comments"></textarea>
+        </div>
+
+        <div class="modal-actions">
+          <button type="submit">{{ clinic.id ? "Update" : "Save" }}</button>
+          <button type="button" (click)="closeModal()">Cancel</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

@@ -1,22 +1,78 @@
 import { Component, OnInit } from '@angular/core';
 import { Clinic } from '../../models/clinic.model';
 import { ClinicService } from '../../services/clinic.service';
+import { LanguageService } from '../../services/language.service';
 
 @Component({
   selector: 'app-tax-clinic-management',
   standalone: false,
 
   templateUrl: './tax-clinic-management.component.html',
-  styleUrl: './tax-clinic-management.component.scss'
+  styleUrl: './tax-clinic-management.component.scss',
 })
 export class TaxClinicManagementComponent implements OnInit {
   taxClinics: Clinic[] = [];
   filteredTaxClinics: Clinic[] = [];
   searchQuery: string = '';
   showClinicDetailsModal: boolean = false;
-  selectedClinic: Clinic | undefined;
+  currentLanguage: string;
+  //selectedClinic: Clinic | undefined;
 
-  constructor(private clinicService: ClinicService) { }
+  isDeleteModalOpen: boolean = false;
+  taxClinicToDeleteId: number | null = null;
+
+  showClinicModal = false;
+  selectedClinic: Clinic = {
+    id: 0,
+    organizationName: '',
+    organizationContact: '',
+    contactPersonName: '',
+    contactPersonTitle: '',
+    contactEmail: '',
+    appointmentAvailability: '',
+    listedOnCra: '',
+    visibleOnNceo: '',
+    alternateContactName: '',
+    alternateContactEmail: '',
+    alternateContactTitle: '',
+    alternateContactPhone: '',
+    publicInfo: '',
+    clinicTypes: '',
+    wheelchairAccessible: false,
+    servePeopleFrom: '',
+    catchmentArea: '',
+    monthsOffered: '',
+    hoursOfOperation: '',
+    yearRoundService: false,
+    populationServed: '',
+    serviceLanguages: '',
+    taxYearsPrepared: '',
+    residencyTaxYear: '',
+    servePeople: '',
+    eligibilityCriteriaWebpage: '',
+    bookingProcess: '',
+    bookingDaysHours: '',
+    bookingContactPhone: '',
+    bookingContactEmail: '',
+    onlineBookingLink: '',
+    usefulOnlineBooking: '',
+    requiredDocuments: '',
+    helpWithMissingDocs: '',
+    taxPreparers: '',
+    taxFilers: '',
+    volunteerRoles: '',
+    clinicCapacity: '',
+    additionalSupport: '',
+    comments: '',
+    createdDate: new Date().toISOString(),
+    updatedDate: new Date().toISOString(),
+    locations: [],
+  };
+
+  constructor(private clinicService: ClinicService, 
+      private languageService: LanguageService) {
+    this.currentLanguage = this.languageService.getLanguage();
+  }
 
   ngOnInit(): void {
     this.loadTaxClinics();
@@ -71,15 +127,15 @@ export class TaxClinicManagementComponent implements OnInit {
           updatedDate: clinic.updated_at,
           locations: Array.isArray(clinic.locations)
             ? clinic.locations.map((location: any) => ({
-              id: location.id,
-              taxClinicId: location.tax_clinic_id,
-              street: location.street,
-              city: location.city,
-              state: location.state,
-              postalCode: location.postal_code,
-              createdDate: location.created_at,
-              updatedDate: location.updated_at,
-            }))
+                id: location.id,
+                taxClinicId: location.tax_clinic_id,
+                street: location.street,
+                city: location.city,
+                state: location.state,
+                postalCode: location.postal_code,
+                createdDate: location.created_at,
+                updatedDate: location.updated_at,
+              }))
             : [],
         }));
 
@@ -93,8 +149,10 @@ export class TaxClinicManagementComponent implements OnInit {
   }
 
   filterClinics() {
-    this.filteredTaxClinics = this.taxClinics.filter(clinic =>
-      clinic.organizationName.toLowerCase().includes(this.searchQuery.toLowerCase())
+    this.filteredTaxClinics = this.taxClinics.filter((clinic) =>
+      clinic.organizationName
+        .toLowerCase()
+        .includes(this.searchQuery.toLowerCase())
     );
   }
 
@@ -105,6 +163,145 @@ export class TaxClinicManagementComponent implements OnInit {
 
   closeClinicDetailsModal(): void {
     this.showClinicDetailsModal = false;
-    this.selectedClinic = undefined;
+    this.selectedClinic = {
+      id: 0,
+      organizationName: '',
+      organizationContact: '',
+      contactPersonName: '',
+      contactPersonTitle: '',
+      contactEmail: '',
+      appointmentAvailability: '',
+      listedOnCra: '',
+      visibleOnNceo: '',
+      alternateContactName: '',
+      alternateContactEmail: '',
+      alternateContactTitle: '',
+      alternateContactPhone: '',
+      publicInfo: '',
+      clinicTypes: '',
+      wheelchairAccessible: false,
+      servePeopleFrom: '',
+      catchmentArea: '',
+      monthsOffered: '',
+      hoursOfOperation: '',
+      yearRoundService: false,
+      populationServed: '',
+      serviceLanguages: '',
+      taxYearsPrepared: '',
+      residencyTaxYear: '',
+      servePeople: '',
+      eligibilityCriteriaWebpage: '',
+      bookingProcess: '',
+      bookingDaysHours: '',
+      bookingContactPhone: '',
+      bookingContactEmail: '',
+      onlineBookingLink: '',
+      usefulOnlineBooking: '',
+      requiredDocuments: '',
+      helpWithMissingDocs: '',
+      taxPreparers: '',
+      taxFilers: '',
+      volunteerRoles: '',
+      clinicCapacity: '',
+      additionalSupport: '',
+      comments: '',
+      createdDate: new Date().toISOString(),
+      updatedDate: new Date().toISOString(),
+      locations: [],
+    };
+  }
+
+  confirmDelete(taxClinicId: number) {
+    this.isDeleteModalOpen = true;
+    this.taxClinicToDeleteId = taxClinicId;
+  }
+
+  closeDeleteModal() {
+    this.isDeleteModalOpen = false;
+    this.taxClinicToDeleteId = null;
+  }
+
+  openAddClinicModal(): void {
+    this.selectedClinic = {
+      id: 0,
+      organizationName: '',
+      organizationContact: '',
+      contactPersonName: '',
+      contactPersonTitle: '',
+      contactEmail: '',
+      appointmentAvailability: '',
+      listedOnCra: '',
+      visibleOnNceo: '',
+      alternateContactName: '',
+      alternateContactEmail: '',
+      alternateContactTitle: '',
+      alternateContactPhone: '',
+      publicInfo: '',
+      clinicTypes: '',
+      wheelchairAccessible: false,
+      servePeopleFrom: '',
+      catchmentArea: '',
+      monthsOffered: '',
+      hoursOfOperation: '',
+      yearRoundService: false,
+      populationServed: '',
+      serviceLanguages: '',
+      taxYearsPrepared: '',
+      residencyTaxYear: '',
+      servePeople: '',
+      eligibilityCriteriaWebpage: '',
+      bookingProcess: '',
+      bookingDaysHours: '',
+      bookingContactPhone: '',
+      bookingContactEmail: '',
+      onlineBookingLink: '',
+      usefulOnlineBooking: '',
+      requiredDocuments: '',
+      helpWithMissingDocs: '',
+      taxPreparers: '',
+      taxFilers: '',
+      volunteerRoles: '',
+      clinicCapacity: '',
+      additionalSupport: '',
+      comments: '',
+      createdDate: new Date().toISOString(),
+      updatedDate: new Date().toISOString(),
+      locations: [],
+    };
+    this.showClinicModal = true;
+  }
+
+  // Open modal to edit a clinic
+  openEditClinicModal(clinic: Clinic): void {
+    this.selectedClinic = { ...clinic };
+    this.showClinicModal = true;
+  }
+
+  // Close modal
+  closeClinicModal(): void {
+    this.showClinicModal = false;
+  }
+
+  // Reload clinics after adding/editing
+  onClinicSaved(): void {
+    this.loadTaxClinics();
+    this.closeClinicModal();
+  }
+
+  deleteTaxClinic() {
+    if (this.taxClinicToDeleteId !== null) {
+      this.clinicService.deleteTaxClinic(this.taxClinicToDeleteId).subscribe(
+        () => {
+          this.taxClinics = this.taxClinics.filter(
+            (clinic) => clinic.id !== this.taxClinicToDeleteId
+          );
+          this.filteredTaxClinics = [...this.taxClinics];
+          this.closeDeleteModal();
+        },
+        (error) => {
+          console.error('Error deleting user:', error);
+        }
+      );
+    }
   }
 }

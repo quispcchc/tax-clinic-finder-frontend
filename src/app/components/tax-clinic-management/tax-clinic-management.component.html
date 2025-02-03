@@ -1,60 +1,87 @@
 <div class="tax-clinic-management">
-    <p class="clinic-title">Tax Clinic Management</p>
+  <p class="clinic-title">{{"Tax Clinic Management" | translate}}</p>
 
-    <div class="search-bar">
-        <input type="text" placeholder="{{ 'Search Tax Clinics' | translate }}" [(ngModel)]="searchQuery"
-            (input)="filterClinics()" class="search-input" />
-        <button class="add-clinic">Add clinic</button>
-    </div>
-    <div class="table-container">
-        <table>
-            <thead>
-                <tr>
-                    <th class="header-serial">S/N</th>
-                    <th>Clinic name</th>
-                    <th>Clinic details</th>
-                    <th>Contact person</th>
-                    <!-- <th>Days</th>
+  <div class="search-bar">
+    <input
+      type="text"
+      placeholder="{{ 'Search Tax Clinics' | translate }}"
+      [(ngModel)]="searchQuery"
+      (input)="filterClinics()"
+      class="search-input"
+    />
+    <button class="add-clinic" (click)="openAddClinicModal()">{{"Add Clinic" | translate}}</button>
+  </div>
+  <div class="table-container">
+    <table>
+      <thead>
+        <tr>
+          <th class="header-serial">S/N</th>
+          <th>Tax Clinic Name</th>
+          <th>Tax Clinic details</th>
+          <th>Contact person</th>
+          <!-- <th>Days</th>
                     <th>Hours</th> -->
-                    <th></th>
-                    <th class="header-last">Last update</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr *ngFor="let clinic of filteredTaxClinics; let i = index">
-                    <td>{{ i + 1 }}</td>
-                    <td>
-                        <p class="clinic-name">{{ clinic.organizationName }}</p>
-                    </td>
-                    <td>
-                        <!-- <p>{{ clinic.address }}</p>
+          <th></th>
+          <th class="header-last">Last update</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let clinic of filteredTaxClinics; let i = index">
+          <td>{{ i + 1 }}</td>
+          <td>
+            <p class="clinic-name">{{ clinic.organizationName }}</p>
+          </td>
+          <td>
+            <!-- <p>{{ clinic.address }}</p>
                         <p>{{ clinic.phone }}</p> -->
-                        <a [href]="clinic.organizationContact" target="_blank">{{ clinic.organizationContact }}</a>
-                        <button class="view-more" (click)="openClinicDetailsModal(clinic)">View more</button>
-                    </td>
-                    <td>
-                        <span class="contact-name">{{ clinic.contactPersonName }}</span>
-                        <p>{{ clinic.contactEmail }}</p>
-                    </td>
-                    <!-- <td>{{ clinic.days }}</td>
+            <a [href]="clinic.organizationContact" target="_blank">{{
+              clinic.organizationContact
+            }}</a>
+            <button class="view-more" (click)="openClinicDetailsModal(clinic)">
+              View more
+            </button>
+          </td>
+          <td>
+            <span class="contact-name">{{ clinic.contactPersonName }}</span>
+            <p>{{ clinic.contactEmail }}</p>
+          </td>
+          <!-- <td>{{ clinic.days }}</td>
                     <td>{{ clinic.hours }}</td> -->
-                    <td>
-                        <div class="clinic-actions">
-                            <button class="edit-button">
-                                {{ "Edit clinic" | translate }}
-                            </button>
-                            <button class="delete-button">
-                                {{ "Delete clinic" | translate }}
-                            </button>
-                        </div>
-                    </td>
-                    <td>
-                        <p>{{ clinic.updatedDate | date }}</p>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-    <app-tax-clinic-details *ngIf="showClinicDetailsModal" [clinic]="selectedClinic"
-    (closeModal)="closeClinicDetailsModal()"></app-tax-clinic-details>
+          <td>
+            <div class="clinic-actions">
+              <button class="edit-button" (click)="openEditClinicModal(clinic)">
+                {{ "Edit Clinic" | translate }}
+              </button>
+              <button class="delete-button" (click)="confirmDelete(clinic.id)">
+                {{ "Delete Clinic" | translate }}
+              </button>
+            </div>
+          </td>
+          <td>
+            <p>{{ clinic.updatedDate | date }}</p>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <app-tax-clinic-details
+    *ngIf="showClinicDetailsModal"
+    [clinic]="selectedClinic"
+    (closeModal)="closeClinicDetailsModal()"
+  ></app-tax-clinic-details>
+
+  <app-tax-clinic-modal
+    [isOpen]="showClinicModal"
+    [clinic]="selectedClinic"
+    (closeModalEvent)="closeClinicModal()"
+    (clinicSaved)="onClinicSaved()"
+  >
+  </app-tax-clinic-modal>
+
+  <app-confirmation-modal
+    [isOpen]="isDeleteModalOpen"
+    message="Are you sure you want to delete this Tax Clinic?"
+    (confirmAction)="deleteTaxClinic()"
+    (cancelAction)="closeDeleteModal()"
+  ></app-confirmation-modal>
 </div>

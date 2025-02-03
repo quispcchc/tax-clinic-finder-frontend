@@ -63,4 +63,30 @@ export class ClinicService {
     });
     return this.http.delete<void>(`${this.apiUrl}/users/${userId}`, { headers });
   }
+
+  addTaxClinic(clinic: Clinic): Observable<Clinic> {
+    const token = localStorage.getItem('authToken');
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`,
+      'Content-Type': 'application/json'
+    });
+    return this.http.post<Clinic>(`${this.apiUrl}/create-clinic`, clinic, { headers });
+  }
+
+  updateTaxClinic(id: number, clinic: Clinic): Observable<Clinic> {
+    const token = localStorage.getItem('authToken');
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`,
+      'Content-Type': 'application/json'
+    });
+    return this.http.put<Clinic>(`${this.apiUrl}/${id}`, clinic, { headers });
+  }
+
+  deleteTaxClinic(clinicId: number): Observable<void> {
+    const token = localStorage.getItem('authToken');
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    });
+    return this.http.delete<void>(`${this.apiUrl}/${clinicId}`, { headers });
+  }
 }

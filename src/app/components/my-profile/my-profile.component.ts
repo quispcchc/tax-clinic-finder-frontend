@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { LanguageService } from '../../services/language.service';
 
 @Component({
   selector: 'app-my-profile',
@@ -9,6 +10,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MyProfileComponent implements OnInit {
   userProfile: any = {};
+  currentLanguage: string;
+
+  constructor(private languageService: LanguageService) {
+    this.currentLanguage = this.languageService.getLanguage();
+  }
 
   ngOnInit(): void {
     const storedProfile = localStorage.getItem('userProfile');
