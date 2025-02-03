@@ -7,7 +7,7 @@
       </div>
       <button class="close-button" (click)="close()">X</button>
     </div>
-    <app-message-popup [message]="message" [isVisible]="showMessagePopup" [messageType]="messageType">
+    <app-message-popup [message]="message" [isVisible]="showMessagePopup" [messageType]="messageType" (closed)="closePopup()">
     </app-message-popup>
     <div class="clinic-details-container">
       <div class="clinic-details">

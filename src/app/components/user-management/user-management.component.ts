@@ -24,6 +24,10 @@ export class UserManagementComponent implements OnInit {
   isDeleteModalOpen: boolean = false;
   userToDeleteId: number | null = null;
 
+  popupMessage: string = '';
+  popupVisible: boolean = false;
+  popupType: 'success' | 'error' = 'success';
+
   constructor(private clinicService: ClinicService, private languageService: LanguageService) {
     this.currentLanguage = this.languageService.getLanguage();
   }
@@ -51,6 +55,7 @@ export class UserManagementComponent implements OnInit {
       },
       (error) => {
         console.error('Failed to load Users:', error);
+        this.showPopup('Failed to load users', 'error');
       }
     );
   }
@@ -103,9 +108,11 @@ export class UserManagementComponent implements OnInit {
           this.users = this.users.map((u) => (u.id === updatedUser.id ? updatedUser : u));
           this.filteredUsers = [...this.users];
           this.closeModal();
+          this.showPopup('User updated successfully!', 'success');
         },
         (error) => {
           console.error('Error updating user:', error);
+          this.showPopup('Failed to update user', 'error');
         }
       );
     } else {
@@ -116,9 +123,11 @@ export class UserManagementComponent implements OnInit {
           this.users.push(newUser);
           this.filteredUsers = [...this.users];
           this.closeModal();
+          this.showPopup('User added successfully!', 'success');
         },
         (error) => {
           console.error('Error adding user:', error);
+          this.showPopup('Failed to add user', 'error');
         }
       );
     }
@@ -141,11 +150,23 @@ export class UserManagementComponent implements OnInit {
           this.users = this.users.filter((user) => user.id !== this.userToDeleteId);
           this.filteredUsers = [...this.users];
           this.closeDeleteModal();
+          this.showPopup('User deleted successfully!', 'success');
         },
         (error) => {
           console.error('Error deleting user:', error);
+          this.showPopup('Failed to delete user', 'error');
         }
       );
     }
+  }
+
+  showPopup(message: string, type: 'success' | 'error') {
+    this.popupMessage = message;
+    this.popupType = type;
+    this.popupVisible = true;
+  }
+
+  closePopup() {
+    this.popupVisible = false;
   }
 }

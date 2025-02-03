@@ -11,25 +11,54 @@
       </div>
       <button class="close-button" (click)="closeModal()">X</button>
     </div>
+
     <div class="user-details-container">
-      <form #userForm="ngForm">
+      <form [formGroup]="userForm">
         <div class="form-group" *ngFor="let field of formFields">
           <label> {{ field.label }} <span class="required">*</span> </label>
-          <input
-            [type]="field.type"
-            [(ngModel)]="user[field.key]"
-            placeholder="{{ field.placeholder }}"
-            name="{{ field.key }}"
+
+          <select
+            *ngIf="field.key === 'role'"
+            [formControlName]="field.key"
             required
-            #fieldRef="ngModel"
+          >
+            <option value="" disabled>Select Role</option>
+            <option value="Admin">Admin</option>
+            <option value="User">User</option>
+          </select>
+
+          <input
+            *ngIf="field.key !== 'role'"
+            [type]="field.type"
+            [formControlName]="field.key"
+            [placeholder]="field.placeholder"
+            required
           />
+
           <div
             class="error-message"
-            *ngIf="fieldRef.invalid && fieldRef.touched"
+            *ngIf="
+              userForm.get(field.key)?.invalid &&
+              userForm.get(field.key)?.touched
+            "
           >
             {{ field.label }} is required
           </div>
+          <div
+            class="error-message"
+            *ngIf="field.key === 'email' && userForm.get(field.key)?.errors?.['pattern']"
+          >
+            Enter a valid email address
+          </div>
+          <div
+            class="error-message"
+            *ngIf="field.key === 'password' && userForm.get(field.key)?.errors?.['pattern']"
+          >
+            Password must contain at least one special character, one uppercase
+            letter, one lowercase letter, and one number.
+          </div>
         </div>
+
         <div class="modal-actions">
           <button
             (click)="onSave()"

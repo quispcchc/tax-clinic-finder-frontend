@@ -114,19 +114,13 @@ export class DashboardMainComponent implements OnInit {
   }
 
   sortClinics() {
+    const priority: Record<string, number> = { 'Yes': 1, 'No': 2, 'Not Sure': 3 };
+  
     this.filteredClinics.sort((a, b) => {
-      if (
-        a.appointmentAvailability === 'Yes' &&
-        b.appointmentAvailability !== 'Yes'
-      ) {
-        return -1;
-      } else if (
-        b.appointmentAvailability === 'Yes' &&
-        a.appointmentAvailability !== 'Yes'
-      ) {
-        return 1;
-      }
-      return 0;
+      const priorityA = priority[a.appointmentAvailability] ?? 4;
+      const priorityB = priority[b.appointmentAvailability] ?? 4;
+  
+      return priorityA - priorityB;
     });
   }
 

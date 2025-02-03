@@ -1,6 +1,6 @@
 <div *ngIf="isVisible" class="message-popup-container">
     <div class="message-popup" [ngClass]="messageType">
         <p>{{ message }}</p>
-        <button (click)="isVisible = false">Close</button>
+        <button (click)="isVisible = false" class="popup-button">Close</button>
     </div>
 </div>

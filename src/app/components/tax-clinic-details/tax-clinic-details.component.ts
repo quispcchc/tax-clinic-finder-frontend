@@ -74,4 +74,8 @@ export class TaxClinicDetailsComponent implements OnInit {
       }
     );
   }
+
+  closePopup() {
+    this.showMessagePopup = false;
+  }
 }

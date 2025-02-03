@@ -68,4 +68,11 @@
     (confirmAction)="deleteUser()"
     (cancelAction)="closeDeleteModal()"
   ></app-confirmation-modal>
+
+  <app-message-popup 
+  [message]="popupMessage"
+  [isVisible]="popupVisible"
+  [messageType]="popupType"
+  (closed)="closePopup()">
+</app-message-popup>
 </div>
