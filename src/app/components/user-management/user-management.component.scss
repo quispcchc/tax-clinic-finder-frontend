@@ -106,16 +106,17 @@
 
             .edit-button,
             .delete-button {
-                color: #2B2B2B;
+                color: #006577;
                 font-weight: 600;
-                border: 2px solid #0097B2;
-                background-color: #f7fcff;
-                border-radius: 16px;
+                display: inline-block;
+                border: none;
                 padding: 10px 0px;
                 width: 60%;
+                background-color: inherit;
 
                 &:hover {
-                    background-color: #80CBD8;
+                    border-bottom: 1px solid #ccc;
+                    border-radius: 16px;
                 }
             }
         }

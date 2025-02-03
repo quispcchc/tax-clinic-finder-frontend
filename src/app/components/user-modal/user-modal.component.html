@@ -2,11 +2,7 @@
   <div class="modal-content">
     <div class="header">
       <div class="user-header-left">
-        <img
-          src="assets/images/modal-logo.svg"
-          alt="Website"
-          class="website-icon"
-        />
+        <img src="assets/images/modal-logo.svg" alt="Website" class="website-icon" />
         <h3>{{ isEditMode ? "Edit User" : "Add User" }}</h3>
       </div>
       <button class="close-button" (click)="closeModal()">X</button>
@@ -37,16 +33,13 @@
 
           <div
             class="error-message"
-            *ngIf="
-              userForm.get(field.key)?.invalid &&
-              userForm.get(field.key)?.touched
-            "
+            *ngIf="userForm.get(field.key)?.invalid && userForm.get(field.key)?.touched"
           >
             {{ field.label }} is required
           </div>
           <div
             class="error-message"
-            *ngIf="field.key === 'email' && userForm.get(field.key)?.errors?.['pattern']"
+            *ngIf="field.key === 'email' && userForm.get(field.key)?.errors?.['email']"
           >
             Enter a valid email address
           </div>
@@ -60,11 +53,7 @@
         </div>
 
         <div class="modal-actions">
-          <button
-            (click)="onSave()"
-            [disabled]="userForm.invalid"
-            class="save-button"
-          >
+          <button (click)="onSave()" [disabled]="userForm.invalid" class="save-button">
             Save
           </button>
           <button (click)="closeModal()" class="cancel-button">Cancel</button>

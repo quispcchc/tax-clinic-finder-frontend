@@ -81,7 +81,7 @@ export class UserModalComponent {
       role: ['', Validators.required],
       password: [
         '',
-        this.isEditMode ? null : [Validators.required, this.passwordValidator],
+        this.isEditMode ? null : [Validators.required, this.passwordValidator()],
       ],
     });
 
@@ -94,12 +94,14 @@ export class UserModalComponent {
     }
 
     if (this.isEditMode) {
+      // Remove password field in edit mode
       this.formFields = this.formFields.filter(
         (field) => field.key !== 'password'
       );
       this.userForm.get('password')?.clearValidators();
       this.userForm.get('password')?.updateValueAndValidity();
     } else {
+      // Add password field in add mode
       if (!this.formFields.some((field) => field.key === 'password')) {
         this.formFields.push({
           label: 'Password',
@@ -110,7 +112,7 @@ export class UserModalComponent {
       }
       this.userForm
         .get('password')
-        ?.setValidators([Validators.required, this.passwordValidator]);
+        ?.setValidators([Validators.required, this.passwordValidator()]);
       this.userForm.get('password')?.updateValueAndValidity();
     }
   }
