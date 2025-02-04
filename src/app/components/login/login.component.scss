@@ -72,6 +72,14 @@ h2 {
       color: #555;
     }
 
+    input[type="text"] {
+      &:focus {
+        border-color: #007e94;
+        box-shadow: 0 0 5px rgba(0, 126, 148, 0.5);
+        outline: none;
+      }
+    }
+
     input {
       width: 100%;
       padding: 0.75rem;
@@ -91,6 +99,26 @@ h2 {
       font-size: 0.75rem;
       margin-top: 0.25rem;
     }
+
+    .password-input-container input {
+      width: 100%;
+      padding: 0.75rem;
+      border: 1px solid #ddd;
+      border-radius: 24px;
+      font-size: 1rem;
+      box-sizing: border-box;
+      margin: 0;
+    
+      &:focus {
+        border-color: #007e94;
+        box-shadow: 0 0 5px rgba(0, 126, 148, 0.5);
+        outline: none;
+      }
+    
+      &.error-border {
+        border-color: #e74c3c;
+      }
+    }
   }
 
   .error-message {
@@ -102,28 +130,6 @@ h2 {
   .error-message.alert {
     text-align: center;
     padding-block: 1rem;
-  }
-
-  .password-input-container {
-    display: flex;
-    align-items: center;
-
-    input {
-      flex: 1;
-    }
-
-    .toggle-password-visibility {
-      margin-left: 0.5rem;
-      background: none;
-      border: none;
-      color: #007bff;
-      cursor: pointer;
-      font-size: 0.875rem;
-
-      &:hover {
-        text-decoration: underline;
-      }
-    }
   }
 
   .form-actions {
@@ -169,6 +175,18 @@ h2 {
 
     &:disabled {
       cursor: not-allowed;
+    }
+  }
+
+  input[type="checkbox"] {
+    accent-color: #0097b2;
+  }
+
+  input[type="text"] {
+    &:focus {
+      border-color: #007e94;
+      box-shadow: 0 0 5px rgba(0, 126, 148, 0.5);
+      outline: none;
     }
   }
 }
