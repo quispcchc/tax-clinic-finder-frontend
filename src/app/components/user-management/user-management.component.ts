@@ -112,12 +112,18 @@ export class UserManagementComponent implements OnInit {
         },
         (error) => {
           console.error('Error updating user:', error);
-          this.showPopup('Failed to update user', 'error');
+          if (error.error.message && error.error.message === 'Email already exists') {
+            this.showPopup('Email already exists, please choose another one.', 'error');
+          } else if(error.error.message === 'Username already exists') {
+            this.showPopup('Username already exists, please choose another one.', 'error');
+          } else {
+            this.showPopup('Failed to update user', 'error');
+          }
         }
       );
     } else {
       const { ...userToCreate }: UserCreate = user;
-      
+  
       this.clinicService.addUser(userToCreate).subscribe(
         (newUser) => {
           this.users.push(newUser);
@@ -127,12 +133,18 @@ export class UserManagementComponent implements OnInit {
         },
         (error) => {
           console.error('Error adding user:', error);
-          this.showPopup('Failed to add user', 'error');
+          if (error.error.message && error.error.message === 'Email already exists') {
+            this.showPopup('Email already exists, please choose another one.', 'error');
+          } else if(error.error.message === 'Username already exists') {
+            this.showPopup('Username already exists, please choose another one.', 'error');
+          }else {
+            this.showPopup('Failed to add user', 'error');
+          }
         }
       );
     }
   }
-
+  
   confirmDelete(userId: number) {
     this.isDeleteModalOpen = true;
     this.userToDeleteId = userId;

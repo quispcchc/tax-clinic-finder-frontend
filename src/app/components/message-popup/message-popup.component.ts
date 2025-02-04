@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 
 @Component({
   selector: 'app-message-popup',
@@ -7,15 +7,15 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
   templateUrl: './message-popup.component.html',
   styleUrl: './message-popup.component.scss'
 })
-export class MessagePopupComponent implements OnInit{
+export class MessagePopupComponent implements OnChanges {
   @Input() message: string = '';
   @Input() isVisible: boolean = false;
   @Input() messageType: 'success' | 'error' = 'success';
   @Input() duration: number = 3000;
   @Output() closed = new EventEmitter<void>();
 
-  ngOnInit() {
-    if (this.isVisible && this.duration > 0) {
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes['isVisible'] && this.isVisible) {
       setTimeout(() => {
         this.closePopup();
       }, this.duration);
