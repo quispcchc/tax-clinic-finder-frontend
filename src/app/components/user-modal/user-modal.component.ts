@@ -31,6 +31,8 @@ export class UserModalComponent {
 
   emailPattern: string = '^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$';
   userForm: FormGroup;
+  roles: string[] = ['Admin', 'User'];
+
 
   formFields: {
     label: string;

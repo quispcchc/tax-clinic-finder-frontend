@@ -13,15 +13,12 @@
         <div class="form-group" *ngFor="let field of formFields">
           <label> {{ field.label }} <span class="required">*</span> </label>
 
-          <select
-            *ngIf="field.key === 'role'"
-            [formControlName]="field.key"
-            required
-          >
-            <option value="" disabled>Select Role</option>
-            <option value="Admin">Admin</option>
-            <option value="User">User</option>
-          </select>
+          <div *ngIf="field.key === 'role'" class="radio-group">
+            <label *ngFor="let role of roles">
+              <input type="radio" [value]="role" formControlName="role" required />
+              {{ role }}
+            </label>
+          </div>
 
           <input
             *ngIf="field.key !== 'role'"
