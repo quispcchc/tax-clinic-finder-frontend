@@ -68,11 +68,12 @@ export class TaxClinicModalComponent implements OnChanges {
       serviceLanguages: this.fb.array([], Validators.required),
       bookingProcess: this.fb.array([], Validators.required),
       bookingContactPhone: [''],
-      bookingContactEmail: [''], 
+      bookingContactEmail: [''],
       onlineBookingLink: [''],
       usefulOnlineBooking: [''],
       bookingDaysHours: ['', Validators.required],
-      onlineBookingUseful: [''], requiredDocuments: [''],
+      onlineBookingUseful: [''],
+      requiredDocuments: [''],
       helpWithMissingDocs: this.fb.array([], Validators.required),
       taxPreparers: this.fb.array([]),
       taxFilers: this.fb.array([]),
@@ -85,7 +86,7 @@ export class TaxClinicModalComponent implements OnChanges {
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes['clinic'] && this.clinic) {
-      this.clinicForm.reset(); // Reset before patching new values
+      this.clinicForm.reset();
       this.clinicForm.patchValue({ ...this.clinic });
 
       this.populateFormArrays();

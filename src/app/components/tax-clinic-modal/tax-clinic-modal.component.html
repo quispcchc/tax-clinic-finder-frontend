@@ -71,17 +71,37 @@
 
           <div class="form-row">
             <div class="form-group">
-              <label>Contact Person Name: <span class="required">*</span></label>
+              <label
+                >Contact Person Name: <span class="required">*</span></label
+              >
               <input type="text" formControlName="contactPersonName" required />
-              <div class="error" *ngIf="clinicForm.get('contactPersonName')?.invalid && clinicForm.get('contactPersonName')?.touched">
+              <div
+                class="error"
+                *ngIf="
+                  clinicForm.get('contactPersonName')?.invalid &&
+                  clinicForm.get('contactPersonName')?.touched
+                "
+              >
                 Contact Person Name is required.
               </div>
             </div>
-            
+
             <div class="form-group">
-              <label>Contact Person Title: <span class="required">*</span></label>
-              <input type="text" formControlName="contactPersonTitle" required />
-              <div class="error" *ngIf="clinicForm.get('contactPersonTitle')?.invalid && clinicForm.get('contactPersonTitle')?.touched">
+              <label
+                >Contact Person Title: <span class="required">*</span></label
+              >
+              <input
+                type="text"
+                formControlName="contactPersonTitle"
+                required
+              />
+              <div
+                class="error"
+                *ngIf="
+                  clinicForm.get('contactPersonTitle')?.invalid &&
+                  clinicForm.get('contactPersonTitle')?.touched
+                "
+              >
                 Contact person Title is required.
               </div>
             </div>
@@ -89,58 +109,100 @@
             <div class="form-group">
               <label>Contact Email: <span class="required">*</span></label>
               <input type="email" formControlName="contactEmail" required />
-              <div class="error" *ngIf="clinicForm.get('contactEmail')?.invalid && clinicForm.get('contactEmail')?.touched">
+              <div
+                class="error"
+                *ngIf="
+                  clinicForm.get('contactEmail')?.invalid &&
+                  clinicForm.get('contactEmail')?.touched
+                "
+              >
                 Enter a valid email address.
               </div>
             </div>
           </div>
           <div class="form-row">
-            <!-- Listed on CRA -->
             <div class="form-group">
               <label class="required-label">
-                Is tax clinic listed on the CRA's "Find a tax clinic in your area" page online?
+                Is tax clinic listed on the CRA's "Find a tax clinic in your
+                area" page online?
                 <span class="required">*</span>
               </label>
               <div class="radio-group">
                 <label>
-                  <input type="radio" formControlName="listedOnCra" value="Yes" />
+                  <input
+                    type="radio"
+                    formControlName="listedOnCra"
+                    value="Yes"
+                  />
                   Yes
                 </label>
                 <label>
-                  <input type="radio" formControlName="listedOnCra" value="No" />
+                  <input
+                    type="radio"
+                    formControlName="listedOnCra"
+                    value="No"
+                  />
                   No
                 </label>
                 <label>
-                  <input type="radio" formControlName="listedOnCra" value="dontKnow" />
+                  <input
+                    type="radio"
+                    formControlName="listedOnCra"
+                    value="dontKnow"
+                  />
                   I don't know
                 </label>
               </div>
-              <div class="error" *ngIf="clinicForm.get('listedOnCra')?.invalid && clinicForm.get('listedOnCra')?.touched">
+              <div
+                class="error"
+                *ngIf="
+                  clinicForm.get('listedOnCra')?.invalid &&
+                  clinicForm.get('listedOnCra')?.touched
+                "
+              >
                 This field is required.
               </div>
             </div>
-          
-            <!-- Visible on NCEO -->
+
             <div class="form-group">
               <label class="required-label">
-                Is tax clinic visible on the Community Navigation of Eastern Ontario website?
+                Is tax clinic visible on the Community Navigation of Eastern
+                Ontario website?
                 <span class="required">*</span>
               </label>
               <div class="radio-group">
                 <label>
-                  <input type="radio" formControlName="visibleOnNceo" value="Yes" />
+                  <input
+                    type="radio"
+                    formControlName="visibleOnNceo"
+                    value="Yes"
+                  />
                   Yes
                 </label>
                 <label>
-                  <input type="radio" formControlName="visibleOnNceo" value="No" />
+                  <input
+                    type="radio"
+                    formControlName="visibleOnNceo"
+                    value="No"
+                  />
                   No
                 </label>
                 <label>
-                  <input type="radio" formControlName="visibleOnNceo" value="dontKnow" />
+                  <input
+                    type="radio"
+                    formControlName="visibleOnNceo"
+                    value="dontKnow"
+                  />
                   I don't know
                 </label>
               </div>
-              <div class="error" *ngIf="clinicForm.get('visibleOnNceo')?.invalid && clinicForm.get('visibleOnNceo')?.touched">
+              <div
+                class="error"
+                *ngIf="
+                  clinicForm.get('visibleOnNceo')?.invalid &&
+                  clinicForm.get('visibleOnNceo')?.touched
+                "
+              >
                 This field is required.
               </div>
             </div>
@@ -186,11 +248,13 @@
               </button>
             </div>
           </div>
-          
+
           <div formArrayName="locations">
-            <!-- Loop through all the locations (ensure at least one is visible) -->
             <div
-              *ngFor="let location of locationsFormArray.controls; let i = index"
+              *ngFor="
+                let location of locationsFormArray.controls;
+                let i = index
+              "
               [formGroupName]="i"
               class="location-group"
             >
@@ -199,23 +263,22 @@
                   <label>Street:</label>
                   <input type="text" formControlName="street" required />
                 </div>
-          
+
                 <div class="form-group">
                   <label>City:</label>
                   <input type="text" formControlName="city" required />
                 </div>
-          
+
                 <div class="form-group">
                   <label>State:</label>
                   <input type="text" formControlName="state" required />
                 </div>
-          
+
                 <div class="form-group">
                   <label>Postal Code:</label>
                   <input type="text" formControlName="postalCode" required />
                 </div>
-          
-                <!-- Show the remove button only if there is more than one location -->
+
                 <button
                   type="button"
                   class="remove-button"
@@ -230,7 +293,9 @@
 
           <div class="form-row">
             <div class="form-group">
-              <label  class="required-label">Appointment Availability:<span class="required">*</span></label>
+              <label class="required-label"
+                >Appointment Availability:<span class="required">*</span></label
+              >
               <div class="radio-group">
                 <label>
                   <input
@@ -257,15 +322,20 @@
                   Not Sure
                 </label>
               </div>
-              <div class="error" *ngIf="clinicForm.get('appointmentAvailability')?.invalid && clinicForm.get('appointmentAvailability')?.touched">
+              <div
+                class="error"
+                *ngIf="
+                  clinicForm.get('appointmentAvailability')?.invalid &&
+                  clinicForm.get('appointmentAvailability')?.touched
+                "
+              >
                 This field is required.
               </div>
             </div>
 
             <div class="form-group">
               <label class="required-label">
-                Would like the information about the clinic to be
-                public?:
+                Would like the information about the clinic to be public?:
                 <span class="required">*</span></label
               >
               <div class="radio-group">
@@ -290,7 +360,13 @@
                   Maybe
                 </label>
               </div>
-              <div class="error" *ngIf="clinicForm.get('publicInfo')?.invalid && clinicForm.get('publicInfo')?.touched">
+              <div
+                class="error"
+                *ngIf="
+                  clinicForm.get('publicInfo')?.invalid &&
+                  clinicForm.get('publicInfo')?.touched
+                "
+              >
                 This field is required.
               </div>
             </div>
@@ -318,7 +394,11 @@
           </div>
           <div class="form-row">
             <div class="form-group">
-              <label class="required-label">What kind of tax clinics do you offer?<span class="required">*</span></label>
+              <label class="required-label"
+                >What kind of tax clinics do you offer?<span class="required"
+                  >*</span
+                ></label
+              >
               <div class="checkbox-group">
                 <label
                   ><input
@@ -377,13 +457,24 @@
                   />
                 </label>
               </div>
-              <div class="error" *ngIf="clinicForm.get('clinicTypes')?.invalid && clinicForm.get('clinicTypes')?.touched">
+              <div
+                class="error"
+                *ngIf="
+                  clinicForm.get('clinicTypes')?.invalid &&
+                  clinicForm.get('clinicTypes')?.touched
+                "
+              >
                 This field is required.
               </div>
             </div>
 
             <div class="form-group">
-              <label class="required-label">For which months is this income tax clinic offered?<span class="required">*</span></label>
+              <label class="required-label"
+                >For which months is this income tax clinic offered?<span
+                  class="required"
+                  >*</span
+                ></label
+              >
               <div class="checkbox-group">
                 <label
                   ><input
@@ -442,13 +533,20 @@
                   />
                 </label>
               </div>
-              <div class="error" *ngIf="clinicForm.get('monthsOffered')?.errors?.['required'] && clinicForm.get('monthsOffered')?.touched">
+              <div
+                class="error"
+                *ngIf="clinicForm.get('monthsOffered')?.errors?.['required'] && clinicForm.get('monthsOffered')?.touched"
+              >
                 This field is required.
               </div>
             </div>
 
             <div class="form-group">
-              <label class="required-label">Days of operation of the clinic<span class="required">*</span></label>
+              <label class="required-label"
+                >Days of operation of the clinic<span class="required"
+                  >*</span
+                ></label
+              >
               <div class="checkbox-group">
                 <label
                   ><input
@@ -467,14 +565,24 @@
                   Weekends</label
                 >
               </div>
-              <div class="error" *ngIf="clinicForm.get('daysOfOperation')?.invalid && clinicForm.get('daysOfOperation')?.touched">
+              <div
+                class="error"
+                *ngIf="
+                  clinicForm.get('daysOfOperation')?.invalid &&
+                  clinicForm.get('daysOfOperation')?.touched
+                "
+              >
                 This field is required.
               </div>
             </div>
           </div>
           <div class="form-row">
             <div class="form-group">
-              <label class="required-label">Hours of operation of the clinic<span class="required">*</span></label>
+              <label class="required-label"
+                >Hours of operation of the clinic<span class="required"
+                  >*</span
+                ></label
+              >
               <div class="checkbox-group">
                 <label
                   ><input
@@ -493,7 +601,13 @@
                   Evening</label
                 >
               </div>
-              <div class="error" *ngIf="clinicForm.get('hoursOfOperation')?.invalid && clinicForm.get('hoursOfOperation')?.touched">
+              <div
+                class="error"
+                *ngIf="
+                  clinicForm.get('hoursOfOperation')?.invalid &&
+                  clinicForm.get('hoursOfOperation')?.touched
+                "
+              >
                 This field is required.
               </div>
             </div>
@@ -521,13 +635,23 @@
                   No</label
                 >
               </div>
-              <div class="error" *ngIf="clinicForm.get('yearRoundService')?.invalid && clinicForm.get('yearRoundService')?.touched">
+              <div
+                class="error"
+                *ngIf="
+                  clinicForm.get('yearRoundService')?.invalid &&
+                  clinicForm.get('yearRoundService')?.touched
+                "
+              >
                 This field is required.
               </div>
             </div>
 
             <div class="form-group">
-              <label class="required-label">Do the clinic serve people from:<span class="required">*</span></label>
+              <label class="required-label"
+                >Do the clinic serve people from:<span class="required"
+                  >*</span
+                ></label
+              >
               <div class="radio-group">
                 <label>
                   <input
@@ -563,7 +687,13 @@
                   placeholder="Specify here..."
                 />
               </div>
-              <div class="error" *ngIf="clinicForm.get('servePeopleFrom')?.invalid && clinicForm.get('servePeopleFrom')?.touched">
+              <div
+                class="error"
+                *ngIf="
+                  clinicForm.get('servePeopleFrom')?.invalid &&
+                  clinicForm.get('servePeopleFrom')?.touched
+                "
+              >
                 This field is required.
               </div>
             </div>
@@ -642,8 +772,10 @@
 
             <div class="form-group">
               <label class="required-label"
-                >In which languages is the service available in the
-                clinic?<span class="required">*</span></label
+                >In which languages is the service available in the clinic?<span
+                  class="required"
+                  >*</span
+                ></label
               >
               <div class="checkbox-group">
                 <label
@@ -685,7 +817,13 @@
                   placeholder="Specify other languages"
                 />
               </div>
-              <div class="error" *ngIf="clinicForm.get('serviceLanguages')?.invalid && clinicForm.get('serviceLanguages')?.touched">
+              <div
+                class="error"
+                *ngIf="
+                  clinicForm.get('serviceLanguages')?.invalid &&
+                  clinicForm.get('serviceLanguages')?.touched
+                "
+              >
                 This field is required.
               </div>
             </div>
@@ -695,7 +833,11 @@
         <div class="org-details">
           <div class="form-row">
             <div class="form-group">
-              <label class="required-label">Which tax years do you prepare?<span class="required">*</span></label>
+              <label class="required-label"
+                >Which tax years do you prepare?<span class="required"
+                  >*</span
+                ></label
+              >
               <div class="checkbox-group">
                 <label>
                   <input
@@ -736,7 +878,13 @@
                   placeholder="Specify other tax years"
                 />
               </div>
-              <div class="error" *ngIf="clinicForm.get('taxYearsPrepared')?.invalid && clinicForm.get('taxYearsPrepared')?.touched">
+              <div
+                class="error"
+                *ngIf="
+                  clinicForm.get('taxYearsPrepared')?.invalid &&
+                  clinicForm.get('taxYearsPrepared')?.touched
+                "
+              >
                 This field is required.
               </div>
             </div>
@@ -785,12 +933,20 @@
                   placeholder="Specify other provinces"
                 />
               </div>
-              <div class="error" *ngIf="clinicForm.get('residencyTaxYear')?.invalid && clinicForm.get('residencyTaxYear')?.touched">
+              <div
+                class="error"
+                *ngIf="
+                  clinicForm.get('residencyTaxYear')?.invalid &&
+                  clinicForm.get('residencyTaxYear')?.touched
+                "
+              >
                 This field is required.
               </div>
             </div>
             <div class="form-group">
-              <label class="required-label">Do you serve people with?<span class="required">*</span></label>
+              <label class="required-label"
+                >Do you serve people with?<span class="required">*</span></label
+              >
               <div class="checkbox-group">
                 <label
                   ><input
@@ -864,7 +1020,13 @@
                   placeholder="Specify other criteria"
                 />
               </div>
-              <div class="error" *ngIf="clinicForm.get('servePeople')?.invalid && clinicForm.get('servePeople')?.touched">
+              <div
+                class="error"
+                *ngIf="
+                  clinicForm.get('servePeople')?.invalid &&
+                  clinicForm.get('servePeople')?.touched
+                "
+              >
                 This field is required.
               </div>
             </div>
@@ -888,7 +1050,10 @@
           <div class="form-row">
             <div class="form-group">
               <label class="required-label"
-                >Process for booking an appointment during the tax season<span class="required">*</span></label
+                >Process for booking an appointment during the tax season<span
+                  class="required"
+                  >*</span
+                ></label
               >
               <div class="checkbox-group">
                 <label
@@ -916,7 +1081,10 @@
                   Online</label
                 >
               </div>
-              <div class="error" *ngIf="clinicForm.get('bookingProcess')?.errors?.['required'] && clinicForm.get('bookingProcess')?.touched">
+              <div
+                class="error"
+                *ngIf="clinicForm.get('bookingProcess')?.errors?.['required'] && clinicForm.get('bookingProcess')?.touched"
+              >
                 This field is required.
               </div>
             </div>
@@ -954,13 +1122,24 @@
           </div>
           <div class="form-row">
             <div class="form-group">
-              <label class="required-label">Working days and hours for appointment booking:<span class="required">*</span></label>
+              <label class="required-label"
+                >Working days and hours for appointment booking:<span
+                  class="required"
+                  >*</span
+                ></label
+              >
               <input
                 type="text"
                 formControlName="bookingDaysHours"
                 placeholder="Enter Working days and hours"
               />
-              <div class="error" *ngIf="clinicForm.get('bookingDaysHours')?.invalid && clinicForm.get('bookingDaysHours')?.touched">
+              <div
+                class="error"
+                *ngIf="
+                  clinicForm.get('bookingDaysHours')?.invalid &&
+                  clinicForm.get('bookingDaysHours')?.touched
+                "
+              >
                 This field is required.
               </div>
             </div>
@@ -1025,7 +1204,13 @@
                   No, client must have all their documents ready
                 </label>
               </div>
-              <div class="error" *ngIf="clinicForm.get('helpWithMissingDocs')?.invalid && clinicForm.get('helpWithMissingDocs')?.touched">
+              <div
+                class="error"
+                *ngIf="
+                  clinicForm.get('helpWithMissingDocs')?.invalid &&
+                  clinicForm.get('helpWithMissingDocs')?.touched
+                "
+              >
                 This field is required.
               </div>
             </div>
@@ -1302,4 +1487,3 @@
     </div>
   </div>
 </div>
- <!-- [disabled]="clinicForm.invalid" -->
