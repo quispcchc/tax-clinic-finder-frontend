@@ -14,14 +14,11 @@
 }
 
 .modal-content {
-  display: flex;
-  flex-direction: column;
-  width: 40%;
-  max-width: 1200px;
-  height: 70%;
   background-color: white;
   padding: 20px;
   border-radius: 20px;
+  width: 90%;
+  height: 90%;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   position: relative;
   overflow: hidden;
@@ -31,7 +28,6 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 20px;
 }
 
 .clinic-header-left {
@@ -56,64 +52,64 @@ h3 {
   display: flex;
   flex-direction: column;
   gap: 20px;
-  max-height: calc(100% - 80px);
+  padding-top:20px;
+  padding-left:30px;
+  padding-right:30px;
+  padding-bottom:20px;
+  color: #2B2B2B;
   overflow-y: auto;
-  padding: 25px;
+  max-height: calc(100% - 120px);
   scrollbar-color: #80cbd8 #f0f0f0;
   scrollbar-width: thin;
+}
 
-  .form-group {
-    flex: 1 1 calc(50% - 20px);
-    display: flex;
-    flex-direction: column;
-    position: relative;
-    margin-bottom: 25px;
+.clinic-details-container p {
+  font-weight: bold;
+  margin-bottom: 20px;
+}
 
-    label {
-      font-weight: 600;
-      margin-bottom: 5px;
-      display: flex;
-      align-items: center;
-      gap: 5px;
-    }
+.form-row {
+  display: flex;
+  gap: 30px;
+  margin-bottom: 20px;
+  margin-top: 20px;
+}
 
-    .required {
-      color: red;
-      font-size: 14px;
-    }
+.form-group {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
 
-    input {
-      padding: 10px;
-      border: 1px solid #ccc;
-      border-radius: 5px;
-      font-size: 14px;
-      width: 80%;
-      transition: border-color 0.3s ease, box-shadow 0.3s ease;
+.form-group label {
+  font-weight: 600;
+  margin-bottom: 5px;
+}
 
-      &:focus {
-        border-color: #007e94;
-        box-shadow: 0 0 5px rgba(0, 126, 148, 0.5);
-        outline: none;
-      }
-    }
+.form-group input {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 16px;
+  font-size: 1.1em;
 
-    .error-message {
-      color: red;
-      font-size: 12px;
-      margin-top: 5px;
-    }
-  }
-
-  @media (max-width: 768px) {
-    flex-direction: column;
-
-    .form-group {
-      flex: 1 1 100%;
-    }
+  &:focus {
+    border-color: #007e94;
+    box-shadow: 0 0 5px rgba(0, 126, 148, 0.5);
+    outline: none;
   }
 }
 
-button:disabled {
+.save-button {
+  background-color: #007bff;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  width: 100%;
+}
+
+.save-button:disabled {
   background-color: #ccc;
   cursor: not-allowed;
 }
@@ -130,40 +126,95 @@ button:disabled {
   z-index: 10;
 }
 
-.form-group {
-  margin-bottom: 10px;
+p {
+font-weight: 600;
+font-size: 1.35em;
+display: inline-block;
+margin-bottom: 10px;
 }
 
-.modal-actions {
+.radio-group {
   display: flex;
   flex-direction: column;
-  gap: 20px;
-  width: 84%;
+  gap: 10px;
+  margin-top: 10px;
 
-  .save-button {
-    background-color: #80cbd8;
-    color: #2b2b2b;
-    border-radius: 16px;
+  label {
+    display: flex;
+    align-items: center;
+    font-size: 1rem;
+    color: #333;
+    font-weight:500;
 
-    &:hover {
-      background-color: #007e94;
-      color: #ffffff;
-    }
-  }
-  .cancel-button {
-    border: 1px solid #0097b2;
-    background-color: #ffffff;
-    border-radius: 16px;
-
-    &:hover {
-      background-color: #aadce5;
-      border: 2px solid #0097b2;
+    input[type="radio"] {
+      margin-right: 10px;
+      accent-color: #0097b2;
+      width: 18px;
+      height:18px;
     }
   }
 }
 
-button {
-  padding: 10px;
+.checkbox-group {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 10px;
+
+  label {
+    display: flex;
+    align-items: center;
+    font-size: 1rem;
+    color: #333;
+    font-weight:500;
+
+    input[type="checkbox"] {
+      margin-right: 10px;
+      accent-color: #0097b2;
+      width: 18px;
+      height:18px;
+    }
+  }
+}
+
+.location-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.add-button {
+  padding: 3px 8px;
+  font-size: 14px;
+  background-color: #28a745;
+  color: white;
   border: none;
   cursor: pointer;
+  border-radius: 4px;
+}
+
+.remove-button {
+  padding: 3px 8px;
+  font-size: 14px;
+  background-color: #dc3545;
+  color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.location-group {
+  border: 1px solid #ddd;
+  padding: 10px;
+  margin-top: 10px;
+  border-radius: 5px;
+}
+
+
+.org-details {
+  border: 1px solid #007E94;
+  padding-left: 15px;
+  padding-right: 15px;
+  margin-bottom: 35px;
+  box-shadow: 0 0 5px rgba(0, 126, 148, 0.5);
 }

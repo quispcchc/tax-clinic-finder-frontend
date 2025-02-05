@@ -19,7 +19,8 @@ export interface Clinic {
   servePeopleFrom: string;
   catchmentArea: string;
   monthsOffered: string;
-  hoursOfOperation?: string;
+  hoursOfOperation: string;
+  daysOfOperation: string;
   yearRoundService: boolean;
   populationServed?: string;
   serviceLanguages?: string;

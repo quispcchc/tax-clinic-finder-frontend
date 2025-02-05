@@ -21,6 +21,10 @@ export class TaxClinicManagementComponent implements OnInit {
   isDeleteModalOpen: boolean = false;
   taxClinicToDeleteId: number | null = null;
 
+  popupMessage: string = '';
+  popupVisible: boolean = false;
+  popupType: 'success' | 'error' = 'success';
+
   showClinicModal = false;
   selectedClinic: Clinic = {
     id: 0,
@@ -43,6 +47,7 @@ export class TaxClinicManagementComponent implements OnInit {
     catchmentArea: '',
     monthsOffered: '',
     hoursOfOperation: '',
+    daysOfOperation: '',
     yearRoundService: false,
     populationServed: '',
     serviceLanguages: '',
@@ -102,6 +107,7 @@ export class TaxClinicManagementComponent implements OnInit {
           catchmentArea: clinic.catchment_area,
           monthsOffered: clinic.months_offered,
           hoursOfOperation: clinic.hours_of_operation,
+          daysOfOperation: clinic.days_of_operation,
           yearRoundService: clinic.year_round_service,
           populationServed: clinic.population_served,
           serviceLanguages: clinic.service_languages,
@@ -144,6 +150,7 @@ export class TaxClinicManagementComponent implements OnInit {
       },
       (error) => {
         console.error('Failed to load tax clinics:', error);
+        this.showPopup('Failed to load tax clinics', 'error');
       }
     );
   }
@@ -184,6 +191,7 @@ export class TaxClinicManagementComponent implements OnInit {
       catchmentArea: '',
       monthsOffered: '',
       hoursOfOperation: '',
+      daysOfOperation: '',
       yearRoundService: false,
       populationServed: '',
       serviceLanguages: '',
@@ -243,6 +251,7 @@ export class TaxClinicManagementComponent implements OnInit {
       catchmentArea: '',
       monthsOffered: '',
       hoursOfOperation: '',
+      daysOfOperation: '',
       yearRoundService: false,
       populationServed: '',
       serviceLanguages: '',
@@ -297,11 +306,23 @@ export class TaxClinicManagementComponent implements OnInit {
           );
           this.filteredTaxClinics = [...this.taxClinics];
           this.closeDeleteModal();
+          this.showPopup('User deleted successfully!', 'success');
         },
         (error) => {
           console.error('Error deleting user:', error);
+          this.showPopup('Failed to delete user', 'error');
         }
       );
     }
+  }
+
+  showPopup(message: string, type: 'success' | 'error') {
+    this.popupMessage = message;
+    this.popupType = type;
+    this.popupVisible = true;
+  }
+
+  closePopup() {
+    this.popupVisible = false;
   }
 }

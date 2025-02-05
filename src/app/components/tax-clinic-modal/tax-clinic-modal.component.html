@@ -2,139 +2,1210 @@
   <div class="modal-content">
     <div class="header">
       <div class="clinic-header-left">
-        <img src="assets/images/modal-logo.svg" alt="Website" class="website-icon" />
-        <h3>{{ clinic.id ? "Edit Tax Clinic" : "Add Tax Clinic" }}</h3>
+        <img
+          src="assets/images/modal-logo.svg"
+          alt="Website"
+          class="website-icon"
+        />
+        <h3>{{ isEditMode ? "Edit Tax Clinic" : "Add Tax Clinic" }}</h3>
       </div>
       <button class="close-button" (click)="closeModal()">X</button>
     </div>
-
     <div class="clinic-details-container">
-      <form (ngSubmit)="saveClinic()">
-        <div class="form-group">
-          <label>Tax Clinic Name:</label>
-          <input type="text" [(ngModel)]="clinic.organizationName" name="organizationName" required />
+      <form [formGroup]="clinicForm" (ngSubmit)="saveClinic()">
+        <p>Organization Details</p>
+        <div class="org-details">
+          <div class="form-row">
+            <div class="form-group">
+              <label>Tax Clinic Name:</label>
+              <input type="text" formControlName="organizationName" required />
+            </div>
+
+            <div class="form-group">
+              <label>Organisation Website:</label>
+              <input type="text" formControlName="orgWebsite" required />
+            </div>
+
+            <div class="form-group">
+              <label>Organisation Email:</label>
+              <input type="email" formControlName="orgEmail" required />
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label>Contact Person Name:</label>
+              <input type="text" formControlName="contactPersonName" required />
+            </div>
+
+            <div class="form-group">
+              <label>Contact Person Title:</label>
+              <input type="text" formControlName="contactPersonTitle" />
+            </div>
+
+            <div class="form-group">
+              <label>Contact Email:</label>
+              <input type="email" formControlName="contactEmail" required />
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label
+                >Is tax clinic listed on the CRA's "Find a tax clinic in your
+                area" page online?</label
+              >
+              <div class="radio-group">
+                <label>
+                  <input
+                    type="radio"
+                    formControlName="listedOnCra"
+                    value="yes"
+                  />
+                  Yes
+                </label>
+                <label>
+                  <input
+                    type="radio"
+                    formControlName="listedOnCra"
+                    value="no"
+                  />
+                  No
+                </label>
+                <label>
+                  <input
+                    type="radio"
+                    formControlName="listedOnCra"
+                    value="dontKnow"
+                  />
+                  I don't know
+                </label>
+              </div>
+            </div>
+            <div class="form-group">
+              <label
+                >Is tax clinic visible on the Community Navigation of Eastern
+                Ontario web site?</label
+              >
+              <div class="radio-group">
+                <label>
+                  <input
+                    type="radio"
+                    formControlName="visibleOnNceo"
+                    value="yes"
+                  />
+                  Yes
+                </label>
+                <label>
+                  <input
+                    type="radio"
+                    formControlName="visibleOnNceo"
+                    value="no"
+                  />
+                  No
+                </label>
+                <label>
+                  <input
+                    type="radio"
+                    formControlName="visibleOnNceo"
+                    value="dontKnow"
+                  />
+                  I don't know
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+        <p>Tax Clinic Information</p>
+        <div class="org-details">
+          <div class="form-row">
+            <div class="form-group">
+              <label>Alternate Contact Person Name:</label>
+              <input type="text" formControlName="alternateContactName" />
+            </div>
+
+            <div class="form-group">
+              <label>Alternate Contact Person Title:</label>
+              <input type="text" formControlName="alternateContactTitle" />
+            </div>
+
+            <div class="form-group">
+              <label>Alternate Contact Person Email:</label>
+              <input type="email" formControlName="alternateContactEmail" />
+            </div>
+            <div class="form-group">
+              <label>Alternate Contact Person Phone:</label>
+              <input type="email" formControlName="alternateContactPhone" />
+            </div>
+          </div>
+          <div class="form-row">
+           
+            <div class="form-group">
+              <label
+                >Catchment area available, please provide definition
+                (postal codes or street boundaries):</label
+              >
+              <input type="text" formControlName="catchmentArea" />
+            </div>
+          </div>
+      
+          <div class="form-row">
+            <div class="form-group location-header">
+              <label>Tax Clinic Location:</label>
+              <button type="button" class="add-button" (click)="addLocation()">+</button>
+            </div>
+          </div>
+          
+          <div formArrayName="locations">
+            <div *ngFor="let location of locationsFormArray.controls; let i = index" [formGroupName]="i" class="location-group">
+              <div class="form-row">
+                <div class="form-group">
+                  <label>Street:</label>
+                  <input type="text" formControlName="street" required />
+                </div>
+          
+                <div class="form-group">
+                  <label>City:</label>
+                  <input type="text" formControlName="city" required />
+                </div>
+          
+                <div class="form-group">
+                  <label>State:</label>
+                  <input type="text" formControlName="state" required />
+                </div>
+          
+                <div class="form-group">
+                  <label>Postal Code:</label>
+                  <input type="text" formControlName="postalCode" required />
+                </div>
+          
+                <button type="button" class="remove-button" (click)="removeLocation(i)" *ngIf="locationsFormArray.length > 1">
+                  -
+                </button>
+              </div>
+            </div>
+          </div>
+          
+          <div class="form-row">
+            <div class="form-group">
+              <label>Appointment Availability:</label>
+              <div class="radio-group">
+                <label>
+                  <input
+                    type="radio"
+                    formControlName="appointmentAvailability"
+                    value="yes"
+                  />
+                  Yes
+                </label>
+                <label>
+                  <input
+                    type="radio"
+                    formControlName="appointmentAvailability"
+                    value="no"
+                  />
+                  No
+                </label>
+                <label>
+                  <input
+                    type="radio"
+                    formControlName="appointmentAvailability"
+                    value="notSure"
+                  />
+                  Not Sure
+                </label>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label
+                >Would like the information about the clinic to be
+                public?:</label
+              >
+              <div class="radio-group">
+                <label>
+                  <input
+                    type="radio"
+                    formControlName="publicInfo"
+                    value="yes"
+                  />
+                  Yes
+                </label>
+                <label>
+                  <input type="radio" formControlName="publicInfo" value="no" />
+                  No, only for EBO
+                </label>
+                <label>
+                  <input
+                    type="radio"
+                    formControlName="publicInfo"
+                    value="maybe"
+                  />
+                  Maybe
+                </label>
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Is clinic wheelchair accessible:</label>
+              <div class="radio-group">
+                <label>
+                  <input
+                    type="radio"
+                    formControlName="wheelchairAccessible"
+                    value="yes"
+                  />
+                  Yes
+                </label>
+                <label>
+                  <input
+                    type="radio"
+                    formControlName="wheelchairAccessible"
+                    value="no"
+                  />
+                  No
+                </label>
+              </div>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>What kind of tax clinics do you offer?</label>
+              <div class="checkbox-group">
+                <label
+                  ><input
+                    type="checkbox"
+                    (change)="onCheckboxChange('clinicTypes', $event)"
+                    value="Virtual"
+                  />
+                  Virtual</label
+                >
+                <label
+                  ><input
+                    type="checkbox"
+                    (change)="onCheckboxChange('clinicTypes', $event)"
+                    value="In person"
+                  />
+                  In person</label
+                >
+                <label
+                  ><input
+                    type="checkbox"
+                    (change)="onCheckboxChange('clinicTypes', $event)"
+                    value="By appointment"
+                  />
+                  By appointment</label
+                >
+                <label
+                  ><input
+                    type="checkbox"
+                    (change)="onCheckboxChange('clinicTypes', $event)"
+                    value="No appointment"
+                  />
+                  No appointment / Walk-in or call-in</label
+                >
+                <label
+                  ><input
+                    type="checkbox"
+                    (change)="onCheckboxChange('clinicTypes', $event)"
+                    value="Drop-off"
+                  />
+                  Drop-off</label
+                >
+                <label>
+                  <input
+                    type="checkbox"
+                    (change)="onCheckboxChange('clinicTypes', $event)"
+                    value="Other"
+                  />
+                  Other:
+                  <input
+                    *ngIf="
+                      clinicForm.get('clinicTypes')?.value.includes('Other')
+                    "
+                    type="text"
+                    formControlName="clinicTypes"
+                    placeholder="Specify here..."
+                  />
+                </label>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label>For which months is this income tax clinic offered?</label>
+              <div class="checkbox-group">
+                <label
+                  ><input
+                    type="checkbox"
+                    (change)="onCheckboxChange('monthsOffered', $event)"
+                    value="February"
+                  />
+                  February</label
+                >
+                <label
+                  ><input
+                    type="checkbox"
+                    (change)="onCheckboxChange('monthsOffered', $event)"
+                    value="March"
+                  />
+                  March</label
+                >
+                <label
+                  ><input
+                    type="checkbox"
+                    (change)="onCheckboxChange('monthsOffered', $event)"
+                    value="April"
+                  />
+                  April</label
+                >
+                <label
+                  ><input
+                    type="checkbox"
+                    (change)="onCheckboxChange('monthsOffered', $event)"
+                    value="May"
+                  />
+                  May</label
+                >
+                <label
+                  ><input
+                    type="checkbox"
+                    (change)="onCheckboxChange('monthsOffered', $event)"
+                    value="June"
+                  />
+                  June</label
+                >
+                <label>
+                  <input
+                    type="checkbox"
+                    (change)="onCheckboxChange('monthsOffered', $event)"
+                    value="Other"
+                  />
+                  Other:
+                  <input
+                    *ngIf="
+                      clinicForm.get('monthsOffered')?.value.includes('Other')
+                    "
+                    type="text"
+                    formControlName="monthsOffered"
+                    placeholder="Specify here..."
+                  />
+                </label>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label>Days of operation of the clinic</label>
+              <div class="checkbox-group">
+                <label
+                  ><input
+                    type="checkbox"
+                    (change)="onCheckboxChange('daysOfOperation', $event)"
+                    value="Weekdays"
+                  />
+                  Weekdays</label
+                >
+                <label
+                  ><input
+                    type="checkbox"
+                    (change)="onCheckboxChange('daysOfOperation', $event)"
+                    value="Weekends"
+                  />
+                  Weekends</label
+                >
+              </div>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Hours of operation of the clinic</label>
+              <div class="checkbox-group">
+                <label
+                  ><input
+                    type="checkbox"
+                    (change)="onCheckboxChange('hoursOfOperation', $event)"
+                    value="Daytime"
+                  />
+                  Daytime</label
+                >
+                <label
+                  ><input
+                    type="checkbox"
+                    (change)="onCheckboxChange('hoursOfOperation', $event)"
+                    value="Evening"
+                  />
+                  Evening</label
+                >
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label
+                >Do this clinic also offer income tax services year round
+                outside of tax season?</label
+              >
+              <div class="radio-group">
+                <label
+                  ><input
+                    type="radio"
+                    formControlName="yearRoundService"
+                    value="yes"
+                  />
+                  Yes</label
+                >
+                <label
+                  ><input
+                    type="radio"
+                    formControlName="yearRoundService"
+                    value="no"
+                  />
+                  No</label
+                >
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label>Do the clinic serve people from:</label>
+              <div class="radio-group">
+                <label>
+                  <input
+                    type="radio"
+                    formControlName="servePeopleFrom"
+                    value="catchment"
+                    (change)="onServePeopleChange($event)"
+                  />
+                  A specific catchment area only
+                </label>
+                <label>
+                  <input
+                    type="radio"
+                    formControlName="servePeopleFrom"
+                    value="ottawa"
+                    (change)="onServePeopleChange($event)"
+                  />
+                  Anywhere from Ottawa
+                </label>
+                <label>
+                  <input
+                    type="radio"
+                    formControlName="servePeopleFrom"
+                    value="other"
+                    (change)="onServePeopleChange($event)"
+                  />
+                  Other:
+                </label>
+                <input
+                  *ngIf="clinicForm.get('servePeopleFrom')?.value === 'other'"
+                  type="text"
+                  formControlName="servePeopleFromOther"
+                  placeholder="Specify here..."
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+        <p>Population Served Details</p>
+        <div class="org-details">
+          <div class="form-row">
+            <div class="form-group">
+              <label>Do you serve?</label>
+              <div class="checkbox-group">
+                <label
+                  ><input
+                    type="checkbox"
+                    (change)="onCheckboxChange('populationServed', $event)"
+                    value="Seniors"
+                  />
+                  Seniors</label
+                >
+                <label
+                  ><input
+                    type="checkbox"
+                    (change)="onCheckboxChange('populationServed', $event)"
+                    value="Persons with disabilities"
+                  />
+                  Persons with disabilities</label
+                >
+                <label
+                  ><input
+                    type="checkbox"
+                    (change)="onCheckboxChange('populationServed', $event)"
+                    value="Newcomers"
+                  />
+                  Newcomers</label
+                >
+                <label
+                  ><input
+                    type="checkbox"
+                    (change)="onCheckboxChange('populationServed', $event)"
+                    value="Language-specific community"
+                  />
+                  Language-specific community</label
+                >
+                <label
+                  ><input
+                    type="checkbox"
+                    (change)="onCheckboxChange('populationServed', $event)"
+                    value="Indigenous"
+                  />
+                  Indigenous (First Nations, Inuit and Métis)</label
+                >
+                <label
+                  ><input
+                    type="checkbox"
+                    (change)="onCheckboxChange('populationServed', $event)"
+                    value="Students"
+                  />
+                  Students</label
+                >
+                <label
+                  ><input
+                    type="checkbox"
+                    (change)="onCheckboxChange('populationServed', $event)"
+                    value="other"
+                  />
+                  Other</label
+                >
+                <input
+                  *ngIf="clinicForm.get('populationServedOther')"
+                  type="text"
+                  formControlName="populationServedOther"
+                  placeholder="Specify other groups"
+                />
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label
+                >In which languages is the service available in the
+                clinic?</label
+              >
+              <div class="checkbox-group">
+                <label
+                  ><input
+                    type="checkbox"
+                    (change)="onCheckboxChange('serviceLanguages', $event)"
+                    value="English"
+                  />
+                  English</label
+                >
+                <label
+                  ><input
+                    type="checkbox"
+                    (change)="onCheckboxChange('serviceLanguages', $event)"
+                    value="French"
+                  />
+                  French</label
+                >
+                <label
+                  ><input
+                    type="checkbox"
+                    (change)="onCheckboxChange('serviceLanguages', $event)"
+                    value="Arabic"
+                  />
+                  Arabic</label
+                >
+                <label
+                  ><input
+                    type="checkbox"
+                    (change)="onCheckboxChange('serviceLanguages', $event)"
+                    value="other"
+                  />
+                  Other</label
+                >
+                <input
+                  *ngIf="clinicForm.get('serviceLanguagesOther')"
+                  type="text"
+                  formControlName="serviceLanguagesOther"
+                  placeholder="Specify other languages"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+        <p>Eligibility Criteria Details</p>
+        <div class="org-details">
+          <div class="form-row">
+            <div class="form-group">
+              <label>Which tax years do you prepare?</label>
+              <div class="checkbox-group">
+                <label>
+                  <input
+                    type="checkbox"
+                    (change)="onCheckboxChange('taxYearsPrepared', $event)"
+                    value="Only current year"
+                  />
+                  Only current year
+                </label>
+                <label>
+                  <input
+                    type="checkbox"
+                    (change)="onCheckboxChange('taxYearsPrepared', $event)"
+                    value="Current and last year"
+                  />
+                  Current and last year
+                </label>
+                <label>
+                  <input
+                    type="checkbox"
+                    (change)="onCheckboxChange('taxYearsPrepared', $event)"
+                    value="Multiple years"
+                  />
+                  Multiple years
+                </label>
+                <label>
+                  <input
+                    type="checkbox"
+                    (change)="onCheckboxChange('taxYearsPrepared', $event)"
+                    value="other"
+                  />
+                  Other
+                </label>
+                <input
+                  *ngIf="clinicForm.get('taxYearsPreparedOther')"
+                  type="text"
+                  formControlName="taxYearsPreparedOther"
+                  placeholder="Specify other tax years"
+                />
+              </div>
+            </div>
+            <div class="form-group">
+              <label
+                >Do you help with tax year for which a client was a resident
+                of?</label
+              >
+              <div class="checkbox-group">
+                <label>
+                  <input
+                    type="checkbox"
+                    (change)="onCheckboxChange('residencyTaxYear', $event)"
+                    value="Ontario, yes"
+                  />
+                  Ontario, yes
+                </label>
+                <label>
+                  <input
+                    type="checkbox"
+                    (change)="onCheckboxChange('residencyTaxYear', $event)"
+                    value="Québec, yes"
+                  />
+                  Québec, yes
+                </label>
+                <label>
+                  <input
+                    type="checkbox"
+                    (change)="onCheckboxChange('residencyTaxYear', $event)"
+                    value="Any province other than Ontario and Québec, yes"
+                  />
+                  Any province other than Ontario and Québec, yes
+                </label>
+                <label>
+                  <input
+                    type="checkbox"
+                    (change)="onCheckboxChange('residencyTaxYear', $event)"
+                    value="other"
+                  />
+                  Other
+                </label>
+                <input
+                  *ngIf="clinicForm.get('residencyTaxYearOther')"
+                  type="text"
+                  formControlName="residencyTaxYearOther"
+                  placeholder="Specify other provinces"
+                />
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Do you serve people with?</label>
+              <div class="checkbox-group">
+                <label
+                  ><input
+                    type="checkbox"
+                    (change)="onCheckboxChange('servePeople', $event)"
+                    value="rental income"
+                  />
+                  Rental income</label
+                >
+                <label
+                  ><input
+                    type="checkbox"
+                    (change)="onCheckboxChange('servePeople', $event)"
+                    value="self-employment income"
+                  />
+                  Self-employment income</label
+                >
+                <label
+                  ><input
+                    type="checkbox"
+                    (change)="onCheckboxChange('servePeople', $event)"
+                    value="Interest income over 1000$"
+                  />
+                  Interest income over $1000</label
+                >
+                <label
+                  ><input
+                    type="checkbox"
+                    (change)="onCheckboxChange('servePeople', $event)"
+                    value="return for a deceased person"
+                  />
+                  Return for a deceased person</label
+                >
+                <label
+                  ><input
+                    type="checkbox"
+                    (change)="onCheckboxChange('servePeople', $event)"
+                    value="Employment expenses"
+                  />
+                  Employment expenses (with specific conditions)</label
+                >
+                <label
+                  ><input
+                    type="checkbox"
+                    (change)="onCheckboxChange('servePeople', $event)"
+                    value="Capital Gains/losses"
+                  />
+                  Capital Gains/losses (with specific conditions)</label
+                >
+                <label
+                  ><input
+                    type="checkbox"
+                    (change)="onCheckboxChange('servePeople', $event)"
+                    value="Larger income than CVITP income-criteria"
+                  />
+                  Larger income than CVITP income-criteria, when people are low
+                  income now</label
+                >
+                <label
+                  ><input
+                    type="checkbox"
+                    (change)="onCheckboxChange('servePeople', $event)"
+                    value="other"
+                  />
+                  Other</label
+                >
+                <input
+                  *ngIf="clinicForm.get('servePeopleOther')"
+                  type="text"
+                  formControlName="servePeopleOther"
+                  placeholder="Specify other criteria"
+                />
+              </div>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label
+                >Do you have a webpage detailing the eligibility criteria? If
+                yes, please provide the webpage address below:</label
+              >
+              <input
+                type="text"
+                formControlName="eligibilityCriteriaWebpage"
+                placeholder="Enter webpage URL"
+              />
+            </div>
+          </div>
+        </div>
+        <p>Appointment Booking Details</p>
+        <div class="org-details">
+          <div class="form-row">
+            <div class="form-group">
+              <label
+                >Process for booking an appointment during the tax season</label
+              >
+              <div class="checkbox-group">
+                <label
+                  ><input
+                    type="checkbox"
+                    (change)="onCheckboxChange('bookingProcess', $event)"
+                    value="In person"
+                  />
+                  In person</label
+                >
+                <label
+                  ><input
+                    type="checkbox"
+                    (change)="onCheckboxChange('bookingProcess', $event)"
+                    value="By phone"
+                  />
+                  By phone</label
+                >
+                <label
+                  ><input
+                    type="checkbox"
+                    (change)="onCheckboxChange('bookingProcess', $event)"
+                    value="Online"
+                  />
+                  Online</label
+                >
+              </div>
+            </div>
+            <div class="form-group">
+              <label
+                >Would an online booking system be useful to the clinic?</label
+              >
+              <div class="radio-group">
+                <label
+                  ><input
+                    type="radio"
+                    formControlName="usefulOnlineBooking"
+                    value="yes"
+                  />
+                  Yes</label
+                >
+                <label
+                  ><input
+                    type="radio"
+                    formControlName="usefulOnlineBooking"
+                    value="no"
+                  />
+                  No</label
+                >
+                <label
+                  ><input
+                    type="radio"
+                    formControlName="usefulOnlineBooking"
+                    value="maybe"
+                  />
+                  Maybe</label
+                >
+              </div>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Working days and hours for appointment booking:</label>
+              <input
+                type="text"
+                formControlName="bookingDaysHours"
+                placeholder="Enter Working days and hours"
+              />
+            </div>
+            <div class="form-group">
+              <label>Phone number for appointment booking:</label>
+              <input
+                type="text"
+                formControlName="bookingContactPhone"
+                placeholder="Enter Phone number for Appointment booking"
+              />
+            </div>
+            <div class="form-group">
+              <label>Email for appointment booking:</label>
+              <input
+                type="text"
+                formControlName="bookingContactEmail"
+                placeholder="Enter Email for appointment booking"
+              />
+            </div>
+          </div>
+        </div>
+        <p>Client Documentation Details</p>
+        <div class="org-details">
+          <div class="form-row">
+            <div class="form-group">
+              <label>Required Documents:</label>
+              <input
+                type="text"
+                formControlName="requiredDocuments"
+                placeholder="List required documents..."
+              />
+            </div>
+
+            <div class="form-group">
+              <label
+                >If the client does not have all their documentation, can clinic
+                help them find it?</label
+              >
+              <div class="checkbox-group">
+                <label>
+                  <input
+                    type="checkbox"
+                    (change)="onCheckboxChange('helpWithMissingDocs', $event)"
+                    value="yes"
+                  />
+                  Yes for CRA documents with Autofill/REP ID
+                </label>
+                <label>
+                  <input
+                    type="checkbox"
+                    (change)="onCheckboxChange('helpWithMissingDocs', $event)"
+                    value="some"
+                  />
+                  Yes with help from staff or volunteer for some documentation
+                </label>
+                <label>
+                  <input
+                    type="checkbox"
+                    (change)="onCheckboxChange('helpWithMissingDocs', $event)"
+                    value="no"
+                  />
+                  No, client must have all their documents ready
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+        <p>Volunteers Details and other information</p>
+        <div class="org-details">
+          <div class="form-row">
+            <div class="form-group">
+              <label>Who is preparing tax returns?</label>
+              <div class="checkbox-group">
+                <label
+                  ><input
+                    type="checkbox"
+                    (change)="onCheckboxChange('taxPreparers', $event)"
+                    value="Volunteers"
+                  />
+                  Volunteers</label
+                >
+                <label
+                  ><input
+                    type="checkbox"
+                    (change)="onCheckboxChange('taxPreparers', $event)"
+                    value="Employees"
+                  />
+                  Employees</label
+                >
+                <label>
+                  <input
+                    type="checkbox"
+                    (change)="onCheckboxChange('taxPreparers', $event)"
+                    value="Other"
+                  />
+                  Other:
+                  <input
+                    *ngIf="
+                      clinicForm.get('taxPreparers')?.value.includes('Other')
+                    "
+                    type="text"
+                    formControlName="taxPreparers"
+                    placeholder="Specify here..."
+                  />
+                </label>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label>Who is filing tax returns?</label>
+              <div class="checkbox-group">
+                <label
+                  ><input
+                    type="checkbox"
+                    (change)="onCheckboxChange('taxFilers', $event)"
+                    value="Volunteers"
+                  />
+                  Volunteers</label
+                >
+                <label
+                  ><input
+                    type="checkbox"
+                    (change)="onCheckboxChange('taxFilers', $event)"
+                    value="Employees"
+                  />
+                  Employees</label
+                >
+                <label>
+                  <input
+                    type="checkbox"
+                    (change)="onCheckboxChange('taxFilers', $event)"
+                    value="Other"
+                  />
+                  Other:
+                  <input
+                    *ngIf="clinicForm.get('taxFilers')?.value.includes('Other')"
+                    type="text"
+                    formControlName="taxFilers"
+                    placeholder="Specify here..."
+                  />
+                </label>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label>What are your tax clinic volunteers' roles?</label>
+              <div class="checkbox-group">
+                <label
+                  ><input
+                    type="checkbox"
+                    (change)="onCheckboxChange('volunteerRoles', $event)"
+                    value="Booking appointments"
+                  />
+                  Booking appointments</label
+                >
+                <label
+                  ><input
+                    type="checkbox"
+                    (change)="onCheckboxChange('volunteerRoles', $event)"
+                    value="Client intake"
+                  />
+                  Client intake (gathering personal information and tax
+                  slips)</label
+                >
+                <label
+                  ><input
+                    type="checkbox"
+                    (change)="onCheckboxChange('volunteerRoles', $event)"
+                    value="Preparing tax returns"
+                  />
+                  Preparing tax returns using software</label
+                >
+                <label
+                  ><input
+                    type="checkbox"
+                    (change)="onCheckboxChange('volunteerRoles', $event)"
+                    value="Explaining tax returns"
+                  />
+                  Explaining tax return to client and having them sign e-filing
+                  authorization</label
+                >
+                <label
+                  ><input
+                    type="checkbox"
+                    (change)="onCheckboxChange('volunteerRoles', $event)"
+                    value="Verification"
+                  />
+                  Tax return verification/audit before e-filing</label
+                >
+                <label
+                  ><input
+                    type="checkbox"
+                    (change)="onCheckboxChange('volunteerRoles', $event)"
+                    value="E-FILE tax returns"
+                  />
+                  E-FILE tax returns</label
+                >
+                <label
+                  ><input
+                    type="checkbox"
+                    (change)="onCheckboxChange('volunteerRoles', $event)"
+                    value="Administrative tasks"
+                  />
+                  Administrative tasks</label
+                >
+                <label>
+                  <input
+                    type="checkbox"
+                    (change)="onCheckboxChange('volunteerRoles', $event)"
+                    value="Other"
+                  />
+                  Other:
+                  <input
+                    *ngIf="
+                      clinicForm.get('volunteerRoles')?.value.includes('Other')
+                    "
+                    type="text"
+                    formControlName="volunteerRolesOther"
+                    placeholder="Specify here..."
+                  />
+                </label>
+              </div>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label
+                >Would you benefit from additional support with any of the
+                following?</label
+              >
+              <div class="checkbox-group">
+                <label
+                  ><input
+                    type="checkbox"
+                    (change)="onCheckboxChange('additionalSupport', $event)"
+                    value="Volunteer recruitment"
+                  />
+                  Volunteer recruitment</label
+                >
+                <label
+                  ><input
+                    type="checkbox"
+                    (change)="onCheckboxChange('additionalSupport', $event)"
+                    value="Volunteer training"
+                  />
+                  Volunteer training</label
+                >
+                <label
+                  ><input
+                    type="checkbox"
+                    (change)="onCheckboxChange('additionalSupport', $event)"
+                    value="Employee training"
+                  />
+                  Training of employees new to operating tax clinics</label
+                >
+                <label
+                  ><input
+                    type="checkbox"
+                    (change)="onCheckboxChange('additionalSupport', $event)"
+                    value="Follow-up with clients"
+                  />
+                  Follow-up with clients post-tax season</label
+                >
+                <label
+                  ><input
+                    type="checkbox"
+                    (change)="onCheckboxChange('additionalSupport', $event)"
+                    value="Clinic visibility"
+                  />
+                  Visibility for your tax clinic to reach more clients</label
+                >
+                <label
+                  ><input
+                    type="checkbox"
+                    (change)="onCheckboxChange('additionalSupport', $event)"
+                    value="Online booking system"
+                  />
+                  Set up an online booking system</label
+                >
+                <label>
+                  <input
+                    type="checkbox"
+                    (change)="onCheckboxChange('additionalSupport', $event)"
+                    value="Other"
+                  />
+                  Other:
+                  <input
+                    *ngIf="
+                      clinicForm
+                        .get('additionalSupport')
+                        ?.value.includes('Other')
+                    "
+                    type="text"
+                    formControlName="additionalSupport"
+                    placeholder="Specify here..."
+                  />
+                </label>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label>
+                What is the approxime capacity of the tax clinic during the tax
+                season (March-April)?
+              </label>
+              <input
+                type="number"
+                formControlName="clinicCapacity"
+                placeholder="Number of tax returns"
+              />
+            </div>
+
+            <div class="form-group">
+              <label>Any last comments or questions?</label>
+              <input
+                type="text"
+                formControlName="comments"
+                placeholder="Your comments or questions..."
+              />
+            </div>
+          </div>
         </div>
 
-        <div class="form-group">
-          <label>Contact Email:</label>
-          <input type="email" [(ngModel)]="clinic.contactEmail" name="contactEmail" required />
-        </div>
-
-        <div class="form-group">
-          <label>Contact Person:</label>
-          <input type="text" [(ngModel)]="clinic.contactPersonName" name="contactPersonName" required />
-        </div>
-
-        <div class="form-group">
-          <label>Organization Contact:</label>
-          <input type="text" [(ngModel)]="clinic.organizationContact" name="organizationContact" required />
-        </div>
-
-        <div class="form-group">
-          <label>Contact Person Title:</label>
-          <input type="text" [(ngModel)]="clinic.contactPersonTitle" name="contactPersonTitle" />
-        </div>
-
-        <div class="form-group">
-          <label>Appointment Availability:</label>
-          <input type="text" [(ngModel)]="clinic.appointmentAvailability" name="appointmentAvailability" />
-        </div>
-
-        <div class="form-group">
-          <label>Listed on CRA:</label>
-          <select [(ngModel)]="clinic.listedOnCra" name="listedOnCra">
-            <option value="yes">Yes</option>
-            <option value="no">No</option>
-          </select>
-        </div>
-
-        <div class="form-group">
-          <label>Visible on NCEO:</label>
-          <select [(ngModel)]="clinic.visibleOnNceo" name="visibleOnNceo">
-            <option value="yes">Yes</option>
-            <option value="no">No</option>
-          </select>
-        </div>
-
-        <div class="form-group">
-          <label>Wheelchair Accessible:</label>
-          <select [(ngModel)]="clinic.wheelchairAccessible" name="wheelchairAccessible">
-            <option [ngValue]="true">Yes</option>
-            <option [ngValue]="false">No</option>
-          </select>
-        </div>
-
-        <div class="form-group">
-          <label>Serve People From:</label>
-          <input type="text" [(ngModel)]="clinic.servePeopleFrom" name="servePeopleFrom" />
-        </div>
-
-        <div class="form-group">
-          <label>Catchment Area:</label>
-          <input type="text" [(ngModel)]="clinic.catchmentArea" name="catchmentArea" />
-        </div>
-
-        <div class="form-group">
-          <label>Months Offered:</label>
-          <input type="text" [(ngModel)]="clinic.monthsOffered" name="monthsOffered" />
-        </div>
-
-        <div class="form-group">
-          <label>Year-Round Service:</label>
-          <select [(ngModel)]="clinic.yearRoundService" name="yearRoundService">
-            <option [ngValue]="true">Yes</option>
-            <option [ngValue]="false">No</option>
-          </select>
-        </div>
-
-        <div class="form-group">
-          <label>Service Languages:</label>
-          <input type="text" [(ngModel)]="clinic.serviceLanguages" name="serviceLanguages" />
-        </div>
-
-        <div class="form-group">
-          <label>Eligibility Criteria Webpage:</label>
-          <input type="text" [(ngModel)]="clinic.eligibilityCriteriaWebpage" name="eligibilityCriteriaWebpage" />
-        </div>
-
-        <div class="form-group">
-          <label>Booking Process:</label>
-          <input type="text" [(ngModel)]="clinic.bookingProcess" name="bookingProcess" />
-        </div>
-
-        <div class="form-group">
-          <label>Booking Contact Phone:</label>
-          <input type="text" [(ngModel)]="clinic.bookingContactPhone" name="bookingContactPhone" />
-        </div>
-
-        <div class="form-group">
-          <label>Booking Contact Email:</label>
-          <input type="text" [(ngModel)]="clinic.bookingContactEmail" name="bookingContactEmail" />
-        </div>
-
-        <div class="form-group">
-          <label>Online Booking Link:</label>
-          <input type="text" [(ngModel)]="clinic.onlineBookingLink" name="onlineBookingLink" />
-        </div>
-
-        <div class="form-group">
-          <label>Required Documents:</label>
-          <textarea [(ngModel)]="clinic.requiredDocuments" name="requiredDocuments"></textarea>
-        </div>
-
-        <div class="form-group">
-          <label>Additional Support:</label>
-          <textarea [(ngModel)]="clinic.additionalSupport" name="additionalSupport"></textarea>
-        </div>
-
-        <div class="form-group">
-          <label>Comments:</label>
-          <textarea [(ngModel)]="clinic.comments" name="comments"></textarea>
-        </div>
-
-        <div class="modal-actions">
-          <button type="submit">{{ clinic.id ? "Update" : "Save" }}</button>
-          <button type="button" (click)="closeModal()">Cancel</button>
+        <div class="form-row">
+          <button
+            type="submit"
+            class="save-button"
+            [disabled]="clinicForm.invalid"
+          >
+            {{ isEditMode ? "Update Clinic" : "Add Clinic" }}
+          </button>
         </div>
       </form>
     </div>
