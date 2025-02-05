@@ -1,7 +1,13 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  Output,
+  SimpleChanges,
+  OnChanges,
+} from '@angular/core';
 import { Clinic } from '../../models/clinic.model';
 import { Location } from '../../models/location.model';
-import { ClinicService } from '../../services/clinic.service';
 import {
   FormArray,
   FormBuilder,
@@ -13,63 +19,60 @@ import {
 @Component({
   selector: 'app-tax-clinic-modal',
   standalone: false,
-
   templateUrl: './tax-clinic-modal.component.html',
-  styleUrl: './tax-clinic-modal.component.scss',
+  styleUrls: ['./tax-clinic-modal.component.scss'],
 })
-export class TaxClinicModalComponent implements OnInit {
+export class TaxClinicModalComponent implements OnChanges {
   @Input() isOpen: boolean = false;
+  @Input() isEditMode: boolean = false;
   @Input() clinic: Clinic | null = null;
-  @Output() closeModalEvent = new EventEmitter<void>();
-  @Output() clinicSaved = new EventEmitter<void>();
+  @Output() close = new EventEmitter<void>();
+  @Output() save = new EventEmitter<Clinic>();
 
   clinicForm: FormGroup;
-  isEditMode: boolean = false;
 
-  constructor(private fb: FormBuilder, private clinicService: ClinicService) {
+  constructor(private fb: FormBuilder) {
     this.clinicForm = this.fb.group({
-      id: [0],
+      id: [null],
       organizationName: ['', Validators.required],
+      organisationWebsite: [
+        '',
+        [Validators.required, Validators.pattern('https?://.+')],
+      ],
+      organisationalEmail: ['', [Validators.required, Validators.email]],
       contactEmail: ['', [Validators.required, Validators.email]],
       contactPersonName: ['', Validators.required],
-      organizationContact: ['', Validators.required],
       contactPersonTitle: [''],
-      listedOnCra: ['no'],
-      visibleOnNceo: ['no'],
+      listedOnCra: ['', Validators.required],
+      visibleOnNceo: ['', Validators.required],
       alternateContactName: [''],
       alternateContactTitle: [''],
       alternateContactEmail: [''],
       alternateContactPhone: [''],
       catchmentArea: [''],
       locations: this.fb.array([], Validators.required),
-      appointmentAvailability: [''],
-      publicInfo: [''],
+      appointmentAvailability: ['', Validators.required],
+      publicInfo: ['', Validators.required],
       wheelchairAccessible: [false],
       clinicTypes: this.fb.array([], Validators.required),
       monthsOffered: this.fb.array([], Validators.required),
       daysOfOperation: this.fb.array([], Validators.required),
       hoursOfOperation: this.fb.array([], Validators.required),
       yearRoundService: ['', Validators.required],
-      servePeopleFrom: [''],
+      servePeopleFrom: ['', Validators.required],
       taxYearsPrepared: this.fb.array([], Validators.required),
-      taxYearsPreparedOther: [''],
       residencyTaxYear: this.fb.array([], Validators.required),
-      residencyTaxYearOther: [''],
       servePeople: this.fb.array([], Validators.required),
-      servePeopleOther: [''],
       eligibilityCriteriaWebpage: [''],
       populationServed: this.fb.array([]),
-      populationServedOther: [''],
       serviceLanguages: this.fb.array([], Validators.required),
-      serviceLanguagesOther: [''],
       bookingProcess: this.fb.array([], Validators.required),
       bookingContactPhone: [''],
-      bookingContactEmail: [''],
+      bookingContactEmail: [''], 
       onlineBookingLink: [''],
       usefulOnlineBooking: [''],
       bookingDaysHours: ['', Validators.required],
-      onlineBookingUseful: [''],
-      requiredDocuments: [''],
+      onlineBookingUseful: [''], requiredDocuments: [''],
       helpWithMissingDocs: this.fb.array([], Validators.required),
       taxPreparers: this.fb.array([]),
       taxFilers: this.fb.array([]),
@@ -80,54 +83,110 @@ export class TaxClinicModalComponent implements OnInit {
     });
   }
 
-  ngOnInit(): void {
-    if (this.clinic) {
-      this.isEditMode = !!this.clinic.id;
-      this.clinicForm.patchValue(this.clinic);
-      // If clinic has locations, populate them
-      if (this.clinic.locations?.length) {
-        this.clinic.locations.forEach((loc) => this.addLocation(loc));
-      } else {
-        // If no locations exist, add a default empty location
-        this.addLocation();
-      }
-    } else {
-      // If adding a new clinic, ensure a default empty location exists
-      this.addLocation();
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes['clinic'] && this.clinic) {
+      this.clinicForm.reset(); // Reset before patching new values
+      this.clinicForm.patchValue({ ...this.clinic });
+
+      this.populateFormArrays();
     }
   }
 
-  saveClinic(): void {
-    if (this.clinicForm.invalid) return;
+  private populateFormArrays() {
+    const formArrays = [
+      'clinicTypes',
+      'monthsOffered',
+      'daysOfOperation',
+      'hoursOfOperation',
+      'populationServed',
+      'taxYearsPrepared',
+      'residencyTaxYear',
+      'servePeople',
+      'serviceLanguages',
+      'bookingProcess',
+      'helpWithMissingDocs',
+      'taxPreparers',
+      'taxFilers',
+      'volunteerRoles',
+      'additionalSupport',
+    ];
 
-    const clinicData = this.clinicForm.value;
-    if (this.isEditMode) {
-      // Update existing clinic
-      this.clinicService.updateTaxClinic(clinicData.id, clinicData).subscribe(
-        () => {
-          this.clinicSaved.emit();
-          this.closeModal();
-        },
-        (error) => {
-          console.error('Error updating clinic:', error);
-        }
-      );
-    } else {
-      // Add new clinic
-      this.clinicService.addTaxClinic(clinicData).subscribe(
-        () => {
-          this.clinicSaved.emit();
-          this.closeModal();
-        },
-        (error) => {
-          console.error('Error adding clinic:', error);
-        }
-      );
+    formArrays.forEach((field) => {
+      const formArray = this.clinicForm.get(field) as FormArray;
+      formArray.clear();
+      this.convertToArray((this.clinic as any)?.[field]).forEach((value) => {
+        formArray.push(new FormControl(value));
+      });
+    });
+
+    const locationsArray = this.clinicForm.get('locations') as FormArray;
+    locationsArray.clear();
+    (this.clinic?.locations || []).forEach((loc) =>
+      locationsArray.push(this.createLocationGroup(loc))
+    );
+  }
+
+  private convertToArray(value: any): string[] {
+    if (!value) return [];
+    if (Array.isArray(value)) return value.filter(Boolean);
+    return typeof value === 'string' ? value.split(', ').filter(Boolean) : [];
+  }
+
+  saveClinic() {
+    if (this.clinicForm.valid) {
+      const formValue = {
+        ...this.clinicForm.value,
+        locations: this.clinicForm.value.locations.map((loc: Location) => ({
+          ...loc,
+          taxClinicId: this.isEditMode ? this.clinic?.id : undefined,
+        })),
+      };
+      this.save.emit(formValue);
     }
   }
 
-  closeModal(): void {
-    this.closeModalEvent.emit();
+  closeModal() {
+    this.close.emit();
+  }
+
+  createLocationGroup(location?: Location): FormGroup {
+    return this.fb.group({
+      id: [location?.id || null],
+      taxClinicId: [this.isEditMode && this.clinic ? this.clinic.id : null],
+      street: [location?.street || '', Validators.required],
+      city: [location?.city || '', Validators.required],
+      state: [location?.state || '', Validators.required],
+      postalCode: [location?.postalCode || '', Validators.required],
+      createdDate: [location?.createdDate || new Date().toISOString()],
+      updatedDate: [location?.updatedDate || new Date().toISOString()],
+    });
+  }
+
+  addLocation(location?: Location): void {
+    (this.clinicForm.get('locations') as FormArray).push(
+      this.createLocationGroup(location)
+    );
+  }
+
+  removeLocation(index: number): void {
+    (this.clinicForm.get('locations') as FormArray).removeAt(index);
+  }
+
+  get locationsFormArray(): FormArray {
+    return this.clinicForm.get('locations') as FormArray;
+  }
+
+  onCheckboxChange(controlName: string, event: any) {
+    const formArray = this.clinicForm.get(controlName) as FormArray;
+    if (event.target.checked) {
+      formArray.push(new FormControl(event.target.value));
+    } else {
+      const index = formArray.controls.findIndex(
+        (ctrl) => ctrl.value === event.target.value
+      );
+      if (index !== -1) formArray.removeAt(index);
+    }
+    formArray.markAsTouched();
   }
 
   onServePeopleChange(event: any) {
@@ -139,47 +198,5 @@ export class TaxClinicModalComponent implements OnInit {
     } else {
       this.clinicForm.removeControl('servePeopleFromOther');
     }
-  }
-
-  onCheckboxChange(controlName: string, event: any) {
-    const checkArray = this.clinicForm.get(controlName) as FormArray;
-    if (event.target.checked) {
-      checkArray.push(new FormControl(event.target.value));
-    } else {
-      let index = checkArray.controls.findIndex(
-        (x) => x.value === event.target.value
-      );
-      checkArray.removeAt(index);
-    }
-  }
-
-  createLocationGroup(location?: Location): FormGroup {
-    return this.fb.group({
-      id: [location?.id || 0],
-      taxClinicId: [location?.taxClinicId || 0],
-      street: [location?.street || '', Validators.required],
-      city: [location?.city || '', Validators.required],
-      state: [location?.state || '', Validators.required],
-      postalCode: [location?.postalCode || '', Validators.required],
-      createdDate: [location?.createdDate || new Date().toISOString()],
-      updatedDate: [location?.updatedDate || new Date().toISOString()],
-    });
-  }
-
-  // Function to add a new location
-  addLocation(location?: Location): void {
-    (this.clinicForm.get('locations') as FormArray).push(
-      this.createLocationGroup(location)
-    );
-  }
-
-  // Function to remove a location
-  removeLocation(index: number): void {
-    (this.clinicForm.get('locations') as FormArray).removeAt(index);
-  }
-
-  // Helper function to get locations as FormArray
-  get locationsFormArray(): FormArray {
-    return this.clinicForm.get('locations') as FormArray;
   }
 }

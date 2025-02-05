@@ -19,8 +19,6 @@
           <th>Tax Clinic Name</th>
           <th>Tax Clinic details</th>
           <th>Contact person</th>
-          <!-- <th>Days</th>
-                    <th>Hours</th> -->
           <th></th>
           <th class="header-last">Last update</th>
         </tr>
@@ -32,10 +30,14 @@
             <p class="clinic-name">{{ clinic.organizationName }}</p>
           </td>
           <td>
-            <!-- <p>{{ clinic.address }}</p>
-                        <p>{{ clinic.phone }}</p> -->
-            <a [href]="clinic.organizationContact" target="_blank">{{
-              clinic.organizationContact
+            <div class="clinic-info" *ngFor="let location of clinic?.locations">
+              <p>
+                {{ location?.street }}, {{ location?.city }},
+                {{ location?.state }}, {{ location?.postalCode }}
+              </p>
+            </div>
+            <a [href]="clinic.organisationWebsite" target="_blank">{{
+              clinic.organisationWebsite
             }}</a>
             <button class="view-more" (click)="openClinicDetailsModal(clinic)">
               View more
@@ -45,8 +47,6 @@
             <span class="contact-name">{{ clinic.contactPersonName }}</span>
             <p>{{ clinic.contactEmail }}</p>
           </td>
-          <!-- <td>{{ clinic.days }}</td>
-                    <td>{{ clinic.hours }}</td> -->
           <td>
             <div class="clinic-actions">
               <button class="edit-button" (click)="openEditClinicModal(clinic)">
@@ -73,8 +73,9 @@
   <app-tax-clinic-modal
     [isOpen]="showClinicModal"
     [clinic]="selectedClinic"
-    (closeModalEvent)="closeClinicModal()"
-    (clinicSaved)="onClinicSaved()"
+    [isEditMode]="isEditMode"
+    (close)="closeClinicModal()"
+    (save)="saveClinic($event)"
   >
   </app-tax-clinic-modal>
 

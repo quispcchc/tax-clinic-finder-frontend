@@ -20,6 +20,7 @@ export class TaxClinicManagementComponent implements OnInit {
 
   isDeleteModalOpen: boolean = false;
   taxClinicToDeleteId: number | null = null;
+  isEditMode: boolean = false;
 
   popupMessage: string = '';
   popupVisible: boolean = false;
@@ -29,7 +30,8 @@ export class TaxClinicManagementComponent implements OnInit {
   selectedClinic: Clinic = {
     id: 0,
     organizationName: '',
-    organizationContact: '',
+    organisationWebsite: '',
+    organisationalEmail: '',
     contactPersonName: '',
     contactPersonTitle: '',
     contactEmail: '',
@@ -41,41 +43,43 @@ export class TaxClinicManagementComponent implements OnInit {
     alternateContactTitle: '',
     alternateContactPhone: '',
     publicInfo: '',
-    clinicTypes: '',
-    wheelchairAccessible: false,
+    clinicTypes: [],
+    wheelchairAccessible: '',
     servePeopleFrom: '',
     catchmentArea: '',
-    monthsOffered: '',
-    hoursOfOperation: '',
-    daysOfOperation: '',
-    yearRoundService: false,
-    populationServed: '',
-    serviceLanguages: '',
-    taxYearsPrepared: '',
-    residencyTaxYear: '',
-    servePeople: '',
+    monthsOffered: [],
+    hoursOfOperation: [],
+    daysOfOperation: [],
+    yearRoundService: '',
+    populationServed: [],
+    serviceLanguages: [],
+    taxYearsPrepared: [],
+    residencyTaxYear: [],
+    servePeople: [],
     eligibilityCriteriaWebpage: '',
-    bookingProcess: '',
+    bookingProcess: [],
     bookingDaysHours: '',
     bookingContactPhone: '',
     bookingContactEmail: '',
     onlineBookingLink: '',
     usefulOnlineBooking: '',
     requiredDocuments: '',
-    helpWithMissingDocs: '',
-    taxPreparers: '',
-    taxFilers: '',
-    volunteerRoles: '',
+    helpWithMissingDocs: [],
+    taxPreparers: [],
+    taxFilers: [],
+    volunteerRoles: [],
     clinicCapacity: '',
-    additionalSupport: '',
+    additionalSupport: [],
     comments: '',
     createdDate: new Date().toISOString(),
     updatedDate: new Date().toISOString(),
     locations: [],
   };
 
-  constructor(private clinicService: ClinicService, 
-      private languageService: LanguageService) {
+  constructor(
+    private clinicService: ClinicService,
+    private languageService: LanguageService
+  ) {
     this.currentLanguage = this.languageService.getLanguage();
   }
 
@@ -89,7 +93,8 @@ export class TaxClinicManagementComponent implements OnInit {
         this.taxClinics = data.map((clinic) => ({
           id: clinic.id,
           organizationName: clinic.organization_name,
-          organizationContact: clinic.organization_contact,
+          organisationWebsite: clinic.organisation_website,
+          organisationalEmail: clinic.organisation_email,
           contactPersonName: clinic.contact_person_name,
           contactPersonTitle: clinic.contact_person_title,
           contactEmail: clinic.contact_email,
@@ -101,33 +106,43 @@ export class TaxClinicManagementComponent implements OnInit {
           alternateContactPhone: clinic.alternate_contact_phone,
           alternateContactTitle: clinic.alternate_contact_title,
           publicInfo: clinic.public_info,
-          clinicTypes: clinic.clinic_types,
+          clinicTypes: this.convertStringToArray(clinic.clinic_types),
           wheelchairAccessible: clinic.wheelchair_accessible,
           servePeopleFrom: clinic.serve_people_from,
           catchmentArea: clinic.catchment_area,
-          monthsOffered: clinic.months_offered,
-          hoursOfOperation: clinic.hours_of_operation,
-          daysOfOperation: clinic.days_of_operation,
+          monthsOffered: this.convertStringToArray(clinic.months_offered),
+          hoursOfOperation: this.convertStringToArray(
+            clinic.hours_of_operation
+          ),
+          daysOfOperation: this.convertStringToArray(clinic.days_of_operation),
           yearRoundService: clinic.year_round_service,
-          populationServed: clinic.population_served,
-          serviceLanguages: clinic.service_languages,
-          taxYearsPrepared: clinic.tax_years_prepared,
-          residencyTaxYear: clinic.residency_tax_year,
-          servePeople: clinic.serve_people,
+          populationServed: this.convertStringToArray(clinic.population_served),
+          serviceLanguages: this.convertStringToArray(clinic.service_languages),
+          taxYearsPrepared: this.convertStringToArray(
+            clinic.tax_years_prepared
+          ),
+          residencyTaxYear: this.convertStringToArray(
+            clinic.residency_tax_year
+          ),
+          servePeople: this.convertStringToArray(clinic.serve_people),
           eligibilityCriteriaWebpage: clinic.eligibility_criteria_webpage,
-          bookingProcess: clinic.booking_process,
+          bookingProcess: this.convertStringToArray(clinic.booking_process),
           bookingDaysHours: clinic.booking_days_hours,
           bookingContactPhone: clinic.booking_contact_phone,
           bookingContactEmail: clinic.booking_contact_email,
           onlineBookingLink: clinic.online_booking_link,
           usefulOnlineBooking: clinic.useful_online_booking,
           requiredDocuments: clinic.required_documents,
-          helpWithMissingDocs: clinic.help_with_missing_docs,
-          taxPreparers: clinic.tax_preparers,
-          taxFilers: clinic.tax_filers,
-          volunteerRoles: clinic.volunteer_roles,
+          helpWithMissingDocs: this.convertStringToArray(
+            clinic.help_with_missing_docs
+          ),
+          taxPreparers: this.convertStringToArray(clinic.tax_preparers),
+          taxFilers: this.convertStringToArray(clinic.tax_filers),
+          volunteerRoles: this.convertStringToArray(clinic.volunteer_roles),
           clinicCapacity: clinic.clinic_capacity,
-          additionalSupport: clinic.additional_support,
+          additionalSupport: this.convertStringToArray(
+            clinic.additional_support
+          ),
           comments: clinic.comments,
           createdDate: clinic.created_at,
           updatedDate: clinic.updated_at,
@@ -155,6 +170,11 @@ export class TaxClinicManagementComponent implements OnInit {
     );
   }
 
+  // Helper method to convert comma-separated strings to arrays
+  convertStringToArray(value: string): string[] {
+    return value ? value.split(', ') : [];
+  }
+
   filterClinics() {
     this.filteredTaxClinics = this.taxClinics.filter((clinic) =>
       clinic.organizationName
@@ -173,7 +193,8 @@ export class TaxClinicManagementComponent implements OnInit {
     this.selectedClinic = {
       id: 0,
       organizationName: '',
-      organizationContact: '',
+      organisationWebsite: '',
+      organisationalEmail: '',
       contactPersonName: '',
       contactPersonTitle: '',
       contactEmail: '',
@@ -185,33 +206,33 @@ export class TaxClinicManagementComponent implements OnInit {
       alternateContactTitle: '',
       alternateContactPhone: '',
       publicInfo: '',
-      clinicTypes: '',
-      wheelchairAccessible: false,
+      clinicTypes: [],
+      wheelchairAccessible: '',
       servePeopleFrom: '',
       catchmentArea: '',
-      monthsOffered: '',
+      monthsOffered: [],
       hoursOfOperation: '',
-      daysOfOperation: '',
-      yearRoundService: false,
+      daysOfOperation: [],
+      yearRoundService: '',
       populationServed: '',
-      serviceLanguages: '',
-      taxYearsPrepared: '',
-      residencyTaxYear: '',
-      servePeople: '',
+      serviceLanguages: [],
+      taxYearsPrepared: [],
+      residencyTaxYear: [],
+      servePeople: [],
       eligibilityCriteriaWebpage: '',
-      bookingProcess: '',
+      bookingProcess: [],
       bookingDaysHours: '',
       bookingContactPhone: '',
       bookingContactEmail: '',
       onlineBookingLink: '',
       usefulOnlineBooking: '',
       requiredDocuments: '',
-      helpWithMissingDocs: '',
-      taxPreparers: '',
-      taxFilers: '',
-      volunteerRoles: '',
+      helpWithMissingDocs: [],
+      taxPreparers: [],
+      taxFilers: [],
+      volunteerRoles: [],
       clinicCapacity: '',
-      additionalSupport: '',
+      additionalSupport: [],
       comments: '',
       createdDate: new Date().toISOString(),
       updatedDate: new Date().toISOString(),
@@ -233,7 +254,8 @@ export class TaxClinicManagementComponent implements OnInit {
     this.selectedClinic = {
       id: 0,
       organizationName: '',
-      organizationContact: '',
+      organisationWebsite: '',
+      organisationalEmail: '',
       contactPersonName: '',
       contactPersonTitle: '',
       contactEmail: '',
@@ -245,44 +267,46 @@ export class TaxClinicManagementComponent implements OnInit {
       alternateContactTitle: '',
       alternateContactPhone: '',
       publicInfo: '',
-      clinicTypes: '',
-      wheelchairAccessible: false,
+      clinicTypes: [],
+      wheelchairAccessible: '',
       servePeopleFrom: '',
       catchmentArea: '',
-      monthsOffered: '',
-      hoursOfOperation: '',
-      daysOfOperation: '',
-      yearRoundService: false,
-      populationServed: '',
-      serviceLanguages: '',
-      taxYearsPrepared: '',
-      residencyTaxYear: '',
-      servePeople: '',
+      monthsOffered: [],
+      hoursOfOperation: [],
+      daysOfOperation: [],
+      yearRoundService: '',
+      populationServed: [],
+      serviceLanguages: [],
+      taxYearsPrepared: [],
+      residencyTaxYear: [],
+      servePeople: [],
       eligibilityCriteriaWebpage: '',
-      bookingProcess: '',
+      bookingProcess: [],
       bookingDaysHours: '',
       bookingContactPhone: '',
       bookingContactEmail: '',
       onlineBookingLink: '',
       usefulOnlineBooking: '',
       requiredDocuments: '',
-      helpWithMissingDocs: '',
-      taxPreparers: '',
-      taxFilers: '',
-      volunteerRoles: '',
+      helpWithMissingDocs: [],
+      taxPreparers: [],
+      taxFilers: [],
+      volunteerRoles: [],
       clinicCapacity: '',
-      additionalSupport: '',
+      additionalSupport: [],
       comments: '',
       createdDate: new Date().toISOString(),
       updatedDate: new Date().toISOString(),
       locations: [],
     };
+    this.isEditMode = false;
     this.showClinicModal = true;
   }
 
   // Open modal to edit a clinic
   openEditClinicModal(clinic: Clinic): void {
     this.selectedClinic = { ...clinic };
+    this.isEditMode = true;
     this.showClinicModal = true;
   }
 
@@ -297,6 +321,185 @@ export class TaxClinicManagementComponent implements OnInit {
     this.closeClinicModal();
   }
 
+  // mapFrontendToBackend(clinic: Clinic): any {
+  //   console.log("clinic details inside map function", clinic);
+  //   return {
+  //     id: clinic.id,
+  //     organization_name: clinic.organizationName,
+  //     organisation_website: clinic.organisationWebsite,
+  //     organisation_email: clinic.organisationalEmail,
+  //     contact_person_name: clinic.contactPersonName,
+  //     contact_person_title: clinic.contactPersonTitle,
+  //     contact_email: clinic.contactEmail,
+  //     appointment_available: clinic.appointmentAvailability,
+  //     listed_on_cra: clinic.listedOnCra,
+  //     visible_on_nceo: clinic.visibleOnNceo,
+  //     alternate_contact_name: clinic.alternateContactName,
+  //     alternate_contact_email: clinic.alternateContactEmail,
+  //     alternate_contact_phone: clinic.alternateContactPhone,
+  //     alternate_contact_title: clinic.alternateContactTitle,
+  //     public_info: clinic.publicInfo,
+  //     clinic_types: clinic.clinicTypes,
+  //     wheelchair_accessible: clinic.wheelchairAccessible,
+  //     serve_people_from: clinic.servePeopleFrom,
+  //     catchment_area: clinic.catchmentArea,
+  //     months_offered: clinic.monthsOffered,
+  //     hours_of_operation: clinic.hoursOfOperation,
+  //     days_of_operation: clinic.daysOfOperation,
+  //     year_round_service: clinic.yearRoundService,
+  //     population_served: clinic.populationServed,
+  //     service_languages: clinic.serviceLanguages,
+  //     tax_years_prepared: clinic.taxYearsPrepared,
+  //     residency_tax_year: clinic.residencyTaxYear,
+  //     serve_people: clinic.servePeople,
+  //     eligibility_criteria_webpage: clinic.eligibilityCriteriaWebpage,
+  //     booking_process: clinic.bookingProcess,
+  //     booking_days_hours: clinic.bookingDaysHours,
+  //     booking_contact_phone: clinic.bookingContactPhone,
+  //     booking_contact_email: clinic.bookingContactEmail,
+  //     online_booking_link: clinic.onlineBookingLink,
+  //     useful_online_booking: clinic.usefulOnlineBooking,
+  //     required_documents: clinic.requiredDocuments,
+  //     help_with_missing_docs: clinic.helpWithMissingDocs,
+  //     tax_preparers: clinic.taxPreparers,
+  //     tax_filers: clinic.taxFilers,
+  //     volunteer_roles: clinic.volunteerRoles,
+  //     clinic_capacity: clinic.clinicCapacity,
+  //     additional_support: clinic.additionalSupport,
+  //     comments: clinic.comments,
+  //     created_at: clinic.createdDate,
+  //     updated_at: clinic.updatedDate,
+  //     locations: clinic.locations,
+  //   };
+  // }
+
+  mapFrontendToBackend(clinic: any): any {
+    console.log("Clinic before mapping:", clinic);
+    
+    const mappedClinic = {
+      id: clinic.id,
+      organizationName: clinic.organization_name,
+      organisationWebsite: clinic.organisation_website,
+      organisationalEmail: clinic.organisation_email,
+      contactPersonName: clinic.contact_person_name,
+      contactPersonTitle: clinic.contact_person_title,
+      contactEmail: clinic.contact_email,
+      appointmentAvailability: clinic.appointment_available,
+      listedOnCra: clinic.listed_on_cra,
+      visibleOnNceo: clinic.visible_on_nceo,
+      alternateContactName: clinic.alternate_contact_name,
+      alternateContactEmail: clinic.alternate_contact_email,
+      alternateContactPhone: clinic.alternate_contact_phone,
+      alternateContactTitle: clinic.alternate_contact_title,
+      publicInfo: clinic.public_info,
+      clinicTypes: clinic.clinic_types,
+      wheelchairAccessible: clinic.wheelchair_accessible,
+      servePeopleFrom: clinic.serve_people_from,
+      catchmentArea: clinic.catchment_area,
+      monthsOffered: clinic.months_offered,
+      hoursOfOperation: clinic.hours_of_operation,
+      daysOfOperation: clinic.days_of_operation,
+      yearRoundService: clinic.year_round_service,
+      populationServed: clinic.population_served,
+      serviceLanguages: clinic.service_languages,
+      taxYearsPrepared: clinic.tax_years_prepared,
+      residencyTaxYear: clinic.residency_tax_year,
+      servePeople: clinic.serve_people,
+      eligibilityCriteriaWebpage: clinic.eligibility_criteria_webpage,
+      bookingProcess: clinic.booking_process,
+      bookingDaysHours: clinic.booking_days_hours,
+      bookingContactPhone: clinic.booking_contact_phone,
+      bookingContactEmail: clinic.booking_contact_email,
+      onlineBookingLink: clinic.online_booking_link,
+      usefulOnlineBooking: clinic.useful_online_booking,
+      requiredDocuments: clinic.required_documents,
+      helpWithMissingDocs: clinic.help_with_missing_docs,
+      taxPreparers: clinic.tax_preparers,
+      taxFilers: clinic.tax_filers,
+      volunteerRoles: clinic.volunteer_roles,
+      clinicCapacity: clinic.clinic_capacity,
+      additionalSupport: clinic.additional_support,
+      comments: clinic.comments,
+      createdDate: clinic.created_at,
+      updatedDate: clinic.updated_at,
+      locations: clinic.locations,
+    };
+    
+    console.log("Mapped Clinic:", mappedClinic);
+    
+    return mappedClinic;
+  }
+  // saveClinic(clinic: Clinic) {
+  //     if (this.isEditMode) {
+  //       this.clinicService.updateTaxClinic(clinic.id, clinic).subscribe(
+  //         (updatedClinic) => {
+  //           this.taxClinics = this.taxClinics.map((u) => (u.id === updatedClinic.id ? updatedClinic : u));
+  //           this.filteredTaxClinics = [...this.taxClinics];
+  //           this.closeClinicModal();
+  //           this.showPopup('Clinic updated successfully!', 'success');
+  //         },
+  //         (error) => {
+  //           console.error('Error updating clinic:', error);
+  //             this.showPopup('Failed to update clinic', 'error');
+  //         }
+  //       );
+  //     } else {
+  //       const { ...clinicToCreate }: Clinic = clinic;
+
+  //       this.clinicService.addTaxClinic(clinicToCreate).subscribe(
+  //         (newClinic) => {
+  //           this.taxClinics.push(this.mapFrontendToBackend(newClinic));
+  //           console.log("new tax clinic details", this.taxClinics)
+  //           this.filteredTaxClinics = [...this.taxClinics];
+  //           console.log("new filtered tax clinic details", this.filteredTaxClinics)
+  //           this.closeClinicModal();
+  //           this.showPopup('Clinic added successfully!', 'success');
+  //         },
+  //         (error) => {
+  //           console.error('Error adding clinic:', error);
+  //           this.showPopup('Failed to add clinic', 'error');
+  //         }
+  //       );
+  //     }
+  //   }
+
+  saveClinic(clinic: Clinic) {
+    if (this.isEditMode) {
+      this.clinicService.updateTaxClinic(clinic.id, clinic).subscribe(
+        (updatedClinic) => {
+          this.taxClinics = this.taxClinics.map((u) =>
+            u.id === updatedClinic.id ? updatedClinic : u
+          );
+          this.filteredTaxClinics = [...this.taxClinics];
+          this.closeClinicModal();
+          this.showPopup('Clinic updated successfully!', 'success');
+        },
+        (error) => {
+          console.error('Error updating clinic:', error);
+          this.showPopup('Failed to update clinic', 'error');
+        }
+      );
+    } else {
+      const { ...clinicToCreate }: Clinic = clinic;
+      this.clinicService.addTaxClinic(clinicToCreate).subscribe({
+        next: (newClinic) => {
+          console.log("clinic details immideily after save response", newClinic);
+          const frontendClinic = this.mapFrontendToBackend(newClinic);
+          console.log("tax clinics after saving...", frontendClinic)
+          this.taxClinics.push(frontendClinic);
+          this.filteredTaxClinics = [...this.taxClinics];
+          console.log("filtered ax clinics after saving...", this.filteredTaxClinics)
+          this.closeClinicModal();
+          this.showPopup('Clinic added successfully!', 'success');
+        },
+        error: (error) => {
+          console.error('Error adding clinic:', error);
+          this.showPopup('Failed to add clinic', 'error');
+        },
+      });
+    }
+  }
+
   deleteTaxClinic() {
     if (this.taxClinicToDeleteId !== null) {
       this.clinicService.deleteTaxClinic(this.taxClinicToDeleteId).subscribe(
@@ -306,11 +509,11 @@ export class TaxClinicManagementComponent implements OnInit {
           );
           this.filteredTaxClinics = [...this.taxClinics];
           this.closeDeleteModal();
-          this.showPopup('User deleted successfully!', 'success');
+          this.showPopup('Tax Clinic deleted successfully!', 'success');
         },
         (error) => {
           console.error('Error deleting user:', error);
-          this.showPopup('Failed to delete user', 'error');
+          this.showPopup('Failed to delete Tax Clinic', 'error');
         }
       );
     }
