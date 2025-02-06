@@ -86,8 +86,10 @@ export class TaxClinicModalComponent implements OnChanges {
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes['clinic'] && this.clinic) {
+      console.log("the clinic details from parent component is..", this.clinic);
       this.clinicForm.reset();
       this.clinicForm.patchValue({ ...this.clinic });
+      console.log('Form Values:', this.clinicForm.value);
 
       this.populateFormArrays();
     }
@@ -111,15 +113,17 @@ export class TaxClinicModalComponent implements OnChanges {
       'volunteerRoles',
       'additionalSupport',
     ];
-
+  
     formArrays.forEach((field) => {
       const formArray = this.clinicForm.get(field) as FormArray;
       formArray.clear();
-      this.convertToArray((this.clinic as any)?.[field]).forEach((value) => {
+      const values = this.convertToArray((this.clinic as any)?.[field]);
+  
+      values.forEach((value) => {
         formArray.push(new FormControl(value));
       });
     });
-
+  
     const locationsArray = this.clinicForm.get('locations') as FormArray;
     locationsArray.clear();
     (this.clinic?.locations || []).forEach((loc) =>

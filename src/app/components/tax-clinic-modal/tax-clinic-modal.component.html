@@ -242,7 +242,7 @@
 
           <div class="form-row">
             <div class="form-group location-header">
-              <label>Tax Clinic Location:</label>
+              <label class="required-label">Tax Clinic Location:<span class="required">*</span></label>
               <button type="button" class="add-button" (click)="addLocation()">
                 +
               </button>
@@ -405,6 +405,7 @@
                     type="checkbox"
                     (change)="onCheckboxChange('clinicTypes', $event)"
                     value="Virtual"
+                    [checked]="clinicForm.get('clinicTypes')?.value.includes('Virtual')"
                   />
                   Virtual</label
                 >
@@ -413,6 +414,7 @@
                     type="checkbox"
                     (change)="onCheckboxChange('clinicTypes', $event)"
                     value="In person"
+                    [checked]="clinicForm.get('clinicTypes')?.value.includes('In person')"
                   />
                   In person</label
                 >
@@ -421,6 +423,7 @@
                     type="checkbox"
                     (change)="onCheckboxChange('clinicTypes', $event)"
                     value="By appointment"
+                    [checked]="clinicForm.get('clinicTypes')?.value.includes('By appointment')"
                   />
                   By appointment</label
                 >
@@ -428,15 +431,17 @@
                   ><input
                     type="checkbox"
                     (change)="onCheckboxChange('clinicTypes', $event)"
-                    value="No appointment"
+                    value="Walk-in"
+                    [checked]="clinicForm.get('clinicTypes')?.value.includes('Walk-in')"
                   />
-                  No appointment / Walk-in or call-in</label
+                  Walk-in</label
                 >
                 <label
                   ><input
                     type="checkbox"
                     (change)="onCheckboxChange('clinicTypes', $event)"
                     value="Drop-off"
+                    [checked]="clinicForm.get('clinicTypes')?.value.includes('Drop-off')"
                   />
                   Drop-off</label
                 >
@@ -445,6 +450,7 @@
                     type="checkbox"
                     (change)="onCheckboxChange('clinicTypes', $event)"
                     value="Other"
+                    [checked]="clinicForm.get('clinicTypes')?.value.includes('Other')"
                   />
                   Other:
                   <input
@@ -452,7 +458,7 @@
                       clinicForm.get('clinicTypes')?.value.includes('Other')
                     "
                     type="text"
-                    formControlName="clinicTypes"
+                    formControlName="clinicTypesOther"
                     placeholder="Specify here..."
                   />
                 </label>
@@ -481,6 +487,7 @@
                     type="checkbox"
                     (change)="onCheckboxChange('monthsOffered', $event)"
                     value="February"
+                    [checked]="clinicForm.get('monthsOffered')?.value.includes('February')"
                   />
                   February</label
                 >
@@ -489,6 +496,7 @@
                     type="checkbox"
                     (change)="onCheckboxChange('monthsOffered', $event)"
                     value="March"
+                    [checked]="clinicForm.get('monthsOffered')?.value.includes('March')"
                   />
                   March</label
                 >
@@ -497,6 +505,7 @@
                     type="checkbox"
                     (change)="onCheckboxChange('monthsOffered', $event)"
                     value="April"
+                    [checked]="clinicForm.get('monthsOffered')?.value.includes('April')"
                   />
                   April</label
                 >
@@ -505,6 +514,7 @@
                     type="checkbox"
                     (change)="onCheckboxChange('monthsOffered', $event)"
                     value="May"
+                    [checked]="clinicForm.get('monthsOffered')?.value.includes('May')"
                   />
                   May</label
                 >
@@ -513,6 +523,7 @@
                     type="checkbox"
                     (change)="onCheckboxChange('monthsOffered', $event)"
                     value="June"
+                    [checked]="clinicForm.get('monthsOffered')?.value.includes('June')"
                   />
                   June</label
                 >
@@ -521,6 +532,7 @@
                     type="checkbox"
                     (change)="onCheckboxChange('monthsOffered', $event)"
                     value="Other"
+                    [checked]="clinicForm.get('monthsOffered')?.value.includes('Other')"
                   />
                   Other:
                   <input
@@ -528,7 +540,7 @@
                       clinicForm.get('monthsOffered')?.value.includes('Other')
                     "
                     type="text"
-                    formControlName="monthsOffered"
+                    formControlName="monthsOfferedOther"
                     placeholder="Specify here..."
                   />
                 </label>
@@ -553,6 +565,7 @@
                     type="checkbox"
                     (change)="onCheckboxChange('daysOfOperation', $event)"
                     value="Weekdays"
+                    [checked]="clinicForm.get('daysOfOperation')?.value.includes('Weekdays')"
                   />
                   Weekdays</label
                 >
@@ -561,6 +574,7 @@
                     type="checkbox"
                     (change)="onCheckboxChange('daysOfOperation', $event)"
                     value="Weekends"
+                    [checked]="clinicForm.get('daysOfOperation')?.value.includes('Weekends')"
                   />
                   Weekends</label
                 >
@@ -589,6 +603,7 @@
                     type="checkbox"
                     (change)="onCheckboxChange('hoursOfOperation', $event)"
                     value="Daytime"
+                    [checked]="clinicForm.get('hoursOfOperation')?.value.includes('Daytime')"
                   />
                   Daytime</label
                 >
@@ -597,6 +612,7 @@
                     type="checkbox"
                     (change)="onCheckboxChange('hoursOfOperation', $event)"
                     value="Evening"
+                    [checked]="clinicForm.get('hoursOfOperation')?.value.includes('Evening')"
                   />
                   Evening</label
                 >
@@ -710,6 +726,7 @@
                     type="checkbox"
                     (change)="onCheckboxChange('populationServed', $event)"
                     value="Seniors"
+                    [checked]="clinicForm.get('populationServed')?.value.includes('Seniors')"
                   />
                   Seniors</label
                 >
@@ -718,6 +735,7 @@
                     type="checkbox"
                     (change)="onCheckboxChange('populationServed', $event)"
                     value="Persons with disabilities"
+                    [checked]="clinicForm.get('populationServed')?.value.includes('Persons with disabilities')"
                   />
                   Persons with disabilities</label
                 >
@@ -726,6 +744,7 @@
                     type="checkbox"
                     (change)="onCheckboxChange('populationServed', $event)"
                     value="Newcomers"
+                    [checked]="clinicForm.get('populationServed')?.value.includes('Newcomers')"
                   />
                   Newcomers</label
                 >
@@ -734,6 +753,7 @@
                     type="checkbox"
                     (change)="onCheckboxChange('populationServed', $event)"
                     value="Language-specific community"
+                    [checked]="clinicForm.get('populationServed')?.value.includes('Language-specific community')"
                   />
                   Language-specific community</label
                 >
@@ -741,15 +761,17 @@
                   ><input
                     type="checkbox"
                     (change)="onCheckboxChange('populationServed', $event)"
-                    value="Indigenous"
+                    value="Indigenous (First Nations and Inuit and Metis)"
+                    [checked]="clinicForm.get('populationServed')?.value.includes('Indigenous (First Nations and Inuit and Metis)')"
                   />
-                  Indigenous (First Nations, Inuit and Métis)</label
+                  Indigenous (First Nations and Inuit and Metis)</label
                 >
                 <label
                   ><input
                     type="checkbox"
                     (change)="onCheckboxChange('populationServed', $event)"
                     value="Students"
+                    [checked]="clinicForm.get('populationServed')?.value.includes('Students')"
                   />
                   Students</label
                 >
@@ -757,7 +779,8 @@
                   ><input
                     type="checkbox"
                     (change)="onCheckboxChange('populationServed', $event)"
-                    value="other"
+                    value="Other"
+                    [checked]="clinicForm.get('populationServed')?.value.includes('Other')"
                   />
                   Other</label
                 >
@@ -783,6 +806,7 @@
                     type="checkbox"
                     (change)="onCheckboxChange('serviceLanguages', $event)"
                     value="English"
+                    [checked]="clinicForm.get('serviceLanguages')?.value.includes('English')"
                   />
                   English</label
                 >
@@ -791,6 +815,7 @@
                     type="checkbox"
                     (change)="onCheckboxChange('serviceLanguages', $event)"
                     value="French"
+                    [checked]="clinicForm.get('serviceLanguages')?.value.includes('French')"
                   />
                   French</label
                 >
@@ -799,6 +824,7 @@
                     type="checkbox"
                     (change)="onCheckboxChange('serviceLanguages', $event)"
                     value="Arabic"
+                    [checked]="clinicForm.get('serviceLanguages')?.value.includes('Arabic')"
                   />
                   Arabic</label
                 >
@@ -806,12 +832,13 @@
                   ><input
                     type="checkbox"
                     (change)="onCheckboxChange('serviceLanguages', $event)"
-                    value="other"
+                    value="Other"
+                    [checked]="clinicForm.get('serviceLanguages')?.value.includes('Other')"
                   />
                   Other</label
                 >
                 <input
-                  *ngIf="clinicForm.get('serviceLanguagesOther')"
+                  *ngIf="clinicForm.get('serviceLanguages')?.value.includes('Other')"
                   type="text"
                   formControlName="serviceLanguagesOther"
                   placeholder="Specify other languages"
@@ -844,6 +871,7 @@
                     type="checkbox"
                     (change)="onCheckboxChange('taxYearsPrepared', $event)"
                     value="Only current year"
+                    [checked]="clinicForm.get('taxYearsPrepared')?.value.includes('Only current year')"
                   />
                   Only current year
                 </label>
@@ -852,6 +880,7 @@
                     type="checkbox"
                     (change)="onCheckboxChange('taxYearsPrepared', $event)"
                     value="Current and last year"
+                    [checked]="clinicForm.get('taxYearsPrepared')?.value.includes('Current and last year')"
                   />
                   Current and last year
                 </label>
@@ -860,6 +889,7 @@
                     type="checkbox"
                     (change)="onCheckboxChange('taxYearsPrepared', $event)"
                     value="Multiple years"
+                    [checked]="clinicForm.get('taxYearsPrepared')?.value.includes('Multiple years')"
                   />
                   Multiple years
                 </label>
@@ -867,7 +897,8 @@
                   <input
                     type="checkbox"
                     (change)="onCheckboxChange('taxYearsPrepared', $event)"
-                    value="other"
+                    value="Other"
+                    [checked]="clinicForm.get('taxYearsPrepared')?.value.includes('Other')"
                   />
                   Other
                 </label>
@@ -899,6 +930,7 @@
                     type="checkbox"
                     (change)="onCheckboxChange('residencyTaxYear', $event)"
                     value="Ontario"
+                    [checked]="clinicForm.get('residencyTaxYear')?.value.includes('Ontario')"
                   />
                   Ontario
                 </label>
@@ -906,23 +938,26 @@
                   <input
                     type="checkbox"
                     (change)="onCheckboxChange('residencyTaxYear', $event)"
-                    value="Québec"
+                    value="Quebec"
+                    [checked]="clinicForm.get('residencyTaxYear')?.value.includes('Quebec')"
                   />
-                  Québec
+                  Quebec
                 </label>
                 <label>
                   <input
                     type="checkbox"
                     (change)="onCheckboxChange('residencyTaxYear', $event)"
-                    value="Any province other than Ontario and Québec"
+                    value="Any province other than Ontario and Quebec"
+                    [checked]="clinicForm.get('residencyTaxYear')?.value.includes('Any province other than Ontario and Quebec')"
                   />
-                  Any province other than Ontario and Québec
+                  Any province other than Ontario and Quebec
                 </label>
                 <label>
                   <input
                     type="checkbox"
                     (change)="onCheckboxChange('residencyTaxYear', $event)"
-                    value="other"
+                    value="Other"
+                    [checked]="clinicForm.get('residencyTaxYear')?.value.includes('Other')"
                   />
                   Other
                 </label>
@@ -952,7 +987,8 @@
                   ><input
                     type="checkbox"
                     (change)="onCheckboxChange('servePeople', $event)"
-                    value="rental income"
+                    value="Rental income"
+                    [checked]="clinicForm.get('servePeople')?.value.includes('Rental income')"
                   />
                   Rental income</label
                 >
@@ -961,6 +997,7 @@
                     type="checkbox"
                     (change)="onCheckboxChange('servePeople', $event)"
                     value="self-employment income"
+                    [checked]="clinicForm.get('servePeople')?.value.includes('Self-employment income')"
                   />
                   Self-employment income</label
                 >
@@ -968,7 +1005,8 @@
                   ><input
                     type="checkbox"
                     (change)="onCheckboxChange('servePeople', $event)"
-                    value="Interest income over 1000$"
+                    value="Interest income over $1000"
+                    [checked]="clinicForm.get('servePeople')?.value.includes('Self-employment income')"
                   />
                   Interest income over $1000</label
                 >
@@ -976,7 +1014,8 @@
                   ><input
                     type="checkbox"
                     (change)="onCheckboxChange('servePeople', $event)"
-                    value="return for a deceased person"
+                    value="Return for a deceased person"
+                    [checked]="clinicForm.get('servePeople')?.value.includes('Return for a deceased person')"
                   />
                   Return for a deceased person</label
                 >
@@ -984,7 +1023,8 @@
                   ><input
                     type="checkbox"
                     (change)="onCheckboxChange('servePeople', $event)"
-                    value="Employment expenses"
+                    value="Employment expenses (with specific conditions)"
+                    [checked]="clinicForm.get('servePeople')?.value.includes('Employment expenses (with specific conditions)')"
                   />
                   Employment expenses (with specific conditions)</label
                 >
@@ -992,7 +1032,8 @@
                   ><input
                     type="checkbox"
                     (change)="onCheckboxChange('servePeople', $event)"
-                    value="Capital Gains/losses"
+                    value="Capital Gains/losses (with specific conditions)"
+                    [checked]="clinicForm.get('servePeople')?.value.includes('Capital Gains/losses (with specific conditions)')"
                   />
                   Capital Gains/losses (with specific conditions)</label
                 >
@@ -1000,16 +1041,20 @@
                   ><input
                     type="checkbox"
                     (change)="onCheckboxChange('servePeople', $event)"
-                    value="Larger income than CVITP income-criteria"
+                    value="Larger income than CVITP income-criteria. when people are low
+                    income now"
+                    [checked]="clinicForm.get('servePeople')?.value.includes('Larger income than CVITP income-criteria. when people are low
+                    income now')"
                   />
-                  Larger income than CVITP income-criteria, when people are low
+                  Larger income than CVITP income-criteria. when people are low
                   income now</label
                 >
                 <label
                   ><input
                     type="checkbox"
                     (change)="onCheckboxChange('servePeople', $event)"
-                    value="other"
+                    value="Other"
+                    [checked]="clinicForm.get('servePeople')?.value.includes('Other')"
                   />
                   Other</label
                 >
@@ -1061,6 +1106,7 @@
                     type="checkbox"
                     (change)="onCheckboxChange('bookingProcess', $event)"
                     value="In person"
+                    [checked]="clinicForm.get('bookingProcess')?.value.includes('In person')"
                   />
                   In person</label
                 >
@@ -1069,6 +1115,7 @@
                     type="checkbox"
                     (change)="onCheckboxChange('bookingProcess', $event)"
                     value="By phone"
+                    [checked]="clinicForm.get('bookingProcess')?.value.includes('By phone')"
                   />
                   By phone</label
                 >
@@ -1077,6 +1124,7 @@
                     type="checkbox"
                     (change)="onCheckboxChange('bookingProcess', $event)"
                     value="Online"
+                    [checked]="clinicForm.get('bookingProcess')?.value.includes('Online')"
                   />
                   Online</label
                 >
@@ -1184,6 +1232,7 @@
                     type="checkbox"
                     (change)="onCheckboxChange('helpWithMissingDocs', $event)"
                     value="Yes for CRA documents with Autofill/REP ID"
+                    [checked]="clinicForm.get('helpWithMissingDocs')?.value.includes('Yes for CRA documents with Autofill/REP ID')"
                   />
                   Yes for CRA documents with Autofill/REP ID
                 </label>
@@ -1192,6 +1241,7 @@
                     type="checkbox"
                     (change)="onCheckboxChange('helpWithMissingDocs', $event)"
                     value="Yes with help from staff or volunteer for some documentation"
+                    [checked]="clinicForm.get('helpWithMissingDocs')?.value.includes('Yes with help from staff or volunteer for some documentation')"
                   />
                   Yes with help from staff or volunteer for some documentation
                 </label>
@@ -1200,6 +1250,7 @@
                     type="checkbox"
                     (change)="onCheckboxChange('helpWithMissingDocs', $event)"
                     value="No, client must have all their documents ready"
+                    [checked]="clinicForm.get('helpWithMissingDocs')?.value.includes('No, client must have all their documents ready')"
                   />
                   No, client must have all their documents ready
                 </label>
@@ -1227,6 +1278,7 @@
                     type="checkbox"
                     (change)="onCheckboxChange('taxPreparers', $event)"
                     value="Volunteers"
+                    [checked]="clinicForm.get('taxPreparers')?.value.includes('Volunteers')"
                   />
                   Volunteers</label
                 >
@@ -1235,6 +1287,7 @@
                     type="checkbox"
                     (change)="onCheckboxChange('taxPreparers', $event)"
                     value="Employees"
+                    [checked]="clinicForm.get('taxPreparers')?.value.includes('Employees')"
                   />
                   Employees</label
                 >
@@ -1243,6 +1296,7 @@
                     type="checkbox"
                     (change)="onCheckboxChange('taxPreparers', $event)"
                     value="Other"
+                    [checked]="clinicForm.get('taxPreparers')?.value.includes('Other')"
                   />
                   Other:
                   <input
@@ -1250,7 +1304,7 @@
                       clinicForm.get('taxPreparers')?.value.includes('Other')
                     "
                     type="text"
-                    formControlName="taxPreparers"
+                    formControlName="taxPreparersOthers"
                     placeholder="Specify here..."
                   />
                 </label>
@@ -1265,6 +1319,7 @@
                     type="checkbox"
                     (change)="onCheckboxChange('taxFilers', $event)"
                     value="Volunteers"
+                    [checked]="clinicForm.get('taxFilers')?.value.includes('Volunteers')"
                   />
                   Volunteers</label
                 >
@@ -1273,6 +1328,7 @@
                     type="checkbox"
                     (change)="onCheckboxChange('taxFilers', $event)"
                     value="Employees"
+                    [checked]="clinicForm.get('taxFilers')?.value.includes('Employees')"
                   />
                   Employees</label
                 >
@@ -1281,12 +1337,13 @@
                     type="checkbox"
                     (change)="onCheckboxChange('taxFilers', $event)"
                     value="Other"
+                    [checked]="clinicForm.get('taxFilers')?.value.includes('Other')"
                   />
                   Other:
                   <input
                     *ngIf="clinicForm.get('taxFilers')?.value.includes('Other')"
                     type="text"
-                    formControlName="taxFilers"
+                    formControlName="taxFilersOther"
                     placeholder="Specify here..."
                   />
                 </label>
@@ -1301,6 +1358,7 @@
                     type="checkbox"
                     (change)="onCheckboxChange('volunteerRoles', $event)"
                     value="Booking appointments"
+                    [checked]="clinicForm.get('volunteerRoles')?.value.includes('Booking appointments')"
                   />
                   Booking appointments</label
                 >
@@ -1308,17 +1366,17 @@
                   ><input
                     type="checkbox"
                     (change)="onCheckboxChange('volunteerRoles', $event)"
-                    value="Client intake (gathering personal information and tax
-                    slips)"
+                    value="Client intake (gathering personal information and tax slips)"
+                    [checked]="clinicForm.get('volunteerRoles')?.value.includes('Client intake (gathering personal information and tax slips)')"
                   />
-                  Client intake (gathering personal information and tax
-                  slips)</label
+                  Client intake (gathering personal information and tax slips)</label
                 >
                 <label
                   ><input
                     type="checkbox"
                     (change)="onCheckboxChange('volunteerRoles', $event)"
                     value="Preparing tax returns using software"
+                    [checked]="clinicForm.get('volunteerRoles')?.value.includes('Preparing tax returns using software')"
                   />
                   Preparing tax returns using software</label
                 >
@@ -1326,17 +1384,17 @@
                   ><input
                     type="checkbox"
                     (change)="onCheckboxChange('volunteerRoles', $event)"
-                    value="Explaining tax return to client and having them sign e-filing
-                    authorization"
+                    value="Explaining tax return to client and having them sign e-filing authorization"
+                    [checked]="clinicForm.get('volunteerRoles')?.value.includes('Explaining tax return to client and having them sign e-filing authorization')"
                   />
-                  Explaining tax return to client and having them sign e-filing
-                  authorization</label
+                  Explaining tax return to client and having them sign e-filing authorization</label
                 >
                 <label
                   ><input
                     type="checkbox"
                     (change)="onCheckboxChange('volunteerRoles', $event)"
                     value="Tax return verification/audit before e-filing"
+                    [checked]="clinicForm.get('volunteerRoles')?.value.includes('Tax return verification/audit before e-filing')"
                   />
                   Tax return verification/audit before e-filing</label
                 >
@@ -1345,6 +1403,7 @@
                     type="checkbox"
                     (change)="onCheckboxChange('volunteerRoles', $event)"
                     value="E-FILE tax returns"
+                    [checked]="clinicForm.get('volunteerRoles')?.value.includes('E-FILE tax returns')"
                   />
                   E-FILE tax returns</label
                 >
@@ -1353,6 +1412,7 @@
                     type="checkbox"
                     (change)="onCheckboxChange('volunteerRoles', $event)"
                     value="Administrative tasks"
+                    [checked]="clinicForm.get('volunteerRoles')?.value.includes('Administrative tasks')"
                   />
                   Administrative tasks</label
                 >
@@ -1361,6 +1421,7 @@
                     type="checkbox"
                     (change)="onCheckboxChange('volunteerRoles', $event)"
                     value="Other"
+                    [checked]="clinicForm.get('volunteerRoles')?.value.includes('Other')"
                   />
                   Other:
                   <input
@@ -1387,6 +1448,7 @@
                     type="checkbox"
                     (change)="onCheckboxChange('additionalSupport', $event)"
                     value="Volunteer recruitment"
+                    [checked]="clinicForm.get('additionalSupport')?.value.includes('Volunteer recruitment')"
                   />
                   Volunteer recruitment</label
                 >
@@ -1395,6 +1457,7 @@
                     type="checkbox"
                     (change)="onCheckboxChange('additionalSupport', $event)"
                     value="Volunteer training"
+                    [checked]="clinicForm.get('additionalSupport')?.value.includes('Volunteer training')"
                   />
                   Volunteer training</label
                 >
@@ -1403,6 +1466,7 @@
                     type="checkbox"
                     (change)="onCheckboxChange('additionalSupport', $event)"
                     value="Training of employees new to operating tax clinics"
+                    [checked]="clinicForm.get('additionalSupport')?.value.includes('Training of employees new to operating tax clinics')"
                   />
                   Training of employees new to operating tax clinics</label
                 >
@@ -1411,6 +1475,7 @@
                     type="checkbox"
                     (change)="onCheckboxChange('additionalSupport', $event)"
                     value="Follow-up with clients post-tax season"
+                    [checked]="clinicForm.get('additionalSupport')?.value.includes('Follow-up with clients post-tax season')"
                   />
                   Follow-up with clients post-tax season</label
                 >
@@ -1419,6 +1484,7 @@
                     type="checkbox"
                     (change)="onCheckboxChange('additionalSupport', $event)"
                     value="Visibility for your tax clinic to reach more clients"
+                    [checked]="clinicForm.get('additionalSupport')?.value.includes('Visibility for your tax clinic to reach more clients')"
                   />
                   Visibility for your tax clinic to reach more clients</label
                 >
@@ -1427,6 +1493,7 @@
                     type="checkbox"
                     (change)="onCheckboxChange('additionalSupport', $event)"
                     value="Set up an online booking system"
+                    [checked]="clinicForm.get('additionalSupport')?.value.includes('Set up an online booking system')"
                   />
                   Set up an online booking system</label
                 >
@@ -1435,6 +1502,7 @@
                     type="checkbox"
                     (change)="onCheckboxChange('additionalSupport', $event)"
                     value="Other"
+                    [checked]="clinicForm.get('additionalSupport')?.value.includes('Other')"
                   />
                   Other:
                   <input
@@ -1444,7 +1512,7 @@
                         ?.value.includes('Other')
                     "
                     type="text"
-                    formControlName="additionalSupport"
+                    formControlName="additionalSupportOther"
                     placeholder="Specify here..."
                   />
                 </label>

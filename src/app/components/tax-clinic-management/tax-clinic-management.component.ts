@@ -303,6 +303,7 @@ export class TaxClinicManagementComponent implements OnInit {
 
   openEditClinicModal(clinic: Clinic): void {
     this.selectedClinic = { ...clinic };
+    console.log("selectedclinic to the edit is....", JSON.stringify(this.selectedClinic));
     this.isEditMode = true;
     this.showClinicModal = true;
   }
@@ -316,7 +317,68 @@ export class TaxClinicManagementComponent implements OnInit {
     this.closeClinicModal();
   }
 
-  mapFrontendToBackend(clinic: any): any {
+  mapFrontendToBackend(clinic: Clinic): any {
+    return {
+      id: clinic.id,
+      organization_name: clinic.organizationName,
+      organisation_website: clinic.organisationWebsite,
+      organisation_email: clinic.organisationalEmail,
+      contact_person_name: clinic.contactPersonName,
+      contact_person_title: clinic.contactPersonTitle,
+      contact_email: clinic.contactEmail,
+      appointment_available: clinic.appointmentAvailability,
+      listed_on_cra: clinic.listedOnCra,
+      visible_on_nceo: clinic.visibleOnNceo,
+      alternate_contact_name: clinic.alternateContactName,
+      alternate_contact_email: clinic.alternateContactEmail,
+      alternate_contact_phone: clinic.alternateContactPhone,
+      alternate_contact_title: clinic.alternateContactTitle,
+      public_info: clinic.publicInfo,
+      clinic_types: clinic.clinicTypes,
+      wheelchair_accessible: clinic.wheelchairAccessible,
+      serve_people_from: clinic.servePeopleFrom,
+      catchment_area: clinic.catchmentArea,
+      months_offered: clinic.monthsOffered,
+      hours_of_operation: clinic.hoursOfOperation,
+      days_of_operation: clinic.daysOfOperation,
+      year_round_service: clinic.yearRoundService,
+      population_served: clinic.populationServed,
+      service_languages: clinic.serviceLanguages,
+      tax_years_prepared: clinic.taxYearsPrepared,
+      residency_tax_year: clinic.residencyTaxYear,
+      serve_people: clinic.servePeople,
+      eligibility_criteria_webpage: clinic.eligibilityCriteriaWebpage,
+      booking_process: clinic.bookingProcess,
+      booking_days_hours: clinic.bookingDaysHours,
+      booking_contact_phone: clinic.bookingContactPhone,
+      booking_contact_email: clinic.bookingContactEmail,
+      online_booking_link: clinic.onlineBookingLink,
+      useful_online_booking: clinic.usefulOnlineBooking,
+      required_documents: clinic.requiredDocuments,
+      help_with_missing_docs: clinic.helpWithMissingDocs,
+      tax_preparers: clinic.taxPreparers,
+      tax_filers: clinic.taxFilers,
+      volunteer_roles: clinic.volunteerRoles,
+      clinic_capacity: clinic.clinicCapacity,
+      additional_support: clinic.additionalSupport,
+      comments: clinic.comments,
+      created_at: clinic.createdDate,
+      updated_at: clinic.updatedDate,
+      locations: Array.isArray(clinic.locations)
+      ? clinic.locations.map((location: any) => ({
+          id: location.id,
+          tax_clinic_id: location.taxClinicId,
+          street: location.street,
+          city: location.city,
+          state: location.state,
+          postal_code: location.postalCode,
+          created_at: location.updatedDate,
+        }))
+      : [],
+    };
+  }
+
+  mapBackendToFrontend(clinic: any): any {
     const mappedClinic = {
       id: clinic.id,
       organizationName: clinic.organization_name,
@@ -369,46 +431,15 @@ export class TaxClinicManagementComponent implements OnInit {
     return mappedClinic;
   }
 
-  // saveClinic(clinic: Clinic) {
-  //     if (this.isEditMode) {
-  //       this.clinicService.updateTaxClinic(clinic.id, clinic).subscribe(
-  //         (updatedClinic) => {
-  //           this.taxClinics = this.taxClinics.map((u) => (u.id === updatedClinic.id ? updatedClinic : u));
-  //           this.filteredTaxClinics = [...this.taxClinics];
-  //           this.closeClinicModal();
-  //           this.showPopup('Clinic updated successfully!', 'success');
-  //         },
-  //         (error) => {
-  //           console.error('Error updating clinic:', error);
-  //             this.showPopup('Failed to update clinic', 'error');
-  //         }
-  //       );
-  //     } else {
-  //       const { ...clinicToCreate }: Clinic = clinic;
-
-  //       this.clinicService.addTaxClinic(clinicToCreate).subscribe(
-  //         (newClinic) => {
-  //           this.taxClinics.push(this.mapFrontendToBackend(newClinic));
-  //           console.log("new tax clinic details", this.taxClinics)
-  //           this.filteredTaxClinics = [...this.taxClinics];
-  //           console.log("new filtered tax clinic details", this.filteredTaxClinics)
-  //           this.closeClinicModal();
-  //           this.showPopup('Clinic added successfully!', 'success');
-  //         },
-  //         (error) => {
-  //           console.error('Error adding clinic:', error);
-  //           this.showPopup('Failed to add clinic', 'error');
-  //         }
-  //       );
-  //     }
-  //   }
-
   saveClinic(clinic: Clinic) {
     if (this.isEditMode) {
-      this.clinicService.updateTaxClinic(clinic.id, clinic).subscribe(
+      const clinicData = this.mapFrontendToBackend(clinic); 
+      this.clinicService.updateTaxClinic(clinicData.id, clinicData).subscribe(
+        
         (updatedClinic) => {
+          const backendClinic = this.mapBackendToFrontend(updatedClinic);
           this.taxClinics = this.taxClinics.map((u) =>
-            u.id === updatedClinic.id ? updatedClinic : u
+            u.id === backendClinic.id ? backendClinic : u
           );
           this.filteredTaxClinics = [...this.taxClinics];
           this.closeClinicModal();
@@ -423,18 +454,10 @@ export class TaxClinicManagementComponent implements OnInit {
       const { ...clinicToCreate }: Clinic = clinic;
       this.clinicService.addTaxClinic(clinicToCreate).subscribe({
         next: (newClinic) => {
-          console.log(
-            'clinic details immideily after save response',
-            newClinic
-          );
-          const frontendClinic = this.mapFrontendToBackend(newClinic);
-          console.log('tax clinics after saving...', frontendClinic);
+          const frontendClinic = this.mapBackendToFrontend(newClinic);
+
           this.taxClinics.push(frontendClinic);
           this.filteredTaxClinics = [...this.taxClinics];
-          console.log(
-            'filtered ax clinics after saving...',
-            this.filteredTaxClinics
-          );
           this.closeClinicModal();
           this.showPopup('Clinic added successfully!', 'success');
         },
