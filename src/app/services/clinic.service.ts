@@ -27,7 +27,7 @@ export class ClinicService {
       Authorization: `Bearer ${token}`,
     });
 
-    return this.http.put(`${this.apiUrl}/${data.id}`, data, { headers });
+    return this.http.put(`${this.apiUrl}/update-availability/${data.id}`, data, { headers });
   }
 
   getUsers(): Observable<User[]> {
