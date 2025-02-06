@@ -27,8 +27,8 @@
             <dt>{{ "Website" | translate }}:</dt>
             <dd>
               <a
-                [href]="clinic?.organisationWebsite"
-                target="_blank"
+              [href]="(clinic?.organisationWebsite?.startsWith('http') ? clinic?.organisationWebsite : 'https://' + (clinic?.organisationWebsite ?? ''))"
+              target="_blank"
                 rel="noopener noreferrer"
                 class="clinic-link"
               >
