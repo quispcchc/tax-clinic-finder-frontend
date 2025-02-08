@@ -57,6 +57,7 @@ export class TaxClinicModalComponent implements OnChanges {
       clinicTypes: this.fb.array([], Validators.required),
       monthsOffered: this.fb.array([], Validators.required),
       daysOfOperation: this.fb.array([], Validators.required),
+      hoursAndDate: [''],
       hoursOfOperation: this.fb.array([], Validators.required),
       yearRoundService: ['', Validators.required],
       servePeopleFrom: ['', Validators.required],

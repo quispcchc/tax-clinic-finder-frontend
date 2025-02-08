@@ -2,17 +2,33 @@
   <div class="modal-content">
     <div class="header">
       <div class="clinic-header-left">
-        <img src="assets/images/modal-logo.svg" alt="Website" class="website-icon" />
+        <img
+          src="assets/images/modal-logo.svg"
+          alt="Website"
+          class="website-icon"
+        />
         <h3>{{ "Tax Clinic Details" | translate }}</h3>
       </div>
       <button class="close-button" (click)="close()">X</button>
     </div>
-    <app-message-popup [message]="message" [isVisible]="showMessagePopup" [messageType]="messageType" (closed)="closePopup()">
+    <app-message-popup
+      [message]="message"
+      [isVisible]="showMessagePopup"
+      [messageType]="messageType"
+      (closed)="closePopup()"
+    >
     </app-message-popup>
     <div class="clinic-details-container">
       <div class="clinic-details">
-        <label>{{ clinic?.organizationName }}</label>
-        <dl>
+        <label>{{ "Organization information" | translate }}</label>
+        <div class="org-details">
+          <div class="clinic-info" *ngFor="let location of clinic?.locations">
+            <dt>{{ "Name" | translate }}:</dt>
+            <dd>
+              {{ clinic?.organizationName ?? "" | translate }}
+            </dd>
+          </div>
+
           <div class="clinic-info" *ngFor="let location of clinic?.locations">
             <dt>{{ "Address" | translate }}:</dt>
             <dd>
@@ -24,217 +40,300 @@
           <div class="clinic-info">
             <dt>{{ "Website" | translate }}:</dt>
             <dd>
-              <a [href]="(clinic?.organisationWebsite?.startsWith('http') ? clinic?.organisationWebsite : 'https://' + (clinic?.organisationWebsite ?? ''))"
-                target="_blank" rel="noopener noreferrer" class="clinic-link">
-                {{ clinic?.organisationWebsite }}
+              <a
+                [href]="
+                  clinic?.organisationWebsite?.startsWith('http')
+                    ? clinic?.organisationWebsite
+                    : 'https://' + (clinic?.organisationWebsite ?? '')
+                "
+                target="_blank"
+                rel="noopener noreferrer"
+                class="clinic-link"
+              >
+                {{ clinic?.organisationWebsite || "N/A" }}
               </a>
+            </dd>
+          </div>
+          <div class="clinic-info">
+            <dt>{{ "Email" | translate }}:</dt>
+            <dd>{{ clinic?.organisationalEmail || "N/A" }}</dd>
+          </div>
+          <div class="clinic-info">
+            <dt>{{ "Listed on CRA?" | translate }}:</dt>
+            <dd>
+              <input type="radio" checked />
+              {{ clinic?.listedOnCra ?? "" | translate }}
+            </dd>
+          </div>
+          <div class="clinic-info">
+            <dt>{{ "Listed on NCEO?" | translate }} :</dt>
+            <dd>
+              <input type="radio" checked />
+              {{ clinic?.visibleOnNceo ?? "" | translate }}
             </dd>
           </div>
           <div class="clinic-info">
             <dt>{{ "Appointment Availability" | translate }}:</dt>
             <dd>
               <p>
-                <input type="radio" name="appointmentAvailability" value="Yes" [(ngModel)]="appointmentAvailability"
-                  (ngModelChange)="onAppointmentAvailabilityChange()" />
+                <input
+                  type="radio"
+                  name="appointmentAvailability"
+                  value="Yes"
+                  [(ngModel)]="appointmentAvailability"
+                  (ngModelChange)="onAppointmentAvailabilityChange()"
+                />
                 {{ "Yes" | translate }}
               </p>
               <p>
-                <input type="radio" name="appointmentAvailability" value="No" [(ngModel)]="appointmentAvailability"
-                  (ngModelChange)="onAppointmentAvailabilityChange()" />
+                <input
+                  type="radio"
+                  name="appointmentAvailability"
+                  value="No"
+                  [(ngModel)]="appointmentAvailability"
+                  (ngModelChange)="onAppointmentAvailabilityChange()"
+                />
                 {{ "No" | translate }}
               </p>
               <p>
-                <input type="radio" name="appointmentAvailability" value="Not Sure"
-                  [(ngModel)]="appointmentAvailability" (ngModelChange)="onAppointmentAvailabilityChange()" />
+                <input
+                  type="radio"
+                  name="appointmentAvailability"
+                  value="Not Sure"
+                  [(ngModel)]="appointmentAvailability"
+                  (ngModelChange)="onAppointmentAvailabilityChange()"
+                />
                 {{ "Not Sure" | translate }}
               </p>
-              <button (click)="updateAppointmentAvailability()" class="save-button" [disabled]="isSaveButtonDisabled">
+              <button
+                (click)="updateAppointmentAvailability()"
+                class="save-button"
+                [disabled]="isSaveButtonDisabled"
+              >
                 {{ "Save" | translate }}
               </button>
             </dd>
           </div>
+        </div>
+
+        <label>{{ "Respondent information" | translate }}</label>
+        <div class="org-details">
           <div class="clinic-info">
-            <dt>{{ "Contact Person" | translate }}:</dt>
-            <dd>{{ clinic?.contactPersonName }}</dd>
+            <dt>{{ "Name" | translate }}:</dt>
+            <dd>{{ clinic?.contactPersonName || "N/A" }}</dd>
           </div>
           <div class="clinic-info">
-            <dt>{{ "Contact Person Title" | translate }}:</dt>
-            <dd>{{ clinic?.contactPersonTitle }}</dd>
+            <dt>{{ "Title" | translate }}:</dt>
+            <dd>{{ clinic?.contactPersonTitle ?? "N/A" }}</dd>
           </div>
           <div class="clinic-info">
-            <dt>{{ "Contact Person Email" | translate }}:</dt>
-            <dd>{{ clinic?.contactEmail }}</dd>
+            <dt>{{ "Email" | translate }}:</dt>
+            <dd>{{ clinic?.contactEmail ?? "N/A" }}</dd>
+          </div>
+        </div>
+
+        <label>{{ "Contact Person information" | translate }}</label>
+        <div class="org-details">
+          <div class="clinic-info">
+            <dt>{{ "Name" | translate }}:</dt>
+            <dd>{{ clinic?.alternateContactName || ("N/A" | translate) }}</dd>
           </div>
           <div class="clinic-info">
-            <dt>{{ "Alternative Contact Person" | translate }}:</dt>
-            <dd>{{ clinic?.alternateContactName }}</dd>
+            <dt>{{ "Title" | translate }}:</dt>
+            <dd>{{ clinic?.alternateContactTitle || ("N/A" | translate) }}</dd>
           </div>
           <div class="clinic-info">
-            <dt>{{ "Alternative Contact Person Email" | translate }}:</dt>
-            <dd>{{ clinic?.alternateContactEmail }}</dd>
+            <dt>{{ "Email" | translate }}:</dt>
+            <dd>{{ clinic?.alternateContactEmail || ("N/A" | translate) }}</dd>
           </div>
           <div class="clinic-info">
-            <dt>{{ "Alternative Contact Person Phone" | translate }}:</dt>
-            <dd>{{ clinic?.alternateContactPhone }}</dd>
+            <dt>{{ "Phone Number" | translate }}:</dt>
+            <dd>{{ clinic?.alternateContactPhone || ("N/A" | translate) }}</dd>
           </div>
+        </div>
+
+        <label>{{ "Tax Clinic information" | translate }}</label>
+        <div class="org-details">
           <div class="clinic-info">
-            <dt>{{ "Catchment Area of the clinic" | translate }}:</dt>
-            <dd>{{ clinic?.catchmentArea }}</dd>
-          </div>
-          <div class="clinic-info">
-            <dt>{{ "Listed on the CRA's page online" | translate }}:</dt>
-            <dd>{{ clinic?.listedOnCra }}</dd>
-          </div>
-          <div class="clinic-info">
-            <dt>
-              {{
-              "Visible on the Community Navigation of Eastern Ontario web site"
-              | translate
-              }}:
-            </dt>
-            <dd>{{ clinic?.visibleOnNceo }}</dd>
-          </div>
-          <div class="clinic-info">
-            <dt>
-              {{
-              "Would you like the information about your clinic(s) to be public?"
-              | translate
-              }}:
-            </dt>
-            <dd>{{ clinic?.publicInfo }}</dd>
-          </div>
-          <div class="clinic-info">
-            <dt>{{ "What kind of tax clinics offered?" | translate }}:</dt>
-            <dd>{{ clinic?.clinicTypes }}</dd>
-          </div>
-          <div class="clinic-info">
-            <dt>{{ "Is clinic wheelchair accessible?" | translate }}:</dt>
-            <dd>{{ clinic?.wheelchairAccessible }}</dd>
-          </div>
-          <div class="clinic-info">
-            <dt>{{ "Serve people from " | translate }}:</dt>
-            <dd>{{ clinic?.servePeopleFrom }}</dd>
-          </div>
-          <div class="clinic-info">
-            <dt>{{ "Months offered by income tax clinic " | translate }}:</dt>
-            <dd>{{ clinic?.monthsOffered }}</dd>
-          </div>
-          <div class="clinic-info">
-            <dt>
-              {{
-              "Hours of operation or Date and time of tax clinics "
-              | translate
-              }}:
-            </dt>
-            <dd>{{ clinic?.hoursOfOperation }}</dd>
-          </div>
-          <div class="clinic-info">
-            <dt>
-              {{
-              "Offer income tax services year round outside of tax season?"
-              | translate
-              }}:
-            </dt>
-            <dd>{{ clinic?.yearRoundService }}</dd>
-          </div>
-          <div class="clinic-info">
-            <dt>{{ "Population served" | translate }}:</dt>
-            <dd>{{ clinic?.populationServed }}</dd>
-          </div>
-          <div class="clinic-info">
-            <dt>{{ "Service available in Languages" | translate }}:</dt>
-            <dd>{{ clinic?.serviceLanguages }}</dd>
-          </div>
-          <div class="clinic-info">
-            <dt>{{ "Which tax years do you prepare?" | translate }}:</dt>
-            <dd>{{ clinic?.taxYearsPrepared }}</dd>
-          </div>
-          <div class="clinic-info">
-            <dt>
-              {{
-              "Do you help with tax year for which a client was a resident of?"
-              | translate
-              }}:
-            </dt>
-            <dd>{{ clinic?.residencyTaxYear }}</dd>
-          </div>
-          <div class="clinic-info">
-            <dt>{{ "Do you serve people with??" | translate }}:</dt>
-            <dd>{{ clinic?.servePeople }}</dd>
-          </div>
-          <div class="clinic-info">
-            <dt>
-              {{ "Webpage detailing the eligibility criteria" | translate }}:
-            </dt>
+            <dt>{{ "Information public?" | translate }} :</dt>
             <dd>
-              <a [href]="(clinic?.eligibilityCriteriaWebpage?.startsWith('http') ? clinic?.eligibilityCriteriaWebpage : 'https://' + (clinic?.eligibilityCriteriaWebpage ?? ''))"
-                target="_blank" rel="noopener noreferrer"
-                class="clinic-link">
-                {{ clinic?.eligibilityCriteriaWebpage }}
-              </a>
+              <input type="radio" checked />
+              {{ clinic?.publicInfo }}
             </dd>
           </div>
           <div class="clinic-info">
-            <dt>{{ "Booking process for an appointment" | translate }}:</dt>
-            <dd>{{ clinic?.bookingProcess }}</dd>
+            <dt>{{ "Tax Clinic Type" | translate }}:</dt>
+            <dd>
+              <input type="checkbox" checked />
+              <span class="option-details">{{ clinic?.clinicTypes }}</span>
+            </dd>
+          </div>
+
+          <div class="clinic-info">
+            <dt>{{ "Wheelchair accessible?" | translate }}:</dt>
+            <dd>
+              <input type="checkbox" checked />
+              {{ clinic?.wheelchairAccessible || "N/A" }}
+            </dd>
+          </div>
+          <div class="clinic-info">
+            <dt>{{ "Geographical zone" | translate }}:</dt>
+            <dd>
+              <input type="radio" checked />
+              {{ clinic?.servePeopleFrom }}
+            </dd>
+          </div>
+          <div class="clinic-info">
+            <dt>{{ "Clinic Catchment Area" | translate }}:</dt>
+            <dd>{{ clinic?.catchmentArea || "N/A" }}</dd>
+          </div>
+          <div class="clinic-info">
+            <dt>{{ "Months offered by clinic" | translate }}:</dt>
+            <dd>
+              <input type="checkbox" checked />
+              {{ clinic?.monthsOffered }}
+            </dd>
+          </div>
+          <div class="clinic-info">
+            <dt>{{ "Hours and Date of clinic operation" | translate }}:</dt>
+            <dd>{{ clinic?.hoursAndDate || "N/A" }}</dd>
+          </div>
+          <div class="clinic-info">
+            <dt>{{ "Hours of clinic" | translate }}:</dt>
+            <dd>
+              <input type="checkbox" checked />
+              {{ clinic?.hoursOfOperation }}
+            </dd>
+          </div>
+          <div class="clinic-info">
+            <dt>{{ "Day of clinic" | translate }}:</dt>
+            <dd>
+              <input type="checkbox" checked />
+              {{ clinic?.daysOfOperation }}
+            </dd>
           </div>
           <div class="clinic-info">
             <dt>
               {{
-              "Working days and working hours for appointment booking"
-              | translate
+                "Offer income tax services year round outside of tax season?"
+                  | translate
               }}:
             </dt>
+            <dd>
+              <input type="checkbox" checked />
+              {{ clinic?.yearRoundService }}
+            </dd>
+          </div>
+          <div class="clinic-info">
+            <dt>{{ "Population served" | translate }}:</dt>
+            <dd>{{ clinic?.populationServed || "N/A" }}</dd>
+          </div>
+          <div class="clinic-info">
+            <dt>{{ "Available in" | translate }}:</dt>
+            <dd>{{ clinic?.serviceLanguages }}</dd>
+          </div>
+        </div>
+        <label>{{ "Eligibility criteria information" | translate }}</label>
+        <div class="org-details">
+          <div class="clinic-info">
+            <dt>{{ "Year(s) prepared" | translate }}:</dt>
+            <dd>{{ clinic?.taxYearsPrepared }}</dd>
+          </div>
+          <div class="clinic-info">
+            <dt>{{ "Return from (provinces)" | translate }}:</dt>
+            <dd>{{ clinic?.residencyTaxYear }}</dd>
+          </div>
+          <div class="clinic-info">
+            <dt>{{ "Special services?" | translate }}:</dt>
+            <dd>{{ clinic?.servePeople }}</dd>
+          </div>
+          <div class="clinic-info">
+            <dt>{{ "Webpage elligibility" | translate }}:</dt>
+            <dd>
+              <a
+                [href]="
+                  clinic?.eligibilityCriteriaWebpage?.startsWith('http')
+                    ? clinic?.eligibilityCriteriaWebpage
+                    : 'https://' + (clinic?.eligibilityCriteriaWebpage ?? '')
+                "
+                target="_blank"
+                rel="noopener noreferrer"
+                class="clinic-link"
+              >
+                {{ clinic?.eligibilityCriteriaWebpage || "N/A" }}
+              </a>
+            </dd>
+          </div>
+        </div>
+
+        <label>{{ "Appointment Booking information" | translate }}</label>
+        <div class="org-details">
+          <div class="clinic-info">
+            <dt>{{ "Booking process" | translate }}:</dt>
+            <dd>{{ clinic?.bookingProcess }}</dd>
+          </div>
+
+          <div class="clinic-info">
+            <dt>{{ "Appointment hours" | translate }}:</dt>
             <dd>{{ clinic?.bookingDaysHours }}</dd>
           </div>
           <div class="clinic-info">
-            <dt>{{ "Email for booking appointment" | translate }}:</dt>
-            <dd>{{ clinic?.bookingContactEmail }}</dd>
+            <dt>{{ "Email for booking" | translate }}:</dt>
+            <dd>{{ clinic?.bookingContactEmail || "N/A" }}</dd>
           </div>
           <div class="clinic-info">
-            <dt>{{ "Phone Number for booking appointment" | translate }}:</dt>
-            <dd>{{ clinic?.bookingContactPhone }}</dd>
+            <dt>{{ "Phone Number for booking" | translate }}:</dt>
+            <dd>{{ clinic?.bookingContactPhone || "N/A" }}</dd>
           </div>
           <div class="clinic-info">
             <dt>{{ "Appointment booking Link" | translate }}:</dt>
             <dd>
-              <a [href]="(clinic?.onlineBookingLink?.startsWith('http') ? clinic?.onlineBookingLink : 'https://' + (clinic?.onlineBookingLink ?? ''))" target="_blank" rel="noopener noreferrer" class="clinic-link">
-                {{ clinic?.onlineBookingLink }}
+              <a
+                [href]="
+                  clinic?.onlineBookingLink?.startsWith('http')
+                    ? clinic?.onlineBookingLink
+                    : 'https://' + (clinic?.onlineBookingLink ?? '')
+                "
+                target="_blank"
+                rel="noopener noreferrer"
+                class="clinic-link"
+              >
+                {{ clinic?.onlineBookingLink || "N/A" }}
               </a>
             </dd>
           </div>
           <div class="clinic-info">
-            <dt>
-              {{
-              "Would an online booking system be useful to clinic?"
-              | translate
-              }}:
-            </dt>
-            <dd>{{ clinic?.usefulOnlineBooking }}</dd>
+            <dt>{{ "Booking system is useful?" | translate }}:</dt>
+            <dd>{{ clinic?.usefulOnlineBooking || "N/A" }}</dd>
+          </div>
+        </div>
+        <label>{{ "Client Documentation information" | translate }}</label>
+        <div class="org-details">
+          <div class="clinic-info">
+            <dt>{{ "Documents for appointment" | translate }}:</dt>
+            <dd>{{ clinic?.requiredDocuments || "N/A" }}</dd>
           </div>
           <div class="clinic-info">
-            <dt>{{ "Required Documents" | translate }}:</dt>
-            <dd>{{ clinic?.requiredDocuments }}</dd>
-          </div>
-          <div class="clinic-info">
             <dt>
               {{
-              "If client do not have all their documentation, can you help them find it?"
-              | translate
+                "Help find the client with finding documentation?" | translate
               }}:
             </dt>
             <dd>{{ clinic?.helpWithMissingDocs }}</dd>
           </div>
+        </div>
+        <label>{{ "Volunteers and other information" | translate }}</label>
+        <div class="org-details">
           <div class="clinic-info">
-            <dt>{{ "Who is preparing tax returns?" | translate }}:</dt>
+            <dt>{{ "Who prepares tax returns" | translate }}:</dt>
             <dd>{{ clinic?.taxPreparers }}</dd>
           </div>
           <div class="clinic-info">
-            <dt>{{ "Who is filing tax returns?" | translate }}:</dt>
+            <dt>{{ "Who files tax returns" | translate }}:</dt>
             <dd>{{ clinic?.taxFilers }}</dd>
           </div>
           <div class="clinic-info">
-            <dt>{{ "What are tax clinic volunteer's roles?" | translate }}:</dt>
+            <dt>{{ "Clinic volunteer's roles" | translate }}:</dt>
             <dd>{{ clinic?.volunteerRoles }}</dd>
           </div>
           <div class="clinic-info">
@@ -244,16 +343,14 @@
             <dd>{{ clinic?.clinicCapacity }}</dd>
           </div>
           <div class="clinic-info">
-            <dt>
-              {{ "Would you benefit from additional support?" | translate }}:
-            </dt>
+            <dt>{{ "Benefit from additional support" | translate }}:</dt>
             <dd>{{ clinic?.additionalSupport }}</dd>
           </div>
           <div class="clinic-info">
-            <dt>{{ "comments" | translate }}:</dt>
+            <dt>{{ "Comments from Clinic" | translate }}:</dt>
             <dd>{{ clinic?.comments }}</dd>
           </div>
-        </dl>
+        </div>
       </div>
     </div>
   </div>

@@ -65,6 +65,7 @@ export class DashboardMainComponent implements OnInit {
           servePeopleFrom: clinic.serve_people_from,
           catchmentArea: clinic.catchment_area,
           monthsOffered: clinic.months_offered,
+          hoursAndDate: clinic.date_and_time_of_operation,
           hoursOfOperation: clinic.hours_of_operation,
           daysOfOperation: clinic.days_of_operation,
           yearRoundService: clinic.year_round_service,
