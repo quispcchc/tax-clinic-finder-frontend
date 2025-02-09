@@ -164,8 +164,10 @@
           <div class="clinic-info">
             <dt>{{ "Tax Clinic Type" | translate }}:</dt>
             <dd>
-              <input type="checkbox" checked />
-              <span class="option-details">{{ clinic?.clinicTypes }}</span>
+              <div *ngFor="let type of clinicTypes">
+                <input type="checkbox" checked />
+                <span class="option-details">{{ type | translate }}</span>
+              </div>
             </dd>
           </div>
 
@@ -190,8 +192,10 @@
           <div class="clinic-info">
             <dt>{{ "Months offered by clinic" | translate }}:</dt>
             <dd>
-              <input type="checkbox" checked />
-              {{ clinic?.monthsOffered }}
+              <div *ngFor="let month of monthsOffered">
+                <input type="checkbox" checked />
+                <span class="option-details">{{ month | translate }}</span>
+              </div>
             </dd>
           </div>
           <div class="clinic-info">
@@ -201,15 +205,19 @@
           <div class="clinic-info">
             <dt>{{ "Hours of clinic" | translate }}:</dt>
             <dd>
-              <input type="checkbox" checked />
-              {{ clinic?.hoursOfOperation }}
+              <div *ngFor="let hours of hoursOfOperation">
+                <input type="checkbox" checked />
+                <span class="option-details">{{ hours | translate }}</span>
+              </div>
             </dd>
           </div>
           <div class="clinic-info">
             <dt>{{ "Day of clinic" | translate }}:</dt>
             <dd>
-              <input type="checkbox" checked />
-              {{ clinic?.daysOfOperation }}
+              <div *ngFor="let days of daysOfOperation">
+                <input type="checkbox" checked />
+                <span class="option-details">{{ days | translate }}</span>
+              </div>
             </dd>
           </div>
           <div class="clinic-info">
@@ -226,26 +234,64 @@
           </div>
           <div class="clinic-info">
             <dt>{{ "Population served" | translate }}:</dt>
-            <dd>{{ clinic?.populationServed || "N/A" }}</dd>
+            <dd>
+              <ng-container
+                *ngIf="
+                  populationServed && populationServed.length > 0;
+                  else noData
+                "
+              >
+                <div *ngFor="let population of populationServed">
+                  <input type="checkbox" checked />
+                  <span class="option-details">{{
+                    population | translate
+                  }}</span>
+                </div>
+              </ng-container>
+              <ng-template #noData>
+                <span class="option-details">{{ "N/A" | translate }}</span>
+              </ng-template>
+            </dd>
           </div>
+
           <div class="clinic-info">
             <dt>{{ "Available in" | translate }}:</dt>
-            <dd>{{ clinic?.serviceLanguages }}</dd>
+            <dd>
+              <div *ngFor="let language of serviceLanguages">
+                <input type="checkbox" checked />
+                <span class="option-details">{{ language | translate }}</span>
+              </div>
+            </dd>
           </div>
         </div>
         <label>{{ "Eligibility criteria information" | translate }}</label>
         <div class="org-details">
           <div class="clinic-info">
             <dt>{{ "Year(s) prepared" | translate }}:</dt>
-            <dd>{{ clinic?.taxYearsPrepared }}</dd>
+            <dd>
+              <div *ngFor="let year of taxYearsPrepared">
+                <input type="checkbox" checked />
+                <span class="option-details">{{ year | translate }}</span>
+              </div>
+            </dd>
           </div>
           <div class="clinic-info">
             <dt>{{ "Return from (provinces)" | translate }}:</dt>
-            <dd>{{ clinic?.residencyTaxYear }}</dd>
+            <dd>
+              <div *ngFor="let residency of residencyTaxYear">
+                <input type="checkbox" checked />
+                <span class="option-details">{{ residency | translate }}</span>
+              </div>
+            </dd>
           </div>
           <div class="clinic-info">
             <dt>{{ "Special services?" | translate }}:</dt>
-            <dd>{{ clinic?.servePeople }}</dd>
+            <dd>
+              <div *ngFor="let people of servePeople">
+                <input type="checkbox" checked />
+                <span class="option-details">{{ people | translate }}</span>
+              </div>
+            </dd>
           </div>
           <div class="clinic-info">
             <dt>{{ "Webpage elligibility" | translate }}:</dt>
@@ -270,7 +316,12 @@
         <div class="org-details">
           <div class="clinic-info">
             <dt>{{ "Booking process" | translate }}:</dt>
-            <dd>{{ clinic?.bookingProcess }}</dd>
+            <dd>
+              <div *ngFor="let process of bookingProcess">
+                <input type="checkbox" checked />
+                <span class="option-details">{{ process | translate }}</span>
+              </div>
+            </dd>
           </div>
 
           <div class="clinic-info">
@@ -319,22 +370,67 @@
                 "Help find the client with finding documentation?" | translate
               }}:
             </dt>
-            <dd>{{ clinic?.helpWithMissingDocs }}</dd>
+            <dd>
+              <div *ngFor="let missingDocs of helpWithMissingDocs">
+                <input type="checkbox" checked />
+                <span class="option-details">{{
+                  missingDocs | translate
+                }}</span>
+              </div>
+            </dd>
           </div>
         </div>
         <label>{{ "Volunteers and other information" | translate }}</label>
         <div class="org-details">
           <div class="clinic-info">
             <dt>{{ "Who prepares tax returns" | translate }}:</dt>
-            <dd>{{ clinic?.taxPreparers }}</dd>
+            <dd>
+              <ng-container
+                *ngIf="taxPreparers && taxPreparers.length > 0; else noData"
+              >
+                <div *ngFor="let taxPreparer of taxPreparers">
+                  <input type="checkbox" checked />
+                  <span class="option-details">{{
+                    taxPreparer | translate
+                  }}</span>
+                </div>
+              </ng-container>
+              <ng-template #noData>
+                <span class="option-details">{{ "N/A" | translate }}</span>
+              </ng-template>
+            </dd>
           </div>
           <div class="clinic-info">
             <dt>{{ "Who files tax returns" | translate }}:</dt>
-            <dd>{{ clinic?.taxFilers }}</dd>
+            <dd>
+              <ng-container
+                *ngIf="taxFilers && taxFilers.length > 0; else noData"
+              >
+                <div *ngFor="let taxFiler of taxFilers">
+                  <input type="checkbox" checked />
+                  <span class="option-details">{{ taxFiler | translate }}</span>
+                </div>
+              </ng-container>
+              <ng-template #noData>
+                <span class="option-details">{{ "N/A" | translate }}</span>
+              </ng-template>
+            </dd>
           </div>
           <div class="clinic-info">
             <dt>{{ "Clinic volunteer's roles" | translate }}:</dt>
-            <dd>{{ clinic?.volunteerRoles }}</dd>
+            <dd>
+              <ng-container
+                *ngIf="volunteerRoles && volunteerRoles.length > 0; else noData"
+              >
+                <div *ngFor="let role of volunteerRoles">
+                  <input type="checkbox" checked />
+                  <span class="option-details">{{ role | translate }}</span>
+                </div>
+              </ng-container>
+              <ng-template #noData>
+                <span class="option-details">{{ "N/A" | translate }}</span>
+              </ng-template>
+            </dd>
           </div>
           <div class="clinic-info">
             <dt>
@@ -344,7 +440,22 @@
           </div>
           <div class="clinic-info">
             <dt>{{ "Benefit from additional support" | translate }}:</dt>
-            <dd>{{ clinic?.additionalSupport }}</dd>
+            <dd>
+              <ng-container
+                *ngIf="
+                  additionalSupport && additionalSupport.length > 0;
+                  else noData
+                "
+              >
+                <div *ngFor="let support of additionalSupport">
+                  <input type="checkbox" checked />
+                  <span class="option-details">{{ support | translate }}</span>
+                </div>
+              </ng-container>
+              <ng-template #noData>
+                <span class="option-details">{{ "N/A" | translate }}</span>
+              </ng-template>
+            </dd>
           </div>
           <div class="clinic-info">
             <dt>{{ "Comments from Clinic" | translate }}:</dt>

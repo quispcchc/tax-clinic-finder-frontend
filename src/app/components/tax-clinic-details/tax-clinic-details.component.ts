@@ -20,6 +20,22 @@ export class TaxClinicDetailsComponent implements OnInit {
   messageType: 'success' | 'error' = 'success';
   isSaveButtonDisabled: boolean = true;
 
+  clinicTypes: string[] = [];
+  monthsOffered: string[] = [];
+  hoursOfOperation: string[] = [];
+  daysOfOperation: string[] = [];
+  populationServed: string[] = [];
+  serviceLanguages: string[] = [];
+  taxYearsPrepared: string[] = [];
+  residencyTaxYear: string[] = [];
+  servePeople: string[] = [];
+  bookingProcess: string[] = [];
+  helpWithMissingDocs: string[] = [];
+  taxPreparers: string[] = [];
+  taxFilers: string[] = [];
+  volunteerRoles: string[] = [];
+  additionalSupport: string[] = [];
+
   constructor(private clinicService: ClinicService) { }
 
   ngOnInit() {
@@ -27,6 +43,31 @@ export class TaxClinicDetailsComponent implements OnInit {
       this.appointmentAvailability = this.clinic.appointmentAvailability;
       this.initialAppointmentAvailability = this.clinic.appointmentAvailability;
     }
+
+    if (this.clinic) {
+      this.clinicTypes = this.convertStringToArray(this.clinic.clinicTypes);
+      this.monthsOffered = this.convertStringToArray(this.clinic.monthsOffered);
+      this.hoursOfOperation = this.convertStringToArray(this.clinic.hoursOfOperation);
+      this.daysOfOperation = this.convertStringToArray(this.clinic.daysOfOperation);
+      this.populationServed = this.convertStringToArray(this.clinic.populationServed);
+      this.serviceLanguages = this.convertStringToArray(this.clinic.serviceLanguages);
+      this.taxYearsPrepared = this.convertStringToArray(this.clinic.taxYearsPrepared);
+      this.residencyTaxYear = this.convertStringToArray(this.clinic.residencyTaxYear);
+      this.servePeople = this.convertStringToArray(this.clinic.servePeople);
+      this.bookingProcess = this.convertStringToArray(this.clinic.bookingProcess);
+      this.helpWithMissingDocs = this.convertStringToArray(this.clinic.helpWithMissingDocs);
+      this.taxPreparers = this.convertStringToArray(this.clinic.taxPreparers);
+      this.taxFilers = this.convertStringToArray(this.clinic.taxFilers);
+      this.volunteerRoles = this.convertStringToArray(this.clinic.volunteerRoles);
+      this.additionalSupport = this.convertStringToArray(this.clinic.additionalSupport);
+    }
+  }
+
+  convertStringToArray(value: string | string[] | null | undefined): string[] {
+    if (Array.isArray(value)) {
+      return value;
+    }
+    return value ? value.split(',').map(item => item.trim()) : [];
   }
 
   close(): void {
