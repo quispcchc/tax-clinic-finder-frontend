@@ -5,9 +5,10 @@
   </button>
   <p class="directory-header">{{ "Tax clinics in this axis" | translate }}</p>
   <div *ngFor="let clinic of clinics" class="clinic-card" (click)="openModal(clinic)">
-    <label>{{ clinic.organizationName }}
+    <label>
       <span class="availability-dot"
         [ngStyle]="{ 'background-color': getDotColor(clinic.appointmentAvailability) }"></span>
+      {{ clinic.organizationName }}
     </label>
     <div *ngFor="let location of clinic.locations">
       <p>
@@ -26,7 +27,7 @@
       {{ "Appointment Availability" | translate }}:
       {{ clinic.appointmentAvailability }}
     </p>
-  </div>
+  </div>  
   <div *ngIf="clinics.length == 0" class="clinic-not-found">
     <h3>{{ "No Tax Clinic Found" | translate }}</h3>
   </div>

@@ -44,6 +44,9 @@
       <button *ngIf="isAdmin" (click)="navigateTo('tax-clinic-management')">
         {{ "Tax Clinic Management" | translate }}
       </button>
+      <button *ngIf="isAdmin" (click)="navigateTo('export-client-data')">
+        {{ "Export Client Data" | translate }}
+      </button>
       <button (click)="logout()">{{ "Logout" | translate }}</button>
     </div>
   </div>

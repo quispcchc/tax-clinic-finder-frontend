@@ -1,7 +1,17 @@
 <div class="filter" [class.open]="isSidebarOpen">
-  <button class="reset-button" (click)="resetFilters()">
-    {{ "Reset Filters" | translate }}
-  </button>
+  <div  class="btn-container">
+    <label class="switch">
+      <input type="checkbox">
+      <span class="slider">
+        <span class="text">New Client</span>
+      </span>
+    </label>
+
+    <button class="reset-button" (click)="resetFilters()">
+      {{ "Reset Filters" | translate }}
+    </button>
+  </div>
+
   <div class="header">
     <img
       class="hamburger-img"

@@ -135,6 +135,7 @@ export class FilterComponent {
   constructor() {}
 
   applyFilters() {
+    this.toggleSidebarEvent.emit();
     this.filterChange.emit(this.filters);
   }
 

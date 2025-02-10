@@ -67,7 +67,6 @@
   }
 
   label {
-    margin: 0 0 5px 25px;
     font-size: 1rem;
     color: #333;
     font-weight: 500;
@@ -89,14 +88,13 @@
     text-decoration: underline;
   }
 
-  &::before {
-    content: "";
+  .availability-dot {
     width: 15px;
     height: 15px;
     background-color: #aadce5;
     border-radius: 50%;
-    position: absolute;
-    top: 15px;
-    left: 0;
+    margin-right: 8px;
+    vertical-align: middle;
   }
+  
 }

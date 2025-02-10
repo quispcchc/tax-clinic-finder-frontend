@@ -28,6 +28,7 @@ import { MessagePopupComponent } from './components/message-popup/message-popup.
 import { UserModalComponent } from './components/user-modal/user-modal.component';
 import { ConfirmationModalComponent } from './components/confirmation-modal/confirmation-modal.component';
 import { TaxClinicModalComponent } from './components/tax-clinic-modal/tax-clinic-modal.component';
+import { ExportClientDataComponent } from './components/export-client-data/export-client-data.component';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -55,7 +56,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     MessagePopupComponent,
     UserModalComponent,
     ConfirmationModalComponent,
-    TaxClinicModalComponent
+    TaxClinicModalComponent,
+    ExportClientDataComponent
   ],
   imports: [
     BrowserModule,

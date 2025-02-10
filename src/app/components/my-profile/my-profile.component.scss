@@ -5,15 +5,15 @@
   background: #f5f5f5;
   background: url("/assets/images/taxinics-bg.svg") no-repeat center center;
   background-size: cover;
-  height: calc(90vh - 35px);
+  height: calc(90vh - 15px);
 
   .my-profile-card {
-    flex: 0 0 31%;
+    flex: 0 0 31.5%;
     padding: 25px;
     overflow-y: auto;
     background-color: rgba(255, 255, 255, 0.9);
     box-shadow: 4px 0 6px rgba(0, 0, 0, 0.15);
-    height: 93%;
+    height: 94%;
     top: 60px;
     left: 0;
     z-index: 1;

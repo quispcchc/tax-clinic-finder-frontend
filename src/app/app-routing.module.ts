@@ -9,6 +9,7 @@ import { MyProfileComponent } from './components/my-profile/my-profile.component
 import { UserManagementComponent } from './components/user-management/user-management.component';
 import { TaxClinicManagementComponent } from './components/tax-clinic-management/tax-clinic-management.component';
 import { DashboardMainComponent } from './components/dashboard-main/dashboard-main.component';
+import { ExportClientDataComponent } from './components/export-client-data/export-client-data.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -26,6 +27,7 @@ const routes: Routes = [
         path: 'tax-clinic-management',
         component: TaxClinicManagementComponent,
       },
+      { path: 'export-client-data', component: ExportClientDataComponent },
     ],
   },
   { path: '', redirectTo: '/login', pathMatch: 'full' },

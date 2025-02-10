@@ -27,6 +27,7 @@ export class DashboardComponent implements OnInit {
           '/dashboard/my-profile',
           '/dashboard/user-management',
           '/dashboard/tax-clinic-management',
+          '/dashboard/export-client-data'
         ];
 
         if (menuPaths.some((path) => url.startsWith(path))) {
