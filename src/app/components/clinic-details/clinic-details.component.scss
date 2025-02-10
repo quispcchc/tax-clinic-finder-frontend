@@ -34,6 +34,26 @@
   margin-bottom: 20px;
 }
 
+.header-buttons {
+  display: flex;
+  gap: 10px;
+}
+
+.action-button {
+  background-color: #80CBD8;
+  color: #2B2B2B;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 16px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.action-button:hover {
+  background-color: #007E94;
+  color: #ffffff;
+}
+
 .clinic-header-left {
   display: flex;
   align-items: center;

@@ -1,5 +1,20 @@
 <div class="export-container">
     <div class="export-card">
         <h2 class="export-heading">{{ "Export Client Data" | translate}}</h2>
+
+        <div class="date-selection">
+            <label for="startDate">Start Date:</label>
+            <input type="date" id="startDate" name="startDate">
+
+            <label for="endDate">End Date:</label>
+            <input type="date" id="endDate" name="endDate">
+        </div>
+
+        <div class="select-all-option">
+            <input type="checkbox" id="selectAll" onchange="toggleSelectAll()">
+            <label for="selectAll">Select All Data</label>
+        </div>
+
+        <button onclick="exportData()">Export</button>
     </div>
 </div>

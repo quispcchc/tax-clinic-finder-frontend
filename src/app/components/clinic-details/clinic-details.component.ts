@@ -168,4 +168,13 @@ export class ClinicDetailsComponent implements OnInit, AfterViewInit {
 
     return hull;
   }
+
+  assignClinic() {
+    console.log('Assign Clinic button clicked');
+  }
+  
+  filterClinic() {
+    console.log('Back to Filter Clinic button clicked');
+  }
+  
 }

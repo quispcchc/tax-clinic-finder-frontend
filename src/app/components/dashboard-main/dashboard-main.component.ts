@@ -215,7 +215,7 @@ export class DashboardMainComponent implements OnInit {
             )) ||
           (filters['accessDocuments']?.noDocuments &&
             clinic.helpWithMissingDocs?.includes(
-              'No client must have all their documents ready'
+              'No, client must have all their documents ready'
             )) ||
           (!filters['accessDocuments']?.allDocuments &&
             !filters['accessDocuments']?.someDocuments &&
