@@ -1,7 +1,7 @@
 <div class="filter" [class.open]="isSidebarOpen">
-  <div  class="btn-container">
+  <div class="btn-container">
     <label class="switch">
-      <input type="checkbox">
+      <input type="checkbox"  [(ngModel)]="isNewClient"/>
       <span class="slider">
         <span class="text">New Client</span>
       </span>
@@ -24,7 +24,7 @@
   <form (ngSubmit)="applyFilters()">
     <div class="form-group">
       <div class="form-group-label">
-        <label>{{ "Appointment Type" | translate }}</label>
+        <label>{{ "Appointment Status" | translate }}</label>
         <small class="subtitle">{{
           "Do you have appointments available?" | translate
         }}</small>
@@ -61,7 +61,7 @@
     </div>
     <div class="form-group">
       <div class="form-group-label">
-        <label>{{ "Service Delivery Modes" | translate }}</label>
+        <label>{{ "Type of clinic" | translate }}</label>
         <small class="subtitle">{{
           "Do you offer services in the following modes?" | translate
         }}</small>
@@ -73,7 +73,7 @@
             name="inPerson"
             [(ngModel)]="filters.serviceDeliveryModes.inPerson"
           />
-          {{ "In-person" | translate }}
+          {{ "In person" | translate }}
         </label>
         <label>
           <input
@@ -106,6 +106,130 @@
             [(ngModel)]="filters.serviceDeliveryModes.dropOff"
           />
           {{ "Drop-off" | translate }}
+        </label>
+      </div>
+    </div>
+    <div class="form-group">
+      <div class="form-group-label">
+        <label>{{ "Wheelchair accessible" | translate }}</label>
+        <small class="subtitle">{{
+          "Is location wheelchair accessible?" | translate
+        }}</small>
+      </div>
+      <div class="radio-group">
+        <label>
+          <input
+            type="radio"
+            name="wheelchairAccessible"
+            value="yes"
+            [(ngModel)]="filters.wheelchairAccessible"
+          />
+          {{ "Yes" | translate }}
+        </label>
+        <label>
+          <input
+            type="radio"
+            name="wheelchairAccessible"
+            value="no"
+            [(ngModel)]="filters.wheelchairAccessible"
+          />
+          {{ "No" | translate }}
+        </label>
+      </div>
+    </div>
+    <div class="form-group">
+      <div class="form-group-label">
+        <label>{{ "Geographical zone" | translate }}</label>
+        <small class="subtitle">{{
+          "Does clinic serve people from a specific area?" | translate
+        }}</small>
+      </div>
+      <div class="radio-group">
+        <label>
+          <input
+            type="radio"
+            name="servePeopleFrom"
+            value="specific"
+            [(ngModel)]="filters.servePeopleFrom"
+          />
+          {{ "A specific catchment area only" | translate }}
+        </label>
+        <label>
+          <input
+            type="radio"
+            name="servePeopleFrom"
+            value="anywhere"
+            [(ngModel)]="filters.servePeopleFrom"
+          />
+          {{ "Anywhere from Ottawa" | translate }}
+        </label>
+        <label>
+          <input
+            type="radio"
+            name="servePeopleFrom"
+            value="other"
+            [(ngModel)]="filters.servePeopleFrom"
+          />
+          {{ "Other" | translate }}
+        </label>
+        <input
+          class="input-filter"
+          type="text"
+          *ngIf="filters.servePeopleFrom === 'other'"
+          [(ngModel)]="filters.otherServePeopleFrom"
+          placeholder="{{ 'Enter other area' | translate }}"
+        />
+      </div>
+    </div>
+    <div class="form-group">
+      <div class="form-group-label">
+        <label>{{ "Days of Operation" | translate }}</label>
+        <small class="subtitle">{{
+          "Which days does clinic operate?" | translate
+        }}</small>
+      </div>
+      <div class="checkbox-group">
+        <label>
+          <input
+            type="checkbox"
+            name="weekdays"
+            [(ngModel)]="filters.serviceDays.weekdays"
+          />
+          {{ "Weekdays" | translate }}
+        </label>
+        <label>
+          <input
+            type="checkbox"
+            name="weekends"
+            [(ngModel)]="filters.serviceDays.weekends"
+          />
+          {{ "Weekends" | translate }}
+        </label>
+      </div>
+    </div>
+    <div class="form-group">
+      <div class="form-group-label">
+        <label>{{ "Hours of Operation" | translate }}</label>
+        <small class="subtitle">{{
+          "What are clinics operating hours?" | translate
+        }}</small>
+      </div>
+      <div class="checkbox-group">
+        <label>
+          <input
+            type="checkbox"
+            name="daytime"
+            [(ngModel)]="filters.serviceHours.daytime"
+          />
+          {{ "Daytime" | translate }}
+        </label>
+        <label>
+          <input
+            type="checkbox"
+            name="evening"
+            [(ngModel)]="filters.serviceHours.evening"
+          />
+          {{ "Evening" | translate }}
         </label>
       </div>
     </div>
@@ -232,7 +356,7 @@
     </div>
     <div class="form-group">
       <div class="form-group-label">
-        <label>{{ "Client Categories" | translate }}</label>
+        <label>{{ "Population Serve" | translate }}</label>
         <small class="subtitle">{{
           "Are you accepting the following client types?" | translate
         }}</small>
@@ -268,7 +392,7 @@
             name="indigenousClients"
             [(ngModel)]="filters.clientCategories.indigenousClients"
           />
-          {{ "Indigenous clients" | translate }}
+          {{ "Indigenous (First Nations and Inuit and Metis)" | translate }}
         </label>
         <label>
           <input
@@ -277,6 +401,14 @@
             [(ngModel)]="filters.clientCategories.disabilities"
           />
           {{ "Persons with disabilities" | translate }}
+        </label>
+        <label>
+          <input
+            type="checkbox"
+            name="languageSpecific"
+            [(ngModel)]="filters.clientCategories.languageSpecific"
+          />
+          {{ "Language-specific community" | translate }}
         </label>
       </div>
     </div>
@@ -328,35 +460,75 @@
         <label>
           <input
             type="checkbox"
-            name="selfEmployed"
-            [(ngModel)]="filters.specialTaxCases.selfEmployed"
+            name="rentalIncome"
+            [(ngModel)]="filters.specialTaxCases.rentalIncome"
           />
-          {{ "Self-employed individuals" | translate }}
+          {{ "Rental income" | translate }}
         </label>
         <label>
           <input
             type="checkbox"
-            name="deceased"
-            [(ngModel)]="filters.specialTaxCases.deceased"
+            name="selfEmployment"
+            [(ngModel)]="filters.specialTaxCases.selfEmployment"
           />
-          {{ "Deceased individuals" | translate }}
+          {{ "Self-employment income" | translate }}
         </label>
         <label>
           <input
             type="checkbox"
-            name="bankruptcy"
-            [(ngModel)]="filters.specialTaxCases.bankruptcy"
+            name="incomeOver"
+            [(ngModel)]="filters.specialTaxCases.incomeOver"
           />
-          {{ "Bankruptcy cases" | translate }}
+          {{ "Interest income over 1000$" | translate }}
         </label>
         <label>
           <input
             type="checkbox"
-            name="imprisoned"
-            [(ngModel)]="filters.specialTaxCases.imprisoned"
+            name="deceasedPerson"
+            [(ngModel)]="filters.specialTaxCases.deceasedPerson"
           />
-          {{ "Imprisoned individuals" | translate }}
+          {{ "Return for a deceased person" | translate }}
         </label>
+        <label>
+          <input
+            type="checkbox"
+            name="employmentExpenses"
+            [(ngModel)]="filters.specialTaxCases.employmentExpenses"
+          />
+          {{ "Employment expenses (with specific conditions)" | translate }}
+        </label>
+        <label>
+          <input
+            type="checkbox"
+            name="capitalGains"
+            [(ngModel)]="filters.specialTaxCases.capitalGains"
+          />
+          {{ "Capital Gains/losses (with specific conditions)" | translate }}
+        </label>
+        <label>
+          <input
+            type="checkbox"
+            name="largerIncome"
+            [(ngModel)]="filters.specialTaxCases.largerIncome"
+          />
+          {{ "Larger income than CVITP income-criteria. when people are low income now" | translate }}
+        </label>
+        <label>
+          <input
+            type="checkbox"
+            name="other"
+            [(ngModel)]="filters.specialTaxCases.other"
+          />
+          {{ "Other" | translate }}
+        </label>
+        <input
+          class="input-filter"
+          type="text"
+          *ngIf="filters.specialTaxCases.other"
+          name="otherSpecialTaxCases"
+          [(ngModel)]="filters.specialTaxCases.otherSpecialTaxCases"
+          placeholder="{{ 'Enter other' | translate }}"
+        />
       </div>
     </div>
     <div class="form-group">
@@ -390,98 +562,6 @@
             [(ngModel)]="filters.appointmentBooking.inPerson"
           />
           {{ "In person" | translate }}
-        </label>
-      </div>
-    </div>
-    <div class="form-group">
-      <div class="form-group-label">
-        <label>{{ "Catchment Area" | translate }}</label>
-        <small class="subtitle">{{
-          "Do you have a defined catchment area?" | translate
-        }}</small>
-      </div>
-      <div class="radio-group">
-        <label>
-          <input
-            type="radio"
-            name="catchmentArea"
-            value="yes"
-            [(ngModel)]="filters.catchmentArea.hasCatchmentArea"
-            (change)="filters.catchmentArea.hasCatchmentArea = true"
-          />
-          {{ "Yes" | translate }}
-        </label>
-        <label>
-          <input
-            type="radio"
-            name="catchmentArea"
-            value="no"
-            [(ngModel)]="filters.catchmentArea.hasCatchmentArea"
-            (change)="filters.catchmentArea.hasCatchmentArea = false"
-          />
-          {{ "No" | translate }}
-        </label>
-      </div>
-      <div *ngIf="filters.catchmentArea.hasCatchmentArea">
-        <label for="postalCode">{{ "Enter Postal Code" | translate }}</label>
-        <input
-          type="text"
-          id="postalCode"
-          [(ngModel)]="filters.catchmentArea.postalCode"
-          name="postalCode"
-          placeholder="{{ 'Enter Postal Code' | translate }}"
-        />
-      </div>
-    </div>
-    <div class="form-group">
-      <div class="form-group-label">
-        <label>{{ "Service Days" | translate }}</label>
-        <small class="subtitle">{{
-          "When do you see clients?" | translate
-        }}</small>
-      </div>
-      <div class="checkbox-group">
-        <label>
-          <input
-            type="checkbox"
-            name="weekdays"
-            [(ngModel)]="filters.serviceDays.weekdays"
-          />
-          {{ "Weekdays" | translate }}
-        </label>
-        <label>
-          <input
-            type="checkbox"
-            name="weekends"
-            [(ngModel)]="filters.serviceDays.weekends"
-          />
-          {{ "Weekends" | translate }}
-        </label>
-      </div>
-    </div>
-    <div class="form-group">
-      <div class="form-group-label">
-        <label>{{ "Service Hours" | translate }}</label>
-        <small class="subtitle">{{
-          "What times do you see clients?" | translate
-        }}</small>
-      </div>
-      <div class="checkbox-group">
-        <label>
-          <input
-            type="checkbox"
-            name="workHours"
-            [(ngModel)]="filters.serviceHours.workHours"
-          />
-          {{ "Work hours" | translate }}
-        </label>
-        <label>
-          <input
-            type="checkbox"
-            name="afterHours"
-            [(ngModel)]="filters.serviceHours.afterHours"
-          />
-          {{ "After hours" | translate }}
         </label>
       </div>
     </div>

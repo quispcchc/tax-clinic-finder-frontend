@@ -11,9 +11,20 @@ export class FilterComponent {
   @Input() language!: string;
   @Output() toggleSidebarEvent = new EventEmitter<void>();
   @Input() isSidebarOpen: boolean = false;
+  isNewClient: boolean = false;
 
   filters: {
     appointmentType?: string;
+    serviceDeliveryModes: {
+      inPerson?: boolean;
+      virtual?: boolean;
+      byAppointment?: boolean;
+      walkIn?: boolean;
+      dropOff?: boolean;
+    };
+    wheelchairAccessible?: string;
+    servePeopleFrom?: string;
+    otherServePeopleFrom?: string;
     supportedTaxYears: {
       currentYear?: boolean;
       currentLastYears?: boolean;
@@ -21,10 +32,15 @@ export class FilterComponent {
     };
     provinces: { [key: string]: boolean };
     specialTaxCases: {
-      selfEmployed?: boolean;
-      deceased?: boolean;
-      bankruptcy?: boolean;
-      imprisoned?: boolean;
+      rentalIncome?: boolean;
+      selfEmployment?: boolean;
+      incomeOver?: boolean;
+      deceasedPerson?: boolean;
+      employmentExpenses?: boolean;
+      capitalGains?: boolean;
+      largerIncome?: boolean;
+      other?:boolean;
+      otherSpecialTaxCases?: string;
     };
     languageOptions: {
       french?: boolean;
@@ -33,28 +49,18 @@ export class FilterComponent {
       other?: boolean;
       otherLanguage?: string;
     };
-    serviceDeliveryModes: {
-      inPerson?: boolean;
-      virtual?: boolean;
-      byAppointment?: boolean;
-      walkIn?: boolean;
-      dropOff?: boolean;
-    };
     clientCategories: {
       newcomers?: boolean;
       students?: boolean;
       indigenousClients?: boolean;
       seniors?: boolean;
       disabilities?: boolean;
+      languageSpecific?: boolean;
     };
     accessDocuments: {
       allDocuments?: boolean;
       someDocuments?: boolean;
       noDocuments?: boolean;
-    };
-    catchmentArea: {
-      hasCatchmentArea?: boolean;
-      postalCode?: string;
     };
     appointmentBooking: {
       onlineAppointment?: boolean;
@@ -66,11 +72,21 @@ export class FilterComponent {
       weekends?: boolean;
     };
     serviceHours: {
-      workHours?: boolean;
-      afterHours?: boolean;
+      daytime?: boolean;
+      evening?: boolean;
     };
   } = {
     appointmentType: '',
+    serviceDeliveryModes: {
+      inPerson: false,
+      virtual: false,
+      byAppointment: false,
+      walkIn: false,
+      dropOff: false,
+    },
+    wheelchairAccessible: '',
+    servePeopleFrom: '',
+    otherServePeopleFrom: '',
     supportedTaxYears: {
       currentYear: false,
       currentLastYears: false,
@@ -82,10 +98,15 @@ export class FilterComponent {
       Other: false,
     },
     specialTaxCases: {
-      selfEmployed: false,
-      deceased: false,
-      bankruptcy: false,
-      imprisoned: false,
+      rentalIncome: false,
+      selfEmployment: false,
+      incomeOver: false,
+      deceasedPerson: false,
+      employmentExpenses: false,
+      capitalGains: false,
+      largerIncome: false,
+      other: false,
+      otherSpecialTaxCases: '',
     },
     languageOptions: {
       french: false,
@@ -94,28 +115,18 @@ export class FilterComponent {
       other: false,
       otherLanguage: '',
     },
-    serviceDeliveryModes: {
-      inPerson: false,
-      virtual: false,
-      byAppointment: false,
-      walkIn: false,
-      dropOff: false,
-    },
     clientCategories: {
       newcomers: false,
       students: false,
       indigenousClients: false,
       seniors: false,
       disabilities: false,
+      languageSpecific: false,
     },
     accessDocuments: {
       allDocuments: false,
       someDocuments: false,
       noDocuments: false,
-    },
-    catchmentArea: {
-      hasCatchmentArea: false,
-      postalCode: '',
     },
     appointmentBooking: {
       onlineAppointment: false,
@@ -127,8 +138,8 @@ export class FilterComponent {
       weekends: false,
     },
     serviceHours: {
-      workHours: false,
-      afterHours: false,
+      daytime: false,
+      evening: false,
     },
   };
 
@@ -142,6 +153,16 @@ export class FilterComponent {
   resetFilters() {
     this.filters = {
       appointmentType: '',
+      serviceDeliveryModes: {
+        inPerson: false,
+        virtual: false,
+        byAppointment: false,
+        walkIn: false,
+        dropOff: false,
+      },
+      wheelchairAccessible: '',
+      servePeopleFrom: '',
+      otherServePeopleFrom: '',
       supportedTaxYears: {
         currentYear: false,
         currentLastYears: false,
@@ -153,10 +174,15 @@ export class FilterComponent {
         Other: false,
       },
       specialTaxCases: {
-        selfEmployed: false,
-        deceased: false,
-        bankruptcy: false,
-        imprisoned: false,
+        rentalIncome: false,
+        selfEmployment: false,
+        incomeOver: false,
+        deceasedPerson: false,
+        employmentExpenses: false,
+        capitalGains: false,
+        largerIncome: false,
+        other: false,
+        otherSpecialTaxCases: '',
       },
       languageOptions: {
         french: false,
@@ -165,28 +191,18 @@ export class FilterComponent {
         other: false,
         otherLanguage: '',
       },
-      serviceDeliveryModes: {
-        inPerson: false,
-        virtual: false,
-        byAppointment: false,
-        walkIn: false,
-        dropOff: false,
-      },
       clientCategories: {
         newcomers: false,
         students: false,
         indigenousClients: false,
         seniors: false,
         disabilities: false,
+        languageSpecific: false,
       },
       accessDocuments: {
         allDocuments: false,
         someDocuments: false,
         noDocuments: false,
-      },
-      catchmentArea: {
-        hasCatchmentArea: false,
-        postalCode: '',
       },
       appointmentBooking: {
         onlineAppointment: false,
@@ -198,8 +214,8 @@ export class FilterComponent {
         weekends: false,
       },
       serviceHours: {
-        workHours: false,
-        afterHours: false,
+        daytime: false,
+        evening: false,
       },
     };
     this.filterChange.emit();

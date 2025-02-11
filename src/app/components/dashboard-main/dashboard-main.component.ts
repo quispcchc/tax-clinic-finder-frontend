@@ -132,20 +132,22 @@ export class DashboardMainComponent implements OnInit {
       console.log('Resetting filters. Showing all clinics.');
       this.filteredClinics = [...this.clinics];
     } else {
+      const hasSelectedFilters = (filterGroup: any) =>
+        Object.values(filterGroup || {}).some(Boolean);
+
       this.filteredClinics = this.clinics.filter((clinic) => {
         const matchesServiceDelivery =
           (filters['serviceDeliveryModes']?.inPerson &&
-            clinic.clinicTypes?.includes('In Person')) ||
+            clinic.clinicTypes?.includes('In person')) ||
           (filters['serviceDeliveryModes']?.virtual &&
             clinic.clinicTypes?.includes('Virtual')) ||
           (filters['serviceDeliveryModes']?.byAppointment &&
             clinic.clinicTypes?.includes('By appointment')) ||
           (filters['serviceDeliveryModes']?.walkIn &&
-            clinic.clinicTypes?.includes('Walk in')) ||
-          (!filters['serviceDeliveryModes']?.inPerson &&
-            !filters['serviceDeliveryModes']?.virtual &&
-            !filters['serviceDeliveryModes']?.byAppointment &&
-            !filters['serviceDeliveryModes']?.walkIn);
+            clinic.clinicTypes?.includes('Walk-in')) ||
+          (filters['serviceDeliveryModes']?.dropOff &&
+            clinic.clinicTypes?.includes('Drop-off')) ||
+          !hasSelectedFilters(filters['serviceDeliveryModes']);
 
         const matchesSupportedTaxYears =
           (filters['supportedTaxYears']?.currentYear &&
@@ -154,22 +156,18 @@ export class DashboardMainComponent implements OnInit {
             clinic.taxYearsPrepared?.includes('Current and last year')) ||
           (filters['supportedTaxYears']?.multipleYears &&
             clinic.taxYearsPrepared?.includes('Multiple years')) ||
-          (!filters['supportedTaxYears']?.currentYear &&
-            !filters['supportedTaxYears']?.currentLastYears &&
-            !filters['supportedTaxYears']?.multipleYears);
+          !hasSelectedFilters(filters['supportedTaxYears']);
 
         const matchesProvinces =
           (filters['provinces']?.Ontario &&
             clinic.residencyTaxYear.includes('Ontario')) ||
           (filters['provinces']?.Quebec &&
-            clinic.residencyTaxYear.includes('Québec')) ||
+            clinic.residencyTaxYear.includes('Quebec')) ||
           (filters['provinces']?.Other &&
             clinic.residencyTaxYear.includes(
               'Other than Ontario and Quebec'
             )) ||
-          (!filters['provinces']?.Ontario &&
-            !filters['provinces']?.Quebec &&
-            !filters['provinces']?.Other);
+          !hasSelectedFilters(filters['provinces']);
 
         const matchesLanguage =
           (filters['languageOptions']?.french &&
@@ -179,13 +177,11 @@ export class DashboardMainComponent implements OnInit {
           (filters['languageOptions']?.arabic &&
             clinic.serviceLanguages?.includes('Arabic')) ||
           (filters['languageOptions']?.other &&
+            filters['languageOptions']?.otherLanguage &&
             clinic.serviceLanguages?.includes(
               filters['languageOptions'].otherLanguage
             )) ||
-          (!filters['languageOptions']?.french &&
-            !filters['languageOptions']?.english &&
-            !filters['languageOptions']?.arabic &&
-            !filters['languageOptions']?.other);
+          !hasSelectedFilters(filters['languageOptions']);
 
         const matchesClient =
           (filters['clientCategories']?.newcomers &&
@@ -193,16 +189,21 @@ export class DashboardMainComponent implements OnInit {
           (filters['clientCategories']?.students &&
             clinic.populationServed?.includes('Students')) ||
           (filters['clientCategories']?.indigenousClients &&
-            clinic.populationServed?.includes('Indigenous')) ||
+            clinic.populationServed?.includes(
+              'Indigenous (First Nations and Inuit and Metis)'
+            )) ||
           (filters['clientCategories']?.seniors &&
             clinic.populationServed?.includes('Seniors')) ||
           (filters['clientCategories']?.disabilities &&
             clinic.populationServed?.includes('Persons with disabilities')) ||
+          (filters['clientCategories']?.languageSpecific &&
+            clinic.populationServed?.includes('Language-specific community')) ||
           (!filters['clientCategories']?.newcomers &&
             !filters['clientCategories']?.students &&
             !filters['clientCategories']?.indigenousClients &&
             !filters['clientCategories']?.seniors &&
-            !filters['clientCategories']?.disabilities);
+            !filters['clientCategories']?.disabilities &&
+            !filters['clientCategories']?.languageSpecific);
 
         const matchesAccessDocuments =
           (filters['accessDocuments']?.allDocuments &&
@@ -241,6 +242,70 @@ export class DashboardMainComponent implements OnInit {
             clinic.appointmentAvailability === 'Not Sure') ||
           filters['appointmentType'] === '';
 
+        const matchesWheelchairAccessible =
+          (filters['wheelchairAccessible'] === 'yes' &&
+            clinic.wheelchairAccessible === 'Yes') ||
+          (filters['wheelchairAccessible'] === 'no' &&
+            clinic.appointmentAvailability === 'No') ||
+          filters['wheelchairAccessible'] === '';
+
+        const matchesDaysOfOperation =
+          (filters['serviceDays']?.weekdays &&
+            clinic.daysOfOperation.includes('Weekdays')) ||
+          (filters['serviceDays']?.weekends &&
+            clinic.daysOfOperation.includes('Weekends')) ||
+          (!filters['serviceDays']?.weekdays &&
+            !filters['serviceDays']?.weekends);
+
+        const matcheshoursOfOperation =
+          (filters['serviceHours']?.daytime &&
+            clinic.hoursOfOperation.includes('Daytime')) ||
+          (filters['serviceHours']?.evening &&
+            clinic.hoursOfOperation.includes('Evening')) ||
+          (!filters['serviceHours']?.daytime &&
+            !filters['serviceHours']?.evening);
+
+        const matchesServePeopleFrom =
+          (filters['servePeopleFrom'] === 'specific' &&
+            clinic.servePeopleFrom === 'A specific catchment area only') ||
+          (filters['servePeopleFrom'] === 'anywhere' &&
+            clinic.servePeopleFrom === 'Anywhere from Ottawa') ||
+          (filters['servePeopleFrom'] === 'other' &&
+            clinic.servePeopleFrom
+              ?.toLowerCase()
+              .includes(
+                filters['otherServePeopleFrom']?.toLowerCase() || ''
+              )) ||
+          filters['servePeopleFrom'] === '';
+
+        const matchesSpecialTaxCases =
+          (filters['specialTaxCases']?.rentalIncome &&
+            clinic.servePeople?.includes('Rental income')) ||
+          (filters['specialTaxCases']?.selfEmployment &&
+            clinic.servePeople?.includes('Self-employment income')) ||
+          (filters['specialTaxCases']?.incomeOver &&
+            clinic.servePeople?.includes('Interest income over 1000$')) ||
+          (filters['specialTaxCases']?.deceasedPerson &&
+            clinic.servePeople?.includes('Return for a deceased person')) ||
+          (filters['specialTaxCases']?.employmentExpenses &&
+            clinic.servePeople?.includes(
+              'Employment expenses (with specific conditions)'
+            )) ||
+          (filters['specialTaxCases']?.capitalGains &&
+            clinic.servePeople?.includes(
+              'Capital Gains/losses (with specific conditions)'
+            )) ||
+          (filters['specialTaxCases']?.largerIncome &&
+            clinic.servePeople?.includes(
+              'Larger income than CVITP income-criteria. when people are low income now'
+            )) ||
+          (filters['specialTaxCases']?.other &&
+            filters['specialTaxCases']?.otherSpecialTaxCases &&
+            clinic.servePeople?.includes(
+              filters['specialTaxCases'].otherSpecialTaxCases
+            )) ||
+          !hasSelectedFilters(filters['specialTaxCases']);
+
         return (
           matchesSupportedTaxYears &&
           matchesProvinces &&
@@ -249,10 +314,17 @@ export class DashboardMainComponent implements OnInit {
           matchesAccessDocuments &&
           matchesServiceDelivery &&
           matchesAppointmentBooking &&
-          matchesAppointmentAvailability
+          matchesAppointmentAvailability &&
+          matchesWheelchairAccessible &&
+          matchesDaysOfOperation &&
+          matcheshoursOfOperation &&
+          matchesServePeopleFrom &&
+          matchesSpecialTaxCases
         );
       });
     }
+    console.log("filter criteria is....", filters);
+    console.log("after filter final list of clinics..", this.filteredClinics);
     this.sortClinics();
   }
 

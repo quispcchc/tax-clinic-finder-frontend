@@ -11,8 +11,7 @@
       </div>
       <div class="header-buttons">
         <button class="action-button" (click)="assignClinic()">Assign Clinic</button>
-        <button class="action-button" (click)="filterClinic()">Back to Filter Clinic</button>
-        <button class="close-button" (click)="close()">X</button>
+        <button class="action-button" (click)="backToFilterClinic()">Back to Filter Clinic</button>
       </div>
     </div>
 
@@ -117,7 +116,19 @@
                   | translate
               }}:
             </dt>
+            <dd>{{ clinic?.hoursAndDate }}</dd>
+          </div>
+          <div class="clinic-info">
+            <dt>
+              {{"Hours of clinic" | translate}}:
+            </dt>
             <dd>{{ clinic?.hoursOfOperation }}</dd>
+          </div>
+          <div class="clinic-info">
+            <dt>
+              {{"Day of cinic" | translate}}:
+            </dt>
+            <dd>{{ clinic?.daysOfOperation }}</dd>
           </div>
           <div class="clinic-info">
             <dt>

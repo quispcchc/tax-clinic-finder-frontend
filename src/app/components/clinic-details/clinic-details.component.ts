@@ -170,11 +170,11 @@ export class ClinicDetailsComponent implements OnInit, AfterViewInit {
   }
 
   assignClinic() {
-    console.log('Assign Clinic button clicked');
+    this.closeModal.emit();
   }
   
-  filterClinic() {
-    console.log('Back to Filter Clinic button clicked');
+  backToFilterClinic() {
+    this.closeModal.emit();
   }
   
 }
