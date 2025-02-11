@@ -51,6 +51,7 @@ export class AuthService {
               })
             );
             localStorage.setItem('userRole', response.role);
+            localStorage.setItem('userEmail', response.email);
           }
           return true;
         }),

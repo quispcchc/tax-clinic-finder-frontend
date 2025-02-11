@@ -7,7 +7,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
   styleUrls: ['./filter.component.scss'],
 })
 export class FilterComponent {
-  @Output() filterChange = new EventEmitter<{ [key: string]: any }>();
+  @Output() filterChange = new EventEmitter<{ filters: any, isNewClient: boolean }>();
   @Input() language!: string;
   @Output() toggleSidebarEvent = new EventEmitter<void>();
   @Input() isSidebarOpen: boolean = false;
@@ -147,7 +147,10 @@ export class FilterComponent {
 
   applyFilters() {
     this.toggleSidebarEvent.emit();
-    this.filterChange.emit(this.filters);
+    this.filterChange.emit({
+      filters: this.filters,
+      isNewClient: this.isNewClient,
+    });
   }
 
   resetFilters() {

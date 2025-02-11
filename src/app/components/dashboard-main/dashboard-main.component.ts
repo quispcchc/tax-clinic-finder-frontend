@@ -17,6 +17,7 @@ export class DashboardMainComponent implements OnInit {
   selectedTab: string = 'access-filter';
   currentLanguage: string;
   isSidebarOpen: boolean = true;
+  userEmail = localStorage.getItem('userEmail');
 
   constructor(
     private clinicService: ClinicService,
@@ -127,11 +128,34 @@ export class DashboardMainComponent implements OnInit {
     });
   }
 
-  applyFilters(filters: { [key: string]: any } | null): void {
+  applyFilters(event: {filters: { [key: string]: any } | null, isNewClient: boolean }) {
+    const { filters, isNewClient } = event;
     if (!filters) {
       console.log('Resetting filters. Showing all clinics.');
       this.filteredClinics = [...this.clinics];
     } else {
+
+      const filterData = {
+        appointment_type: filters['appointmentType'] || '',
+        type_of_clinic: JSON.stringify(filters['serviceDeliveryModes']) || '',
+        wheelchair_accessible: filters['wheelchairAccessible'] || '',
+        geographical_zone: filters['servePeopleFrom'] || '',
+        days_of_operation: JSON.stringify(filters['serviceDays']) || '',
+        hours_of_operation: JSON.stringify(filters['serviceHours']) || '',
+        supported_tax_years: JSON.stringify(filters['supportedTaxYears']) || '',
+        province_of_residence: JSON.stringify(filters['provinces']) || '',
+        language_options: JSON.stringify(filters['languageOptions']) || '',
+        population_serve: JSON.stringify(filters['clientCategories']) || '',
+        help_access_documents: JSON.stringify(filters['accessDocuments']) || '',
+        special_cases: JSON.stringify(filters['specialTaxCases']) || '',
+        clinics_listed: JSON.stringify(this.filteredClinics.map(clinic => clinic.organizationName)) || '',
+        assigned_clinic: '',
+        unassigned_clinic: '',
+        created_by: this.userEmail,
+        created_date: new Date().toISOString(),
+      };
+      console.log("filter criteria is....", filterData);
+
       const hasSelectedFilters = (filterGroup: any) =>
         Object.values(filterGroup || {}).some(Boolean);
 
@@ -323,9 +347,27 @@ export class DashboardMainComponent implements OnInit {
         );
       });
     }
-    console.log("filter criteria is....", filters);
-    console.log("after filter final list of clinics..", this.filteredClinics);
+
+    console.log("new client is enabled or not", isNewClient);
+
+    const organizationNames = this.filteredClinics.map(clinic => clinic.organizationName);
+    console.log("organisation names", organizationNames);
+
+    if (isNewClient) {
+      this.saveFilteredDataToDatabase(filters, organizationNames);
+    }
     this.sortClinics();
+  }
+
+  saveFilteredDataToDatabase(filters: any, filteredClinics: any) {
+    // this.filterService.saveFilteredData(filters, filteredClinics).subscribe(
+    //   (response) => {
+    //     console.log('Filtered data saved successfully', response);
+    //   },
+    //   (error) => {
+    //     console.error('Error saving filtered data', error);
+    //   }
+    // );
   }
 
   onLanguageChange(language: string): void {
