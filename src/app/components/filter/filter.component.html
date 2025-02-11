@@ -34,7 +34,7 @@
           <input
             type="radio"
             name="appointmentType"
-            value="yes"
+            value="Yes"
             [(ngModel)]="filters.appointmentType"
           />
           {{ "Yes" | translate }}
@@ -43,7 +43,7 @@
           <input
             type="radio"
             name="appointmentType"
-            value="no"
+            value="No"
             [(ngModel)]="filters.appointmentType"
           />
           {{ "No" | translate }}
@@ -52,7 +52,7 @@
           <input
             type="radio"
             name="appointmentType"
-            value="any"
+            value="Not Sure"
             [(ngModel)]="filters.appointmentType"
           />
           {{ "Not Sure" | translate }}
@@ -121,7 +121,7 @@
           <input
             type="radio"
             name="wheelchairAccessible"
-            value="yes"
+            value="Yes"
             [(ngModel)]="filters.wheelchairAccessible"
           />
           {{ "Yes" | translate }}
@@ -130,7 +130,7 @@
           <input
             type="radio"
             name="wheelchairAccessible"
-            value="no"
+            value="No"
             [(ngModel)]="filters.wheelchairAccessible"
           />
           {{ "No" | translate }}
@@ -176,6 +176,7 @@
           class="input-filter"
           type="text"
           *ngIf="filters.servePeopleFrom === 'other'"
+          name="otherServePeopleFrom"
           [(ngModel)]="filters.otherServePeopleFrom"
           placeholder="{{ 'Enter other area' | translate }}"
         />

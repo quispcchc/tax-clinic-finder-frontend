@@ -89,4 +89,14 @@ export class ClinicService {
     });
     return this.http.delete<void>(`${this.apiUrl}/${clinicId}`, { headers });
   }
+
+  saveFilteredData(filterData: any): Observable<any> {
+    const token = localStorage.getItem('authToken');
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`,
+      'Content-Type': 'application/json',
+    });
+  
+    return this.http.post<any>(`${this.apiUrl}/save-filters`, filterData, { headers });
+  }
 }

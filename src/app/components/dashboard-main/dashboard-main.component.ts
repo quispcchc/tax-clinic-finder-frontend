@@ -128,246 +128,378 @@ export class DashboardMainComponent implements OnInit {
     });
   }
 
-  applyFilters(event: {filters: { [key: string]: any } | null, isNewClient: boolean }) {
+  applyFilters(event: {
+    filters: { [key: string]: any } | null;
+    isNewClient: boolean;
+  }) {
     const { filters, isNewClient } = event;
+
     if (!filters) {
       console.log('Resetting filters. Showing all clinics.');
       this.filteredClinics = [...this.clinics];
     } else {
+      this.filteredClinics = this.filterClinics(this.clinics, filters);
 
-      const filterData = {
-        appointment_type: filters['appointmentType'] || '',
-        type_of_clinic: JSON.stringify(filters['serviceDeliveryModes']) || '',
-        wheelchair_accessible: filters['wheelchairAccessible'] || '',
-        geographical_zone: filters['servePeopleFrom'] || '',
-        days_of_operation: JSON.stringify(filters['serviceDays']) || '',
-        hours_of_operation: JSON.stringify(filters['serviceHours']) || '',
-        supported_tax_years: JSON.stringify(filters['supportedTaxYears']) || '',
-        province_of_residence: JSON.stringify(filters['provinces']) || '',
-        language_options: JSON.stringify(filters['languageOptions']) || '',
-        population_serve: JSON.stringify(filters['clientCategories']) || '',
-        help_access_documents: JSON.stringify(filters['accessDocuments']) || '',
-        special_cases: JSON.stringify(filters['specialTaxCases']) || '',
-        clinics_listed: JSON.stringify(this.filteredClinics.map(clinic => clinic.organizationName)) || '',
-        assigned_clinic: '',
-        unassigned_clinic: '',
-        created_by: this.userEmail,
-        created_date: new Date().toISOString(),
-      };
-      console.log("filter criteria is....", filterData);
-
-      const hasSelectedFilters = (filterGroup: any) =>
-        Object.values(filterGroup || {}).some(Boolean);
-
-      this.filteredClinics = this.clinics.filter((clinic) => {
-        const matchesServiceDelivery =
-          (filters['serviceDeliveryModes']?.inPerson &&
-            clinic.clinicTypes?.includes('In person')) ||
-          (filters['serviceDeliveryModes']?.virtual &&
-            clinic.clinicTypes?.includes('Virtual')) ||
-          (filters['serviceDeliveryModes']?.byAppointment &&
-            clinic.clinicTypes?.includes('By appointment')) ||
-          (filters['serviceDeliveryModes']?.walkIn &&
-            clinic.clinicTypes?.includes('Walk-in')) ||
-          (filters['serviceDeliveryModes']?.dropOff &&
-            clinic.clinicTypes?.includes('Drop-off')) ||
-          !hasSelectedFilters(filters['serviceDeliveryModes']);
-
-        const matchesSupportedTaxYears =
-          (filters['supportedTaxYears']?.currentYear &&
-            clinic.taxYearsPrepared?.includes('Current Year')) ||
-          (filters['supportedTaxYears']?.currentLastYears &&
-            clinic.taxYearsPrepared?.includes('Current and last year')) ||
-          (filters['supportedTaxYears']?.multipleYears &&
-            clinic.taxYearsPrepared?.includes('Multiple years')) ||
-          !hasSelectedFilters(filters['supportedTaxYears']);
-
-        const matchesProvinces =
-          (filters['provinces']?.Ontario &&
-            clinic.residencyTaxYear.includes('Ontario')) ||
-          (filters['provinces']?.Quebec &&
-            clinic.residencyTaxYear.includes('Quebec')) ||
-          (filters['provinces']?.Other &&
-            clinic.residencyTaxYear.includes(
-              'Other than Ontario and Quebec'
-            )) ||
-          !hasSelectedFilters(filters['provinces']);
-
-        const matchesLanguage =
-          (filters['languageOptions']?.french &&
-            clinic.serviceLanguages?.includes('French')) ||
-          (filters['languageOptions']?.english &&
-            clinic.serviceLanguages?.includes('English')) ||
-          (filters['languageOptions']?.arabic &&
-            clinic.serviceLanguages?.includes('Arabic')) ||
-          (filters['languageOptions']?.other &&
-            filters['languageOptions']?.otherLanguage &&
-            clinic.serviceLanguages?.includes(
-              filters['languageOptions'].otherLanguage
-            )) ||
-          !hasSelectedFilters(filters['languageOptions']);
-
-        const matchesClient =
-          (filters['clientCategories']?.newcomers &&
-            clinic.populationServed?.includes('Newcomers')) ||
-          (filters['clientCategories']?.students &&
-            clinic.populationServed?.includes('Students')) ||
-          (filters['clientCategories']?.indigenousClients &&
-            clinic.populationServed?.includes(
-              'Indigenous (First Nations and Inuit and Metis)'
-            )) ||
-          (filters['clientCategories']?.seniors &&
-            clinic.populationServed?.includes('Seniors')) ||
-          (filters['clientCategories']?.disabilities &&
-            clinic.populationServed?.includes('Persons with disabilities')) ||
-          (filters['clientCategories']?.languageSpecific &&
-            clinic.populationServed?.includes('Language-specific community')) ||
-          (!filters['clientCategories']?.newcomers &&
-            !filters['clientCategories']?.students &&
-            !filters['clientCategories']?.indigenousClients &&
-            !filters['clientCategories']?.seniors &&
-            !filters['clientCategories']?.disabilities &&
-            !filters['clientCategories']?.languageSpecific);
-
-        const matchesAccessDocuments =
-          (filters['accessDocuments']?.allDocuments &&
-            clinic.helpWithMissingDocs?.includes(
-              'Yes for CRA documents with Autofill/repid'
-            )) ||
-          (filters['accessDocuments']?.someDocuments &&
-            clinic.helpWithMissingDocs?.includes(
-              'Yes with help from staff or volunteer for some documentation'
-            )) ||
-          (filters['accessDocuments']?.noDocuments &&
-            clinic.helpWithMissingDocs?.includes(
-              'No, client must have all their documents ready'
-            )) ||
-          (!filters['accessDocuments']?.allDocuments &&
-            !filters['accessDocuments']?.someDocuments &&
-            !filters['accessDocuments']?.noDocuments);
-
-        const matchesAppointmentBooking =
-          (filters['appointmentBooking']?.onlineAppointment &&
-            clinic.bookingProcess.includes('Online')) ||
-          (filters['appointmentBooking']?.phone &&
-            clinic.bookingProcess.includes('By Phone')) ||
-          (filters['appointmentBooking']?.inPerson &&
-            clinic.bookingProcess.includes('In Person')) ||
-          (!filters['appointmentBooking']?.onlineAppointment &&
-            !filters['appointmentBooking']?.phone &&
-            !filters['appointmentBooking']?.inPerson);
-
-        const matchesAppointmentAvailability =
-          (filters['appointmentType'] === 'yes' &&
-            clinic.appointmentAvailability === 'Yes') ||
-          (filters['appointmentType'] === 'no' &&
-            clinic.appointmentAvailability === 'No') ||
-          (filters['appointmentType'] === 'any' &&
-            clinic.appointmentAvailability === 'Not Sure') ||
-          filters['appointmentType'] === '';
-
-        const matchesWheelchairAccessible =
-          (filters['wheelchairAccessible'] === 'yes' &&
-            clinic.wheelchairAccessible === 'Yes') ||
-          (filters['wheelchairAccessible'] === 'no' &&
-            clinic.appointmentAvailability === 'No') ||
-          filters['wheelchairAccessible'] === '';
-
-        const matchesDaysOfOperation =
-          (filters['serviceDays']?.weekdays &&
-            clinic.daysOfOperation.includes('Weekdays')) ||
-          (filters['serviceDays']?.weekends &&
-            clinic.daysOfOperation.includes('Weekends')) ||
-          (!filters['serviceDays']?.weekdays &&
-            !filters['serviceDays']?.weekends);
-
-        const matcheshoursOfOperation =
-          (filters['serviceHours']?.daytime &&
-            clinic.hoursOfOperation.includes('Daytime')) ||
-          (filters['serviceHours']?.evening &&
-            clinic.hoursOfOperation.includes('Evening')) ||
-          (!filters['serviceHours']?.daytime &&
-            !filters['serviceHours']?.evening);
-
-        const matchesServePeopleFrom =
-          (filters['servePeopleFrom'] === 'specific' &&
-            clinic.servePeopleFrom === 'A specific catchment area only') ||
-          (filters['servePeopleFrom'] === 'anywhere' &&
-            clinic.servePeopleFrom === 'Anywhere from Ottawa') ||
-          (filters['servePeopleFrom'] === 'other' &&
-            clinic.servePeopleFrom
-              ?.toLowerCase()
-              .includes(
-                filters['otherServePeopleFrom']?.toLowerCase() || ''
-              )) ||
-          filters['servePeopleFrom'] === '';
-
-        const matchesSpecialTaxCases =
-          (filters['specialTaxCases']?.rentalIncome &&
-            clinic.servePeople?.includes('Rental income')) ||
-          (filters['specialTaxCases']?.selfEmployment &&
-            clinic.servePeople?.includes('Self-employment income')) ||
-          (filters['specialTaxCases']?.incomeOver &&
-            clinic.servePeople?.includes('Interest income over 1000$')) ||
-          (filters['specialTaxCases']?.deceasedPerson &&
-            clinic.servePeople?.includes('Return for a deceased person')) ||
-          (filters['specialTaxCases']?.employmentExpenses &&
-            clinic.servePeople?.includes(
-              'Employment expenses (with specific conditions)'
-            )) ||
-          (filters['specialTaxCases']?.capitalGains &&
-            clinic.servePeople?.includes(
-              'Capital Gains/losses (with specific conditions)'
-            )) ||
-          (filters['specialTaxCases']?.largerIncome &&
-            clinic.servePeople?.includes(
-              'Larger income than CVITP income-criteria. when people are low income now'
-            )) ||
-          (filters['specialTaxCases']?.other &&
-            filters['specialTaxCases']?.otherSpecialTaxCases &&
-            clinic.servePeople?.includes(
-              filters['specialTaxCases'].otherSpecialTaxCases
-            )) ||
-          !hasSelectedFilters(filters['specialTaxCases']);
-
-        return (
-          matchesSupportedTaxYears &&
-          matchesProvinces &&
-          matchesLanguage &&
-          matchesClient &&
-          matchesAccessDocuments &&
-          matchesServiceDelivery &&
-          matchesAppointmentBooking &&
-          matchesAppointmentAvailability &&
-          matchesWheelchairAccessible &&
-          matchesDaysOfOperation &&
-          matcheshoursOfOperation &&
-          matchesServePeopleFrom &&
-          matchesSpecialTaxCases
+      if (isNewClient) {
+        const filterData = this.prepareFilterData(
+          filters,
+          this.filteredClinics
         );
-      });
+        this.saveFilteredDataToDatabase(filterData);
+      }
     }
 
-    console.log("new client is enabled or not", isNewClient);
-
-    const organizationNames = this.filteredClinics.map(clinic => clinic.organizationName);
-    console.log("organisation names", organizationNames);
-
-    if (isNewClient) {
-      this.saveFilteredDataToDatabase(filters, organizationNames);
-    }
     this.sortClinics();
   }
 
-  saveFilteredDataToDatabase(filters: any, filteredClinics: any) {
-    // this.filterService.saveFilteredData(filters, filteredClinics).subscribe(
-    //   (response) => {
-    //     console.log('Filtered data saved successfully', response);
-    //   },
-    //   (error) => {
-    //     console.error('Error saving filtered data', error);
-    //   }
-    // );
+  filterClinics(clinics: any[], filters: { [key: string]: any }): any[] {
+    const hasSelectedFilters = (filterGroup: any) =>
+      Object.values(filterGroup || {}).some(Boolean);
+
+    return clinics.filter((clinic) => {
+      const matchesServiceDelivery =
+        (filters['serviceDeliveryModes']?.inPerson &&
+          clinic.clinicTypes?.includes('In person')) ||
+        (filters['serviceDeliveryModes']?.virtual &&
+          clinic.clinicTypes?.includes('Virtual')) ||
+        (filters['serviceDeliveryModes']?.byAppointment &&
+          clinic.clinicTypes?.includes('By appointment')) ||
+        (filters['serviceDeliveryModes']?.walkIn &&
+          clinic.clinicTypes?.includes('Walk-in')) ||
+        (filters['serviceDeliveryModes']?.dropOff &&
+          clinic.clinicTypes?.includes('Drop-off')) ||
+        !hasSelectedFilters(filters['serviceDeliveryModes']);
+
+      const matchesSupportedTaxYears =
+        (filters['supportedTaxYears']?.currentYear &&
+          clinic.taxYearsPrepared?.includes('Current Year')) ||
+        (filters['supportedTaxYears']?.currentLastYears &&
+          clinic.taxYearsPrepared?.includes('Current and last year')) ||
+        (filters['supportedTaxYears']?.multipleYears &&
+          clinic.taxYearsPrepared?.includes('Multiple years')) ||
+        !hasSelectedFilters(filters['supportedTaxYears']);
+
+      const matchesProvinces =
+        (filters['provinces']?.Ontario &&
+          clinic.residencyTaxYear.includes('Ontario')) ||
+        (filters['provinces']?.Quebec &&
+          clinic.residencyTaxYear.includes('Quebec')) ||
+        (filters['provinces']?.Other &&
+          clinic.residencyTaxYear.includes('Other than Ontario and Quebec')) ||
+        !hasSelectedFilters(filters['provinces']);
+
+      const matchesLanguage =
+        (filters['languageOptions']?.french &&
+          clinic.serviceLanguages?.includes('French')) ||
+        (filters['languageOptions']?.english &&
+          clinic.serviceLanguages?.includes('English')) ||
+        (filters['languageOptions']?.arabic &&
+          clinic.serviceLanguages?.includes('Arabic')) ||
+        (filters['languageOptions']?.other &&
+          filters['languageOptions']?.otherLanguage &&
+          clinic.serviceLanguages?.includes(
+            filters['languageOptions'].otherLanguage
+          )) ||
+        !hasSelectedFilters(filters['languageOptions']);
+
+      const matchesClient =
+        (filters['clientCategories']?.newcomers &&
+          clinic.populationServed?.includes('Newcomers')) ||
+        (filters['clientCategories']?.students &&
+          clinic.populationServed?.includes('Students')) ||
+        (filters['clientCategories']?.indigenousClients &&
+          clinic.populationServed?.includes(
+            'Indigenous (First Nations and Inuit and Metis)'
+          )) ||
+        (filters['clientCategories']?.seniors &&
+          clinic.populationServed?.includes('Seniors')) ||
+        (filters['clientCategories']?.disabilities &&
+          clinic.populationServed?.includes('Persons with disabilities')) ||
+        (filters['clientCategories']?.languageSpecific &&
+          clinic.populationServed?.includes('Language-specific community')) ||
+        (!filters['clientCategories']?.newcomers &&
+          !filters['clientCategories']?.students &&
+          !filters['clientCategories']?.indigenousClients &&
+          !filters['clientCategories']?.seniors &&
+          !filters['clientCategories']?.disabilities &&
+          !filters['clientCategories']?.languageSpecific);
+
+      const matchesAccessDocuments =
+        (filters['accessDocuments']?.allDocuments &&
+          clinic.helpWithMissingDocs?.includes(
+            'Yes for CRA documents with Autofill/repid'
+          )) ||
+        (filters['accessDocuments']?.someDocuments &&
+          clinic.helpWithMissingDocs?.includes(
+            'Yes with help from staff or volunteer for some documentation'
+          )) ||
+        (filters['accessDocuments']?.noDocuments &&
+          clinic.helpWithMissingDocs?.includes(
+            'No, client must have all their documents ready'
+          )) ||
+        (!filters['accessDocuments']?.allDocuments &&
+          !filters['accessDocuments']?.someDocuments &&
+          !filters['accessDocuments']?.noDocuments);
+
+      const matchesAppointmentBooking =
+        (filters['appointmentBooking']?.onlineAppointment &&
+          clinic.bookingProcess.includes('Online')) ||
+        (filters['appointmentBooking']?.phone &&
+          clinic.bookingProcess.includes('By Phone')) ||
+        (filters['appointmentBooking']?.inPerson &&
+          clinic.bookingProcess.includes('In Person')) ||
+        (!filters['appointmentBooking']?.onlineAppointment &&
+          !filters['appointmentBooking']?.phone &&
+          !filters['appointmentBooking']?.inPerson);
+
+      const matchesAppointmentAvailability =
+        (filters['appointmentType'] === 'Yes' &&
+          clinic.appointmentAvailability === 'Yes') ||
+        (filters['appointmentType'] === 'No' &&
+          clinic.appointmentAvailability === 'No') ||
+        (filters['appointmentType'] === 'Not Sure' &&
+          clinic.appointmentAvailability === 'Not Sure') ||
+        filters['appointmentType'] === '';
+
+      const matchesWheelchairAccessible =
+        (filters['wheelchairAccessible'] === 'Yes' &&
+          clinic.wheelchairAccessible === 'Yes') ||
+        (filters['wheelchairAccessible'] === 'No' &&
+          clinic.appointmentAvailability === 'No') ||
+        filters['wheelchairAccessible'] === '';
+
+      const matchesDaysOfOperation =
+        (filters['serviceDays']?.weekdays &&
+          clinic.daysOfOperation.includes('Weekdays')) ||
+        (filters['serviceDays']?.weekends &&
+          clinic.daysOfOperation.includes('Weekends')) ||
+        (!filters['serviceDays']?.weekdays &&
+          !filters['serviceDays']?.weekends);
+
+      const matcheshoursOfOperation =
+        (filters['serviceHours']?.daytime &&
+          clinic.hoursOfOperation.includes('Daytime')) ||
+        (filters['serviceHours']?.evening &&
+          clinic.hoursOfOperation.includes('Evening')) ||
+        (!filters['serviceHours']?.daytime &&
+          !filters['serviceHours']?.evening);
+
+      const matchesServePeopleFrom =
+        (filters['servePeopleFrom'] === 'specific' &&
+          clinic.servePeopleFrom === 'A specific catchment area only') ||
+        (filters['servePeopleFrom'] === 'anywhere' &&
+          clinic.servePeopleFrom === 'Anywhere from Ottawa') ||
+        (filters['servePeopleFrom'] === 'other' &&
+          filters['otherServePeopleFrom'] &&
+          clinic.servePeopleFrom
+            ?.toLowerCase()
+            .includes(filters['otherServePeopleFrom'].toLowerCase())) ||
+        filters['servePeopleFrom'] === '';
+
+      const matchesSpecialTaxCases =
+        (filters['specialTaxCases']?.rentalIncome &&
+          clinic.servePeople?.includes('Rental income')) ||
+        (filters['specialTaxCases']?.selfEmployment &&
+          clinic.servePeople?.includes('Self-employment income')) ||
+        (filters['specialTaxCases']?.incomeOver &&
+          clinic.servePeople?.includes('Interest income over 1000$')) ||
+        (filters['specialTaxCases']?.deceasedPerson &&
+          clinic.servePeople?.includes('Return for a deceased person')) ||
+        (filters['specialTaxCases']?.employmentExpenses &&
+          clinic.servePeople?.includes(
+            'Employment expenses (with specific conditions)'
+          )) ||
+        (filters['specialTaxCases']?.capitalGains &&
+          clinic.servePeople?.includes(
+            'Capital Gains/losses (with specific conditions)'
+          )) ||
+        (filters['specialTaxCases']?.largerIncome &&
+          clinic.servePeople?.includes(
+            'Larger income than CVITP income-criteria. when people are low income now'
+          )) ||
+        (filters['specialTaxCases']?.other &&
+          filters['specialTaxCases']?.otherSpecialTaxCases &&
+          clinic.servePeople?.includes(
+            filters['specialTaxCases'].otherSpecialTaxCases
+          )) ||
+        !hasSelectedFilters(filters['specialTaxCases']);
+
+      return (
+        matchesSupportedTaxYears &&
+        matchesProvinces &&
+        matchesLanguage &&
+        matchesClient &&
+        matchesAccessDocuments &&
+        matchesServiceDelivery &&
+        matchesAppointmentBooking &&
+        matchesAppointmentAvailability &&
+        matchesWheelchairAccessible &&
+        matchesDaysOfOperation &&
+        matcheshoursOfOperation &&
+        matchesServePeopleFrom &&
+        matchesSpecialTaxCases
+      );
+    });
+  }
+
+  prepareFilterData(
+    filters: { [key: string]: any },
+    filteredClinics: any[]
+  ): any {
+    const serviceDeliveryModesMap = {
+      inPerson: 'In-Person',
+      virtual: 'Virtual',
+      byAppointment: 'By Appointment',
+      walkIn: 'Walk-In',
+      dropOff: 'Drop-Off',
+    };
+    const servePeopleFromMap = {
+      specific: 'A specific catchment area only',
+      anywhere: 'Anywhere from Ottawa',
+      other: 'Other',
+    };
+    const supportedTaxYearsMap = {
+      currentYear: 'Only Current Year',
+      currentLastYears: 'Current and last year',
+      multipleYears: 'Multiple Years',
+    };
+    const provincesMap = {
+      Ontario: 'Ontario',
+      Quebec: 'Quebec',
+      Other: 'Other than Ontario and Quebec',
+    };
+    const specialTaxCasesMap = {
+      rentalIncome: 'Rental Income',
+      selfEmployment: 'Self-employment income',
+      incomeOver: 'Interest income over 1000$',
+      deceasedPerson: 'Return for a deceased person',
+      employmentExpenses: 'Employment expenses (with specific conditions)',
+      capitalGains: 'Capital Gains/losses (with specific conditions)',
+      largerIncome:
+        'Larger income than CVITP income-criteria. when people are low income now',
+      other: 'Other Special Cases',
+    };
+    const clientCategoriesMap = {
+      newcomers: 'Newcomers',
+      students: 'Students',
+      indigenousClients: 'Indigenous (First Nations and Inuit and Metis)',
+      seniors: 'Seniors',
+      disabilities: 'Persons with disabilities',
+      languageSpecific: 'Language-specific community',
+    };
+    const accessDocumentsMap = {
+      allDocuments: 'Yes for CRA documents with Autofill/repid',
+      someDocuments:
+        'Yes with help from staff or volunteer for some documentation',
+      noDocuments: 'No, client must have all their documents ready',
+    };
+
+    const organizationNames = filteredClinics
+      .map((clinic) => clinic.organizationName)
+      .join(', ');
+    return {
+      appointment_type: filters['appointmentType'] || '',
+      type_of_clinic: this.extractTrueValues(
+        filters['serviceDeliveryModes'],
+        serviceDeliveryModesMap
+      ),
+      wheelchair_accessible: filters['wheelchairAccessible'] || '',
+      geographical_zone: this.extractTrueValues(
+        filters['servePeopleFrom'],
+        servePeopleFromMap,
+        'otherServePeopleFrom',
+        filters
+      ),
+      days_of_operation: this.extractTrueValues(filters['serviceDays'], {
+        weekdays: 'Weekdays',
+        weekends: 'Weekends',
+      }),
+      hours_of_operation: this.extractTrueValues(filters['serviceHours'], {
+        daytime: 'Daytime',
+        evening: 'Evening',
+      }),
+      supported_tax_years: this.extractTrueValues(
+        filters['supportedTaxYears'],
+        supportedTaxYearsMap
+      ),
+      province_of_residence: this.extractTrueValues(
+        filters['provinces'],
+        provincesMap
+      ),
+      language_options: this.extractTrueValues(
+        filters['languageOptions'],
+        {
+          french: 'French',
+          english: 'English',
+          arabic: 'Arabic',
+          other: 'Other Language',
+        },
+        'otherLanguage'
+      ),
+      population_serve: this.extractTrueValues(
+        filters['clientCategories'],
+        clientCategoriesMap
+      ),
+      help_access_documents: this.extractTrueValues(
+        filters['accessDocuments'],
+        accessDocumentsMap
+      ),
+      special_cases: this.extractTrueValues(
+        filters['specialTaxCases'],
+        specialTaxCasesMap,
+        'otherSpecialTaxCases'
+      ),
+      clinics_listed: organizationNames || '',
+      assigned_clinic: '',
+      unassigned_clinic: '',
+      created_by: this.userEmail,
+      created_date: new Date().toISOString(),
+    };
+  }
+
+  extractTrueValues(
+    obj: Record<string, boolean> | string,
+    valueMap: Record<string, string>,
+    otherKey?: string,
+    filters?: any
+  ): string {
+    if (!obj) return '';
+
+    if (typeof obj === 'string') {
+      if (obj === 'other' && otherKey && filters[otherKey]) {
+        return filters[otherKey];
+      }
+      return valueMap[obj] || '';
+    }
+
+    if (typeof obj === 'object') {
+      return Object.keys(obj)
+        .filter((key) => {
+          return (
+            obj[key] === true || (otherKey && key === 'other' && obj[otherKey])
+          );
+        })
+        .map((key) => {
+          if (key === 'other' && otherKey && obj[otherKey]) {
+            return obj[otherKey];
+          }
+          return valueMap[key] || '';
+        })
+        .join(', ');
+    }
+
+    return '';
+  }
+
+  saveFilteredDataToDatabase(filterData: any) {
+    this.clinicService.saveFilteredData(filterData).subscribe(
+      (response) => {
+        console.log('Filtered data saved successfully', response);
+      },
+      (error) => {
+        console.error('Error saving filtered data', error);
+      }
+    );
   }
 
   onLanguageChange(language: string): void {
