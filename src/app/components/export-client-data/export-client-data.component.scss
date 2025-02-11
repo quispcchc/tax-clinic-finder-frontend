@@ -1,42 +1,148 @@
 .export-container {
-    display: flex;
-    justify-content: flex-start;
-    align-items: flex-start;
-    background: #f5f5f5;
-    background: url("/assets/images/taxinics-bg.svg") no-repeat center center;
-    background-size: cover;
-    height: calc(90vh - 15px);
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  background: #f5f5f5;
+  background: url("/assets/images/taxinics-bg.svg") no-repeat center center;
+  background-size: cover;
+  height: calc(90vh - 15px);
 
-    .export-card {
-        flex: 0 0 31.5%;
-        padding: 25px;
-        overflow-y: auto;
-        background-color: rgba(255, 255, 255, 0.9);
-        box-shadow: 4px 0 6px rgba(0, 0, 0, 0.15);
-        height: 94%;
-        top: 60px;
-        left: 0;
-        z-index: 1;
+  .export-card {
+    flex: 0 0 31.5%;
+    padding: 25px;
+    overflow-y: auto;
+    background-color: rgba(255, 255, 255, 0.9);
+    box-shadow: 4px 0 6px rgba(0, 0, 0, 0.15);
+    height: 94%;
+    top: 60px;
+    left: 0;
+    z-index: 1;
 
-        .export-heading {
-            font-size: 1.5rem;
-            font-weight: 600;
-            margin-bottom: 20px;
-            color: #2B2B2B;
-        }
+    .export-heading {
+      font-size: 1.5rem;
+      font-weight: 600;
+      margin-bottom: 20px;
+      color: #2b2b2b;
     }
+  }
+}
+
+.date-selection {
+  margin-bottom: 2.5rem;
+  margin-top: 2.5rem;
+  width: 62%;
+  margin-left: 15px;
+
+  .form-group {
+    margin-bottom: 20px;
+
+    label {
+      display: block;
+      margin-bottom: 0.5rem;
+    }
+
+    input[type="date"] {
+      width: 100%;
+      padding: 0.5rem;
+      border: 1px solid #2b2b2b;
+      border-radius: 16px;
+
+      &:focus {
+        border-color: #007e94;
+        box-shadow: 0 0 5px rgba(0, 126, 148, 0.5);
+        outline: none;
+      }
+    }
+  }
+}
+
+.export-options {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
+  margin-left: 15px;
+  margin-top: 3em;
+
+  .form-group {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+
+    input[type="radio"] {
+      margin-right: 10px;
+      width: 16px;
+      height: 16px;
+      accent-color: #0097b2;
+    }
+
+    label {
+      font-size: 1rem;
+      color: #2b2b2b;
+    }
+  }
+}
+
+.data-options {
+  margin-left: 15px;
+}
+
+.action-buttons {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+
+  .btn {
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    width: 100%;
+
+    &.btn-export {
+      background-color: #80cbd8;
+      color: #2b2b2b;
+      border-radius: 16px;
+      width: 65%;
+      margin-right: 150px;
+
+      &:hover {
+        background-color: #007e94;
+        color: #ffffff;
+      }
+      &:disabled {
+        cursor: not-allowed;
+      }
+    }
+
+    &.btn-cancel {
+      background-color: #ffffff;
+      color: #2b2b2b;
+      border: 1px solid #0097b2;
+      border-radius: 16px;
+      width: 65%;
+      margin-right: 150px;
+
+      &:hover {
+        background-color: #aadce5;
+        border: 1px solid #0097b2;
+      }
+    }
+  }
 }
 
 @media (max-width: 768px) {
-    .my-profile-container {
-        flex-direction: column;
-        align-items: center;
-    }
+  .my-profile-container {
+    flex-direction: column;
+    align-items: center;
+  }
 
-    .my-profile-card {
-        flex: 1 1 100%;
-        position: relative;
-        height: auto;
-        top: 0;
-    }
+  .my-profile-card {
+    flex: 1 1 100%;
+    position: relative;
+    height: auto;
+    top: 0;
+  }
 }

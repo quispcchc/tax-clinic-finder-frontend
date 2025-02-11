@@ -8,6 +8,7 @@
       [language]="currentLanguage"
       [isSidebarOpen]="isSidebarOpen"
       (filterChange)="applyFilters($event)"
+      [isNewClient]="isNewClient"
       (toggleSidebarEvent)="onFilterSidebarToggle()"
     ></app-filter>
   </div>
@@ -18,6 +19,8 @@
       [language]="currentLanguage"
       [isSidebarOpen]="isSidebarOpen"
       (toggleSidebarEvent)="onFilterSidebarToggle()"
+      (assignClinic)="onAssignClinic($event)"
+      (unassignClinic)="onUnassignClinic($event)"
     ></app-clinic-list>
   </div>
 

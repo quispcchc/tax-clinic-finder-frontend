@@ -18,6 +18,8 @@ export class DashboardMainComponent implements OnInit {
   currentLanguage: string;
   isSidebarOpen: boolean = true;
   userEmail = localStorage.getItem('userEmail');
+  filteredData: any = {};
+  isNewClient: boolean = false;
 
   constructor(
     private clinicService: ClinicService,
@@ -133,6 +135,7 @@ export class DashboardMainComponent implements OnInit {
     isNewClient: boolean;
   }) {
     const { filters, isNewClient } = event;
+    this.isNewClient = isNewClient;
 
     if (!filters) {
       console.log('Resetting filters. Showing all clinics.');
@@ -145,6 +148,7 @@ export class DashboardMainComponent implements OnInit {
           filters,
           this.filteredClinics
         );
+        this.filteredData = filterData;
         this.saveFilteredDataToDatabase(filterData);
       }
     }
@@ -508,5 +512,26 @@ export class DashboardMainComponent implements OnInit {
 
   onFilterSidebarToggle() {
     this.isSidebarOpen = !this.isSidebarOpen;
+  }
+
+  onAssignClinic(clinic: Clinic) {
+    console.log("assigned clinic");
+    if (this.isNewClient) {
+      this.filteredData.assigned_clinic = clinic.organizationName;
+      this.clinicService.saveFilteredData(this.filteredData).subscribe(() => {
+        this.isNewClient = false;
+        console.log('Clinic assigned successfully.');
+      });
+    }
+  }
+
+  onUnassignClinic(clinic: Clinic) {
+    console.log("unassigned clinic");
+    if (this.isNewClient) {
+      this.filteredData.unassigned_clinic = clinic.organizationName;
+      this.clinicService.saveFilteredData(this.filteredData).subscribe(() => {
+        console.log('Clinic unassigned successfully.');
+      });
+    }
   }
 }

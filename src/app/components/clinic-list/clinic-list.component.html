@@ -33,4 +33,8 @@
   </div>
 </div>
 
-<app-clinic-details *ngIf="showModal" [clinic]="selectedClinic" (closeModal)="closeModal()"></app-clinic-details>
+<app-clinic-details *ngIf="showModal" 
+[clinic]="selectedClinic" 
+(assignClinic)="onAssignClinic($event)"
+(unassignClinic)="onUnassignClinic($event)"
+(closeModal)="closeModal()"></app-clinic-details>

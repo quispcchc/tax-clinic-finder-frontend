@@ -20,6 +20,8 @@ import { PostalCodeService } from '../../services/postal-code.service';
 export class ClinicDetailsComponent implements OnInit, AfterViewInit {
   @Input() clinic: Clinic | undefined;
   @Output() closeModal = new EventEmitter<void>();
+  @Output() assignClinic = new EventEmitter<Clinic>();
+  @Output() unassignClinic = new EventEmitter<Clinic>();
 
   private map!: L.Map;
   private markers: L.LayerGroup = L.layerGroup();
@@ -169,12 +171,18 @@ export class ClinicDetailsComponent implements OnInit, AfterViewInit {
     return hull;
   }
 
-  assignClinic() {
+  referClinic() {
+    if (this.clinic) {
+    this.assignClinic.emit(this.clinic);
     this.closeModal.emit();
+    }
   }
   
   backToFilterClinic() {
+    if (this.clinic) {
+    this.unassignClinic.emit(this.clinic);
     this.closeModal.emit();
+    }
   }
   
 }

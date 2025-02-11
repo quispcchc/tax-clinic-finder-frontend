@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output, SimpleChanges } from '@angular/core';
 
 @Component({
   selector: 'app-filter',
@@ -11,7 +11,7 @@ export class FilterComponent {
   @Input() language!: string;
   @Output() toggleSidebarEvent = new EventEmitter<void>();
   @Input() isSidebarOpen: boolean = false;
-  isNewClient: boolean = false;
+  @Input() isNewClient: boolean = false;
 
   filters: {
     appointmentType?: string;
@@ -144,6 +144,12 @@ export class FilterComponent {
   };
 
   constructor() {}
+
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes['isNewClient']) {
+      this.isNewClient = changes['isNewClient'].currentValue;
+    }
+  }
 
   applyFilters() {
     this.toggleSidebarEvent.emit();

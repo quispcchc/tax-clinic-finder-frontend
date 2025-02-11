@@ -99,4 +99,19 @@ export class ClinicService {
   
     return this.http.post<any>(`${this.apiUrl}/save-filters`, filterData, { headers });
   }
+
+  exportClinicData(exportType: string, startDate?: string, endDate?: string): Observable<any[]> {
+    const token = localStorage.getItem('authToken');
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`
+    });
+  
+    let params: any = { exportType };
+    if (exportType === 'byDate' && startDate && endDate) {
+      params = { ...params, startDate, endDate };
+    }
+  
+    return this.http.get<any[]>(`${this.apiUrl}/export-logs`, { headers, params });
+  }
+  
 }
