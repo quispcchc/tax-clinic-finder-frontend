@@ -96,31 +96,56 @@ export class ClinicDetailsComponent implements OnInit, AfterViewInit {
       console.error(`Error geocoding clinic address:`, error);
     }
   }
+  private readonly OTTAWA_BOUNDS = {
+    north: 45.6,
+    south: 45.2,
+    west: -76.0,
+    east: -75.3,
+  };
+  
 
-  private async updateCatchmentAreaBoundary(
-    catchmentArea: string
-  ): Promise<void> {
+  private async updateCatchmentAreaBoundary(catchmentArea: string): Promise<void> {
     if (!catchmentArea) return;
-
+  
+    let boundaryPoints: [number, number][] = [];
+  
     const postalCodes = this.extractPostalCodes(catchmentArea);
-    const coordinates = await this.postalCodeService.geocodePostalCodes(
-      postalCodes
-    ); // Use the service
-
-    if (coordinates.length < 3) return;
-
-    const boundaryPoints = this.computeConvexHull(coordinates);
-
+    if (postalCodes.length > 0) {
+      boundaryPoints = await this.postalCodeService.geocodePostalCodes(postalCodes);
+    }
+  
+    if (boundaryPoints.length < 3) {
+      const regionNames = catchmentArea.split(',').map((r) => r.trim());
+      boundaryPoints = await this.postalCodeService.geocodeRegionNames(regionNames);
+    }
+  
+    // Final filter to ensure points are inside Ottawa
+    boundaryPoints = boundaryPoints.filter(([lat, lng]) => 
+      lat >= this.OTTAWA_BOUNDS.south &&
+      lat <= this.OTTAWA_BOUNDS.north &&
+      lng >= this.OTTAWA_BOUNDS.west &&
+      lng <= this.OTTAWA_BOUNDS.east
+    );
+  
+    if (boundaryPoints.length < 3) {
+      console.warn("Not enough valid points inside Ottawa to draw a boundary.");
+      return;
+    }
+  
+    const boundaryPolygon = this.computeConvexHull(boundaryPoints);
+    
     this.boundaryLayer.clearLayers();
-    const boundaryPolygon = L.polygon(boundaryPoints, {
+    L.polygon(boundaryPolygon, {
       color: '#007E94',
       fillColor: '#007E94',
       weight: 2,
       fillOpacity: 0.3,
     }).addTo(this.boundaryLayer);
-
-    this.map.fitBounds(boundaryPolygon.getBounds());
+  
+    this.map.fitBounds(L.polygon(boundaryPolygon).getBounds());
   }
+  
+  
 
   private extractPostalCodes(catchmentArea: string): string[] {
     const match = catchmentArea.match(/([A-Z]\d[A-Z] ?\d[A-Z]\d)/g);
@@ -148,6 +173,31 @@ export class ClinicDetailsComponent implements OnInit, AfterViewInit {
     }
   }
 
+  private async geocodeRegionName(regionName: string): Promise<[number, number][]> {
+    try {
+      const response = await axios.get(
+        `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(regionName)}&key=${this.postalCodeService['GOOGLE_MAPS_API_KEY']}`
+      );
+      
+      if (response.data.status === 'OK' && response.data.results.length > 0) {
+        // Use the viewport or polygon geometry from the geocoding results
+        const bounds = response.data.results[0].geometry.bounds;
+        const regionCoordinates: [number, number][] = [
+          [bounds.southwest.lat, bounds.southwest.lng],
+          [bounds.southeast.lat, bounds.southeast.lng],
+          [bounds.northeast.lat, bounds.northeast.lng],
+          [bounds.northwest.lat, bounds.northwest.lng],
+        ];
+        return regionCoordinates;
+      } else {
+        throw new Error(`Geocoding region failed: ${response.data.status}`);
+      }
+    } catch (error) {
+      console.error('Geocoding region error:', error);
+      throw error;
+    }
+  }
+
   private computeConvexHull(points: [number, number][]): [number, number][] {
     points.sort(([ax, ay], [bx, by]) => (ax !== bx ? ax - bx : ay - by));
 
@@ -171,18 +221,29 @@ export class ClinicDetailsComponent implements OnInit, AfterViewInit {
     return hull;
   }
 
+  private drawBoundary(boundaryPoints: [number, number][]): void {
+    this.boundaryLayer.clearLayers();
+    const boundaryPolygon = L.polygon(boundaryPoints, {
+      color: '#007E94',
+      fillColor: '#007E94',
+      weight: 2,
+      fillOpacity: 0.3,
+    }).addTo(this.boundaryLayer);
+
+    this.map.fitBounds(boundaryPolygon.getBounds());
+  }
+
   referClinic() {
     if (this.clinic) {
-    this.assignClinic.emit(this.clinic);
-    this.closeModal.emit();
+      this.assignClinic.emit(this.clinic);
+      this.closeModal.emit();
     }
   }
-  
+
   backToFilterClinic() {
     if (this.clinic) {
-    this.unassignClinic.emit(this.clinic);
-    this.closeModal.emit();
+      this.unassignClinic.emit(this.clinic);
+      this.closeModal.emit();
     }
   }
-  
 }
