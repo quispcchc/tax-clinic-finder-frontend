@@ -54,7 +54,7 @@ export class ExportClientDataComponent {
       },
       (error) => {
         console.error('Error fetching data:', error);
-        this.showPopup('Failed to export data. Please try again.', 'error');
+        this.showPopup(error.error.message, 'error');
       }
     );
   }

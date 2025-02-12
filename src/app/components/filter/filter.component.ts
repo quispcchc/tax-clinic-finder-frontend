@@ -227,7 +227,10 @@ export class FilterComponent {
         evening: false,
       },
     };
-    this.filterChange.emit();
+    this.filterChange.emit({
+      filters: this.filters,
+      isNewClient: this.isNewClient
+    });
   }
 
   closeFilterSidebar() {

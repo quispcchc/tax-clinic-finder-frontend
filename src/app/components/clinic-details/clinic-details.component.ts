@@ -22,6 +22,7 @@ export class ClinicDetailsComponent implements OnInit, AfterViewInit {
   @Output() closeModal = new EventEmitter<void>();
   @Output() assignClinic = new EventEmitter<Clinic>();
   @Output() unassignClinic = new EventEmitter<Clinic>();
+  @Output() toggleSidebarEvent = new EventEmitter<void>();
 
   private map!: L.Map;
   private markers: L.LayerGroup = L.layerGroup();
@@ -243,7 +244,8 @@ export class ClinicDetailsComponent implements OnInit, AfterViewInit {
   backToFilterClinic() {
     if (this.clinic) {
       this.unassignClinic.emit(this.clinic);
-      this.closeModal.emit();
     }
+    this.toggleSidebarEvent.emit();
+    this.closeModal.emit();
   }
 }
