@@ -20,6 +20,7 @@ export class DashboardMainComponent implements OnInit {
   userEmail = localStorage.getItem('userEmail');
   filteredData: any = {};
   isNewClient: boolean = false;
+  newClientId: string = '';
 
   constructor(
     private clinicService: ClinicService,
@@ -134,6 +135,13 @@ export class DashboardMainComponent implements OnInit {
     filters: { [key: string]: any } | null;
     isNewClient: boolean;
   }) {
+    if (!event) {
+      console.log('Resetting filters. Showing all clinics.');
+      this.filteredClinics = [...this.clinics];
+      this.filteredData = null;
+      return;
+    }
+
     const { filters, isNewClient } = event;
     this.isNewClient = isNewClient;
 
@@ -201,9 +209,11 @@ export class DashboardMainComponent implements OnInit {
           clinic.serviceLanguages?.includes('Arabic')) ||
         (filters['languageOptions']?.other &&
           filters['languageOptions']?.otherLanguage &&
-          clinic.serviceLanguages?.includes(
-            filters['languageOptions'].otherLanguage
-          )) ||
+          clinic.serviceLanguages
+            ?.toLowerCase()
+            .includes(
+              filters['languageOptions'].otherLanguage.toLowerCase()
+            )) ||
         !hasSelectedFilters(filters['languageOptions']);
 
       const matchesClient =
@@ -221,12 +231,14 @@ export class DashboardMainComponent implements OnInit {
           clinic.populationServed?.includes('Persons with disabilities')) ||
         (filters['clientCategories']?.languageSpecific &&
           clinic.populationServed?.includes('Language-specific community')) ||
-        (!filters['clientCategories']?.newcomers &&
-          !filters['clientCategories']?.students &&
-          !filters['clientCategories']?.indigenousClients &&
-          !filters['clientCategories']?.seniors &&
-          !filters['clientCategories']?.disabilities &&
-          !filters['clientCategories']?.languageSpecific);
+        (filters['clientCategories']?.other &&
+          filters['clientCategories']?.otherClientCategory &&
+          clinic.populationServed
+            ?.toLowerCase()
+            .includes(
+              filters['clientCategories'].otherClientCategory.toLowerCase()
+            )) ||
+        !hasSelectedFilters(filters['clientCategories']);
 
       const matchesAccessDocuments =
         (filters['accessDocuments']?.allDocuments &&
@@ -244,17 +256,6 @@ export class DashboardMainComponent implements OnInit {
         (!filters['accessDocuments']?.allDocuments &&
           !filters['accessDocuments']?.someDocuments &&
           !filters['accessDocuments']?.noDocuments);
-
-      const matchesAppointmentBooking =
-        (filters['appointmentBooking']?.onlineAppointment &&
-          clinic.bookingProcess.includes('Online')) ||
-        (filters['appointmentBooking']?.phone &&
-          clinic.bookingProcess.includes('By Phone')) ||
-        (filters['appointmentBooking']?.inPerson &&
-          clinic.bookingProcess.includes('In Person')) ||
-        (!filters['appointmentBooking']?.onlineAppointment &&
-          !filters['appointmentBooking']?.phone &&
-          !filters['appointmentBooking']?.inPerson);
 
       const matchesAppointmentAvailability =
         (filters['appointmentType'] === 'Yes' &&
@@ -323,9 +324,11 @@ export class DashboardMainComponent implements OnInit {
           )) ||
         (filters['specialTaxCases']?.other &&
           filters['specialTaxCases']?.otherSpecialTaxCases &&
-          clinic.servePeople?.includes(
-            filters['specialTaxCases'].otherSpecialTaxCases
-          )) ||
+          clinic.servePeople
+            ?.toLowerCase()
+            .includes(
+              filters['specialTaxCases'].otherSpecialTaxCases.toLowerCase()
+            )) ||
         !hasSelectedFilters(filters['specialTaxCases']);
 
       return (
@@ -335,7 +338,6 @@ export class DashboardMainComponent implements OnInit {
         matchesClient &&
         matchesAccessDocuments &&
         matchesServiceDelivery &&
-        matchesAppointmentBooking &&
         matchesAppointmentAvailability &&
         matchesWheelchairAccessible &&
         matchesDaysOfOperation &&
@@ -498,6 +500,7 @@ export class DashboardMainComponent implements OnInit {
   saveFilteredDataToDatabase(filterData: any) {
     this.clinicService.saveFilteredData(filterData).subscribe(
       (response) => {
+        this.newClientId = response.client_id;
         console.log('Filtered data saved successfully', response);
       },
       (error) => {
@@ -515,23 +518,30 @@ export class DashboardMainComponent implements OnInit {
   }
 
   onAssignClinic(clinic: Clinic) {
-    console.log("assigned clinic");
-    if (this.isNewClient) {
+    console.log('assigned clinic');
+    if (this.isNewClient && this.newClientId) {
       this.filteredData.assigned_clinic = clinic.organizationName;
-      this.clinicService.saveFilteredData(this.filteredData).subscribe(() => {
-        this.isNewClient = false;
-        console.log('Clinic assigned successfully.');
-      });
+      this.filteredData.client_id = this.newClientId;
+      this.clinicService
+        .updateFilteredData(this.newClientId, this.filteredData)
+        .subscribe(() => {
+          this.isNewClient = false;
+          this.newClientId = '';
+          console.log('Clinic assigned successfully.');
+        });
     }
   }
 
   onUnassignClinic(clinic: Clinic) {
-    console.log("unassigned clinic");
-    if (this.isNewClient) {
+    console.log('unassigned clinic');
+    if (this.isNewClient && this.newClientId) {
       this.filteredData.unassigned_clinic = clinic.organizationName;
-      this.clinicService.saveFilteredData(this.filteredData).subscribe(() => {
-        console.log('Clinic unassigned successfully.');
-      });
+      this.filteredData.client_id = this.newClientId;
+      this.clinicService
+        .updateFilteredData(this.newClientId, this.filteredData)
+        .subscribe(() => {
+          console.log('Clinic unassigned successfully.');
+        });
     }
   }
 }

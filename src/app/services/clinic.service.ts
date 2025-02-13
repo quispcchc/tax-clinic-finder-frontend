@@ -100,6 +100,15 @@ export class ClinicService {
     return this.http.post<any>(`${this.apiUrl}/save-filters`, filterData, { headers });
   }
 
+  updateFilteredData(id: any, filterData: any): Observable<any> {
+    const token = localStorage.getItem('authToken');
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`,
+      'Content-Type': 'application/json',
+    });
+    return this.http.put<any>(`${this.apiUrl}/update-filters/${id}`, filterData, { headers });
+  }
+
   exportClinicData(exportType: string, startDate?: string, endDate?: string): Observable<any[]> {
     const token = localStorage.getItem('authToken');
     const headers = new HttpHeaders({

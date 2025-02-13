@@ -151,6 +151,7 @@
             name="servePeopleFrom"
             value="specific"
             [(ngModel)]="filters.servePeopleFrom"
+            (change)="onServePeopleFromChange()"
           />
           {{ "A specific catchment area only" | translate }}
         </label>
@@ -160,6 +161,7 @@
             name="servePeopleFrom"
             value="anywhere"
             [(ngModel)]="filters.servePeopleFrom"
+            (change)="onServePeopleFromChange()"
           />
           {{ "Anywhere from Ottawa" | translate }}
         </label>
@@ -340,6 +342,7 @@
             type="checkbox"
             name="other"
             [(ngModel)]="filters.languageOptions.other"
+            (change)="onOtherLanguageToggle()"
           />
           {{ "Other" | translate }}
         </label>
@@ -411,6 +414,25 @@
           />
           {{ "Language-specific community" | translate }}
         </label>
+        <label>
+          <input
+            type="checkbox"
+            name="other"
+            [(ngModel)]="filters.clientCategories.other"
+            (change)="onClientCategoriesToggle()"
+          />
+          {{ "Other" | translate }}
+        </label>
+      </div>
+      <div *ngIf="filters.clientCategories.other">
+        <input
+          class="input-filter"
+          type="text"
+          id="otherClientCategory"
+          [(ngModel)]="filters.clientCategories.otherClientCategory"
+          name="otherClientCategory"
+          placeholder="{{ 'Enter Client Category' | translate }}"
+        />
       </div>
     </div>
     <div class="form-group">
@@ -519,6 +541,7 @@
             type="checkbox"
             name="other"
             [(ngModel)]="filters.specialTaxCases.other"
+            (change)="onOtherSpecialTaxCasesToggle()"
           />
           {{ "Other" | translate }}
         </label>
@@ -530,40 +553,6 @@
           [(ngModel)]="filters.specialTaxCases.otherSpecialTaxCases"
           placeholder="{{ 'Enter other' | translate }}"
         />
-      </div>
-    </div>
-    <div class="form-group">
-      <div class="form-group-label">
-        <label>{{ "Appointment Booking" | translate }}</label>
-        <small class="subtitle">{{
-          "How do you book appointments?" | translate
-        }}</small>
-      </div>
-      <div class="checkbox-group">
-        <label>
-          <input
-            type="checkbox"
-            name="onlineAppointment"
-            [(ngModel)]="filters.appointmentBooking.onlineAppointment"
-          />
-          {{ "Online appointment" | translate }}
-        </label>
-        <label>
-          <input
-            type="checkbox"
-            name="phone"
-            [(ngModel)]="filters.appointmentBooking.phone"
-          />
-          {{ "By phone" | translate }}
-        </label>
-        <label>
-          <input
-            type="checkbox"
-            name="inPerson"
-            [(ngModel)]="filters.appointmentBooking.inPerson"
-          />
-          {{ "In person" | translate }}
-        </label>
       </div>
     </div>
     <button type="submit" class="filters-button">

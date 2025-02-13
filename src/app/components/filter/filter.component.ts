@@ -56,16 +56,13 @@ export class FilterComponent {
       seniors?: boolean;
       disabilities?: boolean;
       languageSpecific?: boolean;
+      other?: boolean;
+      otherClientCategory?: string;
     };
     accessDocuments: {
       allDocuments?: boolean;
       someDocuments?: boolean;
       noDocuments?: boolean;
-    };
-    appointmentBooking: {
-      onlineAppointment?: boolean;
-      phone?: boolean;
-      inPerson?: boolean;
     };
     serviceDays: {
       weekdays?: boolean;
@@ -122,16 +119,13 @@ export class FilterComponent {
       seniors: false,
       disabilities: false,
       languageSpecific: false,
+      other: false,
+      otherClientCategory: ''
     },
     accessDocuments: {
       allDocuments: false,
       someDocuments: false,
       noDocuments: false,
-    },
-    appointmentBooking: {
-      onlineAppointment: false,
-      phone: false,
-      inPerson: false,
     },
     serviceDays: {
       weekdays: false,
@@ -207,16 +201,13 @@ export class FilterComponent {
         seniors: false,
         disabilities: false,
         languageSpecific: false,
+        other: false,
+        otherClientCategory: ''
       },
       accessDocuments: {
         allDocuments: false,
         someDocuments: false,
         noDocuments: false,
-      },
-      appointmentBooking: {
-        onlineAppointment: false,
-        phone: false,
-        inPerson: false,
       },
       serviceDays: {
         weekdays: false,
@@ -227,10 +218,31 @@ export class FilterComponent {
         evening: false,
       },
     };
-    this.filterChange.emit({
-      filters: this.filters,
-      isNewClient: this.isNewClient
-    });
+    this.filterChange.emit({ filters: null, isNewClient: this.isNewClient });
+  }
+
+  onOtherLanguageToggle() {
+    if (!this.filters.languageOptions.other) {
+      this.filters.languageOptions.otherLanguage = '';
+    }
+  }
+
+  onOtherSpecialTaxCasesToggle() {
+    if (!this.filters.specialTaxCases.other) {
+      this.filters.specialTaxCases.otherSpecialTaxCases = '';
+    }
+  }
+
+  onClientCategoriesToggle() {
+    if (!this.filters.clientCategories.other) {
+      this.filters.clientCategories.otherClientCategory = '';
+    }
+  }
+
+  onServePeopleFromChange() {
+    if (this.filters.servePeopleFrom !== 'other') {
+      this.filters.otherServePeopleFrom = '';
+    }
   }
 
   closeFilterSidebar() {
