@@ -65,7 +65,7 @@ export class ExportClientDataComponent {
     const url = window.URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    a.download = 'clinic_data.csv';
+    a.download = 'newClient_data.csv';
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
@@ -75,7 +75,14 @@ export class ExportClientDataComponent {
     if (!data.length) return '';
 
     const header = Object.keys(data[0]).join(',') + '\n';
-    const rows = data.map((row) => Object.values(row).join(',')).join('\n');
+    const rows = data
+      .map((row) =>
+        Object.values(row)
+          .map((value) => `"${String(value).replace(/"/g, '""')}"`)
+          .join(',')
+      )
+      .join('\n');
+
     return header + rows;
   }
 
