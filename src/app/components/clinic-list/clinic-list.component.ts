@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Clinic } from '../../models/clinic.model';
 
 @Component({
@@ -7,7 +7,7 @@ import { Clinic } from '../../models/clinic.model';
   templateUrl: './clinic-list.component.html',
   styleUrls: ['./clinic-list.component.scss'],
 })
-export class ClinicListComponent {
+export class ClinicListComponent implements OnInit {
   @Input() clinics: Clinic[] = [];
   @Input() language!: string;
   @Input() isSidebarOpen: boolean = true;
@@ -18,6 +18,27 @@ export class ClinicListComponent {
 
   showModal: boolean = false;
   selectedClinic: Clinic | undefined;
+  filteredClinics: Clinic[] = [];
+
+  ngOnInit() {
+    this.sortClinics();
+  }
+
+  ngOnChanges() {
+    this.sortClinics();
+  }
+
+  sortClinics() {
+    const priority: Record<string, number> = { 'Yes': 1, 'No': 2, 'Not Sure': 3 };
+  
+    this.clinics.sort((a, b) => {
+      const priorityA = priority[a.appointmentAvailability] ?? 4;
+      const priorityB = priority[b.appointmentAvailability] ?? 4;
+  
+      return priorityA - priorityB;
+    });
+    this.filteredClinics = [...this.clinics];
+  }
 
   toggleFilterSidebar() {
     this.toggleSidebarEvent.emit();

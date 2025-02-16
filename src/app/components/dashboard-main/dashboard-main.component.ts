@@ -93,6 +93,7 @@ export class DashboardMainComponent implements OnInit {
           clinicCapacity: clinic.clinic_capacity,
           additionalSupport: clinic.additional_support,
           comments: clinic.comments,
+          postalCodesServe: clinic.postal_codes_serve,
           createdDate: clinic.created_at,
           updatedDate: clinic.updated_at,
           locations: Array.isArray(clinic.locations)
@@ -193,11 +194,17 @@ export class DashboardMainComponent implements OnInit {
 
       const matchesProvinces =
         (filters['provinces']?.Ontario &&
-          clinic.residencyTaxYear.includes('Ontario')) ||
+          clinic.residencyTaxYear.toLowerCase().includes('ontario')) ||
         (filters['provinces']?.Quebec &&
-          clinic.residencyTaxYear.includes('Quebec')) ||
+          (clinic.residencyTaxYear.toLowerCase().includes('quebec') ||
+            clinic.residencyTaxYear.toLowerCase().includes('québec'))) ||
         (filters['provinces']?.Other &&
-          clinic.residencyTaxYear.includes('Other than Ontario and Quebec')) ||
+          (clinic.residencyTaxYear
+            .toLowerCase()
+            .includes('other than ontario and quebec') ||
+            clinic.residencyTaxYear
+              .toLowerCase()
+              .includes('autres que l’ontario et le québec'))) ||
         !hasSelectedFilters(filters['provinces']);
 
       const matchesLanguage =
@@ -331,6 +338,27 @@ export class DashboardMainComponent implements OnInit {
             )) ||
         !hasSelectedFilters(filters['specialTaxCases']);
 
+      // const matchesPostalCode =
+      //   !filters['postalCodesServe'] ||
+      //   clinic.postalCodesServe
+      //     ?.split(',')
+      //     .map((code: string) => code.trim().toUpperCase())
+      //     .includes(
+      //       filters['postalCodesServe'].replace(/\s+/g, '').toUpperCase()
+      //     );
+
+      const matchesPostalCode =
+        !filters['postalCodesServe'] ||
+        clinic.postalCodesServe
+          ?.split(',')
+          .map((code: string) => code.trim().toUpperCase())
+          .some((code: string) =>
+            filters['postalCodesServe']
+              .replace(/\s+/g, '')
+              .toUpperCase()
+              .startsWith(code)
+          );
+
       return (
         matchesSupportedTaxYears &&
         matchesProvinces &&
@@ -343,7 +371,8 @@ export class DashboardMainComponent implements OnInit {
         matchesDaysOfOperation &&
         matcheshoursOfOperation &&
         matchesServePeopleFrom &&
-        matchesSpecialTaxCases
+        matchesSpecialTaxCases &&
+        matchesPostalCode
       );
     });
   }

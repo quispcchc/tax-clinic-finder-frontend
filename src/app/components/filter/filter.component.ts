@@ -15,6 +15,7 @@ export class FilterComponent {
 
   filters: {
     appointmentType?: string;
+    postalCodesServe?: string;
     serviceDeliveryModes: {
       inPerson?: boolean;
       virtual?: boolean;
@@ -74,6 +75,7 @@ export class FilterComponent {
     };
   } = {
     appointmentType: '',
+    postalCodesServe: '',
     serviceDeliveryModes: {
       inPerson: false,
       virtual: false,
@@ -156,6 +158,7 @@ export class FilterComponent {
   resetFilters() {
     this.filters = {
       appointmentType: '',
+      postalCodesServe: '',
       serviceDeliveryModes: {
         inPerson: false,
         virtual: false,
