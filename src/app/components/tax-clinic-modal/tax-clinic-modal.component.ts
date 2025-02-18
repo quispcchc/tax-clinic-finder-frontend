@@ -9,6 +9,7 @@ import {
 import { Clinic } from '../../models/clinic.model';
 import { Location } from '../../models/location.model';
 import {
+  AbstractControl,
   FormArray,
   FormBuilder,
   FormControl,
@@ -35,11 +36,8 @@ export class TaxClinicModalComponent implements OnChanges {
     this.clinicForm = this.fb.group({
       id: [null],
       organizationName: ['', Validators.required],
-      organisationWebsite: [
-        '',
-        [Validators.required, Validators.pattern('https?://.+')],
-      ],
-      organisationalEmail: ['', [Validators.required, Validators.email]],
+      organisationWebsite: [''],
+      organisationalEmail: [''],
       contactEmail: ['', [Validators.required, Validators.email]],
       contactPersonName: ['', Validators.required],
       contactPersonTitle: [''],
@@ -82,7 +80,20 @@ export class TaxClinicModalComponent implements OnChanges {
       clinicCapacity: [''],
       additionalSupport: this.fb.array([]),
       comments: [''],
-    });
+    },
+    { validators: this.atLeastOneRequired }
+  );
+  }
+
+  atLeastOneRequired(form: AbstractControl) {
+    const website = form.get('organisationWebsite')?.value?.trim();
+    const email = form.get('organisationalEmail')?.value?.trim();
+  
+    if (!website && !email) {
+      return { atLeastOneRequired: true };
+    }
+  
+    return null;
   }
 
   ngOnChanges(changes: SimpleChanges) {

@@ -201,7 +201,7 @@ export class DashboardMainComponent implements OnInit {
         (filters['provinces']?.Other &&
           (clinic.residencyTaxYear
             .toLowerCase()
-            .includes('other than ontario and quebec') ||
+            .includes('Any province other than Ontario and Quebec') ||
             clinic.residencyTaxYear
               .toLowerCase()
               .includes('autres que l’ontario et le québec'))) ||
@@ -401,7 +401,7 @@ export class DashboardMainComponent implements OnInit {
     const provincesMap = {
       Ontario: 'Ontario',
       Quebec: 'Quebec',
-      Other: 'Other than Ontario and Quebec',
+      Other: 'Any province other than Ontario and Quebec',
     };
     const specialTaxCasesMap = {
       rentalIncome: 'Rental Income',
