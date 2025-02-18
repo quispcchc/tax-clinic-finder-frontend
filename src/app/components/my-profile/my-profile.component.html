@@ -1,6 +1,6 @@
 <div class="my-profile-container">
-  <div class="my-profile-card">
-    <h2 class="profile-heading">{{ "My Profile" | translate}}</h2>
+  <div class="my-profile-card" *ngIf="!isChangePassword">
+    <h2 class="profile-heading">{{ "My Profile" | translate }}</h2>
     <div class="profile-picture">
       <img src="/assets/images/user-icon.svg" alt="Profile Picture" />
     </div>
@@ -15,14 +15,207 @@
           <dd>{{ userProfile.userEmail }}</dd>
         </div>
         <div class="profile-details">
-          <dt>{{ "Role" | translate }}:</dt>
+          <dt>{{ "Position" | translate }}:</dt>
+          <dd>{{ userProfile.userDesignation || "N/A" }}</dd>
+        </div>
+        <div class="profile-details">
+          <dt>{{ "User type" | translate }}:</dt>
           <dd>{{ userProfile.userRole }}</dd>
         </div>
       </dl>
     </div>
     <div class="profile-actions">
-      <button class="btn edit-btn">Edit Profile</button>
-      <button class="btn settings-btn">Settings</button>
+      <button class="btn edit-btn" (click)="toggleChangePassword()">
+        {{ "Change Password" | translate }}
+      </button>
+      <button class="btn settings-btn" (click)="logout()">
+        {{ "Log out" | translate }}
+      </button>
     </div>
+  </div>
+
+  <div class="my-profile-card" *ngIf="isChangePassword">
+    <h2 class="profile-heading">{{ "Change Password" | translate }}</h2>
+    <form [formGroup]="passwordForm" (ngSubmit)="changePassword()">
+      <label for="currentPassword">{{ "Current Password" | translate }}</label>
+      <div class="input-wrapper">
+        <input
+          [type]="passwordFieldType"
+          id="currentPassword"
+          formControlName="currentPassword"
+        />
+        <img
+          src="/assets/images/eye-icon.svg"
+          alt="Toggle Visibility"
+          class="input-icon"
+          (click)="togglePasswordVisibility('currentPassword')"
+        />
+      </div>
+      <span
+        class="error-message"
+        *ngIf="
+          passwordForm.controls['currentPassword'].invalid &&
+          passwordForm.controls['currentPassword'].touched
+        "
+      >
+        {{ "Current password is required." | translate }}
+      </span>
+
+      <label for="newPassword">{{ "New Password" | translate }}</label>
+      <div class="input-wrapper">
+        <input
+          [type]="passwordFieldType"
+          id="newPassword"
+          formControlName="newPassword"
+        />
+        <img
+          src="/assets/images/eye-icon.svg"
+          alt="Toggle Visibility"
+          class="input-icon"
+          (click)="togglePasswordVisibility('newPassword')"
+        />
+      </div>
+      <div
+        *ngIf="
+          passwordForm.controls['newPassword'].invalid &&
+          passwordForm.controls['newPassword'].value !== '' &&
+          (passwordForm.controls['newPassword'].dirty ||
+            passwordForm.controls['newPassword'].touched)
+        "
+        class="error-message message"
+      >
+        <div *ngIf="passwordForm.controls['newPassword'].errors?.['required']">
+          {{ "Password is required." | translate }}
+        </div>
+        <div *ngIf="passwordForm.controls['newPassword'].errors?.['minlength']">
+          {{ "Password must be at least 6 characters long." | translate }}
+        </div>
+        <div *ngIf="passwordForm.controls['newPassword'].errors?.['pattern']">
+          {{ "Password must contain at least:" | translate }}
+        </div>
+        <p *ngIf="passwordForm.controls['newPassword'].errors?.['pattern']">
+          <span
+            [ngClass]="
+              passwordForm.controls['newPassword'].errors?.['pattern']?.special ? 'error-border' : 'success-pattern'
+            "
+          >
+            <span
+              *ngIf="!passwordForm.controls['newPassword'].errors?.['pattern']?.special"
+              >✔</span
+            >
+            <span
+              *ngIf="passwordForm.controls['newPassword'].errors?.['pattern']?.special"
+              >✘</span
+            >
+            {{ "one special character" | translate }}
+          </span>
+        </p>
+        <p *ngIf="passwordForm.controls['newPassword'].errors?.['pattern']">
+          <span
+            [ngClass]="
+              passwordForm.controls['newPassword'].errors?.['pattern']?.uppercase ? 'error-border' : 'success-pattern'
+            "
+          >
+            <span
+              *ngIf="!passwordForm.controls['newPassword'].errors?.['pattern']?.uppercase"
+              >✔</span
+            >
+            <span
+              *ngIf="passwordForm.controls['newPassword'].errors?.['pattern']?.uppercase"
+              >✘</span
+            >
+            {{ "one uppercase letter" | translate }}
+          </span>
+        </p>
+        <p *ngIf="passwordForm.controls['newPassword'].errors?.['pattern']">
+          <span
+            [ngClass]="
+              passwordForm.controls['newPassword'].errors?.['pattern']?.lowercase ? 'error-border' : 'success-pattern'
+            "
+          >
+            <span
+              *ngIf="!passwordForm.controls['newPassword'].errors?.['pattern']?.lowercase"
+              >✔</span
+            >
+            <span
+              *ngIf="passwordForm.controls['newPassword'].errors?.['pattern']?.lowercase"
+              >✘</span
+            >
+            {{ "one lowercase letter" | translate }}
+          </span>
+        </p>
+        <p *ngIf="passwordForm.controls['newPassword'].errors?.['pattern']">
+          <span
+            [ngClass]="
+              passwordForm.controls['newPassword'].errors?.['pattern']?.number ? 'error-border' : 'success-pattern'
+            "
+          >
+            <span
+              *ngIf="!passwordForm.controls['newPassword'].errors?.['pattern']?.number"
+              >✔</span
+            >
+            <span
+              *ngIf="passwordForm.controls['newPassword'].errors?.['pattern']?.number"
+              >✘</span
+            >
+            {{ "one number" | translate }}
+          </span>
+        </p>
+      </div>
+
+      <label for="confirmPassword">{{ "Confirm Password" | translate }}</label>
+      <div class="input-wrapper">
+        <input
+          [type]="passwordFieldType"
+          id="confirmPassword"
+          formControlName="confirmPassword"
+        />
+        <img
+          src="/assets/images/eye-icon.svg"
+          alt="Toggle Visibility"
+          class="input-icon"
+          (click)="togglePasswordVisibility('confirmPassword')"
+        />
+      </div>
+      <span
+        class="error-message"
+        *ngIf="
+          passwordForm.controls['confirmPassword'].invalid &&
+          passwordForm.controls['confirmPassword'].touched
+        "
+      >
+        {{ "Confirm password is required." | translate }}
+      </span>
+      <span
+        class="error-message"
+        *ngIf="
+          passwordForm.hasError('passwordMismatch') &&
+          passwordForm.controls['confirmPassword'].touched
+        "
+      >
+        {{ "Passwords must match." | translate }}
+      </span>
+
+      <span class="error-message" *ngIf="passwordError">{{
+        passwordError
+      }}</span>
+
+      <div class="profile-actions">
+        <button
+          type="submit"
+          class="btn edit-btn"
+          [disabled]="passwordForm.invalid"
+        >
+          {{ "Save" | translate }}
+        </button>
+        <button
+          type="button"
+          class="btn settings-btn"
+          (click)="toggleChangePassword()"
+        >
+          {{ "Cancel" | translate }}
+        </button>
+      </div>
+    </form>
   </div>
 </div>

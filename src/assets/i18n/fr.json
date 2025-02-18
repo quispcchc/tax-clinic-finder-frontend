@@ -45,7 +45,7 @@
   "Tax Clinic Management": "Gestion de la Clinique Fiscale",
   "Tax Clinics Directory": "Annuaire des Cliniques Fiscales",
   "Tax clinics in this axis": "Cliniques fiscales dans cet axe",
-  "Logout": "Se déconnecter",
+  "Log out": "Se déconnecter",
   "Search Tax Clinics": "Recherche de Centres Fiscaux",
   "Add Clinic": "Ajouter une Clinique",
   "Search Users": "Recherche d'utilisateurs",
@@ -61,7 +61,7 @@
   "Listed on CRA?": "Répertorié sur l'ARC?",
   "Listed on NCEO?": "Répertorié sur le BNCE?",
   "Title": "Titre",
-  "Email": "Email",
+  "Email": "E-mail",
   "Phone Number": "Numéro de téléphone",
   "N/A": "N/A",
   "Organization information": "Informations sur l'organisation",
@@ -171,5 +171,8 @@
   "Enter other": "Saisir autre chose",
   "Enter other Client Category": "Saisir une autre catégorie de client",
   "Enter other language": "Saisir une autre langue",
-  "Enter other area": "Entrer dans un autre domaine"
+  "Enter other area": "Entrer dans un autre domaine",
+  "User type":"Type d'utilisateur",
+  "Settings": "Paramètres",
+  "Change Password": "Modifier le mot de passe"
 }

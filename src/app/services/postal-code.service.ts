@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import axios from 'axios';
+import boundaryData from '../../assets/data/catchment-boundaries.json';
 
 @Injectable({
   providedIn: 'root',
@@ -68,8 +69,6 @@ export class PostalCodeService {
   
     return coordinates;
   }
-  
-  
 
   // Fetch coordinates for multiple postal codes with caching
   async geocodePostalCodes(postalCodes: string[]): Promise<[number, number][]> {
@@ -101,4 +100,16 @@ export class PostalCodeService {
     this.saveCacheToLocalStorage();
     return coordinates;
   }
+
+  async getCatchmentBoundary(area: string): Promise<[number, number][]> {
+    const feature = boundaryData.features.find((f: any) => f.properties.name.toLowerCase() === area.toLowerCase());
+  
+    if (feature) {
+      // Flattening the coordinates array and ensuring the return type is [number, number][]
+      return feature.geometry.coordinates[0].map((coord: number[]) => [coord[0], coord[1]]);
+    } else {
+      console.warn(`Boundary for ${area} not found.`);
+      return [];
+    }
+  }  
 }

@@ -1,5 +1,5 @@
 import { Injectable, Inject, PLATFORM_ID } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { isPlatformBrowser } from '@angular/common';
@@ -16,6 +16,7 @@ export class AuthService {
   private loginUrl = `${this.API_URL}/auth/login`;
   private resetPasswordUrl = `${this.API_URL}/auth/reset-password`;
   private resetPasswordWithTokenUrl = `${this.API_URL}/auth/reset-password`;
+  private changePasswordUrl = `${this.API_URL}/auth/change-password`;
 
   constructor(
     private http: HttpClient,
@@ -47,6 +48,7 @@ export class AuthService {
                 lastname: response.lastname,
                 userEmail: response.email,
                 userRole: response.role,
+                userDesignation: response.designation,
                 userId: response.id,
               })
             );
@@ -57,6 +59,25 @@ export class AuthService {
         }),
         catchError(() => of(false))
       );
+  }
+
+  changePassword(
+    userId: any,
+    currentPassword: string,
+    newPassword: string
+  ): Observable<any> {
+    const token = localStorage.getItem('authToken');
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`,
+    });
+    return this.http.put(
+      `${this.changePasswordUrl}/${userId}`,
+      {
+        currentPassword,
+        newPassword,
+      },
+      { headers }
+    );
   }
 
   logout(): void {

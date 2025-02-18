@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators, AbstractControl, ValidationErrors, ValidatorFn} from '@angular/forms';
 import { LanguageService } from '../../services/language.service';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-my-profile',
@@ -11,15 +13,94 @@ import { LanguageService } from '../../services/language.service';
 export class MyProfileComponent implements OnInit {
   userProfile: any = {};
   currentLanguage: string;
+  isChangePassword = false;
+  passwordForm!: FormGroup;
+  passwordError: string = '';
+  showPassword = false;
+  passwordFieldType = 'password';
 
-  constructor(private languageService: LanguageService) {
+  constructor(
+    private fb: FormBuilder,
+    private languageService: LanguageService,
+    private authService: AuthService
+  ) {
     this.currentLanguage = this.languageService.getLanguage();
   }
+  
 
   ngOnInit(): void {
     const storedProfile = localStorage.getItem('userProfile');
     if (storedProfile) {
       this.userProfile = JSON.parse(storedProfile);
     }
+
+    this.passwordForm = this.fb.group(
+      {
+        currentPassword: ['', Validators.required],
+        newPassword: [
+          '',
+          [
+            Validators.required,
+            Validators.minLength(6),
+            this.authService.passwordValidator.bind(this),
+          ],
+        ],
+        confirmPassword: ['', Validators.required],
+      },
+      { validators: this.passwordMismatchValidator() }
+    );
+  }
+
+  toggleChangePassword(): void {
+    this.isChangePassword = !this.isChangePassword;
+    this.passwordError = '';
+    this.passwordForm.reset();
+  }
+
+  changePassword(): void {
+    if (this.passwordForm.invalid) {
+      this.passwordError = 'Please fill out all fields correctly.';
+      return;
+    }
+
+    const { currentPassword, newPassword, confirmPassword } = this.passwordForm.value;
+
+    if (newPassword !== confirmPassword) {
+      this.passwordError = 'Passwords do not match!';
+      return;
+    }
+
+    this.authService.changePassword(this.userProfile.userId, currentPassword, newPassword).subscribe(
+      () => {
+        this.passwordError = '';
+        this.logout();
+      },
+      (error) => {
+        this.passwordError = error?.error?.message || 'Error changing password.';
+      }
+    );
+  }
+
+  passwordMismatchValidator(): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
+      const password = control.get('newPassword');
+      const confirmPassword = control.get('confirmPassword');
+  
+      if (password && confirmPassword && password.value !== confirmPassword.value) {
+        return { passwordMismatch: true };
+      }
+      return null;
+    };
+  }
+
+  togglePasswordVisibility(field: string): void {
+    const input = document.getElementById(field) as HTMLInputElement;
+    if (input) {
+      input.type = input.type === 'password' ? 'text' : 'password';
+    }
+  }
+
+  logout(): void {
+    this.authService.logout();
   }
 }

@@ -110,40 +110,29 @@ export class ClinicDetailsComponent implements OnInit, AfterViewInit {
   
     let boundaryPoints: [number, number][] = [];
   
-    const postalCodes = this.extractPostalCodes(catchmentArea);
-    if (postalCodes.length > 0) {
-      boundaryPoints = await this.postalCodeService.geocodePostalCodes(postalCodes);
+    // Split input into multiple areas (postal codes or region names)
+    const areas = catchmentArea.split(',').map((r) => r.trim());
+  
+    for (const area of areas) {
+      const points = await this.postalCodeService.getCatchmentBoundary(area);
+      boundaryPoints.push(...points);
     }
   
     if (boundaryPoints.length < 3) {
-      const regionNames = catchmentArea.split(',').map((r) => r.trim());
-      boundaryPoints = await this.postalCodeService.geocodeRegionNames(regionNames);
-    }
-  
-    boundaryPoints = boundaryPoints.filter(([lat, lng]) => 
-      lat >= this.OTTAWA_BOUNDS.south &&
-      lat <= this.OTTAWA_BOUNDS.north &&
-      lng >= this.OTTAWA_BOUNDS.west &&
-      lng <= this.OTTAWA_BOUNDS.east
-    );
-  
-    if (boundaryPoints.length < 3) {
-      console.warn("Not enough valid points inside Ottawa to draw a boundary.");
+      console.warn("Not enough valid points to draw a boundary.");
       return;
     }
   
-    const boundaryPolygon = this.computeConvexHull(boundaryPoints);
-    
     this.boundaryLayer.clearLayers();
-    L.polygon(boundaryPolygon, {
+    L.polygon(boundaryPoints, {
       color: '#007E94',
       fillColor: '#007E94',
       weight: 2,
       fillOpacity: 0.3,
     }).addTo(this.boundaryLayer);
   
-    this.map.fitBounds(L.polygon(boundaryPolygon).getBounds());
-  }
+    this.map.fitBounds(L.polygon(boundaryPoints).getBounds());
+  }  
 
   private extractPostalCodes(catchmentArea: string): string[] {
     const match = catchmentArea.match(/([A-Z]\d[A-Z] ?\d[A-Z]\d)/g);

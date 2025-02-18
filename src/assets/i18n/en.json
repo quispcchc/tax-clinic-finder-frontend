@@ -45,7 +45,7 @@
   "Tax Clinic Management": "Tax Clinic Management",
   "Tax Clinics Directory": "Tax Clinics Directory",
   "Tax clinics in this axis": "Tax clinics in this axis",
-  "Logout": "Logout",
+  "Log out": "Log out",
   "Search Tax Clinics": "Search Tax Clinics",
   "Add Clinic": "Add Clinic",
   "Search Users": "Search Users",
@@ -171,6 +171,9 @@
   "Enter other": "Enter other",
   "Enter other Client Category": "Enter other Client Category",
   "Enter other language": "Enter other language",
-  "Enter other area": "Enter other area"
+  "Enter other area": "Enter other area",
+  "User type": "User type",
+  "Settings": "Settings",
+  "Change Password": "Change Password"
 }
 

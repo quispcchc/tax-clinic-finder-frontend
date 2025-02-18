@@ -4,12 +4,14 @@ import { Observable } from 'rxjs';
 import { Clinic } from '../models/clinic.model';
 import { User } from '../models/user.model';
 import { UserCreate } from '../models/user-create.modal';
+import { environment } from '../../environments/environment.development';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ClinicService {
-  private apiUrl = 'http://localhost:3000/api/tax-clinics';
+  private API_URL = environment.apiUrl;
+  private apiUrl = `${this.API_URL}/tax-clinics`;
 
   constructor(private http: HttpClient) {}
 
