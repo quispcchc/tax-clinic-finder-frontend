@@ -174,5 +174,12 @@
   "Enter other area": "Entrer dans un autre domaine",
   "User type":"Type d'utilisateur",
   "Settings": "Paramètres",
-  "Change Password": "Modifier le mot de passe"
+  "Change Password": "Modifier le mot de passe",
+  "Current Password": "Mot de passe actuel",
+  "Enter Current Password": "Entrez le mot de passe actuel",
+  "New Password": "Nouveau mot de passe",
+  "Enter New Password": "Entrez un nouveau mot de passe",
+  "Confirm Password": "Confirmez le mot de passe",
+  "Confirm New Password": "Confirmer le nouveau mot de passe",
+  "Cancel": "Annuler"
 }
