@@ -107,6 +107,42 @@ export class TaxClinicModalComponent implements OnChanges {
     }
   }
 
+  // private populateFormArrays() {
+  //   const formArrays = [
+  //     'clinicTypes',
+  //     'monthsOffered',
+  //     'daysOfOperation',
+  //     'hoursOfOperation',
+  //     'populationServed',
+  //     'taxYearsPrepared',
+  //     'residencyTaxYear',
+  //     'servePeople',
+  //     'serviceLanguages',
+  //     'bookingProcess',
+  //     'helpWithMissingDocs',
+  //     'taxPreparers',
+  //     'taxFilers',
+  //     'volunteerRoles',
+  //     'additionalSupport',
+  //   ];
+  
+  //   formArrays.forEach((field) => {
+  //     const formArray = this.clinicForm.get(field) as FormArray;
+  //     formArray.clear();
+  //     const values = this.convertToArray((this.clinic as any)?.[field]);
+  
+  //     values.forEach((value) => {
+  //       formArray.push(new FormControl(value));
+  //     });
+  //   });
+  
+  //   const locationsArray = this.clinicForm.get('locations') as FormArray;
+  //   locationsArray.clear();
+  //   (this.clinic?.locations || []).forEach((loc) =>
+  //     locationsArray.push(this.createLocationGroup(loc))
+  //   );
+  // }
+
   private populateFormArrays() {
     const formArrays = [
       'clinicTypes',
@@ -134,6 +170,13 @@ export class TaxClinicModalComponent implements OnChanges {
       values.forEach((value) => {
         formArray.push(new FormControl(value));
       });
+  
+      if (values.includes('Other')) {
+        this.clinicForm.addControl(
+          `${field}Other`,
+          new FormControl(this.clinic?.[`${field}Other`] || '', Validators.required)
+        );
+      }
     });
   
     const locationsArray = this.clinicForm.get('locations') as FormArray;
@@ -141,7 +184,7 @@ export class TaxClinicModalComponent implements OnChanges {
     (this.clinic?.locations || []).forEach((loc) =>
       locationsArray.push(this.createLocationGroup(loc))
     );
-  }
+  }  
 
   private convertToArray(value: any): string[] {
     if (!value) return [];
@@ -158,9 +201,26 @@ export class TaxClinicModalComponent implements OnChanges {
           taxClinicId: this.isEditMode ? this.clinic?.id : undefined,
         })),
       };
+  
+      if (formValue.populationServed.includes('Other') && formValue.populationServedOther) {
+        formValue.populationServed = formValue.populationServed.map((item: string) =>
+          item === 'Other' ? formValue.populationServedOther : item
+        );
+      }
+  
+      if (formValue.serviceLanguages.includes('Other') && formValue.serviceLanguagesOther) {
+        formValue.serviceLanguages = formValue.serviceLanguages.map((item: string) =>
+          item === 'Other' ? formValue.serviceLanguagesOther : item
+        );
+      }
+  
+      delete formValue.populationServedOther;
+      delete formValue.serviceLanguagesOther;
+  
+      console.log("Final Data Sent to Backend:", formValue);
       this.save.emit(formValue);
     }
-  }
+  }  
 
   closeModal() {
     this.close.emit();
@@ -193,18 +253,58 @@ export class TaxClinicModalComponent implements OnChanges {
     return this.clinicForm.get('locations') as FormArray;
   }
 
+  // onCheckboxChange(controlName: string, event: any) {
+  //   const formArray = this.clinicForm.get(controlName) as FormArray;
+  
+  //   if (event.target.checked) {
+  //     formArray.push(new FormControl(event.target.value));
+  
+  //     if (event.target.value === 'Other') {
+  //       this.clinicForm.addControl(`${controlName}Other`, new FormControl('', Validators.required));
+  //     }
+  //   } else {
+  //     const index = formArray.controls.findIndex(
+  //       (ctrl) => ctrl.value === event.target.value
+  //     );
+  //     if (index !== -1) {
+  //       formArray.removeAt(index);
+  //     }
+  
+  //     if (event.target.value === 'Other') {
+  //       this.clinicForm.removeControl(`${controlName}Other`);
+  //     }
+  //   }
+  
+  //   formArray.markAsTouched();
+  // }  
+
   onCheckboxChange(controlName: string, event: any) {
     const formArray = this.clinicForm.get(controlName) as FormArray;
+  
     if (event.target.checked) {
       formArray.push(new FormControl(event.target.value));
+  
+      if (event.target.value === 'Other') {
+        this.clinicForm.addControl(
+          `${controlName}Other`,
+          new FormControl(this.clinic?.[`${controlName}Other`] || '', Validators.required)
+        );
+      }
     } else {
       const index = formArray.controls.findIndex(
         (ctrl) => ctrl.value === event.target.value
       );
-      if (index !== -1) formArray.removeAt(index);
+      if (index !== -1) {
+        formArray.removeAt(index);
+      }
+  
+      if (event.target.value === 'Other') {
+        this.clinicForm.removeControl(`${controlName}Other`);
+      }
     }
+  
     formArray.markAsTouched();
-  }
+  }  
 
   onServePeopleChange(event: any) {
     if (event.target.value === 'other') {

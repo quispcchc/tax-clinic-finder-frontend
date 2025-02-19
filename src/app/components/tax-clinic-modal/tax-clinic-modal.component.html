@@ -21,7 +21,7 @@
                 >{{ "Tax Clinic Name" | translate }}:
                 <span class="required">*</span></label
               >
-              <input type="text" formControlName="organizationName" required />
+              <input type="text" formControlName="organizationName" placeholder="Enter Tax clinic/Organisation Name" required />
               <div
                 class="error"
                 *ngIf="
@@ -35,7 +35,7 @@
 
             <div class="form-group">
               <label>{{ "Organisation Website:" | translate }}</label>
-              <input type="text" formControlName="organisationWebsite" />
+              <input type="text" formControlName="organisationWebsite" placeholder="Enter Organisation Website"/>
               <div
                 class="error"
                 *ngIf="
@@ -52,7 +52,7 @@
 
             <div class="form-group">
               <label>{{ "Organisation Email:" | translate }}</label>
-              <input type="email" formControlName="organisationalEmail" />
+              <input type="email" formControlName="organisationalEmail" placeholder="Enter Organisation Email"/>
               <div
                 class="error"
                 *ngIf="
@@ -870,9 +870,7 @@
                   Other</label
                 >
                 <input
-                  *ngIf="
-                    clinicForm.get('populationServed')?.value.includes('Other')
-                  "
+                  *ngIf="clinicForm.get('populationServedOther')"
                   type="text"
                   formControlName="populationServedOther"
                   placeholder="Specify other groups"
@@ -942,7 +940,7 @@
                 >
                 <input
                   *ngIf="
-                    clinicForm.get('serviceLanguages')?.value.includes('Other')
+                    clinicForm.get('serviceLanguagesOther')
                   "
                   type="text"
                   formControlName="serviceLanguagesOther"
