@@ -4,6 +4,12 @@
     <div class="profile-picture">
       <img src="/assets/images/user-icon.svg" alt="Profile Picture" />
     </div>
+    <app-message-popup 
+    [message]="popupMessage"
+    [isVisible]="popupVisible"
+    [messageType]="popupType"
+    (closed)="closePopup()">
+  </app-message-popup>
     <div class="profile-info">
       <dl>
         <div class="profile-details">

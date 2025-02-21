@@ -19,6 +19,10 @@ export class MyProfileComponent implements OnInit {
   showPassword = false;
   passwordFieldType = 'password';
 
+  popupMessage: string = '';
+  popupVisible: boolean = false;
+  popupType: 'success' | 'error' = 'success';
+
   constructor(
     private fb: FormBuilder,
     private languageService: LanguageService,
@@ -73,7 +77,9 @@ export class MyProfileComponent implements OnInit {
     this.authService.changePassword(this.userProfile.userId, currentPassword, newPassword).subscribe(
       () => {
         this.passwordError = '';
-        this.logout();
+        //this.logout();
+        this.isChangePassword = !this.isChangePassword;
+        this.showPopup('Password Changed successfully!', 'success');
       },
       (error) => {
         this.passwordError = error?.error?.message || 'Error changing password.';
@@ -102,5 +108,15 @@ export class MyProfileComponent implements OnInit {
 
   logout(): void {
     this.authService.logout();
+  }
+
+  showPopup(message: string, type: 'success' | 'error') {
+    this.popupMessage = message;
+    this.popupType = type;
+    this.popupVisible = true;
+  }
+
+  closePopup() {
+    this.popupVisible = false;
   }
 }
