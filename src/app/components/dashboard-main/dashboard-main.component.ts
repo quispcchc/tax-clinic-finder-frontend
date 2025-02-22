@@ -296,18 +296,6 @@ export class DashboardMainComponent implements OnInit {
         (!filters['serviceHours']?.daytime &&
           !filters['serviceHours']?.evening);
 
-      const matchesServePeopleFrom =
-        (filters['servePeopleFrom'] === 'specific' &&
-          clinic.servePeopleFrom === 'A specific catchment area only') ||
-        (filters['servePeopleFrom'] === 'anywhere' &&
-          clinic.servePeopleFrom === 'Anywhere from Ottawa') ||
-        (filters['servePeopleFrom'] === 'other' &&
-          filters['otherServePeopleFrom'] &&
-          clinic.servePeopleFrom
-            ?.toLowerCase()
-            .includes(filters['otherServePeopleFrom'].toLowerCase())) ||
-        filters['servePeopleFrom'] === '';
-
       const matchesSpecialTaxCases =
         (filters['specialTaxCases']?.rentalIncome &&
           clinic.servePeople?.includes('Rental income')) ||
@@ -361,7 +349,6 @@ export class DashboardMainComponent implements OnInit {
         matchesWheelchairAccessible &&
         matchesDaysOfOperation &&
         matcheshoursOfOperation &&
-        matchesServePeopleFrom &&
         matchesSpecialTaxCases &&
         matchesPostalCode
       );
@@ -378,11 +365,6 @@ export class DashboardMainComponent implements OnInit {
       byAppointment: 'By Appointment',
       walkIn: 'Walk-In',
       dropOff: 'Drop-Off',
-    };
-    const servePeopleFromMap = {
-      specific: 'A specific catchment area only',
-      anywhere: 'Anywhere from Ottawa',
-      other: 'Other',
     };
     const supportedTaxYearsMap = {
       currentYear: 'Only Current Year',
@@ -430,12 +412,7 @@ export class DashboardMainComponent implements OnInit {
         serviceDeliveryModesMap
       ),
       wheelchair_accessible: filters['wheelchairAccessible'] || '',
-      geographical_zone: this.extractTrueValues(
-        filters['servePeopleFrom'],
-        servePeopleFromMap,
-        'otherServePeopleFrom',
-        filters
-      ),
+
       days_of_operation: this.extractTrueValues(filters['serviceDays'], {
         weekdays: 'Weekdays',
         weekends: 'Weekends',

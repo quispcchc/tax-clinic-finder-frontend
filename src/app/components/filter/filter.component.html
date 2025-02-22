@@ -139,53 +139,6 @@
     </div>
     <div class="form-group">
       <div class="form-group-label">
-        <label>{{ "Geographical zone" | translate }}</label>
-        <small class="subtitle">{{
-          "Does clinic serve people from a specific area?" | translate
-        }}</small>
-      </div>
-      <div class="radio-group">
-        <label>
-          <input
-            type="radio"
-            name="servePeopleFrom"
-            value="specific"
-            [(ngModel)]="filters.servePeopleFrom"
-            (change)="onServePeopleFromChange()"
-          />
-          {{ "A specific catchment area only" | translate }}
-        </label>
-        <label>
-          <input
-            type="radio"
-            name="servePeopleFrom"
-            value="anywhere"
-            [(ngModel)]="filters.servePeopleFrom"
-            (change)="onServePeopleFromChange()"
-          />
-          {{ "Anywhere from Ottawa" | translate }}
-        </label>
-        <label>
-          <input
-            type="radio"
-            name="servePeopleFrom"
-            value="other"
-            [(ngModel)]="filters.servePeopleFrom"
-          />
-          {{ "Other" | translate }}
-        </label>
-        <input
-          class="input-filter"
-          type="text"
-          *ngIf="filters.servePeopleFrom === 'other'"
-          name="otherServePeopleFrom"
-          [(ngModel)]="filters.otherServePeopleFrom"
-          placeholder="{{ 'Enter other area' | translate }}"
-        />
-      </div>
-    </div>
-    <div class="form-group">
-      <div class="form-group-label">
         <label>{{ "Days of Operation" | translate }}</label>
         <small class="subtitle">{{
           "Which days does clinic operate?" | translate
@@ -557,7 +510,7 @@
     </div>
     <div class="form-group">
       <div class="form-group-label">
-        <label>{{ "Postal Code" | translate }}</label>
+        <label>{{ "Client Postal Code" | translate }}</label>
         <small class="subtitle">{{
           "Enter Postal Code to Find Nearby Clinics" | translate
         }}</small>
@@ -567,10 +520,16 @@
         type="text" id="postalCodesServe" 
         name="postalCodesServe"
         [(ngModel)]="filters.postalCodesServe" 
+        (input)="onPostalCodeChange(filters.postalCodesServe || '')"
         placeholder="{{ 'Enter postal code' | translate }}" 
       />
+      <div>
+        <small *ngIf="!isPostalCodeValid && filters.postalCodesServe" class="error-message">
+          {{ "Postal code must be exactly 6 digits" | translate }}
+        </small>
+      </div>
     </div>
-    <button type="submit" class="filters-button">
+    <button type="submit" class="filters-button"[disabled]="!isPostalCodeValid && filters.postalCodesServe">
       {{ "Apply Filters" | translate }}
     </button>
   </form>

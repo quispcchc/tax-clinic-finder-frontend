@@ -12,6 +12,7 @@ export class FilterComponent {
   @Output() toggleSidebarEvent = new EventEmitter<void>();
   @Input() isSidebarOpen: boolean = false;
   @Input() isNewClient: boolean = false;
+  isPostalCodeValid: boolean = true;
 
   filters: {
     appointmentType?: string;
@@ -24,8 +25,6 @@ export class FilterComponent {
       dropOff?: boolean;
     };
     wheelchairAccessible?: string;
-    servePeopleFrom?: string;
-    otherServePeopleFrom?: string;
     supportedTaxYears: {
       currentYear?: boolean;
       currentLastYears?: boolean;
@@ -84,8 +83,6 @@ export class FilterComponent {
       dropOff: false,
     },
     wheelchairAccessible: '',
-    servePeopleFrom: '',
-    otherServePeopleFrom: '',
     supportedTaxYears: {
       currentYear: false,
       currentLastYears: false,
@@ -147,7 +144,19 @@ export class FilterComponent {
     }
   }
 
+  validatePostalCode(postalCode: string): boolean {
+    return postalCode.length === 6;
+  }
+
+  onPostalCodeChange(postalCode: string | undefined) {
+    const code = postalCode || '';
+    this.isPostalCodeValid = this.validatePostalCode(code);
+  }
+
   applyFilters() {
+    if (!this.isPostalCodeValid) {
+      return;
+    }
     this.toggleSidebarEvent.emit();
     this.filterChange.emit({
       filters: this.filters,
@@ -167,8 +176,6 @@ export class FilterComponent {
         dropOff: false,
       },
       wheelchairAccessible: '',
-      servePeopleFrom: '',
-      otherServePeopleFrom: '',
       supportedTaxYears: {
         currentYear: false,
         currentLastYears: false,
@@ -221,6 +228,7 @@ export class FilterComponent {
         evening: false,
       },
     };
+    this.isPostalCodeValid = true;
     this.filterChange.emit({ filters: null, isNewClient: this.isNewClient });
   }
 
@@ -239,12 +247,6 @@ export class FilterComponent {
   onClientCategoriesToggle() {
     if (!this.filters.clientCategories.other) {
       this.filters.clientCategories.otherClientCategory = '';
-    }
-  }
-
-  onServePeopleFromChange() {
-    if (this.filters.servePeopleFrom !== 'other') {
-      this.filters.otherServePeopleFrom = '';
     }
   }
 

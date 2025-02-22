@@ -130,6 +130,10 @@
       background-color: #007e94;
       color: #ffffff;
     }
+
+    &:disabled {
+      cursor: not-allowed;
+    }
   }
 
   .reset-button {
@@ -287,4 +291,7 @@ input:checked + .slider .text {
       width: 25px;
     }
   }
+}
+.error-message {
+  color: #e74c3c;
 }
