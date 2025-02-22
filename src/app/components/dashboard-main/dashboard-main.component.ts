@@ -3,6 +3,8 @@ import { Clinic } from '../../models/clinic.model';
 import { ClinicService } from '../../services/clinic.service';
 import { LanguageService } from '../../services/language.service';
 import { ActivatedRoute } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
+import { environment } from '../../../environments/environment.development';
 
 @Component({
   selector: 'app-dashboard-main',
@@ -23,6 +25,7 @@ export class DashboardMainComponent implements OnInit {
   newClientId: string = '';
 
   constructor(
+    private http: HttpClient,
     private clinicService: ClinicService,
     private languageService: LanguageService,
     private activatedRoute: ActivatedRoute
@@ -132,7 +135,7 @@ export class DashboardMainComponent implements OnInit {
     });
   }
 
-  applyFilters(event: {
+  async applyFilters(event: {
     filters: { [key: string]: any } | null;
     isNewClient: boolean;
   }) {
@@ -150,7 +153,7 @@ export class DashboardMainComponent implements OnInit {
       console.log('Resetting filters. Showing all clinics.');
       this.filteredClinics = [...this.clinics];
     } else {
-      this.filteredClinics = this.filterClinics(this.clinics, filters);
+      this.filteredClinics = await this.filterClinics(this.clinics, filters);
 
       if (isNewClient) {
         const filterData = this.prepareFilterData(
@@ -165,9 +168,16 @@ export class DashboardMainComponent implements OnInit {
     this.sortClinics();
   }
 
-  filterClinics(clinics: any[], filters: { [key: string]: any }): any[] {
+  private async filterClinics(clinics: any[], filters: { [key: string]: any }): Promise<any[]> {
     const hasSelectedFilters = (filterGroup: any) =>
       Object.values(filterGroup || {}).some(Boolean);
+
+    let coordinates: { lat: number, lng: number } | null = null;
+    const postalCodeFilter = filters['postalCodesServe'];
+    
+    if (postalCodeFilter) {
+      coordinates = await this.geocodePostalCode(postalCodeFilter);
+    }
 
     return clinics.filter((clinic) => {
       const matchesServiceDelivery =
@@ -326,17 +336,15 @@ export class DashboardMainComponent implements OnInit {
             )) ||
         !hasSelectedFilters(filters['specialTaxCases']);
 
-      const matchesPostalCode =
-        !filters['postalCodesServe'] ||
-        clinic.postalCodesServe
-          ?.split(',')
-          .map((code: string) => code.trim().toUpperCase())
-          .some((code: string) =>
-            filters['postalCodesServe']
-              .replace(/\s+/g, '')
-              .toUpperCase()
-              .startsWith(code)
-          );
+        const matchesPostalCode = !postalCodeFilter || (coordinates && 
+          clinic.catchmentBoundaries?.features?.some((feature: any) => {
+            if (feature.geometry?.type === 'Polygon' && feature.geometry.coordinates) {
+              const polygonCoordinates = feature.geometry.coordinates[0];
+              const point: [number, number] = [coordinates.lng, coordinates.lat];
+              return this.isPointInPolygon(point, polygonCoordinates);
+            }
+            return false;
+          }));
 
       return (
         matchesSupportedTaxYears &&
@@ -504,6 +512,35 @@ export class DashboardMainComponent implements OnInit {
         console.error('Error saving filtered data', error);
       }
     );
+  }
+
+  private async geocodePostalCode(postalCode: string): Promise<{ lat: number, lng: number } | null> {
+    try {
+      const response: any = await this.http.get(
+        `https://maps.googleapis.com/maps/api/geocode/json?address=${postalCode}&key=${environment.googleMapsApiKey}`
+      ).toPromise();
+
+      if (response.status === 'OK' && response.results.length > 0) {
+        return response.results[0].geometry.location;
+      }
+      return null;
+    } catch (error) {
+      console.error('Geocoding error:', error);
+      return null;
+    }
+  }
+
+  private isPointInPolygon(point: [number, number], polygon: number[][]): boolean {
+    const [x, y] = point;
+    let inside = false;
+    for (let i = 0, j = polygon.length - 1; i < polygon.length; j = i++) {
+      const [xi, yi] = polygon[i];
+      const [xj, yj] = polygon[j];
+      const intersect = ((yi > y) !== (yj > y)) &&
+        (x < ((xj - xi) * (y - yi)) / (yj - yi) + xi);
+      if (intersect) inside = !inside;
+    }
+    return inside;
   }
 
   onLanguageChange(language: string): void {

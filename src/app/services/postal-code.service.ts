@@ -5,7 +5,7 @@ import axios from 'axios';
   providedIn: 'root',
 })
 export class PostalCodeService {
-  private readonly GOOGLE_MAPS_API_KEY = 'AIzaSyBc3mEkYs8ZzYf5onUt4vi5jjsQ6cogV40';
+  //private readonly GOOGLE_MAPS_API_KEY = 'AIzaSyBc3mEkYs8ZzYf5onUt4vi5jjsQ6cogV40';
   //private readonly GOOGLE_MAPS_API_KEY = 'YOUR_GOOGLE_MAPS_API_KEY';
   private postalCodeCache: Map<string, [number, number]> = new Map();
   private readonly OTTAWA_BOUNDS = {

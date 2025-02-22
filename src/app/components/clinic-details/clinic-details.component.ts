@@ -10,6 +10,7 @@ import { Clinic } from '../../models/clinic.model';
 import * as L from 'leaflet';
 import axios from 'axios';
 import { PostalCodeService } from '../../services/postal-code.service';
+import { environment } from '../../../environments/environment.development';
 
 @Component({
   selector: 'app-clinic-details',
@@ -134,7 +135,7 @@ export class ClinicDetailsComponent implements OnInit, AfterViewInit {
       const response = await axios.get(
         `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(
           address
-        )}&key=${this.postalCodeService['GOOGLE_MAPS_API_KEY']}`
+        )}&key=${environment.googleMapsApiKey}`
       );
 
       if (response.data.status === 'OK' && response.data.results.length > 0) {
