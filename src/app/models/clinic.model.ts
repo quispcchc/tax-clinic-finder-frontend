@@ -45,7 +45,7 @@ export interface Clinic {
   clinicCapacity?: string;
   additionalSupport?: string | string[];
   comments?: string;
-  postalCodesServe?: string;
+  catchmentBoundaries?: string;
   createdDate: string;
   updatedDate: string;
   locations: Location[];

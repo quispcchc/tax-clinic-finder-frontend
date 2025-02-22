@@ -93,7 +93,7 @@ export class DashboardMainComponent implements OnInit {
           clinicCapacity: clinic.clinic_capacity,
           additionalSupport: clinic.additional_support,
           comments: clinic.comments,
-          postalCodesServe: clinic.postal_codes_serve,
+          catchmentBoundaries: clinic.catchment_boundaries,
           createdDate: clinic.created_at,
           updatedDate: clinic.updated_at,
           locations: Array.isArray(clinic.locations)
@@ -337,15 +337,6 @@ export class DashboardMainComponent implements OnInit {
               filters['specialTaxCases'].otherSpecialTaxCases.toLowerCase()
             )) ||
         !hasSelectedFilters(filters['specialTaxCases']);
-
-      // const matchesPostalCode =
-      //   !filters['postalCodesServe'] ||
-      //   clinic.postalCodesServe
-      //     ?.split(',')
-      //     .map((code: string) => code.trim().toUpperCase())
-      //     .includes(
-      //       filters['postalCodesServe'].replace(/\s+/g, '').toUpperCase()
-      //     );
 
       const matchesPostalCode =
         !filters['postalCodesServe'] ||

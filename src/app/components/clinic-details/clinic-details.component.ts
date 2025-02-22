@@ -88,55 +88,43 @@ export class ClinicDetailsComponent implements OnInit, AfterViewInit {
         <strong>${this.clinic.organizationName}</strong><br>
         ${fullAddress}<br>
         Type: ${this.clinic.clinicTypes || 'N/A'}<br>
-        Language: ${this.clinic.serviceLanguages || 'N/A'}<br>
-        Catchment area: ${this.clinic.catchmentArea || 'N/A'}
+        Language: ${this.clinic.serviceLanguages || 'N/A'}
       `);
 
-      await this.updateCatchmentAreaBoundary(this.clinic.catchmentArea);
+      await this.updateCatchmentAreaBoundary();
     } catch (error) {
       console.error(`Error geocoding clinic address:`, error);
     }
   }
 
-  private readonly OTTAWA_BOUNDS = {
-    north: 45.6,
-    south: 45.2,
-    west: -76.0,
-    east: -75.3,
-  };
+  private async updateCatchmentAreaBoundary(): Promise<void> {
+    if (!this.clinic || !this.clinic.catchmentBoundaries) return;
 
-  private async updateCatchmentAreaBoundary(catchmentArea: string): Promise<void> {
-    if (!catchmentArea) return;
-  
-    let boundaryPoints: [number, number][] = [];
-  
-    // Split input into multiple areas (postal codes or region names)
-    const areas = catchmentArea.split(',').map((r) => r.trim());
-  
-    for (const area of areas) {
-      const points = await this.postalCodeService.getCatchmentBoundary(area);
-      boundaryPoints.push(...points);
-    }
-  
-    if (boundaryPoints.length < 3) {
-      console.warn("Not enough valid points to draw a boundary.");
-      return;
-    }
-  
     this.boundaryLayer.clearLayers();
-    L.polygon(boundaryPoints, {
-      color: '#007E94',
-      fillColor: '#007E94',
-      weight: 2,
-      fillOpacity: 0.3,
-    }).addTo(this.boundaryLayer);
-  
-    this.map.fitBounds(L.polygon(boundaryPoints).getBounds());
-  }  
 
-  private extractPostalCodes(catchmentArea: string): string[] {
-    const match = catchmentArea.match(/([A-Z]\d[A-Z] ?\d[A-Z]\d)/g);
-    return match ? [...new Set(match.map((pc) => pc.replace(/\s/, '')))] : [];
+    let geoJsonData;
+
+    if (typeof this.clinic.catchmentBoundaries === 'string') {
+      try {
+        geoJsonData = JSON.parse(this.clinic.catchmentBoundaries);
+      } catch (error) {
+        console.error('Error parsing catchmentBoundaries:', error);
+        return;
+      }
+    } else {
+      geoJsonData = this.clinic.catchmentBoundaries;
+    }
+
+    const geoJsonLayer = L.geoJSON(geoJsonData, {
+      style: {
+        color: '#007E94',
+        fillColor: '#007E94',
+        weight: 2,
+        fillOpacity: 0.3,
+      },
+    }).addTo(this.boundaryLayer);
+
+    this.map.fitBounds(geoJsonLayer.getBounds());
   }
 
   private async geocodeAddress(
@@ -158,29 +146,6 @@ export class ClinicDetailsComponent implements OnInit, AfterViewInit {
       console.error('Geocoding error:', error);
       throw error;
     }
-  }
-
-  private computeConvexHull(points: [number, number][]): [number, number][] {
-    points.sort(([ax, ay], [bx, by]) => (ax !== bx ? ax - bx : ay - by));
-
-    const crossProduct = (
-      a: [number, number],
-      b: [number, number],
-      c: [number, number]
-    ) => (b[0] - a[0]) * (c[1] - a[1]) - (b[1] - a[1]) * (c[0] - a[0]);
-
-    const hull: [number, number][] = [];
-    for (const point of points) {
-      while (
-        hull.length >= 2 &&
-        crossProduct(hull[hull.length - 2], hull[hull.length - 1], point) <= 0
-      ) {
-        hull.pop();
-      }
-      hull.push(point);
-    }
-
-    return hull;
   }
 
   referClinic() {
