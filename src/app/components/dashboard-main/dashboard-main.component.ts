@@ -460,6 +460,7 @@ export class DashboardMainComponent implements OnInit {
         specialTaxCasesMap,
         'otherSpecialTaxCases'
       ),
+      client_postal_code: filters['postalCodesServe'],
       clinics_listed: organizationNames || '',
       assigned_clinic: '',
       unassigned_clinic: '',
