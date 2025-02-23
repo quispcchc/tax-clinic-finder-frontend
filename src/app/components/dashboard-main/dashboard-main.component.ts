@@ -124,16 +124,55 @@ export class DashboardMainComponent implements OnInit {
     );
   }
 
-  sortClinics() {
-    const priority: Record<string, number> = { 'Yes': 1, 'No': 2, 'Not Sure': 3 };
+  sortClinics(postalCodeFilter?: string, coordinates?: { lat: number, lng: number }) {
+    const appointmentPriority: Record<string, number> = { 'Yes': 1, 'No': 2, 'Not Sure': 3 };
+  
+    const populationPriority: Record<string, number> = {
+      'newcomers': 1,
+      'seniors': 2,
+      'persons with disabilities': 3,
+      'students': 4,
+      'indigenous (first nations and inuit and metis)': 5,
+      'language-specific community': 6
+    };
+  
+    const doesClinicServePostalCode = (clinic: any): boolean => {
+      if (!postalCodeFilter || !coordinates) return false;
+      return clinic.catchmentBoundaries?.features?.some((feature: any) => {
+        if (feature.geometry?.type === 'Polygon' && feature.geometry.coordinates) {
+          const polygonCoordinates = feature.geometry.coordinates[0];
+          const point: [number, number] = [coordinates.lng, coordinates.lat];
+          return this.isPointInPolygon(point, polygonCoordinates);
+        }
+        return false;
+      });
+    };
+  
+    const getPopulationPriority = (clinic: any) => {
+      if (!clinic.populationServed) return 99;
+      const populations = clinic.populationServed.toLowerCase().split(', ');
+      for (const population of populations) {
+        if (populationPriority[population]) {
+          return populationPriority[population];
+        }
+      }
+      return 99;
+    };
   
     this.filteredClinics.sort((a, b) => {
-      const priorityA = priority[a.appointmentAvailability] ?? 4;
-      const priorityB = priority[b.appointmentAvailability] ?? 4;
+      const priorityA = appointmentPriority[a.appointmentAvailability] ?? 4;
+      const priorityB = appointmentPriority[b.appointmentAvailability] ?? 4;
+      if (priorityA !== priorityB) return priorityA - priorityB;
   
-      return priorityA - priorityB;
+      const servesPostalA = doesClinicServePostalCode(a) ? 0 : 1;
+      const servesPostalB = doesClinicServePostalCode(b) ? 0 : 1;
+      if (servesPostalA !== servesPostalB) return servesPostalA - servesPostalB;
+  
+      const popPriorityA = getPopulationPriority(a);
+      const popPriorityB = getPopulationPriority(b);
+      return popPriorityA - popPriorityB;
     });
-  }
+  }  
 
   async applyFilters(event: {
     filters: { [key: string]: any } | null;
