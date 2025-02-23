@@ -182,24 +182,31 @@ export class DashboardMainComponent implements OnInit {
     return clinics.filter((clinic) => {
       const matchesServiceDelivery =
         (filters['serviceDeliveryModes']?.inPerson &&
-          clinic.clinicTypes?.includes('In person')) ||
+          (clinic.clinicTypes?.toLowerCase().includes('in person') ||
+          clinic.clinicTypes?.toLowerCase().includes('en présentiel'))) ||
         (filters['serviceDeliveryModes']?.virtual &&
-          clinic.clinicTypes?.includes('Virtual')) ||
+          (clinic.clinicTypes?.toLowerCase().includes('virtual') ||
+          clinic.clinicTypes?.toLowerCase().includes('virtuelle'))) ||
         (filters['serviceDeliveryModes']?.byAppointment &&
-          clinic.clinicTypes?.includes('By appointment')) ||
+          (clinic.clinicTypes?.toLowerCase().includes('by appointment') ||
+          clinic.clinicTypes?.toLowerCase().includes('sur rendez-vous'))) ||
         (filters['serviceDeliveryModes']?.walkIn &&
-          clinic.clinicTypes?.includes('Walk-in')) ||
+          clinic.clinicTypes?.toLowerCase().includes('walk-in')) ||
         (filters['serviceDeliveryModes']?.dropOff &&
-          clinic.clinicTypes?.includes('Drop-off')) ||
+          (clinic.clinicTypes?.toLowerCase().includes('drop-off') ||
+          clinic.clinicTypes?.toLowerCase().includes('dépôt des documents'))) ||
         !hasSelectedFilters(filters['serviceDeliveryModes']);
 
       const matchesSupportedTaxYears =
         (filters['supportedTaxYears']?.currentYear &&
-          clinic.taxYearsPrepared?.includes('Current Year')) ||
+          (clinic.taxYearsPrepared?.toLowerCase().includes('only current year') ||
+          clinic.taxYearsPrepared?.toLowerCase().includes('année en cours seule'))) ||
         (filters['supportedTaxYears']?.currentLastYears &&
-          clinic.taxYearsPrepared?.includes('Current and last year')) ||
+          (clinic.taxYearsPrepared?.toLowerCase().includes('current and last year')||
+          clinic.taxYearsPrepared?.toLowerCase().includes('année en cours et dernière année'))) ||
         (filters['supportedTaxYears']?.multipleYears &&
-          clinic.taxYearsPrepared?.includes('Multiple years')) ||
+          (clinic.taxYearsPrepared?.toLowerCase().includes('multiple years') ||
+          clinic.taxYearsPrepared?.toLowerCase().includes('plusieurs années'))) ||
         !hasSelectedFilters(filters['supportedTaxYears']);
 
       const matchesProvinces =
@@ -211,7 +218,7 @@ export class DashboardMainComponent implements OnInit {
         (filters['provinces']?.Other &&
           (clinic.residencyTaxYear
             .toLowerCase()
-            .includes('Any province other than Ontario and Quebec') ||
+            .includes('any province other than ontario and quebec') ||
             clinic.residencyTaxYear
               .toLowerCase()
               .includes('autres que l’ontario et le québec'))) ||
@@ -219,11 +226,14 @@ export class DashboardMainComponent implements OnInit {
 
       const matchesLanguage =
         (filters['languageOptions']?.french &&
-          clinic.serviceLanguages?.includes('French')) ||
+          (clinic.serviceLanguages?.toLowerCase().includes('french') || 
+          clinic.serviceLanguages?.toLowerCase().includes('français'))) ||
         (filters['languageOptions']?.english &&
-          clinic.serviceLanguages?.includes('English')) ||
+          (clinic.serviceLanguages?.toLowerCase().includes('english') ||
+          clinic.serviceLanguages?.toLowerCase().includes('anglais'))) ||
         (filters['languageOptions']?.arabic &&
-          clinic.serviceLanguages?.includes('Arabic')) ||
+          (clinic.serviceLanguages?.toLowerCase().includes('arabic') ||
+          clinic.serviceLanguages?.toLowerCase().includes('arabe'))) ||
         (filters['languageOptions']?.other &&
           filters['languageOptions']?.otherLanguage &&
           clinic.serviceLanguages
@@ -235,19 +245,23 @@ export class DashboardMainComponent implements OnInit {
 
       const matchesClient =
         (filters['clientCategories']?.newcomers &&
-          clinic.populationServed?.includes('Newcomers')) ||
+          (clinic.populationServed?.toLowerCase().includes('newcomers') ||
+          clinic.populationServed?.toLowerCase().includes('nouveaux arrivants'))) ||
         (filters['clientCategories']?.students &&
-          clinic.populationServed?.includes('Students')) ||
+          (clinic.populationServed?.toLowerCase().includes('students') ||
+          clinic.populationServed?.toLowerCase().includes('étudiants'))) ||
         (filters['clientCategories']?.indigenousClients &&
-          clinic.populationServed?.includes(
-            'Indigenous (First Nations and Inuit and Metis)'
-          )) ||
+          (clinic.populationServed?.toLowerCase().includes('indigenous (first nations and inuit and metis)') ||
+          clinic.populationServed?.toLowerCase().includes('autochtones (premières nations et inuits et métis)'))) ||
         (filters['clientCategories']?.seniors &&
-          clinic.populationServed?.includes('Seniors')) ||
+          (clinic.populationServed?.toLowerCase().includes('seniors') ||
+          clinic.populationServed?.toLowerCase().includes('personnes âgées'))) ||
         (filters['clientCategories']?.disabilities &&
-          clinic.populationServed?.includes('Persons with disabilities')) ||
+          (clinic.populationServed?.toLowerCase().includes('persons with disabilities') ||
+          clinic.populationServed?.toLowerCase().includes('personnes en situation de handicap'))) ||
         (filters['clientCategories']?.languageSpecific &&
-          clinic.populationServed?.includes('Language-specific community')) ||
+          (clinic.populationServed?.toLowerCase().includes('language-specific community') ||
+          clinic.populationServed?.toLowerCase().includes('communauté spécifique à une langue'))) ||
         (filters['clientCategories']?.other &&
           filters['clientCategories']?.otherClientCategory &&
           clinic.populationServed
@@ -259,74 +273,76 @@ export class DashboardMainComponent implements OnInit {
 
       const matchesAccessDocuments =
         (filters['accessDocuments']?.allDocuments &&
-          clinic.helpWithMissingDocs?.includes(
-            'Yes for CRA documents with Autofill/repid'
-          )) ||
+          (clinic.helpWithMissingDocs?.toLowerCase().includes('yes for cra documents with autofill/repid') ||
+          clinic.helpWithMissingDocs?.toLowerCase().includes('oui pour les documents de l’arc avec autofill/repid'))) ||
         (filters['accessDocuments']?.someDocuments &&
-          clinic.helpWithMissingDocs?.includes(
-            'Yes with help from staff or volunteer for some documentation'
-          )) ||
+          (clinic.helpWithMissingDocs?.toLowerCase().includes('yes with help from staff or volunteer for some documentation') ||
+          clinic.helpWithMissingDocs?.toLowerCase().includes('oui avec l’aide du personnel ou des bénévoles pour certains documents'))) ||
         (filters['accessDocuments']?.noDocuments &&
-          clinic.helpWithMissingDocs?.includes(
-            'No, client must have all their documents ready'
-          )) ||
+          (clinic.helpWithMissingDocs?.toLowerCase().includes('no, client must have all their documents ready') ||
+          clinic.helpWithMissingDocs?.toLowerCase().includes('non, le client doit avoir tous ses documents prêts'))) ||
         (!filters['accessDocuments']?.allDocuments &&
           !filters['accessDocuments']?.someDocuments &&
           !filters['accessDocuments']?.noDocuments);
 
       const matchesAppointmentAvailability =
         (filters['appointmentType'] === 'Yes' &&
-          clinic.appointmentAvailability === 'Yes') ||
+          (clinic.appointmentAvailability === 'Yes' || clinic.appointmentAvailability === 'Oui')) ||
         (filters['appointmentType'] === 'No' &&
-          clinic.appointmentAvailability === 'No') ||
+          (clinic.appointmentAvailability === 'No' || clinic.appointmentAvailability === 'Non')) ||
         (filters['appointmentType'] === 'Not Sure' &&
-          clinic.appointmentAvailability === 'Not Sure') ||
+          (clinic.appointmentAvailability === 'Not Sure' || clinic.appointmentAvailability === 'Pas sûr')) ||
         filters['appointmentType'] === '';
 
       const matchesWheelchairAccessible =
         (filters['wheelchairAccessible'] === 'Yes' &&
-          clinic.wheelchairAccessible === 'Yes') ||
+          (clinic.wheelchairAccessible === 'Yes' || clinic.wheelchairAccessible === 'Oui')) ||
         (filters['wheelchairAccessible'] === 'No' &&
-          clinic.appointmentAvailability === 'No') ||
+          (clinic.wheelchairAccessible === 'No' || clinic.wheelchairAccessible === 'Non')) ||
         filters['wheelchairAccessible'] === '';
 
       const matchesDaysOfOperation =
         (filters['serviceDays']?.weekdays &&
-          clinic.daysOfOperation.includes('Weekdays')) ||
+          (clinic.daysOfOperation.toLowerCase().includes('weekdays') ||
+          clinic.daysOfOperation.toLowerCase().includes('jours de la semaine'))) ||
         (filters['serviceDays']?.weekends &&
-          clinic.daysOfOperation.includes('Weekends')) ||
+          (clinic.daysOfOperation.toLowerCase().includes('weekends') ||
+          clinic.daysOfOperation.toLowerCase().includes('week ends'))) ||
         (!filters['serviceDays']?.weekdays &&
           !filters['serviceDays']?.weekends);
 
       const matcheshoursOfOperation =
         (filters['serviceHours']?.daytime &&
-          clinic.hoursOfOperation.includes('Daytime')) ||
+          (clinic.hoursOfOperation.toLowerCase().includes('daytime') ||
+          clinic.hoursOfOperation.toLowerCase().includes('en journée'))) ||
         (filters['serviceHours']?.evening &&
-          clinic.hoursOfOperation.includes('Evening')) ||
+          (clinic.hoursOfOperation.toLowerCase().includes('evening') ||
+          clinic.hoursOfOperation.toLowerCase().includes('soirée'))) ||
         (!filters['serviceHours']?.daytime &&
           !filters['serviceHours']?.evening);
 
       const matchesSpecialTaxCases =
         (filters['specialTaxCases']?.rentalIncome &&
-          clinic.servePeople?.includes('Rental income')) ||
+          (clinic.servePeople?.toLowerCase().includes('rental income') ||
+          clinic.servePeople?.toLowerCase().includes('revenus locatifs'))) ||
         (filters['specialTaxCases']?.selfEmployment &&
-          clinic.servePeople?.includes('Self-employment income')) ||
+          (clinic.servePeople?.toLowerCase().includes('self-employment income') ||
+          clinic.servePeople?.toLowerCase().includes("revenu d'un travail indépendant"))) ||
         (filters['specialTaxCases']?.incomeOver &&
-          clinic.servePeople?.includes('Interest income over 1000$')) ||
+          (clinic.servePeople?.toLowerCase().includes('interest income over 1000$') ||
+          clinic.servePeople?.toLowerCase().includes("revenu d'intérêts supérieur à 1000$"))) ||
         (filters['specialTaxCases']?.deceasedPerson &&
-          clinic.servePeople?.includes('Return for a deceased person')) ||
+          (clinic.servePeople?.toLowerCase().includes('return for a deceased person') ||
+          clinic.servePeople?.toLowerCase().includes('déclarations pour une personne décédée'))) ||
         (filters['specialTaxCases']?.employmentExpenses &&
-          clinic.servePeople?.includes(
-            'Employment expenses (with specific conditions)'
-          )) ||
+          (clinic.servePeople?.toLowerCase().includes('employment expenses (with specific conditions)') ||
+          clinic.servePeople?.toLowerCase().includes("dépenses d’emploi (sous conditions spécifiques)"))) ||
         (filters['specialTaxCases']?.capitalGains &&
-          clinic.servePeople?.includes(
-            'Capital Gains/losses (with specific conditions)'
-          )) ||
+          (clinic.servePeople?.toLowerCase().includes('capital gains/losses (with specific conditions)') ||
+          clinic.servePeople?.toLowerCase().includes('gains/pertes en capital (avec conditions spécifiques)'))) ||
         (filters['specialTaxCases']?.largerIncome &&
-          clinic.servePeople?.includes(
-            'Larger income than CVITP income-criteria. when people are low income now'
-          )) ||
+          (clinic.servePeople?.toLowerCase().includes('larger income than cvitp income-criteria. when people are low income now') ||
+          clinic.servePeople?.toLowerCase().includes('revenu supérieur aux critères de revenu du cvitp. lorsque les personnes ont un faible revenu actuellement'))) ||
         (filters['specialTaxCases']?.other &&
           filters['specialTaxCases']?.otherSpecialTaxCases &&
           clinic.servePeople
