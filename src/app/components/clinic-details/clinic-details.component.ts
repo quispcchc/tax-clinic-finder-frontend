@@ -10,7 +10,6 @@ import { Clinic } from '../../models/clinic.model';
 import * as L from 'leaflet';
 import axios from 'axios';
 import { PostalCodeService } from '../../services/postal-code.service';
-import { environment } from '../../../environments/environment.development';
 
 @Component({
   selector: 'app-clinic-details',
@@ -79,7 +78,7 @@ export class ClinicDetailsComponent implements OnInit, AfterViewInit {
     const fullAddress = `${location.street}, ${location.city}, ${location.state}, ${location.postalCode}`;
 
     try {
-      const { lat, lng } = await this.geocodeAddress(fullAddress);
+      const { lat, lng } = await this.postalCodeService.getCoordinates(fullAddress);
       const clinicLatLng = L.latLng(lat, lng);
 
       this.map.setView(clinicLatLng, 15);
@@ -126,27 +125,6 @@ export class ClinicDetailsComponent implements OnInit, AfterViewInit {
     }).addTo(this.boundaryLayer);
 
     this.map.fitBounds(geoJsonLayer.getBounds());
-  }
-
-  private async geocodeAddress(
-    address: string
-  ): Promise<{ lat: number; lng: number }> {
-    try {
-      const response = await axios.get(
-        `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(
-          address
-        )}&key=${environment.googleMapsApiKey}`
-      );
-
-      if (response.data.status === 'OK' && response.data.results.length > 0) {
-        return response.data.results[0].geometry.location;
-      } else {
-        throw new Error(`Geocoding failed: ${response.data.status}`);
-      }
-    } catch (error) {
-      console.error('Geocoding error:', error);
-      throw error;
-    }
   }
 
   referClinic() {

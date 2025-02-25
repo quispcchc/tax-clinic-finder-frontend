@@ -8,6 +8,7 @@ import {
 import { Clinic } from '../../models/clinic.model';
 import * as L from 'leaflet';
 import axios from 'axios';
+import { PostalCodeService } from '../../services/postal-code.service';
 
 @Component({
   selector: 'app-map',
@@ -23,8 +24,7 @@ export class MapComponent implements OnInit, OnChanges {
   public isLoading = false;
   private isMapInitialized = false;
 
-  //private readonly GOOGLE_MAPS_API_KEY = 'AIzaSyBc3mEkYs8ZzYf5onUt4vi5jjsQ6cogV40';
-  private readonly GOOGLE_MAPS_API_KEY = 'YOUR_API_KEY_HERE';
+  constructor(private postalCodeService: PostalCodeService) {}
 
   ngOnInit(): void {}
 
@@ -65,22 +65,17 @@ export class MapComponent implements OnInit, OnChanges {
     const defaultLng = -75.695;
     const defaultZoom = 12;
 
-    // Initialize the map
     this.map = L.map('map', {
       center: [defaultLat, defaultLng],
       zoom: defaultZoom,
       attributionControl: false,
     });
 
-    // Add OpenStreetMap tiles
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       attribution: '',
     }).addTo(this.map);
 
-    // Add the marker layer group to the map
     this.markers.addTo(this.map);
-
-    // Ensure the map resizes correctly
     setTimeout(() => {
       this.map.invalidateSize();
     }, 0);
@@ -90,24 +85,19 @@ export class MapComponent implements OnInit, OnChanges {
     this.isLoading = true;
     if (!this.map) return;
 
-    // Clear existing markers and layers
     this.markers.clearLayers();
 
-    // Define bounds for all clinics
     const bounds: L.LatLngBounds = L.latLngBounds([]);
 
     for (const clinic of this.clinics) {
       try {
         const location = clinic.locations[0];
-        // Generate full address for geocoding
         const fullAddress = `${location.street}, ${location.city}, ${location.state}, ${location.postalCode}`;
 
-        // Geocode the clinic address to get latitude and longitude
-        const { lat, lng } = await this.geocodeAddress(fullAddress);
+        const { lat, lng } = await this.postalCodeService.getCoordinates(fullAddress);
 
         const clinicLatLng = L.latLng(lat, lng);
 
-        // Add marker for the clinic
         const marker = L.marker(clinicLatLng).bindPopup(`
           <strong>${clinic.organizationName}</strong><br>
           ${fullAddress}<br>
@@ -115,10 +105,8 @@ export class MapComponent implements OnInit, OnChanges {
           Language: ${clinic.serviceLanguages || 'N/A'}
         `);
 
-        // Add marker to the layer group
         this.markers.addLayer(marker);
 
-        // Extend map bounds to include this clinic
         bounds.extend(clinicLatLng);
       } catch (error) {
         console.error(
@@ -128,36 +116,12 @@ export class MapComponent implements OnInit, OnChanges {
       }
     }
 
-    // Adjust map view to fit all clinics or reset to default if no clinics
     if (bounds.isValid()) {
       this.map.fitBounds(bounds, { padding: [20, 20] });
     } else {
-      this.map.setView([45.424721, -75.695], 12); // Default view if no valid clinics
+      this.map.setView([45.424721, -75.695], 12);
     }
 
     this.isLoading = false;
-  }
-
-  private async geocodeAddress(
-    address: string
-  ): Promise<{ lat: number; lng: number }> {
-    const encodedAddress = encodeURIComponent(address);
-    const url = `https://maps.googleapis.com/maps/api/geocode/json?address=${encodedAddress}&key=${this.GOOGLE_MAPS_API_KEY}`;
-
-    try {
-      const response = await axios.get(url);
-      if (response.data.status === 'OK' && response.data.results.length > 0) {
-        const result = response.data.results[0].geometry.location;
-        return {
-          lat: result.lat,
-          lng: result.lng,
-        };
-      } else {
-        throw new Error(`Geocoding failed: ${response.data.status}`);
-      }
-    } catch (error) {
-      console.error(`Error geocoding address: ${address}`, error);
-      throw error;
-    }
   }
 }
