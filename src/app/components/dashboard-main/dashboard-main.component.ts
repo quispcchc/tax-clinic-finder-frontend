@@ -260,9 +260,9 @@ export class DashboardMainComponent implements OnInit {
             .includes('any province other than ontario and quebec') ||
             clinic.residencyTaxYear
               .toLowerCase()
-              .includes('autres que l’ontario et le québec'))) ||
+              .includes('toute autre province que l’ontario et le québec'))) ||
         !hasSelectedFilters(filters['provinces']);
-
+        
       const matchesLanguage =
         (filters['languageOptions']?.french &&
           (clinic.serviceLanguages?.toLowerCase().includes('french') || 
