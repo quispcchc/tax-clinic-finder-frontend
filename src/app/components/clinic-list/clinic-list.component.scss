@@ -96,5 +96,16 @@
     margin-right: 8px;
     vertical-align: middle;
   }
-  
+  .clinic-label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    white-space: nowrap;
+  }
+
+  .clinic-name {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
 }
