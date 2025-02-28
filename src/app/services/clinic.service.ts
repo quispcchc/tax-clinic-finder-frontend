@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { Clinic } from '../models/clinic.model';
 import { User } from '../models/user.model';
 import { UserCreate } from '../models/user-create.modal';
-import { environment } from '../../environments/environment.development';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root',

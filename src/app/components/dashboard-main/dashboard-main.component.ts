@@ -4,7 +4,7 @@ import { ClinicService } from '../../services/clinic.service';
 import { LanguageService } from '../../services/language.service';
 import { ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
-import { environment } from '../../../environments/environment.development';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-dashboard-main',
