@@ -41,7 +41,7 @@
               {
                 "glob": "**/*",
                 "input": "node_modules/leaflet/dist/images",
-                "output": "/assets/images"
+                "output": "/media"
               }
             ],
             "styles": [
