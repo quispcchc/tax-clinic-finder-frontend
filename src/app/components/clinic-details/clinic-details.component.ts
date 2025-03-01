@@ -57,6 +57,13 @@ export class ClinicDetailsComponent implements OnInit, AfterViewInit {
   }
 
   private initializeMap(): void {
+
+    L.Icon.Default.mergeOptions({
+      iconRetinaUrl: '/media/marker-icon-2x.png',
+      iconUrl: '/media/marker-icon.png',
+      shadowUrl: '/media/marker-shadow.png',
+    });
+
     this.map = L.map('clinic-map', {
       center: [45.424721, -75.695],
       zoom: 12,

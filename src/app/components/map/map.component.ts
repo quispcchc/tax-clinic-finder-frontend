@@ -65,6 +65,12 @@ export class MapComponent implements OnInit, OnChanges {
     const defaultLng = -75.695;
     const defaultZoom = 12;
 
+    L.Icon.Default.mergeOptions({
+      iconRetinaUrl: '/media/marker-icon-2x.png',
+      iconUrl: '/media/marker-icon.png',
+      shadowUrl: '/media/marker-shadow.png',
+    });
+
     this.map = L.map('map', {
       center: [defaultLat, defaultLng],
       zoom: defaultZoom,
