@@ -145,7 +145,7 @@ export class DashboardMainComponent implements OnInit {
           return this.isPointInPolygon(point, polygonCoordinates);
         }
         return false;
-      });
+      }) ?? false;
     };
   
     const getPopulationPriority = (clinic: any) => {
@@ -188,6 +188,13 @@ export class DashboardMainComponent implements OnInit {
     const { filters, isNewClient } = event;
     this.isNewClient = isNewClient;
 
+    let coordinates: { lat: number, lng: number } | undefined = undefined;
+
+    if (filters && filters['postalCodesServe']) {
+      const result = await this.geocodePostalCode(filters['postalCodesServe']);
+      coordinates = result ? { lat: result.lat, lng: result.lng } : undefined;
+    }
+
     if (!filters) {
       console.log('Resetting filters. Showing all clinics.');
       this.filteredClinics = [...this.clinics];
@@ -204,7 +211,7 @@ export class DashboardMainComponent implements OnInit {
       }
     }
 
-    this.sortClinics();
+    this.sortClinics(filters?.['postalCodesServe'], coordinates);
   }
 
   private async filterClinics(clinics: any[], filters: { [key: string]: any }): Promise<any[]> {
@@ -391,8 +398,9 @@ export class DashboardMainComponent implements OnInit {
             )) ||
         !hasSelectedFilters(filters['specialTaxCases']);
 
-        const matchesPostalCode = !postalCodeFilter || (coordinates && 
-          clinic.catchmentBoundaries?.features?.some((feature: any) => {
+        const matchesPostalCode = !postalCodeFilter || 
+          !clinic.catchmentBoundaries ||
+          (coordinates && clinic.catchmentBoundaries?.features?.some((feature: any) => {
             if (feature.geometry?.type === 'Polygon' && feature.geometry.coordinates) {
               const polygonCoordinates = feature.geometry.coordinates[0];
               const point: [number, number] = [coordinates.lng, coordinates.lat];
