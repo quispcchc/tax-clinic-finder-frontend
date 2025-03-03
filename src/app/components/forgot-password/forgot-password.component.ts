@@ -14,7 +14,8 @@ export class ForgotPasswordComponent implements OnInit {
   message: string | null = null;
   isSuccess: boolean = false;
   loginForm!: FormGroup;
-  errorMessage: string | null = null;
+  errorMessage: string = '';
+  successMessage: string = '';
 
   constructor(private fb: FormBuilder, private authService: AuthService) {}
 
@@ -32,12 +33,24 @@ export class ForgotPasswordComponent implements OnInit {
     if (this.resetPasswordForm.valid) {
       this.authService
         .requestPasswordReset(this.resetPasswordForm.value.email)
-        .subscribe((response) => {
-          this.message = response.success
-            ? 'Reset link sent to your email!'
-            : 'Failed to send reset link.';
-          this.isSuccess = response.success;
-        });
+        .subscribe(
+          (response) => {
+            if (response.success) {
+              this.successMessage = response.message || 'RESET_PASSWORD_SUCCESS';
+              this.errorMessage = '';
+              this.isSuccess = true;
+            } else {
+              this.errorMessage = response.message || 'RESET_PASSWORD_FAILURE';
+              this.successMessage = '';
+              this.isSuccess = false;
+            }
+          },
+          (error) => {
+            this.errorMessage = 'ERROR_PROCESSING_REQUEST';
+            this.successMessage = '';
+            this.isSuccess = false;
+          }
+        );
     }
   }
 }

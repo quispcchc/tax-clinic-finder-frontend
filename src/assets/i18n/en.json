@@ -182,6 +182,10 @@
   "Confirm Password": "Confirm Password",
   "Confirm New Password": "Confirm New Password",
   "Cancel": "Cancel",
-  "Organization Details": "Organization Details"
+  "Organization Details": "Organization Details",
+  "RESET_PASSWORD_SUCCESS": "A password reset link has been sent to your email.",
+  "RESET_PASSWORD_FAILURE": "Failed to send reset link.",
+  "USER_NOT_FOUND": "No account found with this email.",
+  "ERROR_PROCESSING_REQUEST": "Something went wrong. Please try again later."
 }
 

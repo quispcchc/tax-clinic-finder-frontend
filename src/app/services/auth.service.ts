@@ -1,5 +1,9 @@
 import { Injectable, Inject, PLATFORM_ID } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import {
+  HttpClient,
+  HttpErrorResponse,
+  HttpHeaders,
+} from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { isPlatformBrowser } from '@angular/common';
@@ -94,10 +98,27 @@ export class AuthService {
     return false;
   }
 
-  requestPasswordReset(email: string): Observable<{ success: boolean }> {
+  requestPasswordReset(
+    email: string
+  ): Observable<{ success: boolean; message?: string }> {
     return this.http
-      .post<{ success: boolean }>(this.resetPasswordUrl, { email })
-      .pipe(catchError(() => of({ success: false })));
+      .post<{ success: boolean; message?: string }>(this.resetPasswordUrl, {
+        email,
+      })
+      .pipe(
+        map((response) => ({
+          success: response.success,
+          message: response.message,
+        })),
+        catchError((error: HttpErrorResponse) => {
+          return of({
+            success: false,
+            message:
+              error.error?.message ||
+              'Something went wrong. Please try again later.',
+          });
+        })
+      );
   }
 
   resetPasswordWithToken(

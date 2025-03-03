@@ -182,5 +182,9 @@
   "Confirm Password": "Confirmez le mot de passe",
   "Confirm New Password": "Confirmer le nouveau mot de passe",
   "Cancel": "Annuler",
-  "Organization Details": "Détails de l'organisation"
+  "Organization Details": "Détails de l'organisation",
+  "RESET_PASSWORD_SUCCESS": "Un lien de réinitialisation du mot de passe a été envoyé à votre email.",
+  "RESET_PASSWORD_FAILURE": "Échec de l'envoi du lien de réinitialisation.",
+  "USER_NOT_FOUND": "Aucun compte trouvé avec cet email.",
+  "ERROR_PROCESSING_REQUEST": "Une erreur est survenue. Veuillez réessayer plus tard."
 }
