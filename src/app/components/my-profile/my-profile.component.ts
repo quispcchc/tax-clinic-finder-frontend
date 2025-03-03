@@ -18,6 +18,7 @@ export class MyProfileComponent implements OnInit {
   passwordError: string = '';
   showPassword = false;
   passwordFieldType = 'password';
+  userInitials: string = '';
 
   popupMessage: string = '';
   popupVisible: boolean = false;
@@ -30,13 +31,14 @@ export class MyProfileComponent implements OnInit {
   ) {
     this.currentLanguage = this.languageService.getLanguage();
   }
-  
 
   ngOnInit(): void {
     const storedProfile = localStorage.getItem('userProfile');
     if (storedProfile) {
       this.userProfile = JSON.parse(storedProfile);
     }
+
+    this.setUserInitials();
 
     this.passwordForm = this.fb.group(
       {
@@ -53,6 +55,14 @@ export class MyProfileComponent implements OnInit {
       },
       { validators: this.passwordMismatchValidator() }
     );
+  }
+
+  setUserInitials() {
+    const firstName = this.userProfile.firstname || '';
+    const lastName = this.userProfile.lastname || '';
+    this.userInitials = (
+      firstName.charAt(0) + lastName.charAt(0)
+    ).toUpperCase();
   }
 
   toggleChangePassword(): void {

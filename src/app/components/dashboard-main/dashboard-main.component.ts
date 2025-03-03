@@ -616,6 +616,7 @@ export class DashboardMainComponent implements OnInit {
         .updateFilteredData(this.newClientId, this.filteredData)
         .subscribe(() => {
           this.isNewClient = false;
+          this.onFilterSidebarToggle();
           this.newClientId = '';
           console.log('Clinic assigned successfully.');
         });

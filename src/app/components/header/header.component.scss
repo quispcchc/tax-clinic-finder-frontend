@@ -13,6 +13,10 @@
     display: flex;
     align-items: center;
 
+    .logo {
+      cursor: pointer;
+    }
+
     .logo img {
       height: 55px;
       margin-right: 15px;
@@ -67,10 +71,17 @@
       }
     }
 
-    .user-icon {
-      height: 55px;
-      margin-left: 15px;
-      cursor: pointer;
+    .user-initials {
+      width: 50px;
+      height: 50px;
+      border: 2px solid #006577;
+      color: #006577;
+      font-weight: bold;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      font-size: 16px;
     }
 
     .menu-dropdown {

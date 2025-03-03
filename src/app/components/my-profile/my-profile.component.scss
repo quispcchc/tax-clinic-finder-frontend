@@ -25,16 +25,16 @@
     }
 
     .profile-picture {
-      margin-bottom: 20px;
-      margin-left: 10px;
-
-      img {
-        width: 25%;
-        height: 25%;
+        width: 20%;
+        height: 15%;
+        background-color: #80cbd8;
+        color: #ffffff;
+        font-weight: bold;
+        display: flex;
+        align-items: center;
+        justify-content: center;
         border-radius: 50%;
-        object-fit: cover;
-        border: 2px solid #ccc;
-      }
+        font-size: 45px;
     }
 
     .profile-info {

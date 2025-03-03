@@ -2,7 +2,7 @@
   <div class="my-profile-card" *ngIf="!isChangePassword">
     <h2 class="profile-heading">{{ "My Profile" | translate }}</h2>
     <div class="profile-picture">
-      <img src="/assets/images/user-icon.svg" alt="Profile Picture" />
+        {{ userInitials }}
     </div>
     <app-message-popup 
     [message]="popupMessage"

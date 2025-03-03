@@ -23,6 +23,8 @@ export class HeaderComponent implements OnInit {
   currentLanguage: string;
   menuOpen: boolean = false;
   isAdmin: boolean = false;
+  userInitials: string = '';
+  userProfile: any = {};
 
   constructor(
     private languageService: LanguageService,
@@ -33,8 +35,22 @@ export class HeaderComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.setUserInitials();
     const userRole = localStorage.getItem('userRole');
     this.isAdmin = userRole === 'Admin';
+  }
+
+  setUserInitials() {
+    const storedProfile = localStorage.getItem('userProfile');
+    if (storedProfile) {
+      this.userProfile = JSON.parse(storedProfile);
+      const firstName = this.userProfile.firstname || '';
+      const lastName = this.userProfile.lastname || '';
+  
+      this.userInitials = (firstName.charAt(0) + lastName.charAt(0)).toUpperCase();
+    } else {
+      this.userInitials = 'User';
+    }
   }
 
   switchTab(tab: string) {
@@ -72,6 +88,10 @@ export class HeaderComponent implements OnInit {
     this.selectedTab = '';
     this.tabChanged.emit('');
     this.router.navigate(['/dashboard', route]);
+  }
+
+  navigateToDashboard() {
+    this.switchTab('access-filter');
   }
 
   logout(): void {

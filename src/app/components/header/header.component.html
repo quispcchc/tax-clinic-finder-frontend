@@ -1,7 +1,7 @@
 <div class="header">
   <div class="logo-and-language">
     <div class="logo">
-      <img src="assets/images/header-logo.svg" alt="Logo" />
+      <img src="assets/images/header-logo.svg" alt="Logo" (click)="navigateToDashboard()"/>
     </div>
     <div class="language-selector">
       <app-language-selector
@@ -33,7 +33,9 @@
         [class.active]="menuOpen"
       />
     </button>
-    <img src="assets/images/user-icon.svg" alt="User" class="user-icon" />
+    <div class="user-initials">
+      {{ userInitials }}
+    </div>
     <div class="menu-dropdown" *ngIf="menuOpen">
       <button (click)="navigateTo('my-profile')">
         {{ "My Profile" | translate }}
