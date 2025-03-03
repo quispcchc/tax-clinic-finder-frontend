@@ -175,7 +175,7 @@
 .switch {
   position: relative;
   display: inline-block;
-  width: 100px;
+  width: 35%;
   height: 34px;
 }
 
@@ -227,11 +227,11 @@ input:checked + .slider {
 }
 
 input:checked + .slider:before {
-  transform: translateX(66px);
+  transform: translateX(90px);
 }
 
 input:checked + .slider .text {
-  transform: translateX(-27px);
+  transform: translateX(-30px);
   color:#2B2B2B;
 }
 
