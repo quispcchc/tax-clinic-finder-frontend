@@ -9,17 +9,17 @@
       (input)="filterUsers()"
       class="search-input"
     />
-    <button class="add-user" (click)="openAddUserModal()">Add User</button>
+    <button class="add-user" (click)="openAddUserModal()">{{"Add User" | translate}}</button>
   </div>
   <div class="table-container">
     <table>
       <thead>
         <tr>
-          <th class="header-serial">S/N</th>
-          <th>Name</th>
-          <th>Email</th>
-          <th>Designation</th>
-          <th>Role</th>
+          <th class="header-serial">{{ "S/N" | translate}}</th>
+          <th>{{ "Name" | translate}}</th>
+          <th>{{"Email" | translate}}</th>
+          <th>{{ "Designation" | translate}}</th>
+          <th>{{ "Role" | translate}}</th>
           <th class="header-last"></th>
         </tr>
       </thead>

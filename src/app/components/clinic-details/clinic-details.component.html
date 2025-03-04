@@ -7,12 +7,12 @@
           alt="Website"
           class="website-icon"
         />
-        <h3>Tax Clinics In This Axis</h3>
+        <h3>{{ "Tax clinics in this axis" | translate}}</h3>
       </div>
       <div class="header-buttons">
         <button *ngIf="!isNewClient" class="close-button" (click)="close()">X</button>
-        <button *ngIf="isNewClient" class="action-button" (click)="referClinic()">Assign Clinic</button>
-        <button *ngIf="isNewClient" class="action-button" (click)="backToFilterClinic()">Back to Filter Clinic</button>
+        <button *ngIf="isNewClient" class="action-button" (click)="referClinic()">{{"Assign Clinic" | translate}}</button>
+        <button *ngIf="isNewClient" class="action-button" (click)="backToFilterClinic()">{{"Back to Filter Clinic" | translate}}</button>
       </div>
     </div>
     <div class="clinic-details-container">
@@ -59,7 +59,7 @@
           </div>
           <div class="clinic-info">
             <dt>
-              {{"Day of cinic" | translate}}:
+              {{"Day of clinic" | translate}}:
             </dt>
             <dd>{{ clinic?.daysOfOperation || 'N/A' }}</dd>
           </div>

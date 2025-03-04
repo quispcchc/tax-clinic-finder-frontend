@@ -186,5 +186,21 @@
   "RESET_PASSWORD_SUCCESS": "Un lien de réinitialisation du mot de passe a été envoyé à votre email.",
   "RESET_PASSWORD_FAILURE": "Échec de l'envoi du lien de réinitialisation.",
   "USER_NOT_FOUND": "Aucun compte trouvé avec cet email.",
-  "ERROR_PROCESSING_REQUEST": "Une erreur est survenue. Veuillez réessayer plus tard."
+  "ERROR_PROCESSING_REQUEST": "Une erreur est survenue. Veuillez réessayer plus tard.",
+  "Search Tax Clinic Directory": "Recherche dans l'annuaire des cliniques fiscales",
+  "Assign Clinic":"Affecter une clinique",
+  "Back to Filter Clinic": "Retour à la clinique des filtres",
+  "Clinic Address": "Adresse de la clinique",
+  "Catchment Area of the clinic": "Zone de chalandise de la clinique",
+  "Type of Clinic": "Type de clinique",
+  "Population serve": "Population desservie",
+  "Webpage detailing eligibility": "Page web détaillant l'éligibilité",
+  "Required Documents for appointment": "Documents requis pour la prise de rendez-vous",
+  "Help Client find the documnets?": "Aidez le client à trouver les documents ?",
+  "Add User": "Ajouter un utilisateur",
+  "Designation": "Désignation",
+  "Role": "Rôle",
+  "Edit User": "Modifier l'utilisateur",
+  "Delete User": "Supprimer l'utilisateur",
+  "Enter a valid email address": "Saisir une adresse électronique valide"
 }

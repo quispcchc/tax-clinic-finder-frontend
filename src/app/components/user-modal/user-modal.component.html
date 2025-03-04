@@ -3,7 +3,7 @@
     <div class="header">
       <div class="user-header-left">
         <img src="assets/images/modal-logo.svg" alt="Website" class="website-icon" />
-        <h3>{{ isEditMode ? "Edit User" : "Add User" }}</h3>
+        <h3>{{ isEditMode ? ('Edit User' | translate) : ('Add User' | translate) }}</h3>
       </div>
       <button class="close-button" (click)="closeModal()">X</button>
     </div>
@@ -38,22 +38,21 @@
             class="error-message"
             *ngIf="field.key === 'email' && userForm.get(field.key)?.errors?.['email']"
           >
-            Enter a valid email address
+            {{"Enter a valid email address" | translate}}
           </div>
           <div
             class="error-message"
             *ngIf="field.key === 'password' && userForm.get(field.key)?.errors?.['pattern']"
           >
-            Password must contain at least one special character, one uppercase
-            letter, one lowercase letter, and one number.
+           {{"Password must contain at least one special character, one uppercase letter, one lowercase letter, and one number." | translate}} 
           </div>
         </div>
 
         <div class="modal-actions">
           <button (click)="onSave()" [disabled]="userForm.invalid" class="save-button">
-            Save
+            {{"Save" | translate}}
           </button>
-          <button (click)="closeModal()" class="cancel-button">Cancel</button>
+          <button (click)="closeModal()" class="cancel-button">{{"Cancel" | translate}}</button>
         </div>
       </form>
     </div>

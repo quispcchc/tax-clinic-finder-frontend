@@ -186,6 +186,22 @@
   "RESET_PASSWORD_SUCCESS": "A password reset link has been sent to your email.",
   "RESET_PASSWORD_FAILURE": "Failed to send reset link.",
   "USER_NOT_FOUND": "No account found with this email.",
-  "ERROR_PROCESSING_REQUEST": "Something went wrong. Please try again later."
+  "ERROR_PROCESSING_REQUEST": "Something went wrong. Please try again later.",
+  "Search Tax Clinic Directory": "Search Tax Clinic Directory",
+  "Assign Clinic": "Assign Clinic",
+  "Back to Filter Clinic": "Back to Filter Clinic",
+  "Clinic Address": "Clinic Address",
+  "Catchment Area of the clinic": "Catchment Area of the clinic",
+  "Type of Clinic": "Type of Clinic",
+  "Population serve": "Population serve",
+  "Webpage detailing eligibility": "Webpage detailing eligibility",
+  "Required Documents for appointment": "Required Documents for appointment",
+  "Help Client find the documnets?": "Help Client find the documnets?",
+  "Add User": "Add User",
+  "Designation": "Designation",
+  "Role": "Role",
+  "Edit User": "Edit User",
+  "Delete User": "Delete User",
+  "Enter a valid email address": "Enter a valid email address"
 }
 
