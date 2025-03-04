@@ -64,11 +64,11 @@
       </tbody>
     </table>
   </div>
-  <app-tax-clinic-details
+  <app-tax-clinic-management-details
     *ngIf="showClinicDetailsModal"
     [clinic]="selectedClinic"
     (closeModal)="closeClinicDetailsModal()"
-  ></app-tax-clinic-details>
+  ></app-tax-clinic-management-details>
 
   <app-tax-clinic-modal
     [isOpen]="showClinicModal"

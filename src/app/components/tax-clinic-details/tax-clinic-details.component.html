@@ -2,75 +2,31 @@
   <div class="modal-content">
     <div class="header">
       <div class="clinic-header-left">
-        <img
-          src="assets/images/modal-logo.svg"
-          alt="Website"
-          class="website-icon"
-        />
+        <img src="assets/images/modal-logo.svg" alt="Website" class="website-icon" />
         <h3>{{ "Tax Clinic Details" | translate }}</h3>
       </div>
       <button class="close-button" (click)="close()">X</button>
     </div>
+    
     <app-message-popup
       [message]="message"
       [isVisible]="showMessagePopup"
       [messageType]="messageType"
-      (closed)="closePopup()"
-    >
+      (closed)="closePopup()">
     </app-message-popup>
+    
     <div class="clinic-details-container">
       <div class="clinic-details">
-        <label>{{ "Organization information" | translate }}</label>
+        
+        <label>{{ "Organization Information" | translate }}</label>
         <div class="org-details">
+          <div class="clinic-info">
+            <dt>{{ "Name/Organisation of the clinic" | translate }}:</dt>
+            <dd>{{ clinic?.organizationName || "N/A" }}</dd>
+          </div>
           <div class="clinic-info" *ngFor="let location of clinic?.locations">
-            <dt>{{ "Name" | translate }}:</dt>
-            <dd>
-              {{ clinic?.organizationName ?? "" | translate }}
-            </dd>
-          </div>
-
-          <div class="clinic-info" *ngFor="let location of clinic?.locations">
-            <dt>{{ "Address" | translate }}:</dt>
-            <dd>
-              {{ location?.street }}, {{ location?.city }},
-              {{ location?.state }},
-              {{ location?.postalCode }}
-            </dd>
-          </div>
-          <div class="clinic-info">
-            <dt>{{ "Website" | translate }}:</dt>
-            <dd>
-              <a
-                [href]="
-                  clinic?.organisationWebsite?.startsWith('http')
-                    ? clinic?.organisationWebsite
-                    : 'https://' + (clinic?.organisationWebsite ?? '')
-                "
-                target="_blank"
-                rel="noopener noreferrer"
-                class="clinic-link"
-              >
-                {{ clinic?.organisationWebsite || "N/A" }}
-              </a>
-            </dd>
-          </div>
-          <div class="clinic-info">
-            <dt>{{ "Email" | translate }}:</dt>
-            <dd>{{ clinic?.organisationalEmail || "N/A" }}</dd>
-          </div>
-          <div class="clinic-info">
-            <dt>{{ "Listed on CRA?" | translate }}:</dt>
-            <dd>
-              <input type="radio" checked />
-              {{ clinic?.listedOnCra ?? "" | translate }}
-            </dd>
-          </div>
-          <div class="clinic-info">
-            <dt>{{ "Listed on NCEO?" | translate }} :</dt>
-            <dd>
-              <input type="radio" checked />
-              {{ clinic?.visibleOnNceo ?? "" | translate }}
-            </dd>
+            <dt>{{ "Clinic Address" | translate }}:</dt>
+            <dd>{{ location?.street }}, {{ location?.city }}, {{ location?.state }}, {{ location?.postalCode }}</dd>
           </div>
           <div class="clinic-info">
             <dt>{{ "Appointment Availability" | translate }}:</dt>
@@ -115,351 +71,128 @@
             </dd>
           </div>
         </div>
-
-        <label>{{ "Respondent information" | translate }}</label>
+        
+        <label>{{ "Tax Clinic Information" | translate }}</label>
         <div class="org-details">
           <div class="clinic-info">
-            <dt>{{ "Name" | translate }}:</dt>
-            <dd>{{ clinic?.contactPersonName || "N/A" }}</dd>
+            <dt>{{ "Type of Clinic" | translate }}:</dt>
+            <dd>{{ clinic?.clinicTypes || "N/A" }}</dd>
           </div>
-          <div class="clinic-info">
-            <dt>{{ "Title" | translate }}:</dt>
-            <dd>{{ clinic?.contactPersonTitle ?? "N/A" }}</dd>
-          </div>
-          <div class="clinic-info">
-            <dt>{{ "Email" | translate }}:</dt>
-            <dd>{{ clinic?.contactEmail ?? "N/A" }}</dd>
-          </div>
-        </div>
-
-        <label>{{ "Contact Person information" | translate }}</label>
-        <div class="org-details">
-          <div class="clinic-info">
-            <dt>{{ "Name" | translate }}:</dt>
-            <dd>{{ clinic?.alternateContactName || ("N/A" | translate) }}</dd>
-          </div>
-          <div class="clinic-info">
-            <dt>{{ "Title" | translate }}:</dt>
-            <dd>{{ clinic?.alternateContactTitle || ("N/A" | translate) }}</dd>
-          </div>
-          <div class="clinic-info">
-            <dt>{{ "Email" | translate }}:</dt>
-            <dd>{{ clinic?.alternateContactEmail || ("N/A" | translate) }}</dd>
-          </div>
-          <div class="clinic-info">
-            <dt>{{ "Phone Number" | translate }}:</dt>
-            <dd>{{ clinic?.alternateContactPhone || ("N/A" | translate) }}</dd>
-          </div>
-        </div>
-
-        <label>{{ "Tax Clinic information" | translate }}</label>
-        <div class="org-details">
-          <div class="clinic-info">
-            <dt>{{ "Information public?" | translate }} :</dt>
-            <dd>
-              <input type="radio" checked />
-              {{ clinic?.publicInfo }}
-            </dd>
-          </div>
-          <div class="clinic-info">
-            <dt>{{ "Tax Clinic Type" | translate }}:</dt>
-            <dd>
-              <div *ngFor="let type of clinicTypes">
-                <input type="checkbox" checked />
-                <span class="option-details">{{ type | translate }}</span>
-              </div>
-            </dd>
-          </div>
-
           <div class="clinic-info">
             <dt>{{ "Wheelchair accessible?" | translate }}:</dt>
-            <dd>
-              <input type="checkbox" checked />
-              {{ clinic?.wheelchairAccessible || "N/A" }}
-            </dd>
+            <dd>{{ clinic?.wheelchairAccessible || "N/A" }}</dd>
           </div>
           <div class="clinic-info">
-            <dt>{{ "Geographical zone" | translate }}:</dt>
-            <dd>
-              <input type="radio" checked />
-              {{ clinic?.servePeopleFrom }}
-            </dd>
-          </div>
-          <div class="clinic-info">
-            <dt>{{ "Clinic Catchment Area" | translate }}:</dt>
+            <dt>{{ "Catchment Area of the clinic" | translate }}:</dt>
             <dd>{{ clinic?.catchmentArea || "N/A" }}</dd>
           </div>
           <div class="clinic-info">
-            <dt>{{ "Months offered by clinic" | translate }}:</dt>
-            <dd>
-              <div *ngFor="let month of monthsOffered">
-                <input type="checkbox" checked />
-                <span class="option-details">{{ month | translate }}</span>
-              </div>
-            </dd>
-          </div>
-          <div class="clinic-info">
-            <dt>{{ "Hours and Date of clinic operation" | translate }}:</dt>
-            <dd>{{ clinic?.hoursAndDate || "N/A" }}</dd>
-          </div>
-          <div class="clinic-info">
-            <dt>{{ "Hours of clinic" | translate }}:</dt>
-            <dd>
-              <div *ngFor="let hours of hoursOfOperation">
-                <input type="checkbox" checked />
-                <span class="option-details">{{ hours | translate }}</span>
-              </div>
-            </dd>
-          </div>
-          <div class="clinic-info">
-            <dt>{{ "Day of clinic" | translate }}:</dt>
-            <dd>
-              <div *ngFor="let days of daysOfOperation">
-                <input type="checkbox" checked />
-                <span class="option-details">{{ days | translate }}</span>
-              </div>
-            </dd>
+            <dt>{{ "Geographical zone" | translate }}:</dt>
+            <dd>{{ clinic?.servePeopleFrom || 'N/A' }}</dd>
           </div>
           <div class="clinic-info">
             <dt>
               {{
-                "Offer income tax services year round outside of tax season?"
+                "Hours and Date of clinic operation"
                   | translate
               }}:
             </dt>
-            <dd>
-              <input type="checkbox" checked />
-              {{ clinic?.yearRoundService }}
-            </dd>
+            <dd>{{ clinic?.hoursAndDate || 'N/A' }}</dd>
           </div>
           <div class="clinic-info">
-            <dt>{{ "Population served" | translate }}:</dt>
-            <dd>
-              <ng-container
-                *ngIf="
-                  populationServed && populationServed.length > 0;
-                  else noData
-                "
-              >
-                <div *ngFor="let population of populationServed">
-                  <input type="checkbox" checked />
-                  <span class="option-details">{{
-                    population | translate
-                  }}</span>
-                </div>
-              </ng-container>
-              <ng-template #noData>
-                <span class="option-details">{{ "N/A" | translate }}</span>
-              </ng-template>
-            </dd>
+            <dt>
+              {{"Hours of clinic" | translate}}:
+            </dt>
+            <dd>{{ clinic?.hoursOfOperation || 'N/A' }}</dd>
           </div>
-
+          <div class="clinic-info">
+            <dt>
+              {{"Day of clinic" | translate}}:
+            </dt>
+            <dd>{{ clinic?.daysOfOperation || 'N/A' }}</dd>
+          </div>
+          <div class="clinic-info">
+            <dt>{{ "Population serve" | translate }}:</dt>
+            <dd>{{ clinic?.populationServed || 'N/A' }}</dd>
+          </div>
           <div class="clinic-info">
             <dt>{{ "Available in" | translate }}:</dt>
-            <dd>
-              <div *ngFor="let language of serviceLanguages">
-                <input type="checkbox" checked />
-                <span class="option-details">{{ language | translate }}</span>
-              </div>
-            </dd>
+            <dd>{{ clinic?.serviceLanguages || 'N/A' }}</dd>
           </div>
-        </div>
-        <label>{{ "Eligibility criteria information" | translate }}</label>
-        <div class="org-details">
           <div class="clinic-info">
             <dt>{{ "Year(s) prepared" | translate }}:</dt>
-            <dd>
-              <div *ngFor="let year of taxYearsPrepared">
-                <input type="checkbox" checked />
-                <span class="option-details">{{ year | translate }}</span>
-              </div>
-            </dd>
+            <dd>{{ clinic?.taxYearsPrepared || 'N/A' }}</dd>
           </div>
           <div class="clinic-info">
-            <dt>{{ "Return from (provinces)" | translate }}:</dt>
-            <dd>
-              <div *ngFor="let residency of residencyTaxYear">
-                <input type="checkbox" checked />
-                <span class="option-details">{{ residency | translate }}</span>
-              </div>
-            </dd>
+            <dt>
+              {{
+                "Return from (provinces)"
+                  | translate
+              }}:
+            </dt>
+            <dd>{{ clinic?.residencyTaxYear || 'N/A' }}</dd>
           </div>
           <div class="clinic-info">
             <dt>{{ "Special services?" | translate }}:</dt>
-            <dd>
-              <div *ngFor="let people of servePeople">
-                <input type="checkbox" checked />
-                <span class="option-details">{{ people | translate }}</span>
-              </div>
-            </dd>
+            <dd>{{ clinic?.servePeople || 'N/A' }}</dd>
           </div>
           <div class="clinic-info">
-            <dt>{{ "Webpage elligibility" | translate }}:</dt>
+            <dt>{{ "Webpage detailing eligibility" | translate }}:</dt>
             <dd>
-              <a
-                [href]="
-                  clinic?.eligibilityCriteriaWebpage?.startsWith('http')
-                    ? clinic?.eligibilityCriteriaWebpage
-                    : 'https://' + (clinic?.eligibilityCriteriaWebpage ?? '')
-                "
-                target="_blank"
-                rel="noopener noreferrer"
-                class="clinic-link"
-              >
-                {{ clinic?.eligibilityCriteriaWebpage || "N/A" }}
-              </a>
+              <ng-container *ngIf="clinic?.eligibilityCriteriaWebpage; else noLink">
+                <a [href]="(clinic?.eligibilityCriteriaWebpage?.startsWith('http') ? clinic?.eligibilityCriteriaWebpage : 'https://' + clinic?.eligibilityCriteriaWebpage)" 
+                target="_blank" rel="noopener noreferrer" class="clinic-link">
+                  {{ clinic?.eligibilityCriteriaWebpage }}
+                </a>
+              </ng-container>
+              <ng-template #noLink>N/A</ng-template>
             </dd>
           </div>
-        </div>
-
-        <label>{{ "Appointment Booking information" | translate }}</label>
-        <div class="org-details">
           <div class="clinic-info">
             <dt>{{ "Booking process" | translate }}:</dt>
-            <dd>
-              <div *ngFor="let process of bookingProcess">
-                <input type="checkbox" checked />
-                <span class="option-details">{{ process | translate }}</span>
-              </div>
-            </dd>
+            <dd>{{ clinic?.bookingProcess || 'N/A' }}</dd>
           </div>
-
           <div class="clinic-info">
-            <dt>{{ "Appointment hours" | translate }}:</dt>
-            <dd>{{ clinic?.bookingDaysHours }}</dd>
+            <dt>
+              {{
+                "Appointment hours"
+                  | translate
+              }}:
+            </dt>
+            <dd>{{ clinic?.bookingDaysHours || 'N/A' }}</dd>
           </div>
           <div class="clinic-info">
             <dt>{{ "Email for booking" | translate }}:</dt>
-            <dd>{{ clinic?.bookingContactEmail || "N/A" }}</dd>
+            <dd>{{ clinic?.bookingContactEmail || 'N/A' }}</dd>
           </div>
           <div class="clinic-info">
             <dt>{{ "Phone Number for booking" | translate }}:</dt>
-            <dd>{{ clinic?.bookingContactPhone || "N/A" }}</dd>
+            <dd>{{ clinic?.bookingContactPhone || 'N/A' }}</dd>
           </div>
           <div class="clinic-info">
             <dt>{{ "Appointment booking Link" | translate }}:</dt>
             <dd>
-              <a
-                [href]="
-                  clinic?.onlineBookingLink?.startsWith('http')
-                    ? clinic?.onlineBookingLink
-                    : 'https://' + (clinic?.onlineBookingLink ?? '')
-                "
-                target="_blank"
-                rel="noopener noreferrer"
-                class="clinic-link"
-              >
-                {{ clinic?.onlineBookingLink || "N/A" }}
-              </a>
+              <ng-container *ngIf="clinic?.onlineBookingLink; else noBookingLink">
+                <a [href]="(clinic?.onlineBookingLink?.startsWith('http') ? clinic?.onlineBookingLink : 'https://' + clinic?.onlineBookingLink)" 
+                target="_blank" rel="noopener noreferrer" class="clinic-link">
+                  {{ clinic?.onlineBookingLink }}
+                </a>
+              </ng-container>
+              <ng-template #noBookingLink>N/A</ng-template>
             </dd>
           </div>
           <div class="clinic-info">
-            <dt>{{ "Booking system is useful?" | translate }}:</dt>
-            <dd>{{ clinic?.usefulOnlineBooking || "N/A" }}</dd>
-          </div>
-        </div>
-        <label>{{ "Client Documentation information" | translate }}</label>
-        <div class="org-details">
-          <div class="clinic-info">
-            <dt>{{ "Documents for appointment" | translate }}:</dt>
-            <dd>{{ clinic?.requiredDocuments || "N/A" }}</dd>
+            <dt>{{ "Required Documents for appointment" | translate }}:</dt>
+            <dd>{{ clinic?.requiredDocuments || 'N/A' }}</dd>
           </div>
           <div class="clinic-info">
             <dt>
               {{
-                "Help find the client with finding documentation?" | translate
+                "Help Client find the documnets?"
+                  | translate
               }}:
             </dt>
-            <dd>
-              <div *ngFor="let missingDocs of helpWithMissingDocs">
-                <input type="checkbox" checked />
-                <span class="option-details">{{
-                  missingDocs | translate
-                }}</span>
-              </div>
-            </dd>
-          </div>
-        </div>
-        <label>{{ "Volunteers and other information" | translate }}</label>
-        <div class="org-details">
-          <div class="clinic-info">
-            <dt>{{ "Who prepares tax returns" | translate }}:</dt>
-            <dd>
-              <ng-container
-                *ngIf="taxPreparers && taxPreparers.length > 0; else noData"
-              >
-                <div *ngFor="let taxPreparer of taxPreparers">
-                  <input type="checkbox" checked />
-                  <span class="option-details">{{
-                    taxPreparer | translate
-                  }}</span>
-                </div>
-              </ng-container>
-              <ng-template #noData>
-                <span class="option-details">{{ "N/A" | translate }}</span>
-              </ng-template>
-            </dd>
-          </div>
-          <div class="clinic-info">
-            <dt>{{ "Who files tax returns" | translate }}:</dt>
-            <dd>
-              <ng-container
-                *ngIf="taxFilers && taxFilers.length > 0; else noData"
-              >
-                <div *ngFor="let taxFiler of taxFilers">
-                  <input type="checkbox" checked />
-                  <span class="option-details">{{ taxFiler | translate }}</span>
-                </div>
-              </ng-container>
-              <ng-template #noData>
-                <span class="option-details">{{ "N/A" | translate }}</span>
-              </ng-template>
-            </dd>
-          </div>
-          <div class="clinic-info">
-            <dt>{{ "Clinic volunteer's roles" | translate }}:</dt>
-            <dd>
-              <ng-container
-                *ngIf="volunteerRoles && volunteerRoles.length > 0; else noData"
-              >
-                <div *ngFor="let role of volunteerRoles">
-                  <input type="checkbox" checked />
-                  <span class="option-details">{{ role | translate }}</span>
-                </div>
-              </ng-container>
-              <ng-template #noData>
-                <span class="option-details">{{ "N/A" | translate }}</span>
-              </ng-template>
-            </dd>
-          </div>
-          <div class="clinic-info">
-            <dt>
-              {{ "Capacity of tax clinic during the tax season" | translate }}:
-            </dt>
-            <dd>{{ clinic?.clinicCapacity }}</dd>
-          </div>
-          <div class="clinic-info">
-            <dt>{{ "Benefit from additional support" | translate }}:</dt>
-            <dd>
-              <ng-container
-                *ngIf="
-                  additionalSupport && additionalSupport.length > 0;
-                  else noData
-                "
-              >
-                <div *ngFor="let support of additionalSupport">
-                  <input type="checkbox" checked />
-                  <span class="option-details">{{ support | translate }}</span>
-                </div>
-              </ng-container>
-              <ng-template #noData>
-                <span class="option-details">{{ "N/A" | translate }}</span>
-              </ng-template>
-            </dd>
-          </div>
-          <div class="clinic-info">
-            <dt>{{ "Comments from Clinic" | translate }}:</dt>
-            <dd>{{ clinic?.comments }}</dd>
+            <dd>{{ clinic?.helpWithMissingDocs || 'N/A' }}</dd>
           </div>
         </div>
       </div>

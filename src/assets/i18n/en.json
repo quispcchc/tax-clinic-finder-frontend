@@ -64,7 +64,7 @@
   "Email": "Email",
   "Phone Number": "Phone Number",
   "N/A": "N/A",
-  "Organization information": "Organization information",
+  "Organization Information": "Organization Information",
   "Respondent information": "Respondent information",
   "Contact Person information": "Contact Person information",
   "Information public?": "Information public?",
@@ -94,7 +94,7 @@
   "Documents for appointment": "Documents for appointment",
   "Help find the client with finding documentation?": "Help find the client with finding documentation?",
   "Volunteers and other information": "Volunteers and other information",
-  "Tax Clinic information": "Tax Clinic information",
+  "Tax Clinic Information": "Tax Clinic Information",
   "Who prepares tax returns": "Who prepares tax returns",
   "Who files tax returns": "Who files tax returns",
   "Clinic volunteer's roles": "Clinic volunteer's roles",
@@ -202,6 +202,12 @@
   "Role": "Role",
   "Edit User": "Edit User",
   "Delete User": "Delete User",
-  "Enter a valid email address": "Enter a valid email address"
+  "Enter a valid email address": "Enter a valid email address",
+  "Name/Organisation of the clinic": "Name/Organisation of the clinic",
+  "Export Client Logs by Date": "Export Client Logs by Date",
+  "Export All Client Logs": "Export All Client Logs",
+  "Export": "Export",
+  "Start Date": "Start Date",
+  "End Date": "End Date"
 }
 

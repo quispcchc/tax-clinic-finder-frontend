@@ -7,10 +7,13 @@
     <h2 class="directory-header">{{ "Tax Clinics Directory" | translate }}</h2>
 
     <div *ngFor="let clinic of filteredClinics" class="clinic-card" (click)="openModal(clinic)">
-      <h4>{{ clinic.organizationName }}
-        <span class="availability-dot"
-          [ngStyle]="{ 'background-color': getDotColor(clinic.appointmentAvailability) }"></span>
-      </h4>
+      <label class="clinic-label">
+        <span
+          class="availability-dot"
+          [ngStyle]="{ 'background-color': getDotColor(clinic.appointmentAvailability) }"
+        ></span>
+        <span class="clinic-name">{{ clinic.organizationName }}</span>
+      </label>
       <div *ngFor="let location of clinic.locations">
         <p>
           {{ "Address" | translate }}: {{ location.street }},

@@ -29,6 +29,7 @@ import { UserModalComponent } from './components/user-modal/user-modal.component
 import { ConfirmationModalComponent } from './components/confirmation-modal/confirmation-modal.component';
 import { TaxClinicModalComponent } from './components/tax-clinic-modal/tax-clinic-modal.component';
 import { ExportClientDataComponent } from './components/export-client-data/export-client-data.component';
+import { TaxClinicManagementDetailsComponent } from './components/tax-clinic-management-details/tax-clinic-management-details.component';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -57,7 +58,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     UserModalComponent,
     ConfirmationModalComponent,
     TaxClinicModalComponent,
-    ExportClientDataComponent
+    ExportClientDataComponent,
+    TaxClinicManagementDetailsComponent
   ],
   imports: [
     BrowserModule,

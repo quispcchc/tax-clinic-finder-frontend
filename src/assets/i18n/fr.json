@@ -64,7 +64,7 @@
   "Email": "E-mail",
   "Phone Number": "Numéro de téléphone",
   "N/A": "N/A",
-  "Organization information": "Informations sur l'organisation",
+  "Organization Information": "Informations sur l'organisation",
   "Respondent information": "Informations sur le répondant",
   "Contact Person information": "Informations sur la personne à contacter",
   "Information public?": "Informations publiques ?",
@@ -94,7 +94,7 @@
   "Documents for appointment": "Documents pour le rendez-vous",
   "Help find the client with finding documentation?": "Aide à trouver les documents du client ?",
   "Volunteers and other information": "Bénévoles et autres informations",
-  "Tax Clinic information": "Informations sur la clinique fiscale",
+  "Tax Clinic Information": "Informations sur la clinique fiscale",
   "Who prepares tax returns": "Qui prépare les déclarations fiscales ?",
   "Who files tax returns": "Qui dépose les déclarations fiscales ?",
   "Clinic volunteer's roles": "Rôles des bénévoles de la clinique",
@@ -202,5 +202,11 @@
   "Role": "Rôle",
   "Edit User": "Modifier l'utilisateur",
   "Delete User": "Supprimer l'utilisateur",
-  "Enter a valid email address": "Saisir une adresse électronique valide"
+  "Enter a valid email address": "Saisir une adresse électronique valide",
+  "Name/Organisation of the clinic": "Nom/Organisation de la clinique",
+  "Export Client Logs by Date": "Exporter les journaux des clients par date",
+  "Export All Client Logs": "Exporter tous les journaux des clients",
+  "Export": "Exportations",
+  "Start Date": "Date de début",
+  "End Date": "Date de fin"
 }

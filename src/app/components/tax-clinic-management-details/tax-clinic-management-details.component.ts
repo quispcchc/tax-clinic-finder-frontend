@@ -3,14 +3,14 @@ import { Clinic } from '../../models/clinic.model';
 import { ClinicService } from '../../services/clinic.service';
 
 @Component({
-  selector: 'app-tax-clinic-details',
+  selector: 'app-tax-clinic-management-details',
   standalone: false,
-
-  templateUrl: './tax-clinic-details.component.html',
-  styleUrl: './tax-clinic-details.component.scss',
+  
+  templateUrl: './tax-clinic-management-details.component.html',
+  styleUrl: './tax-clinic-management-details.component.scss'
 })
-export class TaxClinicDetailsComponent implements OnInit {
-  @Input() clinic: Clinic | undefined;
+export class TaxClinicManagementDetailsComponent implements OnInit {
+ @Input() clinic: Clinic | undefined;
   @Output() closeModal = new EventEmitter<void>();
 
   appointmentAvailability: string = '';
