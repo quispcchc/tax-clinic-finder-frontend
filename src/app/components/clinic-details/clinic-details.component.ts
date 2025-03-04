@@ -23,6 +23,7 @@ export class ClinicDetailsComponent implements OnInit, AfterViewInit {
   @Output() assignClinic = new EventEmitter<Clinic>();
   @Output() unassignClinic = new EventEmitter<Clinic>();
   @Output() toggleSidebarEvent = new EventEmitter<void>();
+  @Input() isNewClient: boolean = false;
 
   private map!: L.Map;
   private markers: L.LayerGroup = L.layerGroup();

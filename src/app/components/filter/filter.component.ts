@@ -12,6 +12,7 @@ export class FilterComponent {
   @Output() toggleSidebarEvent = new EventEmitter<void>();
   @Input() isSidebarOpen: boolean = false;
   @Input() isNewClient: boolean = false;
+  @Output() isNewClientChange = new EventEmitter<boolean>();
   isPostalCodeValid: boolean = true;
 
   filters: {
@@ -230,6 +231,10 @@ export class FilterComponent {
     };
     this.isPostalCodeValid = true;
     this.filterChange.emit({ filters: null, isNewClient: this.isNewClient });
+  }
+
+  onToggleChange() {
+    this.isNewClientChange.emit(this.isNewClient);
   }
 
   onOtherLanguageToggle() {

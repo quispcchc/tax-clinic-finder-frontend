@@ -615,6 +615,10 @@ export class DashboardMainComponent implements OnInit {
     this.isSidebarOpen = !this.isSidebarOpen;
   }
 
+  onNewClientChange(newValue: boolean) {
+    this.isNewClient = newValue;
+  }
+
   onAssignClinic(clinic: Clinic) {
     console.log('assigned clinic');
     if (this.isNewClient && this.newClientId) {

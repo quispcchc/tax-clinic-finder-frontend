@@ -1,7 +1,7 @@
 <div class="filter" [class.open]="isSidebarOpen">
   <div class="btn-container">
     <label class="switch">
-      <input type="checkbox" name="isNewClient" [(ngModel)]="isNewClient"/>
+      <input type="checkbox" name="isNewClient" [(ngModel)]="isNewClient" (ngModelChange)="onToggleChange()"/>
       <span class="slider">
         <span class="text">{{"New Client" | translate}}</span>
       </span>

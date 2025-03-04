@@ -15,6 +15,7 @@ export class ClinicListComponent implements OnInit {
   @Output() clinicSelected = new EventEmitter<Clinic>();
   @Output() assignClinic = new EventEmitter<Clinic>();
   @Output() unassignClinic = new EventEmitter<Clinic>();
+  @Input() isNewClient: boolean = false;
 
   showModal: boolean = false;
   selectedClinic: Clinic | undefined;
