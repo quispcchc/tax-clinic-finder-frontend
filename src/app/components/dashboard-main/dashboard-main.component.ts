@@ -317,20 +317,6 @@ export class DashboardMainComponent implements OnInit {
             )) ||
         !hasSelectedFilters(filters['clientCategories']);
 
-      const matchesAccessDocuments =
-        (filters['accessDocuments']?.allDocuments &&
-          (clinic.helpWithMissingDocs?.toLowerCase().includes('yes for cra documents with autofill/repid') ||
-          clinic.helpWithMissingDocs?.toLowerCase().includes('oui pour les documents de l’arc avec autofill/repid'))) ||
-        (filters['accessDocuments']?.someDocuments &&
-          (clinic.helpWithMissingDocs?.toLowerCase().includes('yes with help from staff or volunteer for some documentation') ||
-          clinic.helpWithMissingDocs?.toLowerCase().includes('oui avec l’aide du personnel ou des bénévoles pour certains documents'))) ||
-        (filters['accessDocuments']?.noDocuments &&
-          (clinic.helpWithMissingDocs?.toLowerCase().includes('no, client must have all their documents ready') ||
-          clinic.helpWithMissingDocs?.toLowerCase().includes('non, le client doit avoir tous ses documents prêts'))) ||
-        (!filters['accessDocuments']?.allDocuments &&
-          !filters['accessDocuments']?.someDocuments &&
-          !filters['accessDocuments']?.noDocuments);
-
       const matchesAppointmentAvailability =
         (filters['appointmentType'] === 'Yes' &&
           (clinic.appointmentAvailability === 'Yes' || clinic.appointmentAvailability === 'Oui')) ||
@@ -414,7 +400,6 @@ export class DashboardMainComponent implements OnInit {
         matchesProvinces &&
         matchesLanguage &&
         matchesClient &&
-        matchesAccessDocuments &&
         matchesServiceDelivery &&
         matchesAppointmentAvailability &&
         matchesWheelchairAccessible &&

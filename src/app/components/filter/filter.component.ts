@@ -60,11 +60,6 @@ export class FilterComponent {
       other?: boolean;
       otherClientCategory?: string;
     };
-    accessDocuments: {
-      allDocuments?: boolean;
-      someDocuments?: boolean;
-      noDocuments?: boolean;
-    };
     serviceDays: {
       weekdays?: boolean;
       weekends?: boolean;
@@ -121,11 +116,6 @@ export class FilterComponent {
       languageSpecific: false,
       other: false,
       otherClientCategory: ''
-    },
-    accessDocuments: {
-      allDocuments: false,
-      someDocuments: false,
-      noDocuments: false,
     },
     serviceDays: {
       weekdays: false,
@@ -214,11 +204,6 @@ export class FilterComponent {
         languageSpecific: false,
         other: false,
         otherClientCategory: ''
-      },
-      accessDocuments: {
-        allDocuments: false,
-        someDocuments: false,
-        noDocuments: false,
       },
       serviceDays: {
         weekdays: false,

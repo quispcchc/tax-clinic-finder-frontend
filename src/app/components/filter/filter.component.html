@@ -492,43 +492,6 @@
         />
       </div>
     </div>
-    <div class="form-group">
-      <div class="form-group-label">
-        <label>{{ "Access Documents" | translate }}</label>
-        <small class="subtitle">{{
-          "Do you need help with accessing documents?" | translate
-        }}</small>
-      </div>
-      <div class="checkbox-group">
-        <label>
-          <input
-            type="checkbox"
-            name="allDocuments"
-            [(ngModel)]="filters.accessDocuments.allDocuments"
-          />
-          {{ "Yes for CRA documents with Autofill/repid" | translate }}
-        </label>
-        <label>
-          <input
-            type="checkbox"
-            name="someDocuments"
-            [(ngModel)]="filters.accessDocuments.someDocuments"
-          />
-          {{
-            "Yes with help from staff or volunteer for some documentation"
-              | translate
-          }}
-        </label>
-        <label>
-          <input
-            type="checkbox"
-            name="noDocuments"
-            [(ngModel)]="filters.accessDocuments.noDocuments"
-          />
-          {{ "No, client must have all their documents ready" | translate }}
-        </label>
-      </div>
-    </div>
     <button type="submit" class="filters-button"[disabled]="!isPostalCodeValid && filters.postalCodesServe">
       {{ "Apply Filters" | translate }}
     </button>
