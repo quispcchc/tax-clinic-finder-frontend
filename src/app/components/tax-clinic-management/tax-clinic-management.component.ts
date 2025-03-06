@@ -431,7 +431,18 @@ export class TaxClinicManagementComponent implements OnInit {
       comments: clinic.comments,
       createdDate: clinic.created_at,
       updatedDate: clinic.updated_at,
-      locations: clinic.locations,
+      locations: clinic.locations
+      ? clinic.locations.map((location: any) => ({
+          id: location.id,
+          taxClinicId: location.tax_clinic_id,
+          street: location.street,
+          city: location.city,
+          state: location.state,
+          postalCode: location.postal_code,
+          createdDate: location.created_at,
+          updatedDate: location.updated_at,
+        }))
+      : [],
     };
 
     return mappedClinic;

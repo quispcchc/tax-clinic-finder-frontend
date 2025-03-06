@@ -475,7 +475,7 @@
                   Other:
                   <input
                     *ngIf="
-                      clinicForm.get('clinicTypes')?.value.includes('Other')
+                      clinicForm.get('clinicTypesOther')
                     "
                     type="text"
                     formControlName="clinicTypesOther"
@@ -571,7 +571,7 @@
                   Other:
                   <input
                     *ngIf="
-                      clinicForm.get('monthsOffered')?.value.includes('Other')
+                      clinicForm.get('monthsOfferedOther')
                     "
                     type="text"
                     formControlName="monthsOfferedOther"
@@ -1023,7 +1023,7 @@
                 </label>
                 <input
                   *ngIf="
-                    clinicForm.get('taxYearsPrepared')?.value.includes('Other')
+                    clinicForm.get('taxYearsPreparedOther')
                   "
                   type="text"
                   formControlName="taxYearsPreparedOther"
@@ -1102,7 +1102,7 @@
                 </label>
                 <input
                   *ngIf="
-                    clinicForm.get('residencyTaxYear')?.value.includes('Other')
+                    clinicForm.get('residencyTaxYearOther')
                   "
                   type="text"
                   formControlName="residencyTaxYearOther"
@@ -1234,7 +1234,7 @@
                   Other</label
                 >
                 <input
-                  *ngIf="clinicForm.get('servePeople')?.value.includes('Other')"
+                  *ngIf="clinicForm.get('servePeopleOther')"
                   type="text"
                   formControlName="servePeopleOther"
                   placeholder="Specify other criteria"
@@ -1515,17 +1515,13 @@
                     type="checkbox"
                     (change)="onCheckboxChange('taxPreparers', $event)"
                     value="Other"
-                    [checked]="
-                      clinicForm.get('taxPreparers')?.value.includes('Other')
-                    "
+                    [checked]="clinicForm.get('taxPreparers')?.value.includes('Other')"
                   />
                   Other:
                   <input
-                    *ngIf="
-                      clinicForm.get('taxPreparers')?.value.includes('Other')
-                    "
+                    *ngIf="clinicForm.get('taxPreparersOther')"
                     type="text"
-                    formControlName="taxPreparersOthers"
+                    formControlName="taxPreparersOther"
                     placeholder="Specify here..."
                   />
                 </label>
@@ -1568,7 +1564,7 @@
                   />
                   Other:
                   <input
-                    *ngIf="clinicForm.get('taxFilers')?.value.includes('Other')"
+                    *ngIf="clinicForm.get('taxFilersOther')"
                     type="text"
                     formControlName="taxFilersOther"
                     placeholder="Specify here..."
@@ -1691,7 +1687,7 @@
                   Other:
                   <input
                     *ngIf="
-                      clinicForm.get('volunteerRoles')?.value.includes('Other')
+                      clinicForm.get('volunteerRolesOther')
                     "
                     type="text"
                     formControlName="volunteerRolesOther"
@@ -1807,8 +1803,7 @@
                   <input
                     *ngIf="
                       clinicForm
-                        .get('additionalSupport')
-                        ?.value.includes('Other')
+                        .get('additionalSupportOther')
                     "
                     type="text"
                     formControlName="additionalSupportOther"

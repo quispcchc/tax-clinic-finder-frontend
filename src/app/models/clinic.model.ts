@@ -21,7 +21,7 @@ export interface Clinic {
   servePeopleFrom: string;
   catchmentArea: string;
   monthsOffered: string | string[];
-  hoursAndDate: string;
+  hoursAndDate?: string;
   hoursOfOperation: string | string[];
   daysOfOperation: string | string[];
   yearRoundService: string;
