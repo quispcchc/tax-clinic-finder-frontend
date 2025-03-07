@@ -16,11 +16,11 @@
       <thead>
         <tr>
           <th class="header-serial">S/N</th>
-          <th>Tax Clinic Name</th>
-          <th>Tax Clinic details</th>
-          <th>Contact person</th>
+          <th>{{"Tax Clinic Name" | translate}}</th>
+          <th>{{"Tax Clinic details" | translate}}</th>
+          <th>{{"Contact person" | translate}}</th>
           <th></th>
-          <th class="header-last">Last update</th>
+          <th class="header-last">{{"Last update" | translate}}</th>
         </tr>
       </thead>
       <tbody>
@@ -41,7 +41,7 @@
               clinic.organisationWebsite
             }}</a>
             <button class="view-more" (click)="openClinicDetailsModal(clinic)">
-              View more
+              {{"View more" | translate}}
             </button>
           </td>
           <td>

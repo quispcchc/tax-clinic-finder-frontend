@@ -209,5 +209,13 @@
   "Export": "Exportations",
   "Start Date": "Date de début",
   "End Date": "Date de fin",
-  "Client Postal Code": "Code postal du client"
+  "Client Postal Code": "Code postal du client",
+  "Tax Clinic Name": "Nom de la clinique fiscale",
+  "Tax Clinic details": "Détails de la clinique fiscale",
+  "Contact person": "Personne de contact",
+  "Last update": "Dernière mise à jour",
+  "View more": "Voir plus",
+  "Edit Clinic": "Éditer la clinique",
+  "Delete Clinic": "Supprimer la clinique",
+  "Tax Clinic information": "Informations sur la clinique fiscale"
 }

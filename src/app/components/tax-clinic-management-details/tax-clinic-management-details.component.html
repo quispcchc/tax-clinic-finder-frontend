@@ -40,18 +40,13 @@
           <div class="clinic-info">
             <dt>{{ "Website" | translate }}:</dt>
             <dd>
-              <a
-                [href]="
-                  clinic?.organisationWebsite?.startsWith('http')
-                    ? clinic?.organisationWebsite
-                    : 'https://' + (clinic?.organisationWebsite ?? '')
-                "
-                target="_blank"
-                rel="noopener noreferrer"
-                class="clinic-link"
-              >
-                {{ clinic?.organisationWebsite || "N/A" }}
-              </a>
+              <ng-container *ngIf="clinic?.organisationWebsite; else noWebsiteLink">
+                <a [href]="(clinic?.organisationWebsite?.startsWith('http') ? clinic?.organisationWebsite : 'https://' + clinic?.organisationWebsite)" 
+                target="_blank" rel="noopener noreferrer" class="clinic-link">
+                  {{ clinic?.organisationWebsite }}
+                </a>
+              </ng-container>
+              <ng-template #noWebsiteLink>N/A</ng-template>
             </dd>
           </div>
           <div class="clinic-info">
@@ -60,11 +55,11 @@
           </div>
           <div class="clinic-info">
             <dt>{{ "Listed on CRA?" | translate }}:</dt>
-            <dd>{{ clinic?.listedOnCra ?? "" | translate }}</dd>
+            <dd>{{ clinic?.listedOnCra ?? "N/A" | translate }}</dd>
           </div>
           <div class="clinic-info">
             <dt>{{ "Listed on NCEO?" | translate }} :</dt>
-            <dd>{{ clinic?.visibleOnNceo ?? "" | translate }}</dd>
+            <dd>{{ clinic?.visibleOnNceo ?? "N/A" | translate }}</dd>
           </div>
           <div class="clinic-info">
             <dt>{{ "Appointment Availability" | translate }}:</dt>
@@ -118,11 +113,11 @@
           </div>
           <div class="clinic-info">
             <dt>{{ "Title" | translate }}:</dt>
-            <dd>{{ clinic?.contactPersonTitle ?? "N/A" }}</dd>
+            <dd>{{ clinic?.contactPersonTitle || "N/A" }}</dd>
           </div>
           <div class="clinic-info">
             <dt>{{ "Email" | translate }}:</dt>
-            <dd>{{ clinic?.contactEmail ?? "N/A" }}</dd>
+            <dd>{{ clinic?.contactEmail || "N/A" }}</dd>
           </div>
         </div>
 
@@ -150,7 +145,7 @@
         <div class="org-details">
           <div class="clinic-info">
             <dt>{{ "Information public?" | translate }} :</dt>
-            <dd>{{ clinic?.publicInfo }}</dd>
+            <dd>{{ clinic?.publicInfo || "N/A" }}</dd>
           </div>
           <div class="clinic-info">
             <dt>{{ "Type of Clinic" | translate }}:</dt>
@@ -163,7 +158,7 @@
           </div>
           <div class="clinic-info">
             <dt>{{ "Geographical zone" | translate }}:</dt>
-            <dd>{{ clinic?.servePeopleFrom }}</dd>
+            <dd>{{ clinic?.servePeopleFrom || "N/A" }}</dd>
           </div>
           <div class="clinic-info">
             <dt>{{ "Clinic Catchment Area" | translate }}:</dt>
@@ -179,11 +174,11 @@
           </div>
           <div class="clinic-info">
             <dt>{{ "Hours of clinic" | translate }}:</dt>
-            <dd>{{ clinic?.hoursOfOperation || "N/A" }}</dd>
+            <dd>{{ clinic?.hoursOfOperation?.length ? clinic?.hoursOfOperation : "N/A" }}</dd>
           </div>
           <div class="clinic-info">
             <dt>{{ "Day of clinic" | translate }}:</dt>
-            <dd>{{ clinic?.daysOfOperation || "N/A" }}</dd>
+            <dd>{{ clinic?.daysOfOperation?.length ? clinic?.daysOfOperation : "N/A" }}</dd>
           </div>
           <div class="clinic-info">
             <dt>
@@ -192,7 +187,7 @@
                   | translate
               }}:
             </dt>
-            <dd>{{ clinic?.yearRoundService }}</dd>
+            <dd>{{ clinic?.yearRoundService || "N/A"}}</dd>
           </div>
           <div class="clinic-info">
             <dt>{{ "Population served" | translate }}:</dt>
@@ -221,18 +216,13 @@
           <div class="clinic-info">
             <dt>{{ "Webpage elligibility" | translate }}:</dt>
             <dd>
-              <a
-                [href]="
-                  clinic?.eligibilityCriteriaWebpage?.startsWith('http')
-                    ? clinic?.eligibilityCriteriaWebpage
-                    : 'https://' + (clinic?.eligibilityCriteriaWebpage ?? '')
-                "
-                target="_blank"
-                rel="noopener noreferrer"
-                class="clinic-link"
-              >
-                {{ clinic?.eligibilityCriteriaWebpage || "N/A" }}
-              </a>
+              <ng-container *ngIf="clinic?.eligibilityCriteriaWebpage; else noLink">
+                <a [href]="(clinic?.eligibilityCriteriaWebpage?.startsWith('http') ? clinic?.eligibilityCriteriaWebpage : 'https://' + clinic?.eligibilityCriteriaWebpage)" 
+                target="_blank" rel="noopener noreferrer" class="clinic-link">
+                  {{ clinic?.eligibilityCriteriaWebpage }}
+                </a>
+              </ng-container>
+              <ng-template #noLink>N/A</ng-template>
             </dd>
           </div>
         </div>
@@ -246,7 +236,7 @@
 
           <div class="clinic-info">
             <dt>{{ "Appointment hours" | translate }}:</dt>
-            <dd>{{ clinic?.bookingDaysHours }}</dd>
+            <dd>{{ clinic?.bookingDaysHours || "N/A"}}</dd>
           </div>
           <div class="clinic-info">
             <dt>{{ "Email for booking" | translate }}:</dt>
@@ -259,18 +249,13 @@
           <div class="clinic-info">
             <dt>{{ "Appointment booking Link" | translate }}:</dt>
             <dd>
-              <a
-                [href]="
-                  clinic?.onlineBookingLink?.startsWith('http')
-                    ? clinic?.onlineBookingLink
-                    : 'https://' + (clinic?.onlineBookingLink ?? '')
-                "
-                target="_blank"
-                rel="noopener noreferrer"
-                class="clinic-link"
-              >
-                {{ clinic?.onlineBookingLink || "N/A" }}
-              </a>
+              <ng-container *ngIf="clinic?.onlineBookingLink; else noBookingLink">
+                <a [href]="(clinic?.onlineBookingLink?.startsWith('http') ? clinic?.onlineBookingLink : 'https://' + clinic?.onlineBookingLink)" 
+                target="_blank" rel="noopener noreferrer" class="clinic-link">
+                  {{ clinic?.onlineBookingLink }}
+                </a>
+              </ng-container>
+              <ng-template #noBookingLink>N/A</ng-template>
             </dd>
           </div>
           <div class="clinic-info">
@@ -311,7 +296,7 @@
             <dt>
               {{ "Capacity of tax clinic during the tax season" | translate }}:
             </dt>
-            <dd>{{ clinic?.clinicCapacity }}</dd>
+            <dd>{{ clinic?.clinicCapacity || "N/A"}}</dd>
           </div>
           <div class="clinic-info">
             <dt>{{ "Benefit from additional support" | translate }}:</dt>
@@ -319,7 +304,7 @@
           </div>
           <div class="clinic-info">
             <dt>{{ "Comments from Clinic" | translate }}:</dt>
-            <dd>{{ clinic?.comments }}</dd>
+            <dd>{{ clinic?.comments || "N/A" }}</dd>
           </div>
         </div>
       </div>

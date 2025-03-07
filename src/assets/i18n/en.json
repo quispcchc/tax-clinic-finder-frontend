@@ -209,6 +209,14 @@
   "Export": "Export",
   "Start Date": "Start Date",
   "End Date": "End Date",
-  "Client Postal Code": "Client Postal Code"
+  "Client Postal Code": "Client Postal Code",
+  "Tax Clinic Name": "Tax Clinic Name",
+  "Tax Clinic details": "Tax Clinic details",
+  "Contact person": "Contact person",
+  "Last update": "Last update",
+  "View more": "View more",
+  "Edit Clinic": "Edit Clinic",
+  "Delete Clinic": "Delete Clinic",
+  "Tax Clinic information": "Tax Clinic information"
 }
 

@@ -23,6 +23,7 @@ export class TaxClinicManagementDetailsComponent implements OnInit {
   constructor(private clinicService: ClinicService) { }
 
   ngOnInit() {
+    console.log("clinic details inside view more:", this.clinic);
     if (this.clinic && this.clinic.appointmentAvailability) {
       this.appointmentAvailability = this.clinic.appointmentAvailability;
       this.initialAppointmentAvailability = this.clinic.appointmentAvailability;
