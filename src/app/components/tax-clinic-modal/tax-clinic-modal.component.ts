@@ -101,8 +101,25 @@ export class TaxClinicModalComponent implements OnChanges, OnInit {
     }
   }
 
+  private standardOptions: { [key: string]: string[] } = {
+    clinicTypes: ['Virtual', 'In person', 'By appointment', 'Walk-in', 'Drop-off'],
+    monthsOffered: ['February', 'March', 'April', 'May', 'June'],
+    populationServed: ['Seniors', 'Persons with disabilities', 'Newcomers', 'Language-specific community', 'Indigenous (First Nations and Inuit and Metis)', 'Students'],
+    serviceLanguages: ['English', 'French', 'Arabic'],
+    taxYearsPrepared: ['Only current year', 'Current and last year', 'Multiple years'],
+    residencyTaxYear: ['Ontario', 'Quebec', 'Any province other than Ontario and Quebec'],
+    servePeople: ['Rental income', 'Self-employment income', 'Interest income over $1000', 'Return for a deceased person', 'Employment expenses (with specific conditions)', 
+      'Capital Gains/losses (with specific conditions)', 'Larger income than CVITP income-criteria. when people are low income now'],
+    taxPreparers: ['Volunteers', 'Employees'],
+    taxFilers: ['Volunteers', 'Employees'],
+    volunteerRoles: ['Booking appointments', 'Client intake (gathering personal information and tax slips)', 'Preparing tax returns using software',
+      'Explaining tax return to client and having them sign e-filing authorization', 'Tax return verification/audit before e-filing', 'E-FILE tax returns',
+      'Administrative tasks'],
+    additionalSupport: ['Volunteer recruitment', 'Volunteer training', 'Training of employees new to operating tax clinics', 'Follow-up with clients post-tax season',
+      'Visibility for your tax clinic to reach more clients', 'Set up an online booking system']
+  };
+
   private initializeForm(clinic: Clinic) {
-    console.log('Initializing form with clinic:', clinic);
     this.clinicForm.reset();
     const nonArrayFields = {
       id: clinic.id,
@@ -138,7 +155,7 @@ export class TaxClinicModalComponent implements OnChanges, OnInit {
   
     this.clinicForm.patchValue(nonArrayFields);
     this.populateFormArrays(clinic);
-    console.log('Form State After Initialization:', this.clinicForm.value);
+    this.reAddDynamicControls(clinic);
   }
 
   private populateFormArrays(clinic: Clinic) {
@@ -165,25 +182,73 @@ export class TaxClinicModalComponent implements OnChanges, OnInit {
       formArray.clear();
       const values = this.convertToArray((clinic as any)?.[field]);
   
-      console.log(`Populating ${field} with values:`, values);
-  
-      values.forEach((value) => {
-        formArray.push(new FormControl(value));
-      });
-  
-      if (values.includes('Other')) {
-        this.clinicForm.addControl(
-          `${field}Other`,
-          new FormControl(clinic?.[`${field}Other`] || '', Validators.required)
+      if (this.standardOptions[field]) {
+        const standardValues = values.filter((value) =>
+          this.standardOptions[field].includes(value)
         );
+        const customValues = values.filter(
+          (value) => !this.standardOptions[field].includes(value)
+        );
+  
+        standardValues.forEach((value) => {
+          formArray.push(new FormControl(value));
+        });
+  
+        if (customValues.length > 0) {
+          formArray.push(new FormControl('Other'));
+        }
+      } else {
+        values.forEach((value) => {
+          formArray.push(new FormControl(value));
+        });
       }
     });
   
     const locationsArray = this.clinicForm.get('locations') as FormArray;
     locationsArray.clear();
     (clinic?.locations || []).forEach((loc) => {
-      console.log('Adding location:', loc);
       locationsArray.push(this.createLocationGroup(loc));
+    });
+  }
+
+  private reAddDynamicControls(clinic: Clinic) {
+    const fieldsToCheck = [
+      'clinicTypes',
+      'monthsOffered',
+      'populationServed',
+      'serviceLanguages',
+      'taxYearsPrepared',
+      'residencyTaxYear',
+      'servePeople',
+      'taxPreparers',
+      'taxFilers',
+      'volunteerRoles',
+      'additionalSupport',
+    ];
+  
+    fieldsToCheck.forEach((field) => {
+      const formArray = this.clinicForm.get(field) as FormArray;
+      const values = this.convertToArray((clinic as any)?.[field]);
+  
+      const customValues = values.filter(
+        (value) => !this.standardOptions[field]?.includes(value)
+      );
+  
+      if (customValues.length > 0) {
+        if (!formArray.value.includes('Other')) {
+          formArray.push(new FormControl('Other'));
+        }
+  
+        const otherControlName = `${field}Other`;
+        if (!this.clinicForm.contains(otherControlName)) {
+          this.clinicForm.addControl(
+            otherControlName,
+            new FormControl(customValues.join(', '), Validators.required)
+          );
+        } else {
+          this.clinicForm.get(otherControlName)?.setValue(customValues.join(', '));
+        }
+      }
     });
   }
 
@@ -274,19 +339,22 @@ export class TaxClinicModalComponent implements OnChanges, OnInit {
       }
   
       if (value === 'Other') {
-        this.clinicForm.addControl(`${controlName}Other`, new FormControl('', Validators.required));
+        this.clinicForm.addControl(
+          `${controlName}Other`,
+          new FormControl('', Validators.required)
+        );
       }
     } else {
       const index = formArray.controls.findIndex(ctrl => ctrl.value === value);
       if (index !== -1) {
         formArray.removeAt(index);
       }
-  
+
       if (value === 'Other') {
         this.clinicForm.removeControl(`${controlName}Other`);
       }
     }
-  
+
     formArray.markAsTouched();
     this.clinicForm.updateValueAndValidity();
   }

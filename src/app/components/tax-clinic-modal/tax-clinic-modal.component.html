@@ -74,7 +74,7 @@
                 >{{ "Contact Person Name:" | translate }}
                 <span class="required">*</span></label
               >
-              <input type="text" formControlName="contactPersonName" required />
+              <input type="text" formControlName="contactPersonName" placeholder="Enter Contact Person Name" required />
               <div
                 class="error"
                 *ngIf="
@@ -93,6 +93,7 @@
               <input
                 type="text"
                 formControlName="contactPersonTitle"
+                placeholder="Enter Contact Person Title"
                 required
               />
               <div
@@ -108,7 +109,7 @@
 
             <div class="form-group">
               <label>Contact Email: <span class="required">*</span></label>
-              <input type="email" formControlName="contactEmail" required />
+              <input type="email" formControlName="contactEmail" placeholder="Enter Contact Person Email" required />
               <div
                 class="error"
                 *ngIf="
@@ -472,11 +473,9 @@
                       clinicForm.get('clinicTypes')?.value.includes('Other')
                     "
                   />
-                  Other:
+                  Other
                   <input
-                    *ngIf="
-                      clinicForm.get('clinicTypesOther')
-                    "
+                    *ngIf="clinicForm.get('clinicTypes')?.value.includes('Other')"
                     type="text"
                     formControlName="clinicTypesOther"
                     placeholder="Specify here..."
@@ -568,7 +567,7 @@
                       clinicForm.get('monthsOffered')?.value.includes('Other')
                     "
                   />
-                  Other:
+                  Other
                   <input
                     *ngIf="
                       clinicForm.get('monthsOfferedOther')
@@ -749,7 +748,7 @@
                     value="other"
                     (change)="onServePeopleChange($event)"
                   />
-                  Other:
+                  Other
                 </label>
                 <input
                   *ngIf="clinicForm.get('servePeopleFrom')?.value === 'other'"
@@ -1158,7 +1157,7 @@
                     [checked]="
                       clinicForm
                         .get('servePeople')
-                        ?.value.includes('Self-employment income')
+                        ?.value.includes('Interest income over $1000')
                     "
                   />
                   Interest income over $1000</label
@@ -1210,17 +1209,14 @@
                   ><input
                     type="checkbox"
                     (change)="onCheckboxChange('servePeople', $event)"
-                    value="Larger income than CVITP income-criteria. when people are low
-                    income now"
+                    value="Larger income than CVITP income-criteria. when people are low income now"
                     [checked]="
                       clinicForm.get('servePeople')?.value.includes(
-                        'Larger income than CVITP income-criteria. when people are low
-                    income now'
+                        'Larger income than CVITP income-criteria. when people are low income now'
                       )
                     "
                   />
-                  Larger income than CVITP income-criteria. when people are low
-                  income now</label
+                  Larger income than CVITP income-criteria. when people are low income now</label
                 >
                 <label
                   ><input
@@ -1517,7 +1513,7 @@
                     value="Other"
                     [checked]="clinicForm.get('taxPreparers')?.value.includes('Other')"
                   />
-                  Other:
+                  Other
                   <input
                     *ngIf="clinicForm.get('taxPreparersOther')"
                     type="text"
@@ -1562,7 +1558,7 @@
                       clinicForm.get('taxFilers')?.value.includes('Other')
                     "
                   />
-                  Other:
+                  Other
                   <input
                     *ngIf="clinicForm.get('taxFilersOther')"
                     type="text"
@@ -1602,8 +1598,7 @@
                         )
                     "
                   />
-                  Client intake (gathering personal information and tax
-                  slips)</label
+                  Client intake (gathering personal information and tax slips)</label
                 >
                 <label
                   ><input
@@ -1631,8 +1626,7 @@
                         )
                     "
                   />
-                  Explaining tax return to client and having them sign e-filing
-                  authorization</label
+                  Explaining tax return to client and having them sign e-filing authorization</label
                 >
                 <label
                   ><input
@@ -1684,7 +1678,7 @@
                       clinicForm.get('volunteerRoles')?.value.includes('Other')
                     "
                   />
-                  Other:
+                  Other
                   <input
                     *ngIf="
                       clinicForm.get('volunteerRolesOther')
@@ -1799,7 +1793,7 @@
                         ?.value.includes('Other')
                     "
                   />
-                  Other:
+                  Other
                   <input
                     *ngIf="
                       clinicForm

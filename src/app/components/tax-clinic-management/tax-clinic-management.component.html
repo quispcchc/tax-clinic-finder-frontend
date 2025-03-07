@@ -36,7 +36,8 @@
                 {{ location?.state }}, {{ location?.postalCode }}
               </p>
             </div>
-            <a [href]="clinic.organisationWebsite" target="_blank">{{
+            <a [href]="(clinic?.organisationWebsite?.startsWith('http') ? clinic?.organisationWebsite : 'https://' + clinic?.organisationWebsite)" 
+            target="_blank" rel="noopener noreferrer">{{
               clinic.organisationWebsite
             }}</a>
             <button class="view-more" (click)="openClinicDetailsModal(clinic)">
