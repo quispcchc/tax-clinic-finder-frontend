@@ -1450,16 +1450,16 @@
                   <input
                     type="checkbox"
                     (change)="onCheckboxChange('helpWithMissingDocs', $event)"
-                    value="No, client must have all their documents ready"
+                    value="No client must have all their documents ready"
                     [checked]="
                       clinicForm
                         .get('helpWithMissingDocs')
                         ?.value.includes(
-                          'No, client must have all their documents ready'
+                          'No client must have all their documents ready'
                         )
                     "
                   />
-                  No, client must have all their documents ready
+                  No client must have all their documents ready
                 </label>
               </div>
               <div

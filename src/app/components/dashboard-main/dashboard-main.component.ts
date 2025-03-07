@@ -455,7 +455,7 @@ export class DashboardMainComponent implements OnInit {
       allDocuments: 'Yes for CRA documents with Autofill/repid',
       someDocuments:
         'Yes with help from staff or volunteer for some documentation',
-      noDocuments: 'No, client must have all their documents ready',
+      noDocuments: 'No client must have all their documents ready',
     };
 
     const organizationNames = filteredClinics

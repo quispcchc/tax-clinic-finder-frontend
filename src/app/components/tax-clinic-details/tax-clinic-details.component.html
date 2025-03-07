@@ -17,13 +17,8 @@
     
     <div class="clinic-details-container">
       <div class="clinic-details">
-        
-        <label>{{ "Organization Information" | translate }}</label>
-        <div class="org-details">
-          <div class="clinic-info">
-            <dt>{{ "Name/Organisation of the clinic" | translate }}:</dt>
-            <dd>{{ clinic?.organizationName || "N/A" }}</dd>
-          </div>
+        <label>{{ clinic?.organizationName }}</label>
+        <dl>
           <div class="clinic-info" *ngFor="let location of clinic?.locations">
             <dt>{{ "Clinic Address" | translate }}:</dt>
             <dd>{{ location?.street }}, {{ location?.city }}, {{ location?.state }}, {{ location?.postalCode }}</dd>
@@ -70,10 +65,6 @@
               </button>
             </dd>
           </div>
-        </div>
-        
-        <label>{{ "Tax Clinic Information" | translate }}</label>
-        <div class="org-details">
           <div class="clinic-info">
             <dt>{{ "Type of Clinic" | translate }}:</dt>
             <dd>{{ clinic?.clinicTypes || "N/A" }}</dd>
@@ -194,7 +185,7 @@
             </dt>
             <dd>{{ clinic?.helpWithMissingDocs || 'N/A' }}</dd>
           </div>
-        </div>
+        </dl>
       </div>
     </div>
   </div>
