@@ -133,6 +133,10 @@ input[type="radio"] {
   flex-wrap: wrap;
   padding: 20px 10px;
   border-bottom: 1px solid #2BA8BF;
+  input {
+    width:18px;
+    height:18px;
+  }
 }
 
 .clinic-info:hover {
