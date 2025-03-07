@@ -99,6 +99,24 @@ h3 {
   }
 }
 
+.form-group textarea {
+  font-family: inherit;
+  min-height: 30px;
+  max-height: 200px;
+  overflow-y: auto;
+  resize: vertical;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 16px;
+  font-size: 1.1em;
+
+  &:focus {
+    border-color: #007e94;
+    box-shadow: 0 0 5px rgba(0, 126, 148, 0.5);
+    outline: none;
+  }
+}
+
 .save-button {
   background-color: #80CBD8;
   color: #2b2b2b;

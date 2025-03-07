@@ -589,7 +589,7 @@
               <label
                 >Hours of operation or Date and time of your tax clinics:</label
               >
-              <input type="text" formControlName="hoursAndDate" />
+              <textarea formControlName="hoursAndDate" rows="4" placeholder="Enter Hours and date of clinic operation"></textarea>
             </div>
           </div>
           <div class="form-row">
@@ -1420,16 +1420,16 @@
                   <input
                     type="checkbox"
                     (change)="onCheckboxChange('helpWithMissingDocs', $event)"
-                    value="Yes for CRA documents with Autofill/REP ID"
+                    value="Yes for CRA documents with Autofill/repid"
                     [checked]="
                       clinicForm
                         .get('helpWithMissingDocs')
                         ?.value.includes(
-                          'Yes for CRA documents with Autofill/REP ID'
+                          'Yes for CRA documents with Autofill/repid'
                         )
                     "
                   />
-                  Yes for CRA documents with Autofill/REP ID
+                  Yes for CRA documents with Autofill/repid
                 </label>
                 <label>
                   <input
