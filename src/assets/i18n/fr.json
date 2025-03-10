@@ -56,7 +56,7 @@
   "Appointment Availability": "Disponibilité des rendez-vous",
   "Yes": "Oui",
   "No": "Non",
-  "Not Sure": "Pas sûr",
+  "Might be available soon": "Pourrait être bientôt disponible",
   "Save": "Enregistrer",
   "Listed on CRA?": "Répertorié sur l'ARC?",
   "Listed on NCEO?": "Répertorié sur le BNCE?",
@@ -217,5 +217,13 @@
   "View more": "Voir plus",
   "Edit Clinic": "Éditer la clinique",
   "Delete Clinic": "Supprimer la clinique",
-  "Tax Clinic information": "Informations sur la clinique fiscale"
+  "Tax Clinic information": "Informations sur la clinique fiscale",
+  "Name/organisation of the clinic": "Nom/organisation de la clinique",
+  "Other Locations": "Autres lieux",
+  "Website of organisation": "Site web de l'organisation",
+  "Email of Organisation": "Courriel de l'organisation",
+  "Listed or not on CRA": "Inscrit ou non sur la liste de l'ARC",
+  "Listed or not on NCEO": "Inscrit ou non sur NCEO",
+  "Information Public or not": "Information publique ou non",
+  "Elligibility file Link": "Fichier Elligibility Lien"
 }

@@ -56,7 +56,7 @@
   "Appointment Availability": "Appointment Availability",
   "Yes": "Yes",
   "No": "No",
-  "Not Sure": "Not Sure",
+  "Might be available soon": "Might be available soon",
   "Save": "Save",
   "Listed on CRA?": "Listed on CRA",
   "Listed on NCEO?": "Listed on NCEO",
@@ -217,6 +217,14 @@
   "View more": "View more",
   "Edit Clinic": "Edit Clinic",
   "Delete Clinic": "Delete Clinic",
-  "Tax Clinic information": "Tax Clinic information"
+  "Tax Clinic information": "Tax Clinic information",
+  "Name/organisation of the clinic": "Name/organisation of the clinic",
+  "Other Locations": "Other Locations",
+  "Website of organisation": "Website of organisation",
+  "Email of Organisation": "Email of Organisation",
+  "Listed or not on CRA": "Listed or not on CRA",
+  "Listed or not on NCEO": "Listed or not on NCEO",
+  "Information Public or not": "Information Public or not",
+  "Elligibility file Link": "Elligibility file Link"
 }
 

@@ -149,4 +149,16 @@ export class ClinicDetailsComponent implements OnInit, AfterViewInit {
     this.toggleSidebarEvent.emit();
     this.closeModal.emit();
   }
+
+  getFormattedArray(value: string | string[] | undefined): string[] {
+    if (!value) {
+      return [];
+    }
+    if (typeof value === 'string') {
+      return value.split(',').map(item => item.trim());
+    } else if (Array.isArray(value)) {
+      return value;
+    }
+    return [];
+  }
 }

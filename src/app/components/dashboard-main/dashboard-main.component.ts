@@ -82,6 +82,8 @@ export class DashboardMainComponent implements OnInit {
           residencyTaxYear: clinic.residency_tax_year,
           servePeople: clinic.serve_people,
           eligibilityCriteriaWebpage: clinic.eligibility_criteria_webpage,
+          eligibilityCriteriaFile: clinic.eligibility_criteria_file,
+          otherBranches: clinic.other_branches,
           bookingProcess: clinic.booking_process,
           bookingDaysHours: clinic.booking_days_hours,
           bookingContactPhone: clinic.booking_contact_phone,
@@ -125,7 +127,7 @@ export class DashboardMainComponent implements OnInit {
   }
 
   sortClinics(postalCodeFilter?: string, coordinates?: { lat: number, lng: number }) {
-    const appointmentPriority: Record<string, number> = { 'Yes': 1, 'No': 2, 'Not Sure': 3 };
+    const appointmentPriority: Record<string, number> = { 'Yes': 1, 'No': 2, 'Might be available soon': 3 };
   
     const populationPriority: Record<string, number> = {
       'newcomers': 1,
@@ -322,8 +324,8 @@ export class DashboardMainComponent implements OnInit {
           (clinic.appointmentAvailability === 'Yes' || clinic.appointmentAvailability === 'Oui')) ||
         (filters['appointmentType'] === 'No' &&
           (clinic.appointmentAvailability === 'No' || clinic.appointmentAvailability === 'Non')) ||
-        (filters['appointmentType'] === 'Not Sure' &&
-          (clinic.appointmentAvailability === 'Not Sure' || clinic.appointmentAvailability === 'Pas sûr')) ||
+        (filters['appointmentType'] === 'Might be available soon' &&
+          (clinic.appointmentAvailability === 'Might be available soon' || clinic.appointmentAvailability === 'Pourrait être bientôt disponible')) ||
         filters['appointmentType'] === '';
 
       const matchesWheelchairAccessible =
@@ -339,14 +341,14 @@ export class DashboardMainComponent implements OnInit {
           clinic.daysOfOperation.toLowerCase().includes('jours de la semaine'))) ||
         (filters['serviceDays']?.weekends &&
           (clinic.daysOfOperation.toLowerCase().includes('weekends') ||
-          clinic.daysOfOperation.toLowerCase().includes('week ends'))) ||
+          clinic.daysOfOperation.toLowerCase().includes('weekends'))) ||
         (!filters['serviceDays']?.weekdays &&
           !filters['serviceDays']?.weekends);
 
       const matcheshoursOfOperation =
         (filters['serviceHours']?.daytime &&
           (clinic.hoursOfOperation.toLowerCase().includes('daytime') ||
-          clinic.hoursOfOperation.toLowerCase().includes('en journée'))) ||
+          clinic.hoursOfOperation.toLowerCase().includes('heures de bureau'))) ||
         (filters['serviceHours']?.evening &&
           (clinic.hoursOfOperation.toLowerCase().includes('evening') ||
           clinic.hoursOfOperation.toLowerCase().includes('soirée'))) ||

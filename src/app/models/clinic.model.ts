@@ -31,6 +31,8 @@ export interface Clinic {
   residencyTaxYear: string | string[];
   servePeople: string | string[];
   eligibilityCriteriaWebpage?: string;
+  eligibilityCriteriaFile?: string;
+  otherBranches?: string;
   bookingProcess: string | string[];
   bookingDaysHours: string;
   bookingContactPhone?: string;

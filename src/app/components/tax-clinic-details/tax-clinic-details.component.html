@@ -24,6 +24,17 @@
             <dd>{{ location?.street }}, {{ location?.city }}, {{ location?.state }}, {{ location?.postalCode }}</dd>
           </div>
           <div class="clinic-info">
+            <dt>{{ "Clinic other Locations" | translate }}:</dt>
+            <dd>
+              <ng-container *ngIf="clinic?.otherBranches">
+                <div *ngFor="let branch of getFormattedArray(clinic?.otherBranches)" class="data-list">
+                  {{ branch.trim() }}
+                </div>
+              </ng-container>
+              <ng-container *ngIf="!clinic?.otherBranches">N/A</ng-container>
+            </dd>
+          </div>
+          <div class="clinic-info">
             <dt>{{ "Appointment Availability" | translate }}:</dt>
             <dd>
               <p>
@@ -50,11 +61,11 @@
                 <input
                   type="radio"
                   name="appointmentAvailability"
-                  value="Not Sure"
+                  value="Might be available soon"
                   [(ngModel)]="appointmentAvailability"
                   (ngModelChange)="onAppointmentAvailabilityChange()"
                 />
-                {{ "Not Sure" | translate }}
+                {{ "Might be available soon" | translate }}
               </p>
               <button
                 (click)="updateAppointmentAvailability()"
@@ -67,7 +78,14 @@
           </div>
           <div class="clinic-info">
             <dt>{{ "Type of Clinic" | translate }}:</dt>
-            <dd>{{ clinic?.clinicTypes || "N/A" }}</dd>
+            <dd>
+              <ng-container *ngIf="clinic?.clinicTypes">
+                <div *ngFor="let type of getFormattedArray(clinic?.clinicTypes)" class="data-list">
+                  {{ type.trim() }}
+                </div>
+              </ng-container>
+              <ng-container *ngIf="!clinic?.clinicTypes">N/A</ng-container>
+            </dd>
           </div>
           <div class="clinic-info">
             <dt>{{ "Wheelchair accessible?" | translate }}:</dt>
@@ -75,7 +93,14 @@
           </div>
           <div class="clinic-info">
             <dt>{{ "Catchment Area of the clinic" | translate }}:</dt>
-            <dd>{{ clinic?.catchmentArea || "N/A" }}</dd>
+            <dd>
+                <ng-container *ngIf="clinic?.catchmentArea">
+                  <div *ngFor="let catchment of getFormattedArray(clinic?.catchmentArea)" class="data-list">
+                    {{ catchment.trim() }}
+                  </div>
+                </ng-container>
+                <ng-container *ngIf="!clinic?.catchmentArea">N/A</ng-container>
+            </dd>
           </div>
           <div class="clinic-info">
             <dt>{{ "Geographical zone" | translate }}:</dt>
@@ -88,31 +113,73 @@
                   | translate
               }}:
             </dt>
-            <dd>{{ clinic?.hoursAndDate || 'N/A' }}</dd>
+            <dd>
+              <ng-container *ngIf="clinic?.hoursAndDate">
+                <div *ngFor="let timing of getFormattedArray(clinic?.hoursAndDate)" class="data-list">
+                  {{ timing.trim() }}
+                </div>
+              </ng-container>
+              <ng-container *ngIf="!clinic?.hoursAndDate">N/A</ng-container>
+            </dd>
           </div>
           <div class="clinic-info">
             <dt>
               {{"Hours of clinic" | translate}}:
             </dt>
-            <dd>{{ clinic?.hoursOfOperation || 'N/A' }}</dd>
+            <dd>
+              <ng-container *ngIf="clinic?.hoursOfOperation">
+                <div *ngFor="let hours of getFormattedArray(clinic?.hoursOfOperation)" class="data-list">
+                  {{ hours.trim() }}
+                </div>
+              </ng-container>
+              <ng-container *ngIf="!clinic?.hoursOfOperation">N/A</ng-container>
+            </dd>
           </div>
           <div class="clinic-info">
             <dt>
               {{"Day of clinic" | translate}}:
             </dt>
-            <dd>{{ clinic?.daysOfOperation || 'N/A' }}</dd>
+            <dd>
+              <ng-container *ngIf="clinic?.daysOfOperation">
+                <div *ngFor="let days of getFormattedArray(clinic?.daysOfOperation)" class="data-list">
+                  {{ days.trim() }}
+                </div>
+              </ng-container>
+              <ng-container *ngIf="!clinic?.daysOfOperation">N/A</ng-container>
+            </dd>
           </div>
           <div class="clinic-info">
             <dt>{{ "Population serve" | translate }}:</dt>
-            <dd>{{ clinic?.populationServed || 'N/A' }}</dd>
+            <dd>
+              <ng-container *ngIf="clinic?.populationServed">
+                <div *ngFor="let population of getFormattedArray(clinic?.populationServed)" class="data-list">
+                  {{ population.trim() }}
+                </div>
+              </ng-container>
+              <ng-container *ngIf="!clinic?.populationServed">N/A</ng-container>
+            </dd>
           </div>
           <div class="clinic-info">
             <dt>{{ "Available in" | translate }}:</dt>
-            <dd>{{ clinic?.serviceLanguages || 'N/A' }}</dd>
+            <dd>
+              <ng-container *ngIf="clinic?.serviceLanguages">
+                <div *ngFor="let language of getFormattedArray(clinic?.serviceLanguages)" class="data-list">
+                  {{ language.trim() }}
+                </div>
+              </ng-container>
+              <ng-container *ngIf="!clinic?.serviceLanguages">N/A</ng-container>
+            </dd>
           </div>
           <div class="clinic-info">
             <dt>{{ "Year(s) prepared" | translate }}:</dt>
-            <dd>{{ clinic?.taxYearsPrepared || 'N/A' }}</dd>
+            <dd>
+              <ng-container *ngIf="clinic?.taxYearsPrepared">
+                <div *ngFor="let yearPrepared of getFormattedArray(clinic?.taxYearsPrepared)" class="data-list">
+                  {{ yearPrepared.trim() }}
+                </div>
+              </ng-container>
+              <ng-container *ngIf="!clinic?.taxYearsPrepared">N/A</ng-container>
+            </dd>
           </div>
           <div class="clinic-info">
             <dt>
@@ -121,11 +188,25 @@
                   | translate
               }}:
             </dt>
-            <dd>{{ clinic?.residencyTaxYear || 'N/A' }}</dd>
+            <dd>
+              <ng-container *ngIf="clinic?.residencyTaxYear">
+                <div *ngFor="let taxYear of getFormattedArray(clinic?.residencyTaxYear)" class="data-list">
+                  {{ taxYear.trim() }}
+                </div>
+              </ng-container>
+              <ng-container *ngIf="!clinic?.residencyTaxYear">N/A</ng-container>
+            </dd>
           </div>
           <div class="clinic-info">
             <dt>{{ "Special services?" | translate }}:</dt>
-            <dd>{{ clinic?.servePeople || 'N/A' }}</dd>
+            <dd>
+              <ng-container *ngIf="clinic?.servePeople">
+                <div *ngFor="let people of getFormattedArray(clinic?.servePeople)" class="data-list">
+                  {{ people.trim() }}
+                </div>
+              </ng-container>
+              <ng-container *ngIf="!clinic?.servePeople">N/A</ng-container>
+            </dd>
           </div>
           <div class="clinic-info">
             <dt>{{ "Webpage detailing eligibility" | translate }}:</dt>
@@ -141,7 +222,14 @@
           </div>
           <div class="clinic-info">
             <dt>{{ "Booking process" | translate }}:</dt>
-            <dd>{{ clinic?.bookingProcess || 'N/A' }}</dd>
+            <dd>
+              <ng-container *ngIf="clinic?.bookingProcess">
+                <div *ngFor="let process of getFormattedArray(clinic?.bookingProcess)" class="data-list">
+                  {{ process.trim() }}
+                </div>
+              </ng-container>
+              <ng-container *ngIf="!clinic?.bookingProcess">N/A</ng-container>
+            </dd>
           </div>
           <div class="clinic-info">
             <dt>
@@ -150,7 +238,14 @@
                   | translate
               }}:
             </dt>
-            <dd>{{ clinic?.bookingDaysHours || 'N/A' }}</dd>
+            <dd>
+              <ng-container *ngIf="clinic?.bookingDaysHours">
+                <div *ngFor="let booking of getFormattedArray(clinic?.bookingDaysHours)" class="data-list">
+                  {{ booking.trim() }}
+                </div>
+              </ng-container>
+              <ng-container *ngIf="!clinic?.bookingDaysHours">N/A</ng-container>
+            </dd>
           </div>
           <div class="clinic-info">
             <dt>{{ "Email for booking" | translate }}:</dt>
@@ -174,7 +269,14 @@
           </div>
           <div class="clinic-info">
             <dt>{{ "Required Documents for appointment" | translate }}:</dt>
-            <dd>{{ clinic?.requiredDocuments || 'N/A' }}</dd>
+            <dd>
+              <ng-container *ngIf="clinic?.requiredDocuments">
+                <div *ngFor="let document of getFormattedArray(clinic?.requiredDocuments)" class="data-list">
+                  {{ document.trim() }}
+                </div>
+              </ng-container>
+              <ng-container *ngIf="!clinic?.requiredDocuments">N/A</ng-container>
+            </dd>
           </div>
           <div class="clinic-info">
             <dt>
@@ -183,7 +285,14 @@
                   | translate
               }}:
             </dt>
-            <dd>{{ clinic?.helpWithMissingDocs || 'N/A' }}</dd>
+            <dd>
+              <ng-container *ngIf="clinic?.helpWithMissingDocs">
+                <div *ngFor="let hepDocs of getFormattedArray(clinic?.helpWithMissingDocs)" class="data-list">
+                  {{ hepDocs.trim() }}
+                </div>
+              </ng-container>
+              <ng-container *ngIf="!clinic?.helpWithMissingDocs">N/A</ng-container>
+            </dd>
           </div>
         </dl>
       </div>

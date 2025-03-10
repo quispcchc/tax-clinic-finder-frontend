@@ -23,14 +23,14 @@
         <label>{{ "Organization Information" | translate }}</label>
         <div class="org-details">
           <div class="clinic-info" *ngFor="let location of clinic?.locations">
-            <dt>{{ "Name" | translate }}:</dt>
+            <dt>{{ "Name/organisation of the clinic" | translate }}:</dt>
             <dd>
               {{ clinic?.organizationName ?? "" | translate }}
             </dd>
           </div>
 
           <div class="clinic-info" *ngFor="let location of clinic?.locations">
-            <dt>{{ "Address" | translate }}:</dt>
+            <dt>{{ "Clinic Address" | translate }}:</dt>
             <dd>
               {{ location?.street }}, {{ location?.city }},
               {{ location?.state }},
@@ -38,7 +38,11 @@
             </dd>
           </div>
           <div class="clinic-info">
-            <dt>{{ "Website" | translate }}:</dt>
+            <dt>{{ "Other Locations" | translate }}:</dt>
+            <dd>{{ clinic?.otherBranches || 'N/A' }}</dd>
+          </div>
+          <div class="clinic-info">
+            <dt>{{ "Website of organisation" | translate }}:</dt>
             <dd>
               <ng-container *ngIf="clinic?.organisationWebsite; else noWebsiteLink">
                 <a [href]="(clinic?.organisationWebsite?.startsWith('http') ? clinic?.organisationWebsite : 'https://' + clinic?.organisationWebsite)" 
@@ -50,15 +54,15 @@
             </dd>
           </div>
           <div class="clinic-info">
-            <dt>{{ "Email" | translate }}:</dt>
+            <dt>{{ "Email of Organisation" | translate }}:</dt>
             <dd>{{ clinic?.organisationalEmail || "N/A" }}</dd>
           </div>
           <div class="clinic-info">
-            <dt>{{ "Listed on CRA?" | translate }}:</dt>
+            <dt>{{ "Listed or not on CRA" | translate }}:</dt>
             <dd>{{ clinic?.listedOnCra ?? "N/A" | translate }}</dd>
           </div>
           <div class="clinic-info">
-            <dt>{{ "Listed on NCEO?" | translate }} :</dt>
+            <dt>{{ "Listed or not on NCEO" | translate }} :</dt>
             <dd>{{ clinic?.visibleOnNceo ?? "N/A" | translate }}</dd>
           </div>
           <div class="clinic-info">
@@ -88,11 +92,11 @@
                 <input
                   type="radio"
                   name="appointmentAvailability"
-                  value="Not Sure"
+                  value="Might be available soon"
                   [(ngModel)]="appointmentAvailability"
                   (ngModelChange)="onAppointmentAvailabilityChange()"
                 />
-                {{ "Not Sure" | translate }}
+                {{ "Might be available soon" | translate }}
               </p>
               <button
                 (click)="updateAppointmentAvailability()"
@@ -144,14 +148,20 @@
         <label>{{ "Tax Clinic information" | translate }}</label>
         <div class="org-details">
           <div class="clinic-info">
-            <dt>{{ "Information public?" | translate }} :</dt>
+            <dt>{{ "Information Public or not" | translate }} :</dt>
             <dd>{{ clinic?.publicInfo || "N/A" }}</dd>
           </div>
           <div class="clinic-info">
             <dt>{{ "Type of Clinic" | translate }}:</dt>
-            <dd>{{ clinic?.clinicTypes || "N/A" }}</dd>
+            <dd>
+              <ng-container *ngIf="clinic?.clinicTypes">
+                <div *ngFor="let type of getFormattedArray(clinic?.clinicTypes)" class="data-list">
+                  {{ type.trim() }}
+                </div>
+              </ng-container>
+              <ng-container *ngIf="!clinic?.clinicTypes">N/A</ng-container>
+            </dd>
           </div>
-
           <div class="clinic-info">
             <dt>{{ "Wheelchair accessible?" | translate }}:</dt>
             <dd>{{ clinic?.wheelchairAccessible || "N/A" }}</dd>
@@ -225,8 +235,19 @@
               <ng-template #noLink>N/A</ng-template>
             </dd>
           </div>
+          <div class="clinic-info">
+            <dt>{{"Elligibility file Link" | translate }}:</dt>
+            <dd>
+              <ng-container *ngIf="clinic?.eligibilityCriteriaFile; else noFile">
+                <a [href]="(clinic?.eligibilityCriteriaFile?.startsWith('http') ? clinic?.eligibilityCriteriaFile : 'https://' + clinic?.eligibilityCriteriaFile)" 
+                target="_blank" rel="noopener noreferrer" class="clinic-link">
+                  {{ clinic?.eligibilityCriteriaFile }}
+                </a>
+              </ng-container>
+              <ng-template #noFile>N/A</ng-template>
+            </dd>
+          </div>
         </div>
-
         <label>{{ "Appointment Booking information" | translate }}</label>
         <div class="org-details">
           <div class="clinic-info">

@@ -30,7 +30,7 @@ export class ClinicListComponent implements OnInit {
   }
 
   sortClinics() {
-    const priority: Record<string, number> = { 'Yes': 1, 'No': 2, 'Not Sure': 3 };
+    const priority: Record<string, number> = { 'Yes': 1, 'No': 2, 'Might be available soon': 3 };
   
     this.clinics.sort((a, b) => {
       const priorityA = priority[a.appointmentAvailability] ?? 4;
@@ -72,7 +72,7 @@ export class ClinicListComponent implements OnInit {
         return 'green';
       case 'No':
         return 'red';
-      case 'Not Sure':
+      case 'Might be available soon':
         return 'orange';
       default:
         return 'gray';

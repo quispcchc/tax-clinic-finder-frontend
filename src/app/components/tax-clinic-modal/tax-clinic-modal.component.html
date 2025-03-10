@@ -234,10 +234,16 @@
             </div>
             <div class="form-group">
               <label
-                >Catchment area available, please provide definition (postal
+                >Catchment area, please provide definition (postal
                 codes):</label
               >
               <input type="text" formControlName="catchmentArea" />
+            </div>
+            <div class="form-group">
+              <label
+                >Clinic other Locations:</label
+              >
+              <input type="text" formControlName="otherBranches" />
             </div>
           </div>
 
@@ -320,9 +326,9 @@
                   <input
                     type="radio"
                     formControlName="appointmentAvailability"
-                    value="Not Sure"
+                    value="Might be available soon"
                   />
-                  Not Sure
+                  Might be available soon
                 </label>
               </div>
               <div
@@ -589,7 +595,7 @@
               <label
                 >Hours of operation or Date and time of your tax clinics:</label
               >
-              <textarea formControlName="hoursAndDate" rows="4" placeholder="Enter Hours and date of clinic operation"></textarea>
+              <textarea formControlName="hoursAndDate" rows="2" placeholder="Enter Hours and date of clinic operation"></textarea>
             </div>
           </div>
           <div class="form-row">
@@ -715,7 +721,6 @@
                 This field is required.
               </div>
             </div>
-
             <div class="form-group">
               <label class="required-label"
                 >Do the clinic serve people from:<span class="required"
@@ -1250,13 +1255,22 @@
           <div class="form-row">
             <div class="form-group">
               <label
-                >Do you have a webpage detailing the eligibility criteria? If
-                yes, please provide the webpage address below:</label
+                >Webpage detailing the eligibility criteria:</label
               >
               <input
                 type="text"
                 formControlName="eligibilityCriteriaWebpage"
                 placeholder="Enter webpage URL"
+              />
+            </div>
+            <div class="form-group">
+              <label
+                >Eligibility criteria detailing Link:</label
+              >
+              <input
+                type="text"
+                formControlName="eligibilityCriteriaFile"
+                placeholder="Enter link..."
               />
             </div>
           </div>
@@ -1821,11 +1835,7 @@
 
             <div class="form-group">
               <label>Any last comments or questions?</label>
-              <input
-                type="text"
-                formControlName="comments"
-                placeholder="Your comments or questions..."
-              />
+              <textarea formControlName="comments" rows="2" placeholder="Your comments or questions..."></textarea>
             </div>
           </div>
         </div>
