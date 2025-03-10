@@ -100,6 +100,10 @@ export class TaxClinicModalComponent implements OnChanges, OnInit {
   ngOnChanges(changes: SimpleChanges) {
     if (changes['clinic'] && this.clinic) {
       this.clinicSubject.next(this.clinic);
+    } else if (changes['isEditMode'] && !this.isEditMode) {
+      this.clinicForm.reset();
+      this.clearDynamicControls();
+      this.clinicForm.patchValue({ servePeopleFrom: '' });
     }
   }
 
@@ -122,7 +126,28 @@ export class TaxClinicModalComponent implements OnChanges, OnInit {
   };
 
   private initializeForm(clinic: Clinic) {
+    this.clearDynamicControls();
     this.clinicForm.reset();
+
+    if (!this.isEditMode) {
+      this.clinicForm.patchValue({ servePeopleFrom: '' });
+    }
+
+    const servePeopleFromValue = clinic.servePeopleFrom;
+    const isCustomValue =
+      servePeopleFromValue &&
+      servePeopleFromValue !== 'A specific catchment area only' &&
+      servePeopleFromValue !== 'Anywhere from Ottawa' &&
+      servePeopleFromValue !== 'Other';
+
+    if (servePeopleFromValue === 'Other' || isCustomValue) {
+      const customValue = isCustomValue ? servePeopleFromValue : clinic["servePeopleFromOther"] || '';
+      this.clinicForm.addControl(
+        'servePeopleFromOther',
+        new FormControl(customValue, Validators.required)
+      );
+    }
+
     const nonArrayFields = {
       id: clinic.id,
       organizationName: clinic.organizationName,
@@ -143,7 +168,8 @@ export class TaxClinicModalComponent implements OnChanges, OnInit {
       wheelchairAccessible: clinic.wheelchairAccessible,
       hoursAndDate: clinic.hoursAndDate,
       yearRoundService: clinic.yearRoundService,
-      servePeopleFrom: clinic.servePeopleFrom,
+      servePeopleFrom:  isCustomValue ? 'Other' : clinic.servePeopleFrom,
+      // servePeopleFromOther: isCustomValue ? servePeopleFromValue : clinic["servePeopleFromOther"] || '',
       eligibilityCriteriaWebpage: clinic.eligibilityCriteriaWebpage,
       eligibilityCriteriaFile: clinic.eligibilityCriteriaFile,
       otherBranches: clinic.otherBranches,
@@ -160,6 +186,32 @@ export class TaxClinicModalComponent implements OnChanges, OnInit {
     this.clinicForm.patchValue(nonArrayFields);
     this.populateFormArrays(clinic);
     this.reAddDynamicControls(clinic);
+  }
+
+  private clearDynamicControls() {
+    const fieldsToCheck = [
+      'clinicTypes',
+      'monthsOffered',
+      'populationServed',
+      'serviceLanguages',
+      'taxYearsPrepared',
+      'residencyTaxYear',
+      'servePeople',
+      'taxPreparers',
+      'taxFilers',
+      'volunteerRoles',
+      'additionalSupport',
+    ];
+  
+    fieldsToCheck.forEach((field) => {
+      const otherControlName = `${field}Other`;
+      if (this.clinicForm.contains(otherControlName)) {
+        this.clinicForm.removeControl(otherControlName);
+      }
+    });
+    if (this.clinicForm.contains('servePeopleFromOther')) {
+      this.clinicForm.removeControl('servePeopleFromOther');
+    }
   }
 
   private populateFormArrays(clinic: Clinic) {
@@ -271,6 +323,11 @@ export class TaxClinicModalComponent implements OnChanges, OnInit {
           taxClinicId: this.isEditMode ? this.clinic?.id : undefined,
         })),
       };
+
+      if (formValue.servePeopleFrom === 'Other' && formValue.servePeopleFromOther) {
+        formValue.servePeopleFrom = formValue.servePeopleFromOther;
+      }
+      delete formValue.servePeopleFromOther;
   
       const replaceOtherValue = (field: string, otherField: string) => {
         if (formValue[field]?.includes('Other') && formValue[otherField]) {
@@ -365,7 +422,7 @@ export class TaxClinicModalComponent implements OnChanges, OnInit {
   
 
   onServePeopleChange(event: any) {
-    if (event.target.value === 'other') {
+    if (event.target.value === 'Other') {
       this.clinicForm.addControl(
         'servePeopleFromOther',
         new FormControl('', Validators.required)

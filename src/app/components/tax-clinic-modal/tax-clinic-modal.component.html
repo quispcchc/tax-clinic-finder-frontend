@@ -750,13 +750,13 @@
                   <input
                     type="radio"
                     formControlName="servePeopleFrom"
-                    value="other"
+                    value="Other"
                     (change)="onServePeopleChange($event)"
                   />
                   Other
                 </label>
                 <input
-                  *ngIf="clinicForm.get('servePeopleFrom')?.value === 'other'"
+                  *ngIf="clinicForm.get('servePeopleFrom')?.value === 'Other'"
                   type="text"
                   formControlName="servePeopleFromOther"
                   placeholder="Specify here..."
