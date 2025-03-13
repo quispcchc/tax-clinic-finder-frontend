@@ -190,6 +190,29 @@ h2 {
   }
 }
 
+.login-footer {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  position: absolute;
+  bottom: 10px;
+  left: 0;
+  right: 0;
+  margin-bottom: 10px;
+}
+
+.left-footer {
+  text-align: left;
+  font-size:x-small;
+  padding: 0 10px;
+}
+
+.right-footer {
+  text-align: right;
+  font-size:x-small;
+  padding: 0 10px;
+}
+
 @media (max-width: 768px) {
   .login-card {
     padding: 1.5rem;
