@@ -203,22 +203,102 @@ h2 {
 
 .left-footer {
   text-align: left;
-  font-size:x-small;
+  font-size:10px;
   padding: 0 10px;
+  margin-top:20px;
+  margin-bottom: 0px;
 }
 
 .right-footer {
   text-align: right;
-  font-size:x-small;
+  font-size:10px;
   padding: 0 10px;
 }
 
-@media (max-width: 768px) {
+.footer-logo {
+  height: 35px;
+  vertical-align: middle;
+}
+
+@media (max-width: 1024px) {
   .login-card {
-    padding: 1.5rem;
+    max-width: 50%;
+    padding: 2rem;
+  }
+
+  h2 {
+    font-size: 1.35rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .login-container {
+    justify-content: center;
+    align-items: center;
+  }
+
+  .login-card {
+    max-width: 80%;
+    padding: 2rem;
+    height: auto;
+    min-height: unset;
+  }
+
+  .login-footer {
+    position: relative;
+    bottom: 0;
+    text-align: center;
+    font-size: 9px;
+    padding-bottom: 1rem;
   }
 
   h2 {
     font-size: 1.25rem;
   }
+
+  .logo-section .logo {
+    max-width: 60%;
+  }
+
+  .login-form {
+    width: 100%;
+  }
+
+  .form-actions {
+    flex-direction: column;
+    align-items: flex-start;
+
+    a {
+      margin-top: 10px;
+    }
+  }
 }
+
+@media (max-width: 480px) {
+  .login-card {
+    max-width: 90%;
+    padding: 1.5rem;
+  }
+
+  .logo-section .logo {
+    max-width: 70%;
+  }
+
+  h2 {
+    font-size: 1.15rem;
+  }
+
+  .login-footer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding-bottom: 1rem;
+  }
+
+  .left-footer,
+  .right-footer {
+    font-size: 8px;
+  }
+}
+
