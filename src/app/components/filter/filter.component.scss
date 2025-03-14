@@ -71,10 +71,11 @@
       }
 
       .subtitle {
-        font-size: 0.8rem;
-        color: #666;
-        margin-top: 15px;
-        margin-bottom: 15px;
+        font-size: 1em;
+        color: #000000;
+        margin: 0px;
+        font-weight: 500;
+        padding-bottom: 20px;
       }
     }
 
@@ -174,9 +175,12 @@
 
 .switch {
   position: relative;
-  display: inline-block;
-  width: 35%;
-  height: 34px;
+  display: inline-flex;
+  align-items: center;
+  padding: 0 10px;
+  height: 40px;
+  min-width: 140px;
+  cursor: pointer;
 }
 
 .switch input {
@@ -186,40 +190,41 @@
 }
 
 .slider {
-  position: absolute;
-  cursor: pointer;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: #ccc;
-  transition: 0.4s;
-  border-radius: 34px;
+  position: relative;
   display: flex;
   align-items: center;
-  justify-content: center;
-  color: #AAAAAA;
-  font-weight: bold;
+  justify-content: space-between;
+  background-color: #ccc;
+  border-radius: 34px;
+  transition: background-color 0.4s ease-in-out;
+  min-width: 100px;
+  padding: 0 5px;
+  height: 38px;
+  width: auto;
 }
 
 .slider .text {
-  position: absolute;
   display: inline-block;
-  width: 100%;
   text-align: center;
-  transition: 0.4s;
+  transition: 0.4s ease-in-out;
+  white-space: nowrap;
+  font-size: 0.9em;
+  font-weight: bold;
+  color: #AAAAAA;
+  margin-left: 35px;
+  transition: color 0.4s, transform 0.4s;
 }
 
 .slider:before {
-  position: absolute;
   content: "";
-  height: 26px;
-  width: 26px;
+  position: absolute;
+  height: 24px;
+  width: 24px;
   border-radius: 50%;
-  left: 4px;
-  bottom: 4px;
   background-color: white;
-  transition: 0.4s;
+  transition: all 0.4s ease-in-out;
+  left: 2px;
+  vertical-align: middle;
 }
 
 input:checked + .slider {
@@ -227,20 +232,13 @@ input:checked + .slider {
 }
 
 input:checked + .slider:before {
-  transform: translateX(90px);
+  left: 98%;
+  transform: translateX(-100%); 
 }
 
 input:checked + .slider .text {
+  color: #2B2B2B;
   transform: translateX(-30px);
-  color:#2B2B2B;
-}
-
-.slider .text {
-  opacity: 1;
-  transition: opacity 0.4s;
-  font-size: 0.75em;
-  text-align: right;
-  margin-right: 10px;
 }
 
 .switch input:checked + .slider {

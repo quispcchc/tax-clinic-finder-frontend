@@ -246,31 +246,22 @@ export class DashboardMainComponent implements OnInit {
         !hasSelectedFilters(filters['serviceDeliveryModes']);
 
       const matchesSupportedTaxYears =
-        (filters['supportedTaxYears']?.currentYear &&
-          (clinic.taxYearsPrepared?.toLowerCase().includes('only current year') ||
-          clinic.taxYearsPrepared?.toLowerCase().includes('année en cours seule'))) ||
-        (filters['supportedTaxYears']?.currentLastYears &&
-          (clinic.taxYearsPrepared?.toLowerCase().includes('current and last year')||
-          clinic.taxYearsPrepared?.toLowerCase().includes('année en cours et dernière année'))) ||
-        (filters['supportedTaxYears']?.multipleYears &&
-          (clinic.taxYearsPrepared?.toLowerCase().includes('multiple years') ||
-          clinic.taxYearsPrepared?.toLowerCase().includes('plusieurs années'))) ||
-        !hasSelectedFilters(filters['supportedTaxYears']);
+        (filters['supportedTaxYears']?.toLowerCase() === 'only current year' &&
+          (clinic.taxYearsPrepared?.toLowerCase() === 'only current year' || clinic.taxYearsPrepared?.toLowerCase() === 'année en cours seule')) ||
+        (filters['supportedTaxYears']?.toLowerCase() === 'current and last year' &&
+          (clinic.taxYearsPrepared?.toLowerCase() === 'current and last year' || clinic.taxYearsPrepared?.toLowerCase() === 'année en cours et dernière année')) ||
+        (filters['supportedTaxYears']?.toLowerCase() === 'multiple years' &&
+          (clinic.taxYearsPrepared?.toLowerCase() === 'multiple years' || clinic.taxYearsPrepared?.toLowerCase() === 'plusieurs années')) ||
+        filters['supportedTaxYears'] === '';
 
       const matchesProvinces =
-        (filters['provinces']?.Ontario &&
-          clinic.residencyTaxYear.toLowerCase().includes('ontario')) ||
-        (filters['provinces']?.Quebec &&
-          (clinic.residencyTaxYear.toLowerCase().includes('quebec') ||
-            clinic.residencyTaxYear.toLowerCase().includes('québec'))) ||
-        (filters['provinces']?.Other &&
-          (clinic.residencyTaxYear
-            .toLowerCase()
-            .includes('any province other than ontario and quebec') ||
-            clinic.residencyTaxYear
-              .toLowerCase()
-              .includes('toute autre province que l’ontario et le québec'))) ||
-        !hasSelectedFilters(filters['provinces']);
+        (filters['provinces']?.toLowerCase() === 'ontario' &&
+          (clinic.residencyTaxYear?.toLowerCase().includes('ontario'))) ||
+        (filters['provinces']?.toLowerCase() === 'quebec' &&
+          (clinic.residencyTaxYear?.toLowerCase().includes('quebec') || clinic.residencyTaxYear?.toLowerCase().includes('québec'))) ||
+        (filters['provinces']?.toLowerCase() === 'other' && filters['otherProvince']?.trim() !== '' &&
+          clinic.residencyTaxYear?.toLowerCase().includes(filters['otherProvince']?.toLowerCase())) ||
+        filters['provinces'] === '';
         
       const matchesLanguage =
         (filters['languageOptions']?.french &&
@@ -318,15 +309,6 @@ export class DashboardMainComponent implements OnInit {
               filters['clientCategories'].otherClientCategory.toLowerCase()
             )) ||
         !hasSelectedFilters(filters['clientCategories']);
-
-      const matchesAppointmentAvailability =
-        (filters['appointmentType'] === 'Yes' &&
-          (clinic.appointmentAvailability === 'Yes' || clinic.appointmentAvailability === 'Oui')) ||
-        (filters['appointmentType'] === 'No' &&
-          (clinic.appointmentAvailability === 'No' || clinic.appointmentAvailability === 'Non')) ||
-        (filters['appointmentType'] === 'Might be available soon' &&
-          (clinic.appointmentAvailability === 'Might be available soon' || clinic.appointmentAvailability === 'Pourrait être bientôt disponible')) ||
-        filters['appointmentType'] === '';
 
       const matchesWheelchairAccessible =
         (filters['wheelchairAccessible'] === 'Yes' &&
@@ -403,7 +385,6 @@ export class DashboardMainComponent implements OnInit {
         matchesLanguage &&
         matchesClient &&
         matchesServiceDelivery &&
-        matchesAppointmentAvailability &&
         matchesWheelchairAccessible &&
         matchesDaysOfOperation &&
         matcheshoursOfOperation &&
@@ -424,16 +405,6 @@ export class DashboardMainComponent implements OnInit {
       walkIn: 'Walk-In',
       dropOff: 'Drop-Off',
     };
-    const supportedTaxYearsMap = {
-      currentYear: 'Only Current Year',
-      currentLastYears: 'Current and last year',
-      multipleYears: 'Multiple Years',
-    };
-    const provincesMap = {
-      Ontario: 'Ontario',
-      Quebec: 'Quebec',
-      Other: 'Any province other than Ontario and Quebec',
-    };
     const specialTaxCasesMap = {
       rentalIncome: 'Rental Income',
       selfEmployment: 'Self-employment income',
@@ -453,18 +424,11 @@ export class DashboardMainComponent implements OnInit {
       disabilities: 'Persons with disabilities',
       languageSpecific: 'Language-specific community',
     };
-    const accessDocumentsMap = {
-      allDocuments: 'Yes for CRA documents with Autofill/repid',
-      someDocuments:
-        'Yes with help from staff or volunteer for some documentation',
-      noDocuments: 'No client must have all their documents ready',
-    };
 
     const organizationNames = filteredClinics
       .map((clinic) => clinic.organizationName)
       .join(', ');
     return {
-      appointment_type: filters['appointmentType'] || '',
       type_of_clinic: this.extractTrueValues(
         filters['serviceDeliveryModes'],
         serviceDeliveryModesMap
@@ -479,14 +443,8 @@ export class DashboardMainComponent implements OnInit {
         daytime: 'Daytime',
         evening: 'Evening',
       }),
-      supported_tax_years: this.extractTrueValues(
-        filters['supportedTaxYears'],
-        supportedTaxYearsMap
-      ),
-      province_of_residence: this.extractTrueValues(
-        filters['provinces'],
-        provincesMap
-      ),
+      supported_tax_years: filters['supportedTaxYears'] || '',
+      province_of_residence: filters['provinces'] || '',
       language_options: this.extractTrueValues(
         filters['languageOptions'],
         {
@@ -501,10 +459,7 @@ export class DashboardMainComponent implements OnInit {
         filters['clientCategories'],
         clientCategoriesMap
       ),
-      help_access_documents: this.extractTrueValues(
-        filters['accessDocuments'],
-        accessDocumentsMap
-      ),
+
       special_cases: this.extractTrueValues(
         filters['specialTaxCases'],
         specialTaxCasesMap,

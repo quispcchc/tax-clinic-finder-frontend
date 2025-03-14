@@ -14,7 +14,6 @@ import { LanguageService } from '../../services/language.service';
 export class LoginComponent implements OnInit {
   loginForm!: FormGroup;
   errorMessage: string | null = null;
-  isPasswordVisible: boolean = false;
   currentLanguage: string = 'en';
 
   constructor(
@@ -94,10 +93,6 @@ export class LoginComponent implements OnInit {
 
   resetPassword(): void {
     this.router.navigate(['/forgot-password']);
-  }
-
-  togglePasswordVisibility(): void {
-    this.isPasswordVisible = !this.isPasswordVisible;
   }
 
   switchLanguage(language: string): void {

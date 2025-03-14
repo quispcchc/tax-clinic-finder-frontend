@@ -49,7 +49,7 @@
           <input
             id="password"
             formControlName="password"
-            [type]="isPasswordVisible ? 'text' : 'password'"
+            type="password"
             [placeholder]="'Enter Password' | translate"
             [ngClass]="
               password && password.value !== '' && password.invalid

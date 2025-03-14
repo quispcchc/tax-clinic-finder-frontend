@@ -24,47 +24,9 @@
   <form (ngSubmit)="applyFilters()">
     <div class="form-group">
       <div class="form-group-label">
-        <label>{{ "Appointment Status" | translate }}</label>
-        <small class="subtitle">{{
-          "Are there any available appointments?" | translate
-        }}</small>
-      </div>
-      <div class="radio-group">
-        <label>
-          <input
-            type="radio"
-            name="appointmentType"
-            value="Yes"
-            [(ngModel)]="filters.appointmentType"
-          />
-          {{ "Yes" | translate }}
-        </label>
-        <label>
-          <input
-            type="radio"
-            name="appointmentType"
-            value="No"
-            [(ngModel)]="filters.appointmentType"
-          />
-          {{ "No" | translate }}
-        </label>
-        <label>
-          <input
-            type="radio"
-            name="appointmentType"
-            value="Might be available soon"
-            [(ngModel)]="filters.appointmentType"
-          />
-          {{ "Might be available soon" | translate }}
-        </label>
-      </div>
-    </div>
-    <div class="form-group">
-      <div class="form-group-label">
-        <label>{{ "Special Tax Return Cases" | translate }}</label>
-        <small class="subtitle">{{
+        <p class="subtitle">{{
           "Are you low income with a simple tax situation?" | translate
-        }}</small>
+        }}</p>
       </div>
       <div class="checkbox-group">
         <label>
@@ -144,33 +106,35 @@
     </div>
     <div class="form-group">
       <div class="form-group-label">
-        <label>{{ "Supported Tax Years" | translate }}</label>
-        <small class="subtitle">{{
+        <p class="subtitle">{{
           "For which tax year(s) do you need to file a return?" | translate
-        }}</small>
+        }}</p>
       </div>
-      <div class="checkbox-group">
+      <div class="radio-group">
         <label>
           <input
-            type="checkbox"
-            name="currentYear"
-            [(ngModel)]="filters.supportedTaxYears!.currentYear"
+            type="radio"
+            name="supportedTaxYears"
+            value="Only current year"
+            [(ngModel)]="filters.supportedTaxYears"
           />
           {{ "Only current year" | translate }}
         </label>
         <label>
           <input
-            type="checkbox"
-            name="currentLastYears"
-            [(ngModel)]="filters.supportedTaxYears!.currentLastYears"
+            type="radio"
+            name="supportedTaxYears"
+            value="Current and last year"
+            [(ngModel)]="filters.supportedTaxYears"
           />
           {{ "Current and last year" | translate }}
         </label>
         <label>
           <input
-            type="checkbox"
-            name="multipleYears"
-            [(ngModel)]="filters.supportedTaxYears!.multipleYears"
+            type="radio"
+            name="supportedTaxYears"
+            value="Multiple years"
+            [(ngModel)]="filters.supportedTaxYears"
           />
           {{ "Multiple years" | translate }}
         </label>
@@ -178,45 +142,60 @@
     </div>
     <div class="form-group">
       <div class="form-group-label">
-        <label>{{ "Province of Residence" | translate }}</label>
-        <small class="subtitle">{{
+        <p class="subtitle">{{
           "Which province did you reside during those years on december 31?"
             | translate
-        }}</small>
+        }}</p>
       </div>
-      <div class="checkbox-group">
+      <div class="radio-group">
         <label>
           <input
-            type="checkbox"
-            name="Ontario"
-            [(ngModel)]="filters.provinces['Ontario']"
+            type="radio"
+            name="provinces"
+            value="Ontario"
+            [(ngModel)]="filters.provinces"
+            (change)="onProvinceChange()"
           />
           {{ "Ontario" | translate }}
         </label>
         <label>
           <input
-            type="checkbox"
-            name="Quebec"
-            [(ngModel)]="filters.provinces['Quebec']"
+            type="radio"
+            name="provinces"
+            value="Quebec"
+            [(ngModel)]="filters.provinces"
+            (change)="onProvinceChange()"
           />
           {{ "Quebec" | translate }}
         </label>
         <label>
           <input
-            type="checkbox"
-            name="Other"
-            [(ngModel)]="filters.provinces['Other']"
+            type="radio"
+            name="provinces"
+            value="Other"
+            [(ngModel)]="filters.provinces"
+            (change)="onProvinceChange()"
           />
-          {{ "Any province other than Ontario and Quebec" | translate }}
+          {{ "Other" | translate }}
         </label>
+      </div>
+      <div *ngIf="filters.provinces === 'Other'">
+        <input
+          class="input-filter"
+          type="text"
+          id="otherProvince"
+          [(ngModel)]="filters.otherProvince"
+          name="otherProvince"
+          placeholder="{{ 'Enter other province' | translate }}"
+          (input)="onOtherProvinceInput()"
+        />
       </div>
     </div>
     <div class="form-group">
       <div class="form-group-label">
-        <label>{{ "Type of clinic" | translate }}</label>
-        <small class="subtitle">{{
+        <p class="subtitle">{{
           "What type of clinic would you prefer?" | translate
-        }}</small>
+        }}</p>
       </div>
       <div class="checkbox-group">
         <label>
@@ -263,10 +242,9 @@
     </div>
     <div class="form-group">
       <div class="form-group-label">
-        <label>{{ "Wheelchair accessible" | translate }}</label>
-        <small class="subtitle">{{
+        <p class="subtitle">{{
           "Do you need a wheelchair-accessible clinic?" | translate
-        }}</small>
+        }}</p>
       </div>
       <div class="radio-group">
         <label>
@@ -291,10 +269,9 @@
     </div>
     <div class="form-group">
       <div class="form-group-label">
-        <label>{{ "Hours of Operation" | translate }}</label>
-        <small class="subtitle">{{
+        <p class="subtitle">{{
           "Would you like an appointment during the day or in the evening?" | translate
-        }}</small>
+        }}</p>
       </div>
       <div class="checkbox-group">
         <label>
@@ -317,10 +294,9 @@
     </div>
     <div class="form-group">
       <div class="form-group-label">
-        <label>{{ "Days of Operation" | translate }}</label>
-        <small class="subtitle">{{
+        <p class="subtitle">{{
           "Would you like an appointment on a weekday or weekend?" | translate
-        }}</small>
+        }}</p>
       </div>
       <div class="checkbox-group">
         <label>
@@ -343,10 +319,9 @@
     </div>
     <div class="form-group">
       <div class="form-group-label">
-        <label>{{ "Language Options" | translate }}</label>
-        <small class="subtitle">{{
+        <p class="subtitle">{{
           "Do you need service in French, English or another language?" | translate
-        }}</small>
+        }}</p>
       </div>
       <div class="checkbox-group">
         <label>
@@ -396,10 +371,9 @@
     </div>
     <div class="form-group">
       <div class="form-group-label">
-        <label>{{ "Client Postal Code" | translate }}</label>
-        <small class="subtitle">{{
+        <p class="subtitle">{{
           "What is your postal code?" | translate
-        }}</small>
+        }}</p>
       </div>
       <input 
         class="input-filter" 
@@ -410,17 +384,16 @@
         placeholder="{{ 'Enter postal code' | translate }}" 
       />
       <div>
-        <small *ngIf="!isPostalCodeValid && filters.postalCodesServe" class="error-message">
+        <p *ngIf="!isPostalCodeValid && filters.postalCodesServe" class="error-message">
           {{ "Postal code must be exactly 6 digits without space" | translate }}
-        </small>
+        </p>
       </div>
     </div>
     <div class="form-group">
       <div class="form-group-label">
-        <label>{{ "Population Serve" | translate }}</label>
-        <small class="subtitle">{{
+        <p class="subtitle">{{
           "Which group do you belong to?" | translate
-        }}</small>
+        }}</p>
       </div>
       <div class="checkbox-group">
         <label>

@@ -16,7 +16,6 @@ export class FilterComponent {
   isPostalCodeValid: boolean = true;
 
   filters: {
-    appointmentType?: string;
     postalCodesServe?: string;
     serviceDeliveryModes: {
       inPerson?: boolean;
@@ -26,12 +25,9 @@ export class FilterComponent {
       dropOff?: boolean;
     };
     wheelchairAccessible?: string;
-    supportedTaxYears: {
-      currentYear?: boolean;
-      currentLastYears?: boolean;
-      multipleYears?: boolean;
-    };
-    provinces: { [key: string]: boolean };
+    supportedTaxYears?: string;
+    provinces?: string;
+    otherProvince?: string,
     specialTaxCases: {
       rentalIncome?: boolean;
       selfEmployment?: boolean;
@@ -69,7 +65,6 @@ export class FilterComponent {
       evening?: boolean;
     };
   } = {
-    appointmentType: '',
     postalCodesServe: '',
     serviceDeliveryModes: {
       inPerson: false,
@@ -79,16 +74,9 @@ export class FilterComponent {
       dropOff: false,
     },
     wheelchairAccessible: '',
-    supportedTaxYears: {
-      currentYear: false,
-      currentLastYears: false,
-      multipleYears: false,
-    },
-    provinces: {
-      Ontario: false,
-      Quebec: false,
-      Other: false,
-    },
+    supportedTaxYears: '',
+    provinces: '',
+    otherProvince: '',
     specialTaxCases: {
       rentalIncome: false,
       selfEmployment: false,
@@ -157,7 +145,6 @@ export class FilterComponent {
 
   resetFilters() {
     this.filters = {
-      appointmentType: '',
       postalCodesServe: '',
       serviceDeliveryModes: {
         inPerson: false,
@@ -167,16 +154,9 @@ export class FilterComponent {
         dropOff: false,
       },
       wheelchairAccessible: '',
-      supportedTaxYears: {
-        currentYear: false,
-        currentLastYears: false,
-        multipleYears: false,
-      },
-      provinces: {
-        Ontario: false,
-        Quebec: false,
-        Other: false,
-      },
+      supportedTaxYears: '',
+      provinces: '',
+      otherProvince: '',
       specialTaxCases: {
         rentalIncome: false,
         selfEmployment: false,
@@ -237,6 +217,18 @@ export class FilterComponent {
   onClientCategoriesToggle() {
     if (!this.filters.clientCategories.other) {
       this.filters.clientCategories.otherClientCategory = '';
+    }
+  }
+
+  onProvinceChange() {
+    if (this.filters.provinces !== 'Other') {
+      this.filters.otherProvince = '';
+    }
+  }
+
+  onOtherProvinceInput() {
+    if (this.filters.provinces !== 'Other') {
+      this.filters.provinces = 'Other'; 
     }
   }
 
