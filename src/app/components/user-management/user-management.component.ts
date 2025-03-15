@@ -62,7 +62,9 @@ export class UserManagementComponent implements OnInit {
 
   filterUsers() {
     this.filteredUsers = this.users.filter((user) =>
-      user.username.toLowerCase().includes(this.searchQuery.toLowerCase())
+      user.email.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
+      user.firstname.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
+      user.lastname.toLowerCase().includes(this.searchQuery.toLowerCase())
     );
   }
 
