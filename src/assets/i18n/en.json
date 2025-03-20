@@ -56,6 +56,7 @@
   "Appointment Availability": "Appointment Availability",
   "Yes": "Yes",
   "No": "No",
+  "I do not know": "I do not know",
   "Might be available soon": "Might be available soon",
   "Save": "Save",
   "Listed on CRA?": "Listed on CRA",
@@ -143,11 +144,11 @@
   "English": "English",
   "Arabic": "Arabic",
   "Population Serve": "Population Serve",
-  "Which group do you belong to?": "Which group do you belong to?",
+  "Do you belong to one of these groups?": "Do you belong to one of these groups?",
   "Access Documents": "Access Documents",
   "Do you need help with accessing documents?": "Do you need help with accessing documents?",
   "Special Tax Return Cases": "Special Tax Return Cases",
-  "Are you low income with a simple tax situation?": "Are you low income with a simple tax situation?",
+  "Do you have a simple tax situation excluding the following?": "Do you have a simple tax situation excluding the following?",
   "Newcomers": "Newcomers",
   "Seniors": "Seniors",
   "Students": "Students",
@@ -225,6 +226,12 @@
   "Listed or not on CRA": "Listed or not on CRA",
   "Listed or not on NCEO": "Listed or not on NCEO",
   "Information Public or not": "Information Public or not",
-  "Elligibility file Link": "Elligibility file Link"
+  "Elligibility file Link": "Elligibility file Link",
+  "Edit Tax Clinic": "Edit Tax Clinic",
+  "Add Tax Clinic": "Add Tax Clinic",
+  "Organisation Website": "Organisation Website",
+  "Enter Organisation Website": "Enter Organisation Website",
+  "Are you low income (CVITP)?": "Are you low income (CVITP)?",
+  "Enter other province": "Enter other province"
 }
 

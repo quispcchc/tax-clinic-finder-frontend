@@ -25,7 +25,34 @@
     <div class="form-group">
       <div class="form-group-label">
         <p class="subtitle">{{
-          "Are you low income with a simple tax situation?" | translate
+          "Are you low income (CVITP)?" | translate
+        }}</p>
+      </div>
+      <div class="radio-group">
+        <label>
+          <input
+            type="radio"
+            name="lowIncome"
+            value="Yes"
+            [(ngModel)]="filters.lowIncome"
+          />
+          {{ "Yes" | translate }}
+        </label>
+        <label>
+          <input
+            type="radio"
+            name="lowIncome"
+            value="No"
+            [(ngModel)]="filters.lowIncome"
+          />
+          {{ "No" | translate }}
+        </label>
+      </div>
+    </div>
+    <div class="form-group">
+      <div class="form-group-label">
+        <p class="subtitle">{{
+          "Do you have a simple tax situation excluding the following?" | translate
         }}</p>
       </div>
       <div class="checkbox-group">
@@ -147,47 +174,41 @@
             | translate
         }}</p>
       </div>
-      <div class="radio-group">
+      <div class="checkbox-group">
         <label>
           <input
-            type="radio"
-            name="provinces"
-            value="Ontario"
-            [(ngModel)]="filters.provinces"
-            (change)="onProvinceChange()"
+            type="checkbox"
+            name="ontario"
+            [(ngModel)]="filters.provinces.ontario"
           />
           {{ "Ontario" | translate }}
         </label>
         <label>
           <input
-            type="radio"
-            name="provinces"
-            value="Quebec"
-            [(ngModel)]="filters.provinces"
-            (change)="onProvinceChange()"
+            type="checkbox"
+            name="quebec"
+            [(ngModel)]="filters.provinces.quebec"
           />
           {{ "Quebec" | translate }}
         </label>
         <label>
           <input
-            type="radio"
-            name="provinces"
-            value="Other"
-            [(ngModel)]="filters.provinces"
-            (change)="onProvinceChange()"
+            type="checkbox"
+            name="other"
+            [(ngModel)]="filters.provinces.other"
+            (change)="onOtherProvinceToggle()"
           />
           {{ "Other" | translate }}
         </label>
       </div>
-      <div *ngIf="filters.provinces === 'Other'">
+      <div *ngIf="filters.provinces.other">
         <input
           class="input-filter"
           type="text"
           id="otherProvince"
-          [(ngModel)]="filters.otherProvince"
+          [(ngModel)]="filters.provinces.otherProvince"
           name="otherProvince"
           placeholder="{{ 'Enter other province' | translate }}"
-          (input)="onOtherProvinceInput()"
         />
       </div>
     </div>
@@ -392,7 +413,7 @@
     <div class="form-group">
       <div class="form-group-label">
         <p class="subtitle">{{
-          "Which group do you belong to?" | translate
+          "Do you belong to one of these groups?" | translate
         }}</p>
       </div>
       <div class="checkbox-group">

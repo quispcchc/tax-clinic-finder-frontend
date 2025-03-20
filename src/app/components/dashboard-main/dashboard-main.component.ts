@@ -220,6 +220,10 @@ export class DashboardMainComponent implements OnInit {
     const hasSelectedFilters = (filterGroup: any) =>
       Object.values(filterGroup || {}).some(Boolean);
 
+    if (filters['lowIncome'] === 'No') {
+      return [];
+    }
+
     let coordinates: { lat: number, lng: number } | null = null;
     const postalCodeFilter = filters['postalCodesServe'];
     
@@ -255,13 +259,15 @@ export class DashboardMainComponent implements OnInit {
         filters['supportedTaxYears'] === '';
 
       const matchesProvinces =
-        (filters['provinces']?.toLowerCase() === 'ontario' &&
-          (clinic.residencyTaxYear?.toLowerCase().includes('ontario'))) ||
-        (filters['provinces']?.toLowerCase() === 'quebec' &&
-          (clinic.residencyTaxYear?.toLowerCase().includes('quebec') || clinic.residencyTaxYear?.toLowerCase().includes('québec'))) ||
-        (filters['provinces']?.toLowerCase() === 'other' && filters['otherProvince']?.trim() !== '' &&
-          clinic.residencyTaxYear?.toLowerCase().includes(filters['otherProvince']?.toLowerCase())) ||
-        filters['provinces'] === '';
+        (filters['provinces']?.ontario &&
+          clinic.residencyTaxYear.toLowerCase().includes('ontario')) ||
+        (filters['provinces']?.quebec &&
+          (clinic.residencyTaxYear.toLowerCase().includes('quebec') ||
+            clinic.residencyTaxYear.toLowerCase().includes('québec'))) ||
+        (filters['provinces']?.other &&
+          filters['provinces']?.otherProvince &&
+          clinic.residencyTaxYear?.toLowerCase().includes(filters['provinces'].otherProvince.toLowerCase())) ||
+        !hasSelectedFilters(filters['provinces']);
         
       const matchesLanguage =
         (filters['languageOptions']?.french &&
@@ -275,11 +281,7 @@ export class DashboardMainComponent implements OnInit {
           clinic.serviceLanguages?.toLowerCase().includes('arabe'))) ||
         (filters['languageOptions']?.other &&
           filters['languageOptions']?.otherLanguage &&
-          clinic.serviceLanguages
-            ?.toLowerCase()
-            .includes(
-              filters['languageOptions'].otherLanguage.toLowerCase()
-            )) ||
+          clinic.serviceLanguages?.toLowerCase().includes(filters['languageOptions'].otherLanguage.toLowerCase())) ||
         !hasSelectedFilters(filters['languageOptions']);
 
       const matchesClient =
@@ -433,8 +435,8 @@ export class DashboardMainComponent implements OnInit {
         filters['serviceDeliveryModes'],
         serviceDeliveryModesMap
       ),
+      low_income: filters['lowIncome'] || '',
       wheelchair_accessible: filters['wheelchairAccessible'] || '',
-
       days_of_operation: this.extractTrueValues(filters['serviceDays'], {
         weekdays: 'Weekdays',
         weekends: 'Weekends',
@@ -444,7 +446,15 @@ export class DashboardMainComponent implements OnInit {
         evening: 'Evening',
       }),
       supported_tax_years: filters['supportedTaxYears'] || '',
-      province_of_residence: filters['provinces'] || '',
+      province_of_residence: this.extractTrueValues(
+        filters['provinces'],
+        {
+          ontario: 'Ontario',
+          quebec: 'Quebec',
+          other: 'Other Province',
+        },
+        'otherProvince'
+      ),
       language_options: this.extractTrueValues(
         filters['languageOptions'],
         {
@@ -457,7 +467,8 @@ export class DashboardMainComponent implements OnInit {
       ),
       population_serve: this.extractTrueValues(
         filters['clientCategories'],
-        clientCategoriesMap
+        clientCategoriesMap,
+        'otherClientCategory'
       ),
 
       special_cases: this.extractTrueValues(

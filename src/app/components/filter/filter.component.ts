@@ -16,6 +16,7 @@ export class FilterComponent {
   isPostalCodeValid: boolean = true;
 
   filters: {
+    lowIncome?: string;
     postalCodesServe?: string;
     serviceDeliveryModes: {
       inPerson?: boolean;
@@ -26,7 +27,12 @@ export class FilterComponent {
     };
     wheelchairAccessible?: string;
     supportedTaxYears?: string;
-    provinces?: string;
+    provinces: {
+      ontario?: boolean;
+      quebec?: boolean;
+      other?: boolean;
+      otherProvince?: string;
+    };
     otherProvince?: string,
     specialTaxCases: {
       rentalIncome?: boolean;
@@ -65,6 +71,7 @@ export class FilterComponent {
       evening?: boolean;
     };
   } = {
+    lowIncome: '',
     postalCodesServe: '',
     serviceDeliveryModes: {
       inPerson: false,
@@ -75,8 +82,12 @@ export class FilterComponent {
     },
     wheelchairAccessible: '',
     supportedTaxYears: '',
-    provinces: '',
-    otherProvince: '',
+    provinces: {
+      ontario: false,
+      quebec: false,
+      other: false,
+      otherProvince: ''
+    },
     specialTaxCases: {
       rentalIncome: false,
       selfEmployment: false,
@@ -145,6 +156,7 @@ export class FilterComponent {
 
   resetFilters() {
     this.filters = {
+      lowIncome: '',
       postalCodesServe: '',
       serviceDeliveryModes: {
         inPerson: false,
@@ -155,8 +167,12 @@ export class FilterComponent {
       },
       wheelchairAccessible: '',
       supportedTaxYears: '',
-      provinces: '',
-      otherProvince: '',
+      provinces: {
+        ontario: false,
+        quebec: false,
+        other: false,
+        otherProvince: ''
+      },
       specialTaxCases: {
         rentalIncome: false,
         selfEmployment: false,
@@ -220,15 +236,9 @@ export class FilterComponent {
     }
   }
 
-  onProvinceChange() {
-    if (this.filters.provinces !== 'Other') {
-      this.filters.otherProvince = '';
-    }
-  }
-
-  onOtherProvinceInput() {
-    if (this.filters.provinces !== 'Other') {
-      this.filters.provinces = 'Other'; 
+  onOtherProvinceToggle() {
+    if (!this.filters.provinces.other) {
+      this.filters.provinces.otherProvince = ''; 
     }
   }
 
