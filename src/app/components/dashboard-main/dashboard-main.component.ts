@@ -258,16 +258,25 @@ export class DashboardMainComponent implements OnInit {
           (clinic.taxYearsPrepared?.toLowerCase() === 'multiple years' || clinic.taxYearsPrepared?.toLowerCase() === 'plusieurs années')) ||
         filters['supportedTaxYears'] === '';
 
+
       const matchesProvinces =
         (filters['provinces']?.ontario &&
           clinic.residencyTaxYear.toLowerCase().includes('ontario')) ||
         (filters['provinces']?.quebec &&
           (clinic.residencyTaxYear.toLowerCase().includes('quebec') ||
-            clinic.residencyTaxYear.toLowerCase().includes('québec'))) ||
+          clinic.residencyTaxYear.toLowerCase().includes('québec'))) ||
         (filters['provinces']?.other &&
           filters['provinces']?.otherProvince &&
-          clinic.residencyTaxYear?.toLowerCase().includes(filters['provinces'].otherProvince.toLowerCase())) ||
-        !hasSelectedFilters(filters['provinces']);
+          clinic.residencyTaxYear?.toLowerCase().includes(filters['provinces'].otherProvince.toLowerCase()) &&
+          !clinic.residencyTaxYear.toLowerCase().includes('any province other than ontario and quebec') &&
+          !clinic.residencyTaxYear.toLowerCase().includes('toute autre province que l\'ontario et le québec')) ||
+        (filters['provinces']?.other &&
+          filters['provinces']?.otherProvince &&
+          (clinic.residencyTaxYear?.toLowerCase().includes('any province other than ontario and quebec') ||
+          clinic.residencyTaxYear?.toLowerCase().includes('toute autre province que l\'ontario et le québec')) &&
+          filters['provinces'].otherProvince.toLowerCase() !== 'ontario' && 
+          filters['provinces'].otherProvince.toLowerCase() !== 'quebec') ||
+          !hasSelectedFilters(filters['provinces']);
         
       const matchesLanguage =
         (filters['languageOptions']?.french &&
