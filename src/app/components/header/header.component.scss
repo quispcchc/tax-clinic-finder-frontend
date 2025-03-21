@@ -33,7 +33,7 @@
       border: none;
       padding: 10px 20px;
       font-size: 1rem;
-      font-weight: 500;
+      font-weight: 600;
       cursor: pointer;
       color: black;
       transition: color 0.3s ease;
@@ -41,7 +41,7 @@
       &.active {
         color: #006577;
         font-weight: 600;
-        border-bottom: 1px solid #006577;
+        border-bottom: 1.5px solid #006577;
         border-radius: 15px;
       }
 

@@ -20,10 +20,13 @@
     </div>
     <p>
       {{ "Website" | translate }}:
-      <a [href]="(clinic?.organisationWebsite?.startsWith('http') ? clinic?.organisationWebsite : 'https://' + (clinic?.organisationWebsite ?? ''))"
-        target="_blank" rel="noopener noreferrer" class="clinic-link">
-        {{ clinic.organisationWebsite }}
-      </a>
+      <ng-container *ngIf="clinic?.organisationWebsite; else noWebsite">
+        <a [href]="clinic.organisationWebsite.startsWith('http') ? clinic.organisationWebsite : 'https://' + clinic.organisationWebsite"
+           target="_blank" rel="noopener noreferrer" class="clinic-link">
+          {{ clinic.organisationWebsite }}
+        </a>
+      </ng-container>
+      <ng-template #noWebsite>N/A</ng-template>
     </p>
     <p>
       {{ "Appointment Availability" | translate }}:

@@ -16,7 +16,7 @@
     }
 
     h3 {
-      color: #333;
+      color: #000000;
     }
   }
 
@@ -66,7 +66,7 @@
 
       label {
         font-size: 1rem;
-        color: #333;
+        color: #000000;
         font-weight: 500;
       }
 
@@ -88,7 +88,7 @@
         display: flex;
         align-items: center;
         font-size: 1rem;
-        color: #333;
+        color: #000000;
 
         input[type="radio"] {
           margin-right: 10px;
@@ -106,7 +106,7 @@
         display: flex;
         align-items: center;
         font-size: 1rem;
-        color: #333;
+        color: #000000;
 
         input[type="checkbox"] {
           margin-right: 10px;
@@ -144,6 +144,7 @@
     border: 1px solid #0097b2;
     border-radius: 16px;
     cursor: pointer;
+    font-weight: 600;
 
     &:hover {
       background-color: #aadce5;
@@ -155,7 +156,7 @@
     border-radius: 16px;
     margin-top: 10px;
     padding: 7px;
-    border: 1px solid #ccc;
+    border: 1px solid #000000;
     width: 70%;
 
     &:focus {
@@ -218,8 +219,8 @@
 .slider:before {
   content: "";
   position: absolute;
-  height: 24px;
-  width: 24px;
+  height: 28px;
+  width: 28px;
   border-radius: 50%;
   background-color: white;
   transition: all 0.4s ease-in-out;
