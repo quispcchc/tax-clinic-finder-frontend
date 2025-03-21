@@ -98,6 +98,9 @@ export class MapComponent implements OnInit, OnChanges {
     for (const clinic of this.clinics) {
       try {
         const location = clinic.locations[0];
+        if (!location) {
+          continue;
+        }
         const fullAddress = `${location.street}, ${location.city}, ${location.state}, ${location.postalCode}`;
 
         const { lat, lng } = await this.postalCodeService.getCoordinates(fullAddress);
