@@ -239,15 +239,18 @@ export class DashboardMainComponent implements OnInit {
         (filters['serviceDeliveryModes']?.virtual &&
           (clinic.clinicTypes?.toLowerCase().includes('virtual') ||
           clinic.clinicTypes?.toLowerCase().includes('virtuelle'))) ||
-        (filters['serviceDeliveryModes']?.byAppointment &&
-          (clinic.clinicTypes?.toLowerCase().includes('by appointment') ||
-          clinic.clinicTypes?.toLowerCase().includes('sur rendez-vous'))) ||
-        (filters['serviceDeliveryModes']?.walkIn &&
-          clinic.clinicTypes?.toLowerCase().includes('walk-in')) ||
         (filters['serviceDeliveryModes']?.dropOff &&
           (clinic.clinicTypes?.toLowerCase().includes('drop-off') ||
           clinic.clinicTypes?.toLowerCase().includes('dépôt des documents'))) ||
         !hasSelectedFilters(filters['serviceDeliveryModes']);
+
+      const matchesModeOfService =
+        (filters['modeOfService']?.byAppointment &&
+          (clinic.clinicTypes?.toLowerCase().includes('by appointment') ||
+          clinic.clinicTypes?.toLowerCase().includes('sur rendez-vous'))) ||
+        (filters['modeOfService']?.walkIn &&
+          clinic.clinicTypes?.toLowerCase().includes('walk-in')) ||
+        !hasSelectedFilters(filters['modeOfService']); 
 
       const matchesSupportedTaxYears =
         (filters['supportedTaxYears']?.toLowerCase() === 'only current year' &&
@@ -378,6 +381,7 @@ export class DashboardMainComponent implements OnInit {
         matchesLanguage &&
         matchesClient &&
         matchesServiceDelivery &&
+        matchesModeOfService &&
         matchesWheelchairAccessible &&
         matchesDaysOfOperation &&
         matcheshoursOfOperation &&
@@ -394,9 +398,11 @@ export class DashboardMainComponent implements OnInit {
     const serviceDeliveryModesMap = {
       inPerson: 'In-Person',
       virtual: 'Virtual',
-      byAppointment: 'By Appointment',
-      walkIn: 'Walk-In',
       dropOff: 'Drop-Off',
+    };
+    const modeOfServiceMap = {
+      byAppointment: 'By Appointment',
+      walkIn: 'Walk-In'
     };
     const specialTaxCasesMap = {
       rentalIncome: 'Rental Income',
@@ -424,6 +430,10 @@ export class DashboardMainComponent implements OnInit {
       type_of_clinic: this.extractTrueValues(
         filters['serviceDeliveryModes'],
         serviceDeliveryModesMap
+      ),
+      mode_of_service: this.extractTrueValues(
+        filters['modeOfService'],
+        modeOfServiceMap
       ),
       low_income: filters['lowIncome'] || '',
       wheelchair_accessible: filters['wheelchairAccessible'] ? 'Yes' : '',

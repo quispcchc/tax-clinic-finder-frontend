@@ -148,18 +148,27 @@
           <span>{{ "Virtual" | translate }}</span>
         </div>
         <div class="checkbox-item">
-          <input type="checkbox" name="byAppointment" [(ngModel)]="filters.serviceDeliveryModes.byAppointment" />
+          <input type="checkbox" name="dropOff" [(ngModel)]="filters.serviceDeliveryModes.dropOff" />
+          <span>{{ "Drop-off" | translate }}</span>
+        </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <div class="form-group-label">
+        <p class="subtitle">{{
+          "What mode of service would you prefer?" | translate
+          }}</p>
+      </div>
+      <div class="checkbox-group">
+        <div class="checkbox-item">
+          <input type="checkbox" name="byAppointment" [(ngModel)]="filters.modeOfService.byAppointment" />
           <span>
             {{ "By appointment" | translate }}
           </span>
         </div>
         <div class="checkbox-item">
-          <input type="checkbox" name="walkIn" [(ngModel)]="filters.serviceDeliveryModes.walkIn" />
+          <input type="checkbox" name="walkIn" [(ngModel)]="filters.modeOfService.walkIn" />
           <span>{{ "Walk-in" | translate }}</span>
-        </div>
-        <div class="checkbox-item">
-          <input type="checkbox" name="dropOff" [(ngModel)]="filters.serviceDeliveryModes.dropOff" />
-          <span>{{ "Drop-off" | translate }}</span>
         </div>
       </div>
     </div>

@@ -21,9 +21,11 @@ export class FilterComponent {
     serviceDeliveryModes: {
       inPerson?: boolean;
       virtual?: boolean;
+      dropOff?: boolean;
+    };
+    modeOfService: {
       byAppointment?: boolean;
       walkIn?: boolean;
-      dropOff?: boolean;
     };
     wheelchairAccessible?: boolean;
     supportedTaxYears?: string;
@@ -72,9 +74,11 @@ export class FilterComponent {
     serviceDeliveryModes: {
       inPerson: false,
       virtual: false,
+      dropOff: false
+    },
+    modeOfService: {
       byAppointment: false,
-      walkIn: false,
-      dropOff: false,
+      walkIn: false
     },
     wheelchairAccessible: false,
     supportedTaxYears: '',
@@ -153,9 +157,11 @@ export class FilterComponent {
       serviceDeliveryModes: {
         inPerson: false,
         virtual: false,
-        byAppointment: false,
-        walkIn: false,
         dropOff: false,
+      },
+      modeOfService: {
+        byAppointment: false,
+        walkIn: false
       },
       wheelchairAccessible: false,
       supportedTaxYears: '',
