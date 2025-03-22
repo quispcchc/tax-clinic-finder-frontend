@@ -264,19 +264,15 @@ export class DashboardMainComponent implements OnInit {
           clinic.residencyTaxYear.toLowerCase().includes('ontario')) ||
         (filters['provinces']?.quebec &&
           (clinic.residencyTaxYear.toLowerCase().includes('quebec') ||
-          clinic.residencyTaxYear.toLowerCase().includes('québec'))) ||
-        (filters['provinces']?.other &&
-          filters['provinces']?.otherProvince &&
-          clinic.residencyTaxYear?.toLowerCase().includes(filters['provinces'].otherProvince.toLowerCase()) &&
-          !clinic.residencyTaxYear.toLowerCase().includes('any province other than ontario and quebec') &&
-          !clinic.residencyTaxYear.toLowerCase().includes('toute autre province que l\'ontario et le québec')) ||
-        (filters['provinces']?.other &&
-          filters['provinces']?.otherProvince &&
-          (clinic.residencyTaxYear?.toLowerCase().includes('any province other than ontario and quebec') ||
-          clinic.residencyTaxYear?.toLowerCase().includes('toute autre province que l\'ontario et le québec')) &&
-          filters['provinces'].otherProvince.toLowerCase() !== 'ontario' && 
-          filters['provinces'].otherProvince.toLowerCase() !== 'quebec') ||
-          !hasSelectedFilters(filters['provinces']);
+            clinic.residencyTaxYear.toLowerCase().includes('québec'))) ||
+        (filters['provinces']?.anyOtherProvince &&
+          (clinic.residencyTaxYear
+            .toLowerCase()
+            .includes('any province other than ontario and quebec') ||
+            clinic.residencyTaxYear
+              .toLowerCase()
+              .includes('toute autre province que l\'ontario et le québec'))) ||
+        !hasSelectedFilters(filters['provinces']);
         
       const matchesLanguage =
         (filters['languageOptions']?.french &&
@@ -309,24 +305,17 @@ export class DashboardMainComponent implements OnInit {
         (filters['clientCategories']?.disabilities &&
           (clinic.populationServed?.toLowerCase().includes('persons with disabilities') ||
           clinic.populationServed?.toLowerCase().includes('personnes en situation de handicap'))) ||
-        (filters['clientCategories']?.languageSpecific &&
-          (clinic.populationServed?.toLowerCase().includes('language-specific community') ||
-          clinic.populationServed?.toLowerCase().includes('communauté spécifique à une langue'))) ||
-        (filters['clientCategories']?.other &&
-          filters['clientCategories']?.otherClientCategory &&
-          clinic.populationServed
-            ?.toLowerCase()
-            .includes(
-              filters['clientCategories'].otherClientCategory.toLowerCase()
-            )) ||
+        (filters['clientCategories']?.lgbtq &&
+          (clinic.populationServed?.toLowerCase().includes('2slgbtqi+'))) ||
+        (filters['clientCategories']?.ruralPopulation &&
+          (clinic.populationServed?.toLowerCase().includes('rural population') ||
+          clinic.populationServed?.toLowerCase().includes('population rurale'))) ||
         !hasSelectedFilters(filters['clientCategories']);
 
-      const matchesWheelchairAccessible =
-        (filters['wheelchairAccessible'] === 'Yes' &&
-          (clinic.wheelchairAccessible === 'Yes' || clinic.wheelchairAccessible === 'Oui')) ||
-        (filters['wheelchairAccessible'] === 'No' &&
-          (clinic.wheelchairAccessible === 'No' || clinic.wheelchairAccessible === 'Non')) ||
-        filters['wheelchairAccessible'] === '';
+      const matchesWheelchairAccessible = 
+        !filters['wheelchairAccessible'] ||
+        (filters['wheelchairAccessible'] && 
+        (clinic.wheelchairAccessible === 'Yes' || clinic.wheelchairAccessible === 'Oui'));
 
       const matchesDaysOfOperation =
         (filters['serviceDays']?.weekdays &&
@@ -370,13 +359,6 @@ export class DashboardMainComponent implements OnInit {
         (filters['specialTaxCases']?.largerIncome &&
           (clinic.servePeople?.toLowerCase().includes('larger income than cvitp income-criteria. when people are low income now') ||
           clinic.servePeople?.toLowerCase().includes('revenu supérieur aux critères de revenu du cvitp. lorsque les personnes ont un faible revenu actuellement'))) ||
-        (filters['specialTaxCases']?.other &&
-          filters['specialTaxCases']?.otherSpecialTaxCases &&
-          clinic.servePeople
-            ?.toLowerCase()
-            .includes(
-              filters['specialTaxCases'].otherSpecialTaxCases.toLowerCase()
-            )) ||
         !hasSelectedFilters(filters['specialTaxCases']);
 
         const matchesPostalCode = !postalCodeFilter || 
@@ -423,9 +405,7 @@ export class DashboardMainComponent implements OnInit {
       deceasedPerson: 'Return for a deceased person',
       employmentExpenses: 'Employment expenses (with specific conditions)',
       capitalGains: 'Capital Gains/losses (with specific conditions)',
-      largerIncome:
-        'Larger income than CVITP income-criteria. when people are low income now',
-      other: 'Other Special Cases',
+      largerIncome: 'Larger income than CVITP income-criteria. when people are low income now'
     };
     const clientCategoriesMap = {
       newcomers: 'Newcomers',
@@ -433,7 +413,8 @@ export class DashboardMainComponent implements OnInit {
       indigenousClients: 'Indigenous (First Nations and Inuit and Metis)',
       seniors: 'Seniors',
       disabilities: 'Persons with disabilities',
-      languageSpecific: 'Language-specific community',
+      lgbtq: '2SLGBTQI+',
+      ruralPopulation: 'Rural population'
     };
 
     const organizationNames = filteredClinics
@@ -445,7 +426,7 @@ export class DashboardMainComponent implements OnInit {
         serviceDeliveryModesMap
       ),
       low_income: filters['lowIncome'] || '',
-      wheelchair_accessible: filters['wheelchairAccessible'] || '',
+      wheelchair_accessible: filters['wheelchairAccessible'] ? 'Yes' : '',
       days_of_operation: this.extractTrueValues(filters['serviceDays'], {
         weekdays: 'Weekdays',
         weekends: 'Weekends',
@@ -460,9 +441,8 @@ export class DashboardMainComponent implements OnInit {
         {
           ontario: 'Ontario',
           quebec: 'Quebec',
-          other: 'Other Province',
-        },
-        'otherProvince'
+          anyOtherProvince: 'Provinces other than Ontario and Quebec',
+        }
       ),
       language_options: this.extractTrueValues(
         filters['languageOptions'],
@@ -476,14 +456,12 @@ export class DashboardMainComponent implements OnInit {
       ),
       population_serve: this.extractTrueValues(
         filters['clientCategories'],
-        clientCategoriesMap,
-        'otherClientCategory'
+        clientCategoriesMap
       ),
 
       special_cases: this.extractTrueValues(
         filters['specialTaxCases'],
-        specialTaxCasesMap,
-        'otherSpecialTaxCases'
+        specialTaxCasesMap
       ),
       client_postal_code: filters['postalCodesServe'],
       clinics_listed: organizationNames || '',

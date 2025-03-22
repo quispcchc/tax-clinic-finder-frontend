@@ -25,13 +25,12 @@ export class FilterComponent {
       walkIn?: boolean;
       dropOff?: boolean;
     };
-    wheelchairAccessible?: string;
+    wheelchairAccessible?: boolean;
     supportedTaxYears?: string;
     provinces: {
       ontario?: boolean;
       quebec?: boolean;
-      other?: boolean;
-      otherProvince?: string;
+      anyOtherProvince?: boolean;
     };
     otherProvince?: string,
     specialTaxCases: {
@@ -42,8 +41,6 @@ export class FilterComponent {
       employmentExpenses?: boolean;
       capitalGains?: boolean;
       largerIncome?: boolean;
-      other?:boolean;
-      otherSpecialTaxCases?: string;
     };
     languageOptions: {
       french?: boolean;
@@ -58,9 +55,8 @@ export class FilterComponent {
       indigenousClients?: boolean;
       seniors?: boolean;
       disabilities?: boolean;
-      languageSpecific?: boolean;
-      other?: boolean;
-      otherClientCategory?: string;
+      lgbtq?: boolean;
+      ruralPopulation?: boolean;
     };
     serviceDays: {
       weekdays?: boolean;
@@ -80,13 +76,12 @@ export class FilterComponent {
       walkIn: false,
       dropOff: false,
     },
-    wheelchairAccessible: '',
+    wheelchairAccessible: false,
     supportedTaxYears: '',
     provinces: {
       ontario: false,
       quebec: false,
-      other: false,
-      otherProvince: ''
+      anyOtherProvince: false
     },
     specialTaxCases: {
       rentalIncome: false,
@@ -95,9 +90,7 @@ export class FilterComponent {
       deceasedPerson: false,
       employmentExpenses: false,
       capitalGains: false,
-      largerIncome: false,
-      other: false,
-      otherSpecialTaxCases: '',
+      largerIncome: false
     },
     languageOptions: {
       french: false,
@@ -112,9 +105,8 @@ export class FilterComponent {
       indigenousClients: false,
       seniors: false,
       disabilities: false,
-      languageSpecific: false,
-      other: false,
-      otherClientCategory: ''
+      lgbtq: false,
+      ruralPopulation: false
     },
     serviceDays: {
       weekdays: false,
@@ -165,13 +157,12 @@ export class FilterComponent {
         walkIn: false,
         dropOff: false,
       },
-      wheelchairAccessible: '',
+      wheelchairAccessible: false,
       supportedTaxYears: '',
       provinces: {
         ontario: false,
         quebec: false,
-        other: false,
-        otherProvince: ''
+        anyOtherProvince: false
       },
       specialTaxCases: {
         rentalIncome: false,
@@ -180,9 +171,7 @@ export class FilterComponent {
         deceasedPerson: false,
         employmentExpenses: false,
         capitalGains: false,
-        largerIncome: false,
-        other: false,
-        otherSpecialTaxCases: '',
+        largerIncome: false
       },
       languageOptions: {
         french: false,
@@ -197,9 +186,8 @@ export class FilterComponent {
         indigenousClients: false,
         seniors: false,
         disabilities: false,
-        languageSpecific: false,
-        other: false,
-        otherClientCategory: ''
+        lgbtq: false,
+        ruralPopulation: false
       },
       serviceDays: {
         weekdays: false,
@@ -221,24 +209,6 @@ export class FilterComponent {
   onOtherLanguageToggle() {
     if (!this.filters.languageOptions.other) {
       this.filters.languageOptions.otherLanguage = '';
-    }
-  }
-
-  onOtherSpecialTaxCasesToggle() {
-    if (!this.filters.specialTaxCases.other) {
-      this.filters.specialTaxCases.otherSpecialTaxCases = '';
-    }
-  }
-
-  onClientCategoriesToggle() {
-    if (!this.filters.clientCategories.other) {
-      this.filters.clientCategories.otherClientCategory = '';
-    }
-  }
-
-  onOtherProvinceToggle() {
-    if (!this.filters.provinces.other) {
-      this.filters.provinces.otherProvince = ''; 
     }
   }
 
