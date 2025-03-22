@@ -160,6 +160,18 @@ dd {
   text-align: left;
 }
 
+.bullet-list {
+  list-style-type: none;
+  padding-left: 0;
+}
+
+.bullet-list div::before {
+  content: "•";
+  color: #007e94;
+  font-size: 1.2em;
+  margin-right: 8px;
+}
+
 @media (max-width: 768px) {
   .modal-content {
     width: 90%;

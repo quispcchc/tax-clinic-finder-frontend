@@ -126,8 +126,10 @@ export class DashboardMainComponent implements OnInit {
     );
   }
 
-  sortClinics(postalCodeFilter?: string, coordinates?: { lat: number, lng: number }) {
+  sortClinics( filters?: { [key: string]: any }, coordinates?: { lat: number, lng: number }) {
     const appointmentPriority: Record<string, number> = { 'Yes': 1, 'No': 2, 'Might be available soon': 3 };
+
+    const postalCodeFilter = filters?.['postalCodesServe'];
   
     const populationPriority: Record<string, number> = {
       'newcomers': 1,
@@ -160,6 +162,35 @@ export class DashboardMainComponent implements OnInit {
       }
       return 99;
     };
+
+    const languageOptions = filters?.['languageOptions'];
+    const selectedLanguages: string[] = [];
+
+    if (languageOptions) {
+      if (languageOptions.english) selectedLanguages.push('english');
+      if (languageOptions.french) selectedLanguages.push('french');
+  
+      if (languageOptions.other && languageOptions.otherLanguage) {
+        selectedLanguages.push(languageOptions.otherLanguage.toLowerCase());
+      }
+    }
+
+      const getLanguagePriority = (clinic: any): number => {
+        if (selectedLanguages.length === 0) return 99;     
+        const clinicLanguages = clinic.serviceLanguages?.toLowerCase().split(/\s*,\s*/) || [];       
+        for (const lang of selectedLanguages) {
+          if (lang !== 'english' && lang !== 'french' && clinicLanguages.includes(lang)) {
+            return 0;
+          }
+        }     
+        if (selectedLanguages.includes('french') && clinicLanguages.includes('french')) {
+          return 1;
+        }      
+        if (selectedLanguages.includes('english') && clinicLanguages.includes('english')) {
+          return 2;
+        }     
+        return 3;
+      };
   
     this.filteredClinics.sort((a, b) => {
       const priorityA = appointmentPriority[a.appointmentAvailability] ?? 4;
@@ -172,7 +203,11 @@ export class DashboardMainComponent implements OnInit {
   
       const popPriorityA = getPopulationPriority(a);
       const popPriorityB = getPopulationPriority(b);
-      return popPriorityA - popPriorityB;
+      if (popPriorityA !== popPriorityB) return popPriorityA - popPriorityB;
+
+      const langPriorityA = getLanguagePriority(a);
+      const langPriorityB = getLanguagePriority(b);
+      return langPriorityA - langPriorityB;
     });
   }  
 
@@ -213,7 +248,7 @@ export class DashboardMainComponent implements OnInit {
       }
     }
 
-    this.sortClinics(filters?.['postalCodesServe'], coordinates);
+    this.sortClinics(filters ?? undefined, coordinates);
   }
 
   private async filterClinics(clinics: any[], filters: { [key: string]: any }): Promise<any[]> {
@@ -254,29 +289,22 @@ export class DashboardMainComponent implements OnInit {
 
       const matchesSupportedTaxYears =
         (filters['supportedTaxYears']?.toLowerCase() === 'only current year' &&
-          (clinic.taxYearsPrepared?.toLowerCase() === 'only current year' || clinic.taxYearsPrepared?.toLowerCase() === 'année en cours seule')) ||
+          (clinic.taxYearsPrepared?.toLowerCase().includes('only current year') || clinic.taxYearsPrepared?.toLowerCase().includes('année en cours seule'))) ||
         (filters['supportedTaxYears']?.toLowerCase() === 'current and last year' &&
-          (clinic.taxYearsPrepared?.toLowerCase() === 'current and last year' || clinic.taxYearsPrepared?.toLowerCase() === 'année en cours et dernière année')) ||
+          (clinic.taxYearsPrepared?.toLowerCase().includes('current and last year') || clinic.taxYearsPrepared?.toLowerCase().includes('année en cours et dernière année'))) ||
         (filters['supportedTaxYears']?.toLowerCase() === 'multiple years' &&
-          (clinic.taxYearsPrepared?.toLowerCase() === 'multiple years' || clinic.taxYearsPrepared?.toLowerCase() === 'plusieurs années')) ||
+          (clinic.taxYearsPrepared?.toLowerCase().includes('multiple years') || clinic.taxYearsPrepared?.toLowerCase().includes('plusieurs années'))) ||
         filters['supportedTaxYears'] === '';
-
-
-      const matchesProvinces =
-        (filters['provinces']?.ontario &&
-          clinic.residencyTaxYear.toLowerCase().includes('ontario')) ||
-        (filters['provinces']?.quebec &&
-          (clinic.residencyTaxYear.toLowerCase().includes('quebec') ||
-            clinic.residencyTaxYear.toLowerCase().includes('québec'))) ||
-        (filters['provinces']?.anyOtherProvince &&
-          (clinic.residencyTaxYear
-            .toLowerCase()
-            .includes('any province other than ontario and quebec') ||
-            clinic.residencyTaxYear
-              .toLowerCase()
-              .includes('toute autre province que l\'ontario et le québec'))) ||
-        !hasSelectedFilters(filters['provinces']);
         
+      const clinicProvinces = clinic.residencyTaxYear?.toLowerCase().split(/\s*,\s*/) || [];
+      const matchesProvinces =
+        (!filters['provinces']?.ontario || clinicProvinces.includes('ontario')) &&
+        (!filters['provinces']?.quebec || 
+          (clinicProvinces.includes('quebec') || clinicProvinces.includes('québec'))) &&
+        (!filters['provinces']?.anyOtherProvince || 
+          clinicProvinces.includes('any province other than ontario and quebec') || 
+          clinicProvinces.includes("toute autre province que l'ontario et le québec"));
+
       const matchesLanguage =
         (filters['languageOptions']?.french &&
           (clinic.serviceLanguages?.toLowerCase().includes('french') || 
@@ -341,28 +369,57 @@ export class DashboardMainComponent implements OnInit {
           !filters['serviceHours']?.evening);
 
       const matchesSpecialTaxCases =
-        (filters['specialTaxCases']?.rentalIncome &&
-          (clinic.servePeople?.toLowerCase().includes('rental income') ||
-          clinic.servePeople?.toLowerCase().includes('revenus locatifs'))) ||
-        (filters['specialTaxCases']?.selfEmployment &&
-          (clinic.servePeople?.toLowerCase().includes('self-employment income') ||
-          clinic.servePeople?.toLowerCase().includes("revenu d'un travail indépendant"))) ||
-        (filters['specialTaxCases']?.incomeOver &&
-          (clinic.servePeople?.toLowerCase().includes('interest income over 1000$') ||
-          clinic.servePeople?.toLowerCase().includes("revenu d'intérêts supérieur à 1000$"))) ||
-        (filters['specialTaxCases']?.deceasedPerson &&
-          (clinic.servePeople?.toLowerCase().includes('return for a deceased person') ||
-          clinic.servePeople?.toLowerCase().includes('déclarations pour une personne décédée'))) ||
-        (filters['specialTaxCases']?.employmentExpenses &&
-          (clinic.servePeople?.toLowerCase().includes('employment expenses (with specific conditions)') ||
-          clinic.servePeople?.toLowerCase().includes("dépenses d’emploi (sous conditions spécifiques)"))) ||
-        (filters['specialTaxCases']?.capitalGains &&
-          (clinic.servePeople?.toLowerCase().includes('capital gains/losses (with specific conditions)') ||
-          clinic.servePeople?.toLowerCase().includes('gains/pertes en capital (avec conditions spécifiques)'))) ||
-        (filters['specialTaxCases']?.largerIncome &&
-          (clinic.servePeople?.toLowerCase().includes('larger income than cvitp income-criteria. when people are low income now') ||
-          clinic.servePeople?.toLowerCase().includes('revenu supérieur aux critères de revenu du cvitp. lorsque les personnes ont un faible revenu actuellement'))) ||
-        !hasSelectedFilters(filters['specialTaxCases']);
+        (!filters['specialTaxCases']?.rentalIncome ||
+          clinic.servePeople?.toLowerCase().includes('rental income') ||
+          clinic.servePeople?.toLowerCase().includes('revenus locatifs')) &&
+        (!filters['specialTaxCases']?.selfEmployment ||
+          clinic.servePeople
+            ?.toLowerCase()
+            .includes('self-employment income') ||
+          clinic.servePeople
+            ?.toLowerCase()
+            .includes("revenu d'un travail indépendant")) &&
+        (!filters['specialTaxCases']?.incomeOver ||
+          clinic.servePeople
+            ?.toLowerCase()
+            .includes('interest income over 1000$') ||
+          clinic.servePeople
+            ?.toLowerCase()
+            .includes("revenu d'intérêts supérieur à 1000$")) &&
+        (!filters['specialTaxCases']?.deceasedPerson ||
+          clinic.servePeople
+            ?.toLowerCase()
+            .includes('return for a deceased person') ||
+          clinic.servePeople
+            ?.toLowerCase()
+            .includes('déclarations pour une personne décédée')) &&
+        (!filters['specialTaxCases']?.employmentExpenses ||
+          clinic.servePeople
+            ?.toLowerCase()
+            .includes('employment expenses (with specific conditions)') ||
+          clinic.servePeople
+            ?.toLowerCase()
+            .includes('dépenses d’emploi (sous conditions spécifiques)')) &&
+        (!filters['specialTaxCases']?.capitalGains ||
+          clinic.servePeople
+            ?.toLowerCase()
+            .includes('capital gains/losses (with specific conditions)') ||
+          clinic.servePeople
+            ?.toLowerCase()
+            .includes(
+              'gains/pertes en capital (avec conditions spécifiques)'
+            )) &&
+        (!filters['specialTaxCases']?.largerIncome ||
+          clinic.servePeople
+            ?.toLowerCase()
+            .includes(
+              'larger income than cvitp income-criteria. when people are low income now'
+            ) ||
+          clinic.servePeople
+            ?.toLowerCase()
+            .includes(
+              'revenu supérieur aux critères de revenu du cvitp. lorsque les personnes ont un faible revenu actuellement'
+            ));
 
         const matchesPostalCode = !postalCodeFilter || 
           !clinic.catchmentBoundaries ||

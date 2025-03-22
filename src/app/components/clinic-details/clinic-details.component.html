@@ -30,8 +30,10 @@
             <dt>{{ "Clinic other Locations" | translate }}:</dt>
             <dd>
               <ng-container *ngIf="clinic?.otherBranches">
-                <div *ngFor="let branch of getFormattedArray(clinic?.otherBranches)">
-                  {{ branch.trim() }}
+                <div class="bullet-list">
+                  <div *ngFor="let branch of getFormattedArray(clinic?.otherBranches)">
+                    {{ branch.trim() }}
+                  </div>
                 </div>
               </ng-container>
               <ng-container *ngIf="!clinic?.otherBranches">N/A</ng-container>
@@ -52,8 +54,10 @@
             <dt>{{ "Type of Clinic" | translate }}:</dt>
              <dd>
               <ng-container *ngIf="clinic?.clinicTypes">
-                <div *ngFor="let type of getFormattedArray(clinic?.clinicTypes)">
-                  {{ type.trim() }}
+                <div class="bullet-list">
+                  <div *ngFor="let type of getFormattedArray(clinic?.clinicTypes)">
+                    {{ type.trim() }}
+                  </div>
                 </div>
               </ng-container>
               <ng-container *ngIf="!clinic?.clinicTypes">N/A</ng-container>
@@ -84,8 +88,10 @@
             </dt>
             <dd>
               <ng-container *ngIf="clinic?.hoursOfOperation">
-                <div *ngFor="let hours of getFormattedArray(clinic?.hoursOfOperation)">
-                  {{ hours.trim() }}
+                <div class="bullet-list">
+                  <div *ngFor="let hours of getFormattedArray(clinic?.hoursOfOperation)">
+                    {{ hours.trim() }}
+                  </div>
                 </div>
               </ng-container>
               <ng-container *ngIf="!clinic?.hoursOfOperation">N/A</ng-container>
@@ -97,8 +103,10 @@
             </dt>
             <dd>
               <ng-container *ngIf="clinic?.daysOfOperation">
-                <div *ngFor="let day of getFormattedArray(clinic?.daysOfOperation)">
-                  {{ day.trim() }}
+                <div class="bullet-list">
+                  <div *ngFor="let day of getFormattedArray(clinic?.daysOfOperation)">
+                    {{ day.trim() }}
+                  </div>
                 </div>
               </ng-container>
               <ng-container *ngIf="!clinic?.daysOfOperation">N/A</ng-container>
@@ -108,8 +116,10 @@
             <dt>{{ "Population serve" | translate }}:</dt>
             <dd>
               <ng-container *ngIf="clinic?.populationServed">
-                <div *ngFor="let population of getFormattedArray(clinic?.populationServed)">
-                  {{ population.trim() }}
+                <div class="bullet-list">
+                  <div *ngFor="let population of getFormattedArray(clinic?.populationServed)">
+                    {{ population.trim() }}
+                  </div>
                 </div>
               </ng-container>
               <ng-container *ngIf="!clinic?.populationServed">N/A</ng-container>
@@ -119,8 +129,10 @@
             <dt>{{ "Available in" | translate }}:</dt>
             <dd>
             <ng-container *ngIf="clinic?.serviceLanguages">
-              <div *ngFor="let language of getFormattedArray(clinic?.serviceLanguages)">
-                {{ language.trim() }}
+              <div class="bullet-list">
+                <div *ngFor="let language of getFormattedArray(clinic?.serviceLanguages)">
+                  {{ language.trim() }}
+                </div>
               </div>
             </ng-container>
             <ng-container *ngIf="!clinic?.serviceLanguages">N/A</ng-container>
@@ -130,8 +142,10 @@
             <dt>{{ "Year(s) prepared" | translate }}:</dt>
             <dd>
               <ng-container *ngIf="clinic?.taxYearsPrepared">
-                <div *ngFor="let taxYear of getFormattedArray(clinic?.taxYearsPrepared)" class="data-list">
-                  {{ taxYear.trim() }}
+                <div class="bullet-list">
+                  <div *ngFor="let taxYear of getFormattedArray(clinic?.taxYearsPrepared)" class="data-list">
+                    {{ taxYear.trim() }}
+                  </div>
                 </div>
               </ng-container>
               <ng-container *ngIf="!clinic?.taxYearsPrepared">N/A</ng-container>
@@ -146,8 +160,10 @@
             </dt>
             <dd>
               <ng-container *ngIf="clinic?.residencyTaxYear">
-                <div *ngFor="let taxYear of getFormattedArray(clinic?.residencyTaxYear)">
-                  {{ taxYear.trim() }}
+                <div class="bullet-list">
+                  <div *ngFor="let taxYear of getFormattedArray(clinic?.residencyTaxYear)">
+                    {{ taxYear.trim() }}
+                  </div>
                 </div>
               </ng-container>
               <ng-container *ngIf="!clinic?.residencyTaxYear">N/A</ng-container>
@@ -157,8 +173,10 @@
             <dt>{{ "Special services?" | translate }}:</dt>
             <dd>
               <ng-container *ngIf="clinic?.servePeople">
-                <div *ngFor="let serve of getFormattedArray(clinic?.servePeople)">
-                  {{ serve.trim() }}
+                <div class="bullet-list">
+                  <div *ngFor="let serve of getFormattedArray(clinic?.servePeople)">
+                    {{ serve.trim() }}
+                  </div>
                 </div>
               </ng-container>
               <ng-container *ngIf="!clinic?.servePeople">N/A</ng-container>
@@ -180,8 +198,10 @@
             <dt>{{ "Booking process" | translate }}:</dt>
             <dd>
               <ng-container *ngIf="clinic?.bookingProcess">
-                <div *ngFor="let process of getFormattedArray(clinic?.bookingProcess)">
-                  {{ process.trim() }}
+                <div class="bullet-list">
+                  <div *ngFor="let process of getFormattedArray(clinic?.bookingProcess)">
+                    {{ process.trim() }}
+                  </div>
                 </div>
               </ng-container>
               <ng-container *ngIf="!clinic?.bookingProcess">N/A</ng-container>
@@ -227,8 +247,10 @@
             <dt>{{ "Required Documents for appointment" | translate }}:</dt>
             <dd>
               <ng-container *ngIf="clinic?.requiredDocuments">
-                <div *ngFor="let documents of getFormattedArray(clinic?.requiredDocuments)">
-                  {{ documents.trim() }}
+                <div class="bullet-list">
+                  <div *ngFor="let documents of getFormattedArray(clinic?.requiredDocuments)">
+                    {{ documents.trim() }}
+                  </div>
                 </div>
               </ng-container>
               <ng-container *ngIf="!clinic?.requiredDocuments">N/A</ng-container>
@@ -243,8 +265,10 @@
             </dt>
             <dd>
               <ng-container *ngIf="clinic?.helpWithMissingDocs">
-                <div *ngFor="let helpDocs of getFormattedArray(clinic?.helpWithMissingDocs)">
-                  {{ helpDocs.trim() }}
+                <div class="bullet-list">
+                  <div *ngFor="let helpDocs of getFormattedArray(clinic?.helpWithMissingDocs)">
+                    {{ helpDocs.trim() }}
+                  </div>
                 </div>
               </ng-container>
               <ng-container *ngIf="!clinic?.helpWithMissingDocs">N/A</ng-container>
