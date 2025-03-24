@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, SimpleChanges } from '@angular/core';
+import { Component, Input, OnInit, ChangeDetectorRef } from '@angular/core';
 import { Clinic } from '../../models/clinic.model';
 import { ClinicService } from '../../services/clinic.service';
 import { LanguageService } from '../../services/language.service';
@@ -28,7 +28,8 @@ export class DashboardMainComponent implements OnInit {
     private http: HttpClient,
     private clinicService: ClinicService,
     private languageService: LanguageService,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private cdr: ChangeDetectorRef
   ) {
     this.currentLanguage = this.languageService.getLanguage();
   }
@@ -118,7 +119,6 @@ export class DashboardMainComponent implements OnInit {
         this.filteredClinics = [...this.clinics];
 
         this.sortClinics();
-        console.log('the clinic details are....', this.filteredClinics);
       },
       (error) => {
         console.error('Failed to load tax clinics:', error);
@@ -132,22 +132,20 @@ export class DashboardMainComponent implements OnInit {
     const postalCodeFilter = filters?.['postalCodesServe'];
     const clinicCoordinateCache = new Map<string, { lat: number, lng: number }>();
     const distanceCache = new Map<any, number>();
+    const servesPostalCodeCache = new Map<any, boolean>();
+    const hasCatchmentBoundariesCache = new Map<any, boolean>();
 
     if (postalCodeFilter && coordinates) {
       await Promise.all(this.filteredClinics.map(async (clinic) => {
         let distance = Infinity;
-  
-        if (clinic?.['location']) {
+        let servesPostalCode = false;
+        let hasCatchmentBoundaries = false;
+
+        if (clinic?.['locations']) {
           let clinicCoords: { lat: number; lng: number } | undefined;
-  
-          if (clinic['location'].lat !== undefined && clinic['location'].lng !== undefined) {
-            clinicCoords = { 
-              lat: clinic['location'].lat, 
-              lng: clinic['location'].lng 
-            };
-          }
-          else if (clinic['location'].postalCode) {
-            const postalCode = clinic['location'].postalCode;
+
+          if (clinic.locations[0] && clinic.locations[0].postalCode) {
+            const postalCode = clinic.locations[0].postalCode;
             if (!clinicCoordinateCache.has(postalCode)) {
               const coords = await this.geocodePostalCode(postalCode);
               if (coords) {
@@ -156,46 +154,39 @@ export class DashboardMainComponent implements OnInit {
             }
             clinicCoords = clinicCoordinateCache.get(postalCode);
           }
-  
+
           if (clinicCoords) {
             distance = this.calculateDistance(coordinates, clinicCoords);
           }
+
+          if (clinic.catchmentBoundaries) {
+            hasCatchmentBoundaries = true;
+            const features = (clinic.catchmentBoundaries as any)?.features;
+            if (Array.isArray(features)) {
+              servesPostalCode = features.some((feature: any) => {
+                if (feature?.geometry?.type === 'Polygon' && feature.geometry.coordinates) {
+                  const polygonCoordinates = feature.geometry.coordinates[0];
+                  const point: [number, number] = [coordinates.lng, coordinates.lat];
+                  return this.isPointInPolygon(point, polygonCoordinates);
+                }
+                return false;
+              });
+            }
+          }
         }
-  
+
         distanceCache.set(clinic, distance);
+        servesPostalCodeCache.set(clinic, servesPostalCode);
+        hasCatchmentBoundariesCache.set(clinic, hasCatchmentBoundaries);
       }));
     }
-
-    const doesClinicServePostalCode = (clinic: any): boolean => {
-      if (!postalCodeFilter || !coordinates) return false;
-      return clinic.catchmentBoundaries?.features?.some((feature: any) => {
-        if (feature.geometry?.type === 'Polygon' && feature.geometry.coordinates) {
-          const polygonCoordinates = feature.geometry.coordinates[0];
-          const point: [number, number] = [coordinates.lng, coordinates.lat];
-          return this.isPointInPolygon(point, polygonCoordinates);
-        }
-        return false;
-      }) ?? false;
-    };
   
     const populationPriority: Record<string, number> = {
       'newcomers': 1,
       'seniors': 2,
       'persons with disabilities': 3,
       'students': 4,
-      'indigenous (first nations and inuit and metis)': 5,
-      'language-specific community': 6
-    };
-
-    const getPopulationPriority = (clinic: any) => {
-      if (!clinic.populationServed) return 99;
-      const populations = clinic.populationServed.toLowerCase().split(', ');
-      for (const population of populations) {
-        if (populationPriority[population]) {
-          return populationPriority[population];
-        }
-      }
-      return 99;
+      'indigenous (first nations and inuit and metis)': 5
     };
 
     const languageOptions = filters?.['languageOptions'];
@@ -210,23 +201,6 @@ export class DashboardMainComponent implements OnInit {
         selectedLanguages.push(...otherLanguages);
       }
     }
-
-    const getLanguagePriority = (clinic: any): number => {
-      if (selectedLanguages.length === 0) return 99;     
-      const clinicLanguages = clinic.serviceLanguages?.toLowerCase().split(/\s*,\s*/) || [];     
-      for (const lang of selectedLanguages) {
-        if (lang !== 'english' && lang !== 'french' && clinicLanguages.includes(lang)) {
-          return 0;
-        }
-      }     
-      if (selectedLanguages.includes('french') && clinicLanguages.includes('french')) {
-        return 1;
-      }      
-      if (selectedLanguages.includes('english') && clinicLanguages.includes('english')) {
-        return 2;
-      }     
-      return 3;
-    };
   
     this.filteredClinics.sort((a, b) => {
       const priorityA = appointmentPriority[a.appointmentAvailability] ?? 4;
@@ -234,10 +208,21 @@ export class DashboardMainComponent implements OnInit {
       if (priorityA !== priorityB) return priorityA - priorityB;
 
       if (postalCodeFilter && coordinates) {
-        const servesA = doesClinicServePostalCode(a);
-        const servesB = doesClinicServePostalCode(b);
-        
-        if (servesA !== servesB) return servesA ? -1 : 1;
+        const hasBoundariesA = hasCatchmentBoundariesCache.get(a) ?? false;
+        const hasBoundariesB = hasCatchmentBoundariesCache.get(b) ?? false;
+        const servesA = servesPostalCodeCache.get(a) ?? false;
+        const servesB = servesPostalCodeCache.get(b) ?? false;
+
+         const isGroup1A = hasBoundariesA && servesA;
+         const isGroup1B = hasBoundariesB && servesB;
+         
+         const isGroup2A = !hasBoundariesA;
+         const isGroup2B = !hasBoundariesB;
+         
+         if (isGroup1A && !isGroup1B) return -1;
+         if (!isGroup1A && isGroup1B) return 1;
+         if (isGroup2A && !isGroup2B) return -1;
+         if (!isGroup2A && isGroup2B) return 1;
     
         const distanceA = distanceCache.get(a) ?? Infinity;
         const distanceB = distanceCache.get(b) ?? Infinity;
@@ -257,6 +242,47 @@ export class DashboardMainComponent implements OnInit {
       }
       return 0;
     });
+
+    function getPopulationPriority(clinic: any) {
+      if (!clinic.populationServed) return 99;
+      const populations = clinic.populationServed.toLowerCase().split(', ');
+      for (const population of populations) {
+        if (populationPriority[population]) {
+          return populationPriority[population];
+        }
+      }
+      return 99;
+    }
+
+    function getLanguagePriority(clinic: any): number  {
+      if (selectedLanguages.length === 0) return 99;     
+      const clinicLanguages = clinic.serviceLanguages?.toLowerCase().split(/\s*,\s*/) || [];     
+      for (const lang of selectedLanguages) {
+        if (lang !== 'english' && lang !== 'french' && clinicLanguages.includes(lang)) {
+          return 0;
+        }
+      }     
+      if (selectedLanguages.includes('french') && clinicLanguages.includes('french')) {
+        return 1;
+      }      
+      if (selectedLanguages.includes('english') && clinicLanguages.includes('english')) {
+        return 2;
+      }     
+      return 3;
+    }
+
+    this.filteredClinics = [...this.filteredClinics];
+    this.cdr.detectChanges();
+
+    this.filteredClinics.forEach(clinic => {
+      const distance = distanceCache.get(clinic) ?? Infinity;
+      const hasBoundaries = hasCatchmentBoundariesCache.get(clinic) ?? false;
+      console.log(
+        `Clinic: ${clinic.organizationName}, ` +
+        `Distance: ${distance.toFixed(2)} km, ` +
+        `Catchment: ${hasBoundaries ? 'Yes' : 'No'}`
+      );
+    });
   }  
 
   async applyFilters(event: {
@@ -264,7 +290,6 @@ export class DashboardMainComponent implements OnInit {
     isNewClient: boolean;
   }) {
     if (!event) {
-      console.log('Resetting filters. Showing all clinics.');
       this.filteredClinics = [...this.clinics];
       this.filteredData = null;
       return;
@@ -281,7 +306,6 @@ export class DashboardMainComponent implements OnInit {
     }
 
     if (!filters) {
-      console.log('Resetting filters. Showing all clinics.');
       this.filteredClinics = [...this.clinics];
     } else {
       this.filteredClinics = await this.filterClinics(this.clinics, filters);
@@ -469,8 +493,9 @@ export class DashboardMainComponent implements OnInit {
             ));
 
         const matchesPostalCode = !postalCodeFilter || 
+          !coordinates ||
           !clinic.catchmentBoundaries ||
-          (coordinates && clinic.catchmentBoundaries?.features?.some((feature: any) => {
+          (clinic.catchmentBoundaries?.features?.some((feature: any) => {
             if (feature.geometry?.type === 'Polygon' && feature.geometry.coordinates) {
               const polygonCoordinates = feature.geometry.coordinates[0];
               const point: [number, number] = [coordinates.lng, coordinates.lat];
@@ -478,7 +503,6 @@ export class DashboardMainComponent implements OnInit {
             }
             return false;
           }));
-
       return (
         matchesSupportedTaxYears &&
         matchesProvinces &&
@@ -643,7 +667,7 @@ export class DashboardMainComponent implements OnInit {
     const φ2 = toRad(point2.lat);
     const Δφ = toRad(point2.lat - point1.lat);
     const Δλ = toRad(point2.lng - point1.lng);
-
+  
     const a = 
       Math.sin(Δφ/2) * Math.sin(Δφ/2) +
       Math.cos(φ1) * Math.cos(φ2) *
@@ -651,8 +675,8 @@ export class DashboardMainComponent implements OnInit {
     
     const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
     const distance = R * c;
-
-    return Math.round(distance * 1000);
+  
+    return parseFloat(distance.toFixed(2));
   }
 
   private async geocodePostalCode(postalCode: string): Promise<{ lat: number, lng: number } | null> {
