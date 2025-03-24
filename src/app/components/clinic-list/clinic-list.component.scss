@@ -118,3 +118,107 @@
     display: block;
   }
 }
+@media (max-width: 1024px) {
+  .find-clinic-btn {
+    width: 50%;
+    font-size: 0.95rem;
+  }
+
+  .clinic-card {
+    padding: 12px;
+
+    label {
+      font-size: 0.95rem;
+    }
+
+    p {
+      font-size: 0.9rem;
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .clinic-list {
+    padding: 15px;
+    gap: 15px;
+  }
+
+  .directory-header {
+    font-size: 1.1em;
+  }
+
+  .find-clinic-btn {
+    width: 100%;
+    font-size: 0.9rem;
+    padding: 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .clinic-card {
+    padding: 10px;
+    border-bottom: 1px solid #aadce5;
+
+    label {
+      font-size: 0.9rem;
+      gap: 8px;
+    }
+
+    p {
+      font-size: 0.85rem;
+      padding-left: 32px;
+    }
+
+    .clinic-name {
+      max-width: 100%;
+    }
+
+    .availability-dot {
+      width: 12px;
+      height: 12px;
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .clinic-list {
+    padding: 10px;
+    gap: 10px;
+  }
+
+  .directory-header {
+    font-size: 1em;
+  }
+
+  .find-clinic-btn {
+    font-size: 0.85rem;
+    padding: 6px;
+    gap: 8px;
+  }
+
+  .clinic-card {
+    padding: 8px;
+    border-bottom: 1px solid #aadce5;
+
+    label {
+      font-size: 0.85rem;
+      gap: 6px;
+    }
+
+    p {
+      font-size: 0.8rem;
+      padding-left: 25px;
+    }
+
+    .clinic-link {
+      font-size: 0.85rem;
+    }
+
+    .availability-dot {
+      width: 10px;
+      height: 10px;
+    }
+  }
+}
+

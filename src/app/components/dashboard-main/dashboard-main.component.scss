@@ -4,6 +4,15 @@
   height: calc(90vh - 15px);
   position: relative;
   z-index: 1;
+  @media (max-width: 768px) {
+    flex-direction: column;
+    height: auto;
+  }
+
+  @media (max-width: 480px) {
+    flex-direction: column;
+    height: auto;
+  }
 
   .filter-section {
     transition: all 0.3s ease-in-out;
@@ -23,6 +32,18 @@
       flex: 0;
       display: none;
     }
+    @media (max-width: 768px) {
+      width: 100%;
+      &.open {
+        width: 100%;
+      }
+    }
+
+    @media (max-width: 480px) {
+      padding: 15px;
+      overflow-y: auto;
+      width: 100%;
+    }
   }
 
   .clinic-section {
@@ -33,6 +54,16 @@
     box-shadow: 0px 0 6px rgba(0, 0, 0, 0.15);
     scrollbar-color: #80cbd8 #f0f0f0;
     scrollbar-width: thin;
+
+    @media (max-width: 768px) {
+      padding: 10px;
+      width: 100%;
+      height: auto;
+    }
+    @media (max-width: 480px) {
+      padding: 8px;
+      overflow-y: auto;
+    }
   }
 
   .map-section {
@@ -40,34 +71,15 @@
     height: 100%;
     position: relative;
     z-index: 1;
-  }
-}
 
-@media (max-width: 768px) {
-  .main-container {
-    flex-direction: column;
-
-    .filter-section,
-    .clinic-section,
-    .map-section {
-      flex: none;
+    @media (max-width: 768px) {
       width: 100%;
-      display: none;
-    }
-
-    .filter-section {
-      flex: none;
-      width: 100%;
-      display: none;
-
-      &.open {
-        display: block;
-      }
-    }
-
-    .map-section {
       height: 300px;
-      width: 100%;
+    }
+
+    @media (max-width: 480px) {
+      height: 250px;
     }
   }
 }
+

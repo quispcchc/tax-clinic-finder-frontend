@@ -124,16 +124,71 @@
 @media (max-width: 768px) {
   .tax-clinics {
     flex-direction: column;
+    height: auto;
   }
 
   .clinic-list {
     flex: 1 1 100%;
     position: relative;
-    height: auto;
+    height: 80vh;
+    overflow-y: auto;
     top: 0;
+    padding: 15px;
   }
 
   .directory-header {
     font-size: 1.2rem;
+  }
+
+  .search-bar .search-input {
+    width: 100%;
+  }
+
+  .clinic-card {
+    padding: 10px;
+
+    h4 {
+      margin: 0 0 10px 15px;
+    }
+
+    p {
+      margin: 5px 0 5px 15px;
+      font-size: 0.9rem;
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .tax-clinics {
+    background-size: contain;
+  }
+
+  .clinic-list {
+    padding: 10px;
+    overflow-y: auto;
+  }
+
+  .directory-header {
+    font-size: 1.1rem;
+    margin-bottom: 15px;
+    margin-top: 10px;
+  }
+
+  .search-bar .search-input {
+    padding: 8px 30px 8px 35px;
+    font-size: 0.9rem;
+  }
+
+  .clinic-card {
+    padding: 8px;
+
+    h4 {
+      margin: 0 0 8px 10px;
+    }
+
+    p {
+      margin: 4px 0 4px 10px;
+      font-size: 0.85rem;
+    }
   }
 }
