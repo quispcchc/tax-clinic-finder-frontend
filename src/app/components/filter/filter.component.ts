@@ -131,7 +131,7 @@ export class FilterComponent {
   }
 
   validatePostalCode(postalCode: string): boolean {
-    return postalCode.length === 6;
+    return postalCode.length === 6 || postalCode.length === 0;
   }
 
   onPostalCodeChange(postalCode: string | undefined) {
