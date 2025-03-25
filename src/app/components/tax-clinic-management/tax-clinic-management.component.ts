@@ -76,6 +76,7 @@ export class TaxClinicManagementComponent implements OnInit {
     createdDate: new Date().toISOString(),
     updatedDate: new Date().toISOString(),
     locations: [],
+    isVirtualClinic: false
   };
 
   constructor(
@@ -151,6 +152,7 @@ export class TaxClinicManagementComponent implements OnInit {
           comments: clinic.comments,
           createdDate: clinic.created_at,
           updatedDate: clinic.updated_at,
+          isVirtualClinic: clinic.is_virtual_clinic,
           locations: Array.isArray(clinic.locations)
             ? clinic.locations.map((location: any) => ({
                 id: location.id,
@@ -244,6 +246,7 @@ export class TaxClinicManagementComponent implements OnInit {
       createdDate: new Date().toISOString(),
       updatedDate: new Date().toISOString(),
       locations: [],
+      isVirtualClinic: false
     };
   }
 
@@ -308,6 +311,7 @@ export class TaxClinicManagementComponent implements OnInit {
       createdDate: new Date().toISOString(),
       updatedDate: new Date().toISOString(),
       locations: [],
+      isVirtualClinic: false
     };
     this.isEditMode = false;
     this.showClinicModal = true;
@@ -379,7 +383,9 @@ export class TaxClinicManagementComponent implements OnInit {
       comments: clinic.comments,
       created_at: clinic.createdDate,
       updated_at: clinic.updatedDate,
-      locations: Array.isArray(clinic.locations)
+      is_virtual_clinic: clinic.isVirtualClinic,
+      locations: clinic.isVirtualClinic ? [] : 
+      Array.isArray(clinic.locations)
       ? clinic.locations.map((location: any) => ({
           id: location.id,
           tax_clinic_id: location.taxClinicId,
@@ -443,6 +449,7 @@ export class TaxClinicManagementComponent implements OnInit {
       comments: clinic.comments,
       createdDate: clinic.created_at,
       updatedDate: clinic.updated_at,
+      isVirtualClinic: clinic.is_virtual_clinic,
       locations: clinic.locations
       ? clinic.locations.map((location: any) => ({
           id: location.id,

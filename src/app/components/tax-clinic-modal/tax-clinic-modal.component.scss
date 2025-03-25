@@ -213,11 +213,16 @@ margin-bottom: 10px;
 .add-button {
   padding: 3px 8px;
   font-size: 14px;
-  background-color: #28a745;
+  background-color: #0097b2;
   color: white;
   border: none;
   cursor: pointer;
   border-radius: 4px;
+}
+
+.add-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
 }
 
 .remove-button {

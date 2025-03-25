@@ -248,14 +248,26 @@
           </div>
 
           <div class="form-row">
+            <div class="form-group">
+              <div class="checkbox-group">
+                <label>
+                  <input type="checkbox" formControlName="isVirtualClinic" (change)="onVirtualClinicChange($event)">
+                  Is this a virtual clinic?<span *ngIf="showVirtualClinicRequired()" class="required">*</span>
+                </label>
+              </div> 
+            </div>
             <div class="form-group location-header">
               <label class="required-label"
-                >Tax Clinic Location:<span class="required">*</span></label
+                >Tax Clinic Location:<span *ngIf="showLocationRequired()" class="required">*</span></label
               >
-              <button type="button" class="add-button" (click)="addLocation()">
+              <button type="button" class="add-button" (click)="addLocation()" [disabled]="clinicForm.get('isVirtualClinic')?.value">
                 +
               </button>
             </div>
+          </div>
+          <div *ngIf="(isVirtualClinicTouched() || locationsTouched()) && clinicForm.hasError('virtualOrLocationRequired')" 
+              class="error">
+              Please either check "Virtual Clinic" or add at least one location
           </div>
 
           <div formArrayName="locations">

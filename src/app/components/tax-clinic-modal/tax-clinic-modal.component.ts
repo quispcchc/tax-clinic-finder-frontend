@@ -15,6 +15,7 @@ import {
   FormBuilder,
   FormControl,
   FormGroup,
+  ValidationErrors,
   Validators,
 } from '@angular/forms';
 import { BehaviorSubject } from 'rxjs';
@@ -51,7 +52,8 @@ export class TaxClinicModalComponent implements OnChanges, OnInit {
       alternateContactEmail: [''],
       alternateContactPhone: [''],
       catchmentArea: [''],
-      locations: this.fb.array([], Validators.required),
+      locations: this.fb.array([]),
+      isVirtualClinic: [false],
       appointmentAvailability: ['', Validators.required],
       publicInfo: ['', Validators.required],
       wheelchairAccessible: [false],
@@ -85,7 +87,10 @@ export class TaxClinicModalComponent implements OnChanges, OnInit {
       additionalSupport: this.fb.array([]),
       comments: [''],
     },
-    { validators: this.atLeastOneRequired }
+    {  validators: [
+      this.atLeastOneRequired.bind(this),
+      this.virtualOrLocationValidator.bind(this)
+    ] }
   );
   }
 
@@ -105,6 +110,43 @@ export class TaxClinicModalComponent implements OnChanges, OnInit {
       this.clearDynamicControls();
       this.clinicForm.patchValue({ servePeopleFrom: '' });
     }
+  }
+
+  virtualOrLocationValidator(form: AbstractControl): ValidationErrors | null {
+    const isVirtual = form.get('isVirtualClinic')?.value;
+    const locations = form.get('locations') as FormArray;
+    
+    if (this.isEditMode) {
+      if (!isVirtual && locations.length === 0) {
+        return { virtualOrLocationRequired: true };
+      }
+      return null;
+    }
+    
+    if (form.get('isVirtualClinic')?.dirty || locations.dirty) {
+      if (!isVirtual && locations.length === 0) {
+        return { virtualOrLocationRequired: true };
+      }
+    }
+    return null;
+  }
+
+  onVirtualClinicChange(event: Event) {
+    const isChecked = (event.target as HTMLInputElement).checked;
+    
+    this.clinicForm.get('isVirtualClinic')?.setValue(isChecked);
+    
+    if (isChecked) {
+      const locations = this.clinicForm.get('locations') as FormArray;
+      while (locations.length > 0) {
+        locations.removeAt(0);
+      }
+    }
+    
+    this.clinicForm.get('isVirtualClinic')?.markAsTouched();
+    this.clinicForm.get('locations')?.markAsTouched();
+    
+    this.clinicForm.updateValueAndValidity();
   }
 
   private standardOptions: { [key: string]: string[] } = {
@@ -128,6 +170,16 @@ export class TaxClinicModalComponent implements OnChanges, OnInit {
   private initializeForm(clinic: Clinic) {
     this.clearDynamicControls();
     this.clinicForm.reset();
+
+    const locationsArray = this.clinicForm.get('locations') as FormArray;
+    locationsArray.clear();
+
+    this.clinicForm.patchValue({ isVirtualClinic: clinic.isVirtualClinic });
+    if (!clinic.isVirtualClinic) {
+      (clinic?.locations || []).forEach((loc) => {
+        locationsArray.push(this.createLocationGroup(loc));
+      });
+    }
 
     if (!this.isEditMode) {
       this.clinicForm.patchValue({ servePeopleFrom: '' });
@@ -169,7 +221,6 @@ export class TaxClinicModalComponent implements OnChanges, OnInit {
       hoursAndDate: clinic.hoursAndDate,
       yearRoundService: clinic.yearRoundService,
       servePeopleFrom:  isCustomValue ? 'Other' : clinic.servePeopleFrom,
-      // servePeopleFromOther: isCustomValue ? servePeopleFromValue : clinic["servePeopleFromOther"] || '',
       eligibilityCriteriaWebpage: clinic.eligibilityCriteriaWebpage,
       eligibilityCriteriaFile: clinic.eligibilityCriteriaFile,
       otherBranches: clinic.otherBranches,
@@ -181,6 +232,7 @@ export class TaxClinicModalComponent implements OnChanges, OnInit {
       requiredDocuments: clinic.requiredDocuments,
       clinicCapacity: clinic.clinicCapacity,
       comments: clinic.comments,
+      isVirtualClinic: clinic.isVirtualClinic
     };
   
     this.clinicForm.patchValue(nonArrayFields);
@@ -318,7 +370,9 @@ export class TaxClinicModalComponent implements OnChanges, OnInit {
     if (this.clinicForm.valid) {
       const formValue = {
         ...this.clinicForm.value,
-        locations: this.clinicForm.value.locations.map((loc: Location) => ({
+        isVirtualClinic: this.clinicForm.value.isVirtualClinic,
+        locations: this.clinicForm.value.isVirtualClinic ? [] : 
+        this.clinicForm.value.locations.map((loc: Location) => ({
           ...loc,
           taxClinicId: this.isEditMode ? this.clinic?.id : undefined,
         })),
@@ -377,13 +431,23 @@ export class TaxClinicModalComponent implements OnChanges, OnInit {
   }
 
   addLocation(location?: Location): void {
+    this.clinicForm.get('isVirtualClinic')?.setValue(false);
+    
     (this.clinicForm.get('locations') as FormArray).push(
       this.createLocationGroup(location)
     );
+    
+    this.clinicForm.get('locations')?.markAsTouched();
+    this.clinicForm.updateValueAndValidity();
   }
-
+  
   removeLocation(index: number): void {
     (this.clinicForm.get('locations') as FormArray).removeAt(index);
+    
+    if (this.locationsFormArray.length === 0) {
+      this.clinicForm.get('locations')?.markAsTouched();
+      this.clinicForm.updateValueAndValidity();
+    }
   }
 
   get locationsFormArray(): FormArray {
@@ -441,5 +505,25 @@ export class TaxClinicModalComponent implements OnChanges, OnInit {
     }
   
     return null;
+  }
+
+  isVirtualClinicTouched(): boolean {
+    return this.clinicForm.get('isVirtualClinic')?.dirty || false;
+  }
+  
+  locationsTouched(): boolean {
+    return (this.clinicForm.get('locations') as FormArray).dirty || false;
+  }
+
+  showVirtualClinicRequired(): boolean {
+    const isVirtual = this.clinicForm.get('isVirtualClinic')?.value;
+    const hasLocations = this.locationsFormArray.length > 0;
+    return !isVirtual && !hasLocations;
+  }
+  
+  showLocationRequired(): boolean {
+    const isVirtual = this.clinicForm.get('isVirtualClinic')?.value;
+    const hasLocations = this.locationsFormArray.length > 0;
+    return !isVirtual && !hasLocations;
   }
 }

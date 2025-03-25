@@ -102,6 +102,7 @@ export class DashboardMainComponent implements OnInit {
           catchmentBoundaries: clinic.catchment_boundaries,
           createdDate: clinic.created_at,
           updatedDate: clinic.updated_at,
+          isVirtualClinic: clinic.is_virtual_clinic,
           locations: Array.isArray(clinic.locations)
             ? clinic.locations.map((location: any) => ({
                 id: location.id,
@@ -273,16 +274,6 @@ export class DashboardMainComponent implements OnInit {
 
     this.filteredClinics = [...this.filteredClinics];
     this.cdr.detectChanges();
-
-    this.filteredClinics.forEach(clinic => {
-      const distance = distanceCache.get(clinic) ?? Infinity;
-      const hasBoundaries = hasCatchmentBoundariesCache.get(clinic) ?? false;
-      console.log(
-        `Clinic: ${clinic.organizationName}, ` +
-        `Distance: ${distance.toFixed(2)} km, ` +
-        `Catchment: ${hasBoundaries ? 'Yes' : 'No'}`
-      );
-    });
   }  
 
   async applyFilters(event: {

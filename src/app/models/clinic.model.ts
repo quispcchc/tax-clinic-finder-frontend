@@ -51,4 +51,5 @@ export interface Clinic {
   createdDate: string;
   updatedDate: string;
   locations: Location[];
+  isVirtualClinic: boolean;
 }
