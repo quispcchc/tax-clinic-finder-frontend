@@ -1,7 +1,6 @@
 .clinic-list {
   display: flex;
   flex-direction: column;
-  gap: 20px;
   padding: 20px;
 }
 
@@ -66,6 +65,12 @@
     border-bottom: none;
   }
 
+  &:hover {
+    //background-color: rgba(128, 203, 216, 0.1);
+    cursor: pointer;
+    //border-radius: 6px;
+  }
+
   label {
     font-size: 1rem;
     color: #000000;
@@ -116,6 +121,11 @@
     white-space: normal;
     max-width: 90%;
     display: block;
+
+    &:hover {
+      color: #007E94;
+      text-shadow: 0 3px 3px rgba(128, 128, 128, 0.4);
+    }
   }
 }
 @media (max-width: 1024px) {

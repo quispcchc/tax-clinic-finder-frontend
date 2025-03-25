@@ -7,7 +7,7 @@
           alt="Website"
           class="website-icon"
         />
-        <h3>{{ "Tax clinics in this axis" | translate}}</h3>
+        <h3>{{ "Tax Clinic Details" | translate}}</h3>
       </div>
       <div class="header-buttons">
         <button *ngIf="!isNewClient" class="close-button" (click)="close()">X</button>
@@ -241,10 +241,12 @@
             <dt>{{ "Appointment booking Link" | translate }}:</dt>
             <dd>
               <ng-container *ngIf="clinic?.onlineBookingLink; else noBookingLink">
-                <a [href]="(clinic?.onlineBookingLink?.startsWith('http') ? clinic?.onlineBookingLink : 'https://' + clinic?.onlineBookingLink)" 
-                target="_blank" rel="noopener noreferrer" class="clinic-link">
-                  {{ clinic?.onlineBookingLink }}
-                </a>
+                  <div *ngFor="let bookingLink of getFormattedArray(clinic?.onlineBookingLink)">
+                    <a [href]="(bookingLink?.startsWith('http') ? bookingLink : 'https://' + bookingLink)" 
+                    target="_blank" rel="noopener noreferrer" class="clinic-link">
+                      {{ bookingLink }}
+                    </a>
+                </div>
               </ng-container>
               <ng-template #noBookingLink>N/A</ng-template>
             </dd>

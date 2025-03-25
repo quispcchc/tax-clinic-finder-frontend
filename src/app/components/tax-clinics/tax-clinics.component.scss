@@ -41,6 +41,12 @@
     &:last-child {
       border-bottom: none;
     }
+    
+    &:hover {
+      //background-color: rgba(128, 203, 216, 0.1);
+      cursor: pointer;
+      //border-radius: 6px;
+    }
 
     h4 {
       margin: 0 0 10px 25px;
@@ -118,6 +124,11 @@
     max-width: 93%;
     display: block;
     font-weight: 600;
+
+    &:hover {
+      color: #007E94;
+      text-shadow: 0 3px 3px rgba(128, 128, 128, 0.4);
+    }
   }
 }
 
