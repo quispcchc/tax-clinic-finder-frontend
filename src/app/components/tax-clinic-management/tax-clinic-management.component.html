@@ -30,12 +30,17 @@
             <p class="clinic-name">{{ clinic.organizationName }}</p>
           </td>
           <td>
-            <div class="clinic-info" *ngFor="let location of clinic?.locations">
-              <p>
-                {{ location?.street }}, {{ location?.city }},
-                {{ location?.state }}, {{ location?.postalCode }}
-              </p>
+            <div class="clinic-info" *ngIf="clinic.locations && clinic.locations.length > 0; else virtualOrNoLocation">
+              <div *ngFor="let location of clinic.locations">
+                <p>
+                  {{ location?.street }}, {{ location?.city }},
+                  {{ location?.state }}, {{ location?.postalCode }}
+                </p>
+              </div>
             </div>
+            <ng-template #virtualOrNoLocation>
+              <p *ngIf="clinic.isVirtualClinic">{{"Virtual Clinic" | translate}}</p>
+            </ng-template>
             <a [href]="(clinic?.organisationWebsite?.startsWith('http') ? clinic?.organisationWebsite : 'https://' + clinic?.organisationWebsite)" 
             target="_blank" rel="noopener noreferrer">{{
               clinic.organisationWebsite

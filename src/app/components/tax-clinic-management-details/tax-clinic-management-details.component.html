@@ -22,20 +22,24 @@
       <div class="clinic-details">
         <label>{{ "Organization Information" | translate }}</label>
         <div class="org-details">
-          <div class="clinic-info" *ngFor="let location of clinic?.locations">
+          <div class="clinic-info">
             <dt>{{ "Name/organisation of the clinic" | translate }}:</dt>
             <dd>
               {{ clinic?.organizationName ?? "" | translate }}
             </dd>
           </div>
-
-          <div class="clinic-info" *ngFor="let location of clinic?.locations">
+          <div  *ngIf="clinic?.locations && (clinic?.locations?.length ?? 0) > 0">
+            <div class="clinic-info" *ngFor="let location of clinic?.locations">
+              <dt>{{ "Clinic Address" | translate }}:</dt>
+              <dd>
+                {{ location?.street }}, {{ location?.city }},
+                {{ location?.state }}, {{ location?.postalCode }}
+              </dd>
+            </div>
+          </div>
+          <div class="clinic-info" *ngIf="clinic?.isVirtualClinic && (!clinic?.locations || clinic?.locations?.length === 0)">
             <dt>{{ "Clinic Address" | translate }}:</dt>
-            <dd>
-              {{ location?.street }}, {{ location?.city }},
-              {{ location?.state }},
-              {{ location?.postalCode }}
-            </dd>
+            <dd>{{ "Virtual Clinic" | translate }}</dd>
           </div>
           <div class="clinic-info">
             <dt>{{ "Other Locations" | translate }}:</dt>

@@ -14,12 +14,17 @@
         ></span>
         <span class="clinic-name">{{ clinic.organizationName }}</span>
       </label>
-      <div *ngFor="let location of clinic.locations">
-        <p>
-          {{ "Address" | translate }}: {{ location.street }},
-          {{ location.city }}, {{ location.state }}, {{ location.postalCode }}
-        </p>
+      <div class="clinic-info" *ngIf="clinic.locations && clinic.locations.length > 0; else virtualOrNoLocation">
+        <div *ngFor="let location of clinic.locations">
+          <p>
+            {{ "Address" | translate }}: {{ location?.street }}, {{ location?.city }},
+            {{ location?.state }}, {{ location?.postalCode }}
+          </p>
+        </div>
       </div>
+      <ng-template #virtualOrNoLocation>
+        <p *ngIf="clinic.isVirtualClinic">{{ "Address" | translate }}: {{"Virtual Clinic" | translate}}</p>
+      </ng-template>
       <p>
         {{ "Website" | translate }}:
         <ng-container *ngIf="clinic?.organisationWebsite; else noWebsite">
