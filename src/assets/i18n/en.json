@@ -231,7 +231,11 @@
   "Add Tax Clinic": "Add Tax Clinic",
   "Organisation Website": "Organisation Website",
   "Enter Organisation Website": "Enter Organisation Website",
-  "Are you low income (CVITP)?": "Are you low income (CVITP)?",
-  "Enter other province": "Enter other province"
+  "Is your income, based on your family size (household), above or below the CVITP definition?": "Is your income, based on your family size (household), above or below the CVITP definition?",
+  "Enter other province": "Enter other province",
+  "What mode of service would you prefer": "What mode of service would you prefer",
+  "Rural population": "Rural population",
+  "Below": "Below",
+  "Above": "Above"
 }
 

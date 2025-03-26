@@ -231,6 +231,10 @@
   "Add Tax Clinic": "Ajouter une clinique fiscale",
   "Organisation Website": "Site web de l'organisation",
   "Enter Organisation Website": "Site web d'Enter Organisation",
-  "Are you low income (CVITP)?": "Avez-vous de faibles revenus (CVITP) ?",
-  "Enter other province": "Indiquer une autre province"
+  "Is your income, based on your family size (household), above or below the CVITP definition?": "Votre revenu, en fonction de la taille de votre famille (ménage), est-il supérieur ou inférieur à la définition du PCIT ?",
+  "Enter other province": "Indiquer une autre province",
+  "What mode of service would you prefer": "Quel mode de service préférez-vous ?",
+  "Rural population": "Population rurale",
+  "Below": "En dessous",
+  "Above": "Au-dessus"
 }

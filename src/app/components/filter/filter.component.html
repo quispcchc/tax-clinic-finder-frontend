@@ -25,17 +25,17 @@
     <div class="form-group">
       <div class="form-group-label">
         <p class="subtitle">{{
-          "Are you low income (CVITP)?" | translate
+          "Is your income, based on your family size (household), above or below the CVITP definition?" | translate
           }}</p>
       </div>
       <div class="radio-group">
         <div class="radio-item">
           <input type="radio" name="lowIncome" value="Yes" [(ngModel)]="filters.lowIncome" />
-          <span>{{ "Yes" | translate }}</span>
+          <span>{{ "Below" | translate }}</span>
         </div>
         <div class="radio-item">
           <input type="radio" name="lowIncome" value="No" [(ngModel)]="filters.lowIncome" />
-          <span>{{ "No" | translate }}</span>
+          <span>{{ "Above" | translate }}</span>
         </div>
       </div>
     </div>
