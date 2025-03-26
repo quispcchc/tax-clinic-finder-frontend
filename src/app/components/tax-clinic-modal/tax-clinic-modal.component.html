@@ -240,13 +240,47 @@
               <input type="text" formControlName="catchmentArea" />
             </div>
             <div class="form-group">
-              <label
-                >Clinic other Locations:</label
-              >
-              <input type="text" formControlName="otherBranches" />
+              <label>Catchment Boundaries (GeoJSON):</label>
+              
+              <div class="file-upload-container"  [class.has-file]="fileName">
+                <label class="file-upload-label">
+                  <input type="file" 
+                         (change)="onGeoJsonUpload($event)" 
+                         accept=".geojson,.json" 
+                         hidden />
+                  <span class="file-upload-button"><i class="upload-icon"></i>{{ fileName ? 'Change File' : 'Choose File' }}</span>
+                </label>
+                <div class="file-info" *ngIf="fileName">
+                  <span class="file-name">
+                    <i class="file-icon"></i>
+                    {{ fileName }}
+                  </span>
+                  <button type="button" class="remove-file" (click)="removeFile()">
+                    <i class="remove-icon"></i>
+                  </button>
+                </div>
+                <span class="no-file" *ngIf="!fileName">No file chosen</span>
+              </div>
+              <input type="hidden" formControlName="catchmentBoundariesData" />
+
+              <div class="validation-messages">
+                <div *ngIf="clinicForm.get('catchmentBoundariesData')?.errors?.['required']" class="error">
+                  Please select a GeoJSON file
+                </div>
+                <div *ngIf="clinicForm.get('catchmentBoundariesData')?.errors?.['invalidGeoJson']" class="error">
+                  Please upload a valid GeoJSON file (must be FeatureCollection with Polygon features)
+                </div>
+                <div *ngIf="clinicForm.get('catchmentBoundariesData')?.errors?.['fileError']" class="error">
+                  Error reading file. Please try again.
+                </div>
+              </div>
+              
+              <div *ngIf="uploadProgress > 0" class="upload-progress-container">
+                <div class="upload-progress-bar" [style.width.%]="uploadProgress"></div>
+                <span class="upload-progress-text">{{ uploadProgress }}%</span>
+              </div>
             </div>
           </div>
-
           <div class="form-row">
             <div class="form-group">
               <div class="checkbox-group">
@@ -263,6 +297,12 @@
               <button type="button" class="add-button" (click)="addLocation()" [disabled]="clinicForm.get('isVirtualClinic')?.value">
                 +
               </button>
+            </div>
+            <div class="form-group">
+              <label
+                >Clinic other Locations:</label
+              >
+              <input type="text" formControlName="otherBranches" />
             </div>
           </div>
           <div *ngIf="(isVirtualClinicTouched() || locationsTouched()) && clinicForm.hasError('virtualOrLocationRequired')" 

@@ -33,6 +33,11 @@ export class TaxClinicModalComponent implements OnChanges, OnInit {
   @Output() close = new EventEmitter<void>();
   @Output() save = new EventEmitter<Clinic>();
 
+  uploadProgress = 0;
+  fileName = '';
+  currentGeoJsonFile: File | null = null;
+  geoJsonData: any = null;
+
   clinicForm: FormGroup;
   private clinicSubject = new BehaviorSubject<Clinic | null>(null);
 
@@ -52,6 +57,7 @@ export class TaxClinicModalComponent implements OnChanges, OnInit {
       alternateContactEmail: [''],
       alternateContactPhone: [''],
       catchmentArea: [''],
+      catchmentBoundariesData: [null, [this.validateGeoJson.bind(this)]],
       locations: this.fb.array([]),
       isVirtualClinic: [false],
       appointmentAvailability: ['', Validators.required],
@@ -104,13 +110,38 @@ export class TaxClinicModalComponent implements OnChanges, OnInit {
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes['clinic'] && this.clinic) {
+      this.resetGeoJsonState();
+      if (this.clinic.catchmentBoundaries) {
+        try {
+          const geoJsonData = typeof this.clinic.catchmentBoundaries === 'string' 
+            ? JSON.parse(this.clinic.catchmentBoundaries)
+            : this.clinic.catchmentBoundaries;
+  
+          const validationErrors = this.validateGeoJson({ value: geoJsonData } as AbstractControl);
+          
+          if (!validationErrors) {
+            const control = this.clinicForm.get('catchmentBoundariesData');
+            control?.setValidators([this.validateGeoJson.bind(this)]);
+            control?.setValue(JSON.stringify(geoJsonData));
+            control?.updateValueAndValidity();
+            
+            this.geoJsonData = geoJsonData;
+            this.fileName = 'Existing GeoJSON data';
+          }
+        } catch (error) {
+          console.error('Error parsing catchmentBoundaries:', error);
+          this.clinicForm.get('catchmentBoundariesData')?.setErrors({ invalidGeoJson: true });
+        }
+      }
+      
       this.clinicSubject.next(this.clinic);
     } else if (changes['isEditMode'] && !this.isEditMode) {
       this.clinicForm.reset();
       this.clearDynamicControls();
       this.clinicForm.patchValue({ servePeopleFrom: '' });
+      this.resetGeoJsonState();
     }
-  }
+  }  
 
   virtualOrLocationValidator(form: AbstractControl): ValidationErrors | null {
     const isVirtual = form.get('isVirtualClinic')?.value;
@@ -215,6 +246,7 @@ export class TaxClinicModalComponent implements OnChanges, OnInit {
       alternateContactEmail: clinic.alternateContactEmail,
       alternateContactPhone: clinic.alternateContactPhone,
       catchmentArea: clinic.catchmentArea,
+      catchmentBoundariesData: clinic.catchmentBoundaries,
       appointmentAvailability: clinic.appointmentAvailability,
       publicInfo: clinic.publicInfo,
       wheelchairAccessible: clinic.wheelchairAccessible,
@@ -370,6 +402,7 @@ export class TaxClinicModalComponent implements OnChanges, OnInit {
     if (this.clinicForm.valid) {
       const formValue = {
         ...this.clinicForm.value,
+        catchmentBoundaries: this.clinicForm.value.catchmentBoundariesData,
         isVirtualClinic: this.clinicForm.value.isVirtualClinic,
         locations: this.clinicForm.value.isVirtualClinic ? [] : 
         this.clinicForm.value.locations.map((loc: Location) => ({
@@ -525,5 +558,167 @@ export class TaxClinicModalComponent implements OnChanges, OnInit {
     const isVirtual = this.clinicForm.get('isVirtualClinic')?.value;
     const hasLocations = this.locationsFormArray.length > 0;
     return !isVirtual && !hasLocations;
+  }
+
+  onGeoJsonUpload(event: Event) {
+    const input = event.target as HTMLInputElement;
+    const file = input.files?.[0];
+    
+    if (!file) {
+      this.clinicForm.get('catchmentBoundariesData')?.setErrors({ required: true });
+      return;
+    }
+  
+    this.fileName = file.name;
+    this.uploadProgress = 10;
+    
+    const reader = new FileReader();
+  
+    reader.onload = (e) => {
+      try {
+        const geoJson = JSON.parse(e.target?.result as string);
+        this.uploadProgress = 90;
+        
+        const validationErrors = this.validateGeoJson({ value: geoJson } as AbstractControl);
+        
+        if (!validationErrors) {
+          this.currentGeoJsonFile = file;
+          this.geoJsonData = geoJson;
+
+          this.clinicForm.get('catchmentBoundariesData')?.setValue(JSON.stringify(geoJson));
+          this.clinicForm.get('catchmentBoundariesData')?.updateValueAndValidity();
+          
+          this.uploadProgress = 100;
+          setTimeout(() => this.uploadProgress = 0, 2000);
+        } else {
+          this.handleGeoJsonError(input, validationErrors);
+        }
+      } catch (error) {
+        this.handleGeoJsonError(input, { invalidGeoJson: { reason: 'Invalid JSON format' } });
+      }
+    };
+  
+    reader.onerror = () => {
+      this.handleGeoJsonError(input, { fileReadError: true });
+    };
+    
+    reader.readAsText(file);
+    setTimeout(() => { input.value = ''; }, 100);
+  }
+  
+  private handleGeoJsonError(input: HTMLInputElement, errors: ValidationErrors) {
+    input.value = '';
+    this.clearGeoJsonInput(input);
+    this.clinicForm.get('catchmentBoundariesData')?.setErrors(errors);
+    this.uploadProgress = 0;
+  }
+  
+  private clearGeoJsonInput(input: HTMLInputElement) {
+    input.value = '';
+    this.fileName = '';
+  }
+
+  clearGeoJson() {
+    const input = document.getElementById('geoJsonUpload') as HTMLInputElement;
+    if (input) input.value = '';
+    
+    this.currentGeoJsonFile = null;
+    this.geoJsonData = null;
+    this.fileName = '';
+    this.uploadProgress = 0;
+    
+    const control = this.clinicForm.get('catchmentBoundaries');
+    control?.setValue(null);
+    control?.setValidators([this.validateGeoJson.bind(this)]);
+    control?.updateValueAndValidity();
+  }
+
+  removeFile() {
+    this.resetGeoJsonState();
+  }
+
+  validateGeoJson(control: AbstractControl): ValidationErrors | null {
+    let geoJson = control.value;
+  
+    if (!geoJson) {
+      return null;
+    }
+
+    try {
+      if (typeof geoJson === 'string') {
+        geoJson = JSON.parse(geoJson);
+      }
+    } catch (error) {
+      return { invalidGeoJson: { reason: 'Invalid JSON format' } };
+    }
+  
+    if (typeof geoJson !== 'object' || geoJson === null) {
+      return { invalidGeoJson: { reason: 'Not a valid object' } };
+    }
+  
+    if (geoJson.type !== 'FeatureCollection') {
+      return { invalidGeoJson: { reason: 'Must be a FeatureCollection' } };
+    }
+  
+    if (!Array.isArray(geoJson.features)) {
+      return { invalidGeoJson: { reason: 'Features must be an array' } };
+    }
+  
+    for (const feature of geoJson.features) {
+      if (!feature || typeof feature !== 'object') {
+        return { invalidGeoJson: { reason: 'Invalid feature structure' } };
+      }
+  
+      if (feature.type !== 'Feature') {
+        return { invalidGeoJson: { reason: 'Features must be of type Feature' } };
+      }
+  
+      if (!feature.geometry || typeof feature.geometry !== 'object') {
+        return { invalidGeoJson: { reason: 'Feature missing geometry' } };
+      }
+  
+      const geom = feature.geometry;
+      
+      const validTypes = ['Polygon', 'MultiPolygon', 'Point', 'LineString'];
+      if (!validTypes.includes(geom.type)) {
+        return { invalidGeoJson: { reason: `Unsupported geometry type: ${geom.type}` } };
+      }
+  
+      if (!Array.isArray(geom.coordinates)) {
+        return { invalidGeoJson: { reason: 'Coordinates must be an array' } };
+      }
+  
+      if (geom.type === 'Polygon') {
+        if (geom.coordinates.length === 0) {
+          return { invalidGeoJson: { reason: 'Polygon coordinates empty' } };
+        }
+  
+        const firstRing = geom.coordinates[0];
+        if (firstRing.length < 4) {
+          return { invalidGeoJson: { reason: 'Polygon must have at least 4 points' } };
+        }
+  
+        const first = firstRing[0];
+        const last = firstRing[firstRing.length - 1];
+        if (first[0] !== last[0] || first[1] !== last[1]) {
+          return { invalidGeoJson: { reason: 'Polygon is not closed' } };
+        }
+      }
+    }
+    return null;
+  }
+
+  private resetGeoJsonState() {
+    this.fileName = '';
+    this.currentGeoJsonFile = null;
+    this.geoJsonData = null;
+    this.uploadProgress = 0;
+    
+    const fileInput = document.querySelector('input[type="file"]') as HTMLInputElement;
+    if (fileInput) {
+      fileInput.value = '';
+    }
+    
+    this.clinicForm.get('catchmentBoundariesData')?.reset();
   }
 }

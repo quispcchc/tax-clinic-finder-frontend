@@ -80,28 +80,37 @@ export class ClinicDetailsComponent implements OnInit, AfterViewInit {
   }
 
   private async updateClinicLocation(): Promise<void> {
-    if (!this.clinic || this.clinic.locations.length === 0) return;
+    if (!this.clinic) return;
 
-    const location = this.clinic.locations[0];
-    const fullAddress = `${location.street}, ${location.city}, ${location.state}, ${location.postalCode}`;
+    const hasLocation = this.clinic.locations && this.clinic.locations.length > 0;
+    const hasCatchmentBoundaries = !!this.clinic.catchmentBoundaries;
 
-    try {
-      const { lat, lng } = await this.postalCodeService.getCoordinates(fullAddress);
-      const clinicLatLng = L.latLng(lat, lng);
+    if (hasLocation) {
+      const location = this.clinic.locations[0];
+      const fullAddress = `${location.street}, ${location.city}, ${location.state}, ${location.postalCode}`;
+  
+      try {
+        const { lat, lng } = await this.postalCodeService.getCoordinates(fullAddress);
+        const clinicLatLng = L.latLng(lat, lng);
+  
+        this.map.setView(clinicLatLng, 15);
+        this.markers.clearLayers();
+  
+        L.marker(clinicLatLng).addTo(this.markers).bindPopup(`
+          <strong>${this.clinic.organizationName}</strong><br>
+          ${fullAddress}<br>
+          Type: ${this.clinic.clinicTypes || 'N/A'}<br>
+          Language: ${this.clinic.serviceLanguages || 'N/A'}
+        `);
 
-      this.map.setView(clinicLatLng, 15);
-      this.markers.clearLayers();
-
-      L.marker(clinicLatLng).addTo(this.markers).bindPopup(`
-        <strong>${this.clinic.organizationName}</strong><br>
-        ${fullAddress}<br>
-        Type: ${this.clinic.clinicTypes || 'N/A'}<br>
-        Language: ${this.clinic.serviceLanguages || 'N/A'}
-      `);
-
+        if (hasCatchmentBoundaries) {
+          await this.updateCatchmentAreaBoundary();
+        }
+      } catch (error) {
+        console.error(`Error geocoding clinic address:`, error);
+      }
+    } else if (hasCatchmentBoundaries) {
       await this.updateCatchmentAreaBoundary();
-    } catch (error) {
-      console.error(`Error geocoding clinic address:`, error);
     }
   }
 
