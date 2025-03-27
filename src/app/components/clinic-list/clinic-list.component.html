@@ -3,7 +3,14 @@
     <img src="assets/images/filter-hamberger.svg" alt="Find Clinic" class="find-clinic-icon" />
     {{ "Find your Tax Clinic" | translate }}
   </button>
-  <p class="directory-header">{{ "Tax clinics in this axis" | translate }}</p>
+  <p class="directory-header" *ngIf="!isSidebarOpen; else otherText">
+    {{ "Filtered Tax Clinics" | translate }}
+  </p>
+  <ng-template #otherText>
+    <p class="directory-header">
+      {{ "Tax Clinics" | translate }}
+    </p>
+  </ng-template>
   <div *ngFor="let clinic of filteredClinics" class="clinic-card" (click)="openModal(clinic)">
     <label class="clinic-label">
       <span
