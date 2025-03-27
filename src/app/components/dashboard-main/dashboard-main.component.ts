@@ -230,7 +230,7 @@ export class DashboardMainComponent implements OnInit {
         return distanceA - distanceB;
       }
 
-      if (filters?.['populationServed']) {
+      if (filters?.['clientCategories']) {
         const popPriorityA = getPopulationPriority(a);
         const popPriorityB = getPopulationPriority(b);
         if (popPriorityA !== popPriorityB) return popPriorityA - popPriorityB;
@@ -247,12 +247,15 @@ export class DashboardMainComponent implements OnInit {
     function getPopulationPriority(clinic: any) {
       if (!clinic.populationServed) return 99;
       const populations = clinic.populationServed.toLowerCase().split(', ');
+      if (!filters?.['clientCategories']) {
+        return populations.includes("anyone") ? 0 : 99;
+      }
       for (const population of populations) {
-        if (populationPriority[population]) {
+        if (populationPriority[population] && filters['clientCategories'][population]) {
           return populationPriority[population];
         }
       }
-      return 99;
+      return populations.includes("anyone") ? 10 : 99;
     }
 
     function getLanguagePriority(clinic: any): number  {
@@ -383,6 +386,7 @@ export class DashboardMainComponent implements OnInit {
         !hasSelectedFilters(filters['languageOptions']);
 
       const matchesClient =
+        clinic.populationServed?.toLowerCase().includes('anyone') || 
         (filters['clientCategories']?.newcomers &&
           (clinic.populationServed?.toLowerCase().includes('newcomers') ||
           clinic.populationServed?.toLowerCase().includes('nouveaux arrivants'))) ||
