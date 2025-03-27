@@ -291,7 +291,7 @@
             </dd>
           </div>
           <div class="clinic-info">
-            <dt>{{ "Webpage elligibility" | translate }}:</dt>
+            <dt>{{ "Webpage eligibility" | translate }}:</dt>
             <dd>
               <ng-container *ngIf="clinic?.eligibilityCriteriaWebpage; else noLink">
                 <a [href]="(clinic?.eligibilityCriteriaWebpage?.startsWith('http') ? clinic?.eligibilityCriteriaWebpage : 'https://' + clinic?.eligibilityCriteriaWebpage)" 
