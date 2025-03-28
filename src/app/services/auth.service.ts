@@ -17,10 +17,10 @@ import { Router } from '@angular/router';
 export class AuthService {
   private API_URL = environment.apiUrl;
 
-  private loginUrl = `${this.API_URL}/auth/login`;
-  private resetPasswordUrl = `${this.API_URL}/auth/reset-password`;
-  private resetPasswordWithTokenUrl = `${this.API_URL}/auth/reset-password`;
-  private changePasswordUrl = `${this.API_URL}/auth/change-password`;
+  private loginUrl = `${this.API_URL}/login`;
+  private resetPasswordUrl = `${this.API_URL}/reset-password`;
+  private resetPasswordWithTokenUrl = `${this.API_URL}/reset-password`;
+  private changePasswordUrl = `${this.API_URL}/change-password`;
 
   constructor(
     private http: HttpClient,

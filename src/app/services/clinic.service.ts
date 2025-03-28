@@ -11,7 +11,7 @@ import { environment } from '../../environments/environment';
 })
 export class ClinicService {
   private API_URL = environment.apiUrl;
-  private apiUrl = `${this.API_URL}/tax-clinics`;
+  private apiUrl = `${this.API_URL}`;
 
   constructor(private http: HttpClient) {}
 
@@ -20,7 +20,7 @@ export class ClinicService {
     const headers = new HttpHeaders({
       Authorization: `Bearer ${token}`,
     });
-    return this.http.get<Clinic[]>(this.apiUrl, { headers });
+    return this.http.get<Clinic[]>(`${this.apiUrl}/tax-clinics`, { headers });
   }
 
   updateAppointmentAvailability(data: any): Observable<any> {
