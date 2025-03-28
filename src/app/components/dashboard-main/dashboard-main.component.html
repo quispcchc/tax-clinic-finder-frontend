@@ -14,6 +14,15 @@
     ></app-filter>
   </div>
 
+  <div *ngIf="!isSidebarOpen" class="filter-details-section">
+    <app-filter-details
+      [currentFilters]="currentFilters"
+      [isNewClient]="isNewClient"
+      [isSidebarOpen]="isSidebarOpen"
+      (toggleSidebarEvent)="onFilterSidebarToggle()"
+    ></app-filter-details>
+  </div>
+
   <div class="clinic-section">
     <app-clinic-list
       [clinics]="filteredClinics"

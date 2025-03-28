@@ -1,0 +1,104 @@
+<div class="filter-details">
+  <div class="applied-filters-header">
+    <button
+      *ngIf="!isSidebarOpen"
+      class="find-clinic-btn"
+      (click)="toggleFilterSidebar()"
+    >
+      <img
+        src="assets/images/filter-hamberger.svg"
+        alt="Find Clinic"
+        class="find-clinic-icon"
+      />
+      {{ "Find your Tax Clinic" | translate }}
+    </button>
+    <h3>{{ "Applied Filters" | translate }}</h3>
+  </div>
+
+  <div class="applied-filters-content">
+    <div class="filter-item">
+      <span class="filter-label">{{ "New Client" | translate }}:</span>
+      <span class="filter-value">{{
+        isNewClient ? ("ON" | translate) : ("OFF" | translate)
+      }}</span>
+    </div>
+
+    <div *ngIf="currentFilters?.lowIncome" class="filter-item">
+      <span class="filter-label">{{ "Income" | translate }}:</span>
+      <span class="filter-value">{{
+        currentFilters?.lowIncome | translate
+      }}</span>
+    </div>
+
+    <div *ngIf="hasSelectedTaxCases()" class="filter-item">
+      <span class="filter-label">{{ "Tax situation" | translate }}:</span>
+      <span class="filter-value">{{ getSelectedTaxCases() | translate }}</span>
+    </div>
+
+    <div *ngIf="currentFilters?.supportedTaxYears" class="filter-item">
+      <span class="filter-label">{{ "Tax years" | translate }}:</span>
+      <span class="filter-value">{{
+        currentFilters.supportedTaxYears | translate
+      }}</span>
+    </div>
+
+    <div *ngIf="hasSelectedProvinces()" class="filter-item">
+      <span class="filter-label">{{ "Province" | translate }}:</span>
+      <span class="filter-value">{{ getSelectedProvinces() | translate }}</span>
+    </div>
+
+    <div *ngIf="hasSelectedServiceDeliveryModes()" class="filter-item">
+      <span class="filter-label">{{ "Type of clinic" | translate }}:</span>
+      <span class="filter-value">{{
+        getServiceDeliveryModes() | translate
+      }}</span>
+    </div>
+
+    <div *ngIf="hasSelectedModeOfService()" class="filter-item">
+      <span class="filter-label">{{ "Service mode" | translate }}:</span>
+      <span class="filter-value">{{ getModeOfService() | translate }}</span>
+    </div>
+
+    <div *ngIf="currentFilters?.wheelchairAccessible" class="filter-item">
+      <span class="filter-label"
+        >{{ "Wheelchair accessibility" | translate }}:</span
+      >
+      <span class="filter-value">{{
+        currentFilters.wheelchairAccessible
+          ? ("Yes" | translate)
+          : ("No" | translate)
+      }}</span>
+    </div>
+
+    <div *ngIf="hasSelectedServiceHours()" class="filter-item">
+      <span class="filter-label">{{ "Appointment time" | translate }}:</span>
+      <span class="filter-value">{{
+        getSelectedServiceHours() | translate
+      }}</span>
+    </div>
+
+    <div *ngIf="hasSelectedServiceDays()" class="filter-item">
+      <span class="filter-label">{{ "Appointment day" | translate }}:</span>
+      <span class="filter-value">{{
+        getSelectedServiceDays() | translate
+      }}</span>
+    </div>
+
+    <div *ngIf="hasSelectedLanguages()" class="filter-item">
+      <span class="filter-label">{{ "Language" | translate }}:</span>
+      <span class="filter-value">{{ getSelectedLanguages() | translate }}</span>
+    </div>
+
+    <div *ngIf="currentFilters?.postalCodesServe" class="filter-item">
+      <span class="filter-label">{{ "Postal code" | translate }}:</span>
+      <span class="filter-value">{{ currentFilters.postalCodesServe }}</span>
+    </div>
+
+    <div *ngIf="hasSelectedClientCategories()" class="filter-item">
+      <span class="filter-label">{{ "Client types" | translate }}:</span>
+      <span class="filter-value">{{
+        getSelectedClientCategories() | translate
+      }}</span>
+    </div>
+  </div>
+</div>

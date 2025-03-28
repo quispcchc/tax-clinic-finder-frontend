@@ -23,6 +23,7 @@ export class DashboardMainComponent implements OnInit {
   filteredData: any = {};
   isNewClient: boolean = false;
   newClientId: string = '';
+  currentFilters: any; 
 
   constructor(
     private http: HttpClient,
@@ -283,6 +284,7 @@ export class DashboardMainComponent implements OnInit {
     filters: { [key: string]: any } | null;
     isNewClient: boolean;
   }) {
+    
     if (!event) {
       this.filteredClinics = [...this.clinics];
       this.filteredData = null;
@@ -291,6 +293,7 @@ export class DashboardMainComponent implements OnInit {
 
     const { filters, isNewClient } = event;
     this.isNewClient = isNewClient;
+    this.currentFilters = filters;
 
     let coordinates: { lat: number, lng: number } | undefined = undefined;
 
@@ -320,7 +323,7 @@ export class DashboardMainComponent implements OnInit {
     const hasSelectedFilters = (filterGroup: any) =>
       Object.values(filterGroup || {}).some(Boolean);
 
-    if (filters['lowIncome'] === 'No') {
+    if (filters['lowIncome'] === 'Above') {
       return [];
     }
 
