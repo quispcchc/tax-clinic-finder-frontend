@@ -1,9 +1,9 @@
 <div class="modal-overlay" *ngIf="isOpen">
   <div class="modal-content">
-    <p>{{ message }}</p>
+    <p>{{ message | translate }}</p>
     <div class="modal-actions">
-      <button class="confirm-button" (click)="confirm()">Confirm</button>
-      <button class="cancel-button" (click)="cancel()">Cancel</button>
+      <button class="confirm-button" (click)="confirm()">{{"Confirm" | translate}}</button>
+      <button class="cancel-button" (click)="cancel()">{{"Cancel" | translate}}</button>
     </div>
   </div>
 </div>

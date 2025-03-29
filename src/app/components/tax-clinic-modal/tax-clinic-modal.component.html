@@ -7,7 +7,7 @@
           alt="Website"
           class="website-icon"
         />
-        <h3>{{ isEditMode ? "Edit Tax Clinic" : "Add Tax Clinic" }}</h3>
+        <h3>{{ isEditMode ? ("Edit Tax Clinic" | translate) : ("Add Tax Clinic" | translate) }}</h3>
       </div>
       <button class="close-button" (click)="closeModal()">X</button>
     </div>
@@ -21,7 +21,7 @@
                 >{{ "Tax Clinic Name" | translate }}:
                 <span class="required">*</span></label
               >
-              <input type="text" formControlName="organizationName" placeholder="Enter Tax clinic/Organisation Name" required />
+              <input type="text" formControlName="organizationName" placeholder="{{'Enter Tax clinic Name' | translate}}" required />
               <div
                 class="error"
                 *ngIf="
@@ -34,8 +34,8 @@
             </div>
 
             <div class="form-group">
-              <label>{{ "Organisation Website:" | translate }}</label>
-              <input type="text" formControlName="organisationWebsite" placeholder="Enter Organisation Website"/>
+              <label>{{ "Organisation Website" | translate }}:</label>
+              <input type="text" formControlName="organisationWebsite" placeholder="{{'Enter Organisation Website' | translate}}"/>
               <div
                 class="error"
                 *ngIf="
@@ -51,8 +51,8 @@
             </div>
 
             <div class="form-group">
-              <label>{{ "Organisation Email:" | translate }}</label>
-              <input type="email" formControlName="organisationalEmail" placeholder="Enter Organisation Email"/>
+              <label>{{ "Organisation Email" | translate }}:</label>
+              <input type="email" formControlName="organisationalEmail" placeholder="{{'Enter Organisation Email' | translate}}"/>
               <div
                 class="error"
                 *ngIf="
@@ -71,10 +71,10 @@
           <div class="form-row">
             <div class="form-group">
               <label
-                >{{ "Contact Person Name:" | translate }}
+                >{{ "Contact Person Name" | translate }}:
                 <span class="required">*</span></label
               >
-              <input type="text" formControlName="contactPersonName" placeholder="Enter Contact Person Name" required />
+              <input type="text" formControlName="contactPersonName" placeholder="{{'Enter Contact Person Name' | translate}}" required />
               <div
                 class="error"
                 *ngIf="
@@ -82,18 +82,17 @@
                   clinicForm.get('contactPersonName')?.touched
                 "
               >
-                Contact Person Name is required.
+                {{"Contact Person Name is required." | translate}}
               </div>
             </div>
 
             <div class="form-group">
-              <label
-                >Contact Person Title: <span class="required">*</span></label
+              <label>{{"Contact Person Title"}}: <span class="required">*</span></label
               >
               <input
                 type="text"
                 formControlName="contactPersonTitle"
-                placeholder="Enter Contact Person Title"
+                placeholder="{{'Enter Contact Person Title' | translate}}"
                 required
               />
               <div
@@ -103,13 +102,13 @@
                   clinicForm.get('contactPersonTitle')?.touched
                 "
               >
-                Contact person Title is required.
+                {{"Contact person Title is required." | translate}}
               </div>
             </div>
 
             <div class="form-group">
-              <label>Contact Email: <span class="required">*</span></label>
-              <input type="email" formControlName="contactEmail" placeholder="Enter Contact Person Email" required />
+              <label>{{"Contact Email" | translate}}: <span class="required">*</span></label>
+              <input type="email" formControlName="contactEmail" placeholder="{{'Enter Contact Person Email' | translate}}" required />
               <div
                 class="error"
                 *ngIf="
@@ -117,15 +116,14 @@
                   clinicForm.get('contactEmail')?.touched
                 "
               >
-                Enter a valid email address.
+                {{"Enter a valid email address." | translate}}
               </div>
             </div>
           </div>
           <div class="form-row">
             <div class="form-group">
               <label class="required-label">
-                Is tax clinic listed on the CRA's "Find a tax clinic in your
-                area" page online?
+                {{"Tax clinic listed on CRA?" | translate}}
                 <span class="required">*</span>
               </label>
               <div class="radio-group">
@@ -135,7 +133,7 @@
                     formControlName="listedOnCra"
                     value="Yes"
                   />
-                  Yes
+                  {{"Yes" | translate }}
                 </label>
                 <label>
                   <input
@@ -143,7 +141,7 @@
                     formControlName="listedOnCra"
                     value="No"
                   />
-                  No
+                  {{"No" | translate }}
                 </label>
                 <label>
                   <input
@@ -151,7 +149,7 @@
                     formControlName="listedOnCra"
                     value="I dont know"
                   />
-                  I do not know
+                  {{"I do not know" | translate}}
                 </label>
               </div>
               <div
@@ -161,14 +159,13 @@
                   clinicForm.get('listedOnCra')?.touched
                 "
               >
-                This field is required.
+                {{"This field is required." | translate}}
               </div>
             </div>
 
             <div class="form-group">
               <label class="required-label">
-                Is tax clinic visible on the Community Navigation of Eastern
-                Ontario website?
+                {{"Tax clinic visible on the Community Navigation of Eastern Ontario website?" | translate}}
                 <span class="required">*</span>
               </label>
               <div class="radio-group">
@@ -178,7 +175,7 @@
                     formControlName="visibleOnNceo"
                     value="Yes"
                   />
-                  Yes
+                  {{"Yes" | translate}}
                 </label>
                 <label>
                   <input
@@ -186,7 +183,7 @@
                     formControlName="visibleOnNceo"
                     value="No"
                   />
-                  No
+                  {{"No" | translate}}
                 </label>
                 <label>
                   <input
@@ -194,7 +191,7 @@
                     formControlName="visibleOnNceo"
                     value="I do not know"
                   />
-                  I do not know
+                  {{"I do not know" | translate}}
                 </label>
               </div>
               <div
@@ -204,25 +201,25 @@
                   clinicForm.get('visibleOnNceo')?.touched
                 "
               >
-                This field is required.
+                {{"This field is required." | translate}}
               </div>
             </div>
           </div>
         </div>
-        <p>Tax Clinic Location Details</p>
+        <p>{{"Tax Clinic Location Details" | translate}}</p>
         <div class="org-details">
           <div class="form-row">
             <div class="form-group">
               <div class="checkbox-group">
                 <label>
                   <input type="checkbox" formControlName="isVirtualClinic" (change)="onVirtualClinicChange($event)">
-                  Is this a virtual clinic?<span *ngIf="showVirtualClinicRequired()" class="required">*</span>
+                  {{"Virtual clinic?" | translate}}<span *ngIf="showVirtualClinicRequired()" class="required">*</span>
                 </label>
               </div> 
             </div>
             <div class="form-group location-header">
               <label class="required-label"
-                >Tax Clinic Location:<span *ngIf="showLocationRequired()" class="required">*</span></label
+                >{{"Tax Clinic Location" | translate}}:<span *ngIf="showLocationRequired()" class="required">*</span></label
               >
               <button type="button" class="add-button" (click)="addLocation()" [disabled]="clinicForm.get('isVirtualClinic')?.value">
                 +
@@ -230,14 +227,14 @@
             </div>
             <div class="form-group">
               <label
-                >Clinic other Locations:</label
+                >{{"Clinic other Locations" | translate}}:</label
               >
-              <textarea formControlName="otherBranches"rows="2" placeholder="Enter if other Locations available"></textarea>
+              <textarea formControlName="otherBranches"rows="2" placeholder="{{'Enter if other Locations available' | translate}}"></textarea>
             </div>
           </div>
           <div *ngIf="(isVirtualClinicTouched() || locationsTouched()) && clinicForm.hasError('virtualOrLocationRequired')" 
             class="error">
-            Please either check "Virtual Clinic" or add at least one location
+            {{"Please either check Virtual Clinic or add at least one location" | translate}}
           </div>
           <div formArrayName="locations">
             <div
@@ -250,22 +247,22 @@
             >
               <div class="form-row">
                 <div class="form-group">
-                  <label>Street:</label>
+                  <label>{{"Street" | translate}}:</label>
                   <input type="text" formControlName="street" required />
                 </div>
 
                 <div class="form-group">
-                  <label>City:</label>
+                  <label>{{"City" | translate}}:</label>
                   <input type="text" formControlName="city" required />
                 </div>
 
                 <div class="form-group">
-                  <label>State:</label>
+                  <label>{{"State" | translate}}:</label>
                   <input type="text" formControlName="state" required />
                 </div>
 
                 <div class="form-group">
-                  <label>Postal Code:</label>
+                  <label>{{"Postal Code" | translate}}:</label>
                   <input type="text" formControlName="postalCode" required />
                 </div>
 
@@ -281,38 +278,37 @@
             </div>
           </div>
         </div>
-        <p>Tax Clinic Information</p>
+        <p>{{"Tax Clinic Information" | translate}}</p>
         <div class="org-details">
           <div class="form-row">
             <div class="form-group">
-              <label>Alternate Contact Person Name:</label>
+              <label>{{"Alternate Contact Person Name" | translate}}:</label>
               <input type="text" formControlName="alternateContactName" />
             </div>
 
             <div class="form-group">
-              <label>Alternate Contact Person Title:</label>
+              <label>{{"Alternate Contact Person Title" | translate}}:</label>
               <input type="text" formControlName="alternateContactTitle" />
             </div>
 
             <div class="form-group">
-              <label>Alternate Contact Person Email:</label>
+              <label>{{"Alternate Contact Person Email" | translate}}:</label>
               <input type="email" formControlName="alternateContactEmail" />
             </div>
           </div>
           <div class="form-row">
             <div class="form-group">
-              <label>Alternate Contact Person Phone:</label>
+              <label>{{"Alternate Contact Person Phone" | translate}}:</label>
               <input type="email" formControlName="alternateContactPhone" />
             </div>
             <div class="form-group">
               <label
-                >Catchment area, please provide definition (postal
-                codes):</label
+                >{{"Catchment area, please provide definition (postal codes)" | translate}}:</label
               >
               <input type="text" formControlName="catchmentArea" />
             </div>
             <div class="form-group">
-              <label>Catchment Boundaries (GeoJSON):</label>
+              <label>{{"Catchment Boundaries (GeoJSON)" | translate}}:</label>
               
               <div class="file-upload-container"  [class.has-file]="fileName">
                 <label class="file-upload-label">
@@ -320,7 +316,7 @@
                          (change)="onGeoJsonUpload($event)" 
                          accept=".geojson,.json" 
                          hidden />
-                  <span class="file-upload-button"><i class="upload-icon"></i>{{ fileName ? 'Change File' : 'Choose File' }}</span>
+                  <span class="file-upload-button"><i class="upload-icon"></i>{{ fileName ? ('Change File' | translate) : ('Choose File' | translate) }}</span>
                 </label>
                 <div class="file-info" *ngIf="fileName">
                   <span class="file-name">
@@ -331,19 +327,19 @@
                     <i class="remove-icon"></i>
                   </button>
                 </div>
-                <span class="no-file" *ngIf="!fileName">No file chosen</span>
+                <span class="no-file" *ngIf="!fileName">{{"No file chosen" | translate}}</span>
               </div>
               <input type="hidden" formControlName="catchmentBoundariesData" />
 
               <div class="validation-messages">
                 <div *ngIf="clinicForm.get('catchmentBoundariesData')?.errors?.['required']" class="error">
-                  Please select a GeoJSON file
+                  {{"Please select a GeoJSON file" | translate}}
                 </div>
                 <div *ngIf="clinicForm.get('catchmentBoundariesData')?.errors?.['invalidGeoJson']" class="error">
-                  Please upload a valid GeoJSON file (must be FeatureCollection with Polygon features)
+                  {{"Please upload a valid GeoJSON file (must be FeatureCollection with Polygon features)" | translate}}
                 </div>
                 <div *ngIf="clinicForm.get('catchmentBoundariesData')?.errors?.['fileError']" class="error">
-                  Error reading file. Please try again.
+                  {{"Error reading file. Please try again." | translate}}
                 </div>
               </div>
               
@@ -356,7 +352,7 @@
           <div class="form-row">
             <div class="form-group">
               <label class="required-label"
-                >Appointment Availability:<span class="required">*</span></label
+                >{{"Appointment Availability" | translate}}:<span class="required">*</span></label
               >
               <div class="radio-group">
                 <label>
@@ -365,7 +361,7 @@
                     formControlName="appointmentAvailability"
                     value="Yes"
                   />
-                  Yes
+                  {{"Yes" | translate}}
                 </label>
                 <label>
                   <input
@@ -373,7 +369,7 @@
                     formControlName="appointmentAvailability"
                     value="No"
                   />
-                  No
+                  {{"No" | translate}}
                 </label>
                 <label>
                   <input
@@ -381,7 +377,7 @@
                     formControlName="appointmentAvailability"
                     value="Might be available soon"
                   />
-                  Might be available soon
+                  {{"Might be available soon" | translate}}
                 </label>
               </div>
               <div
@@ -391,13 +387,13 @@
                   clinicForm.get('appointmentAvailability')?.touched
                 "
               >
-                This field is required.
+                {{"This field is required." | translate}}
               </div>
             </div>
 
             <div class="form-group">
               <label class="required-label">
-                Would like the information about the clinic to be public?:
+                {{"Would like the information about the clinic to be public?" | translate}}:
                 <span class="required">*</span></label
               >
               <div class="radio-group">
@@ -407,7 +403,7 @@
                     formControlName="publicInfo"
                     value="Yes"
                   />
-                  Yes
+                  {{"Yes" | translate}}
                 </label>
                 <label>
                   <input
@@ -415,7 +411,7 @@
                     formControlName="publicInfo"
                     value="No, only for EBO"
                   />
-                  No, only for EBO
+                  {{"No, only for EBO" | translate }}
                 </label>
                 <label>
                   <input
@@ -423,7 +419,7 @@
                     formControlName="publicInfo"
                     value="Maybe but needs more info"
                   />
-                  Maybe but needs more info
+                  {{"Maybe but needs more info" | translate}}
                 </label>
               </div>
               <div
@@ -433,11 +429,11 @@
                   clinicForm.get('publicInfo')?.touched
                 "
               >
-                This field is required.
+                {{"This field is required." | translate}}
               </div>
             </div>
             <div class="form-group">
-              <label>Is clinic wheelchair accessible:</label>
+              <label>{{"Wheelchair accessible" | translate}}:</label>
               <div class="radio-group">
                 <label>
                   <input
@@ -445,7 +441,7 @@
                     formControlName="wheelchairAccessible"
                     value="Yes"
                   />
-                  Yes
+                  {{"Yes" | translate}}
                 </label>
                 <label>
                   <input
@@ -453,7 +449,7 @@
                     formControlName="wheelchairAccessible"
                     value="No"
                   />
-                  No
+                  {{"No" | translate}}
                 </label>
               </div>
             </div>
@@ -461,7 +457,7 @@
           <div class="form-row">
             <div class="form-group">
               <label class="required-label"
-                >What kind of tax clinics do you offer?<span class="required"
+                >{{"Type of tax clinic" | translate}}<span class="required"
                   >*</span
                 ></label
               >
@@ -475,7 +471,7 @@
                       clinicForm.get('clinicTypes')?.value.includes('Virtual')
                     "
                   />
-                  Virtual</label
+                  {{"Virtual" | translate}}</label
                 >
                 <label
                   ><input
@@ -486,7 +482,7 @@
                       clinicForm.get('clinicTypes')?.value.includes('In person')
                     "
                   />
-                  In person</label
+                  {{"In person" | translate}}</label
                 >
                 <label
                   ><input
@@ -499,7 +495,7 @@
                         ?.value.includes('By appointment')
                     "
                   />
-                  By appointment</label
+                  {{"By appointment" | translate}}</label
                 >
                 <label
                   ><input
@@ -510,7 +506,7 @@
                       clinicForm.get('clinicTypes')?.value.includes('Walk-in')
                     "
                   />
-                  Walk-in</label
+                  {{"Walk-in" | translate}}</label
                 >
                 <label
                   ><input
@@ -521,7 +517,7 @@
                       clinicForm.get('clinicTypes')?.value.includes('Drop-off')
                     "
                   />
-                  Drop-off</label
+                  {{"Drop-off" | translate}}</label
                 >
                 <label>
                   <input
@@ -532,12 +528,12 @@
                       clinicForm.get('clinicTypes')?.value.includes('Other')
                     "
                   />
-                  Other
+                  {{"Other" | translate}}
                   <input
                     *ngIf="clinicForm.get('clinicTypes')?.value.includes('Other')"
                     type="text"
                     formControlName="clinicTypesOther"
-                    placeholder="Specify here..."
+                    placeholder="{{'Specify here...' | translate}}"
                   />
                 </label>
               </div>
@@ -548,13 +544,13 @@
                   clinicForm.get('clinicTypes')?.touched
                 "
               >
-                This field is required.
+                {{"This field is required." | translate}}
               </div>
             </div>
 
             <div class="form-group">
               <label class="required-label"
-                >For which months is this income tax clinic offered?<span
+                >{{"Months offered" | translate}}:<span
                   class="required"
                   >*</span
                 ></label
@@ -571,7 +567,7 @@
                         ?.value.includes('February')
                     "
                   />
-                  February</label
+                  {{"February" | translate}}</label
                 >
                 <label
                   ><input
@@ -582,7 +578,7 @@
                       clinicForm.get('monthsOffered')?.value.includes('March')
                     "
                   />
-                  March</label
+                  {{"March" | translate}}</label
                 >
                 <label
                   ><input
@@ -593,7 +589,7 @@
                       clinicForm.get('monthsOffered')?.value.includes('April')
                     "
                   />
-                  April</label
+                  {{"April" | translate}}</label
                 >
                 <label
                   ><input
@@ -604,7 +600,7 @@
                       clinicForm.get('monthsOffered')?.value.includes('May')
                     "
                   />
-                  May</label
+                  {{"May" | translate}}</label
                 >
                 <label
                   ><input
@@ -615,7 +611,7 @@
                       clinicForm.get('monthsOffered')?.value.includes('June')
                     "
                   />
-                  June</label
+                  {{"June" | translate}}</label
                 >
                 <label>
                   <input
@@ -626,14 +622,14 @@
                       clinicForm.get('monthsOffered')?.value.includes('Other')
                     "
                   />
-                  Other
+                  {{"Other" | translate}}
                   <input
                     *ngIf="
                       clinicForm.get('monthsOfferedOther')
                     "
                     type="text"
                     formControlName="monthsOfferedOther"
-                    placeholder="Specify here..."
+                    placeholder="{{'Specify here...' | translate}}"
                   />
                 </label>
               </div>
@@ -641,20 +637,20 @@
                 class="error"
                 *ngIf="clinicForm.get('monthsOffered')?.errors?.['required'] && clinicForm.get('monthsOffered')?.touched"
               >
-                This field is required.
+                {{"This field is required." | translate}}
               </div>
             </div>
             <div class="form-group">
               <label
-                >Hours of operation or Date and time of your tax clinics:</label
+                >{{"Hours of operation or Date and time of tax clinic" | translate}}:</label
               >
-              <textarea formControlName="hoursAndDate" rows="2" placeholder="Enter Hours and date of clinic operation"></textarea>
+              <textarea formControlName="hoursAndDate" rows="2" placeholder="{{'Enter Hours and date of clinic operation' | translate}}"></textarea>
             </div>
           </div>
           <div class="form-row">
             <div class="form-group">
               <label class="required-label"
-                >Days of operation of the clinic<span class="required"
+                >{{"Days of operation of the clinic" | translate}}<span class="required"
                   >*</span
                 ></label
               >
@@ -670,7 +666,7 @@
                         ?.value.includes('Weekdays')
                     "
                   />
-                  Weekdays</label
+                  {{"Weekdays" | translate}}</label
                 >
                 <label
                   ><input
@@ -683,7 +679,7 @@
                         ?.value.includes('Weekends')
                     "
                   />
-                  Weekends</label
+                  {{"Weekends" | translate}}</label
                 >
               </div>
               <div
@@ -693,12 +689,12 @@
                   clinicForm.get('daysOfOperation')?.touched
                 "
               >
-                This field is required.
+                {{"This field is required." | translate}}
               </div>
             </div>
             <div class="form-group">
               <label class="required-label"
-                >Hours of operation of the clinic<span class="required"
+                >{{"Hours of operation of the clinic" | translate}}<span class="required"
                   >*</span
                 ></label
               >
@@ -714,7 +710,7 @@
                         ?.value.includes('Daytime')
                     "
                   />
-                  Daytime</label
+                  {{"Daytime" | translate}}</label
                 >
                 <label
                   ><input
@@ -727,7 +723,7 @@
                         ?.value.includes('Evening')
                     "
                   />
-                  Evening</label
+                  {{"Evening" | translate}}</label
                 >
               </div>
               <div
@@ -737,14 +733,13 @@
                   clinicForm.get('hoursOfOperation')?.touched
                 "
               >
-                This field is required.
+                {{"This field is required." | translate}}
               </div>
             </div>
 
             <div class="form-group">
               <label class="required-label"
-                >Do this clinic also offer income tax services year round
-                outside of tax season?<span class="required">*</span></label
+                >{{"Offer services year round outside of tax season?" | translate}}<span class="required">*</span></label
               >
               <div class="radio-group">
                 <label
@@ -753,7 +748,7 @@
                     formControlName="yearRoundService"
                     value="Yes"
                   />
-                  Yes</label
+                  {{"Yes" | translate}}</label
                 >
                 <label
                   ><input
@@ -761,7 +756,7 @@
                     formControlName="yearRoundService"
                     value="No"
                   />
-                  No</label
+                  {{"No" | translate}}</label
                 >
               </div>
               <div
@@ -771,12 +766,12 @@
                   clinicForm.get('yearRoundService')?.touched
                 "
               >
-                This field is required.
+                {{"This field is required." | translate}}
               </div>
             </div>
             <div class="form-group">
               <label class="required-label"
-                >Do the clinic serve people from:<span class="required"
+                >{{"Serve people from" | translate}}:<span class="required"
                   >*</span
                 ></label
               >
@@ -788,7 +783,7 @@
                     value="A specific catchment area only"
                     (change)="onServePeopleChange($event)"
                   />
-                  A specific catchment area only
+                  {{"A specific catchment area only" | translate}}
                 </label>
                 <label>
                   <input
@@ -797,7 +792,7 @@
                     value="Anywhere from Ottawa"
                     (change)="onServePeopleChange($event)"
                   />
-                  Anywhere from Ottawa
+                  {{"Anywhere from Ottawa" | translate}}
                 </label>
                 <label>
                   <input
@@ -806,13 +801,13 @@
                     value="Other"
                     (change)="onServePeopleChange($event)"
                   />
-                  Other
+                  {{"Other" | translate}}
                 </label>
                 <input
                   *ngIf="clinicForm.get('servePeopleFrom')?.value === 'Other'"
                   type="text"
                   formControlName="servePeopleFromOther"
-                  placeholder="Specify here..."
+                  placeholder="{{'Specify here...' | translate}}"
                 />
               </div>
               <div
@@ -822,16 +817,16 @@
                   clinicForm.get('servePeopleFrom')?.touched
                 "
               >
-                This field is required.
+                {{"This field is required." | translate}}
               </div>
             </div>
           </div>
         </div>
-        <p>Population Served Details</p>
+        <p>{{"Population Served Details" | translate}}</p>
         <div class="org-details">
           <div class="form-row">
             <div class="form-group">
-              <label>Do you serve?</label>
+              <label>{{"Do you serve?" | translate}}</label>
               <div class="checkbox-group">
                 <label
                   ><input
@@ -844,7 +839,7 @@
                         ?.value.includes('Seniors')
                     "
                   />
-                  Seniors</label
+                  {{"Seniors" | translate}}</label
                 >
                 <label
                   ><input
@@ -857,7 +852,7 @@
                         ?.value.includes('Persons with disabilities')
                     "
                   />
-                  Persons with disabilities</label
+                  {{"Persons with disabilities" | translate}}</label
                 >
                 <label
                   ><input
@@ -870,7 +865,7 @@
                         ?.value.includes('Newcomers')
                     "
                   />
-                  Newcomers</label
+                  {{"Newcomers" | translate}}</label
                 >
                 <label
                   ><input
@@ -883,7 +878,7 @@
                         ?.value.includes('Language-specific community')
                     "
                   />
-                  Language-specific community</label
+                  {{"Language-specific community" | translate}}</label
                 >
                 <label
                   ><input
@@ -898,7 +893,7 @@
                         )
                     "
                   />
-                  Indigenous (First Nations and Inuit and Metis)</label
+                  {{"Indigenous (First Nations and Inuit and Metis)" | translate}}</label
                 >
                 <label
                   ><input
@@ -911,7 +906,7 @@
                         ?.value.includes('Students')
                     "
                   />
-                  Students</label
+                  {{"Students" | translate}}</label
                 >
                 <label
                   ><input
@@ -924,20 +919,20 @@
                         ?.value.includes('Other')
                     "
                   />
-                  Other</label
+                  {{"Other" | translate}}</label
                 >
                 <input
                   *ngIf="clinicForm.get('populationServedOther')"
                   type="text"
                   formControlName="populationServedOther"
-                  placeholder="Specify other groups"
+                  placeholder="{{'Specify other groups' | translate}}"
                 />
               </div>
             </div>
 
             <div class="form-group">
               <label class="required-label"
-                >In which languages is the service available in the clinic?<span
+                >{{"Service available in?" | translate}}<span
                   class="required"
                   >*</span
                 ></label
@@ -954,7 +949,7 @@
                         ?.value.includes('English')
                     "
                   />
-                  English</label
+                  {{"English" | translate}}</label
                 >
                 <label
                   ><input
@@ -967,7 +962,7 @@
                         ?.value.includes('French')
                     "
                   />
-                  French</label
+                  {{"French" | translate}}</label
                 >
                 <label
                   ><input
@@ -980,7 +975,7 @@
                         ?.value.includes('Arabic')
                     "
                   />
-                  Arabic</label
+                  {{"Arabic" | translate}}</label
                 >
                 <label
                   ><input
@@ -993,7 +988,7 @@
                         ?.value.includes('Other')
                     "
                   />
-                  Other</label
+                  {{"Other" | translate}}</label
                 >
                 <input
                   *ngIf="
@@ -1001,7 +996,7 @@
                   "
                   type="text"
                   formControlName="serviceLanguagesOther"
-                  placeholder="Specify other languages"
+                  placeholder="{{'Specify other languages' | translate}}"
                 />
               </div>
               <div
@@ -1011,17 +1006,17 @@
                   clinicForm.get('serviceLanguages')?.touched
                 "
               >
-                This field is required.
+                {{"This field is required." | translate}}
               </div>
             </div>
           </div>
         </div>
-        <p>Eligibility Criteria Details</p>
+        <p>{{"Eligibility Criteria Details" | translate}}</p>
         <div class="org-details">
           <div class="form-row">
             <div class="form-group">
               <label class="required-label"
-                >Which tax years do you prepare?<span class="required"
+                >{{"Which tax years do you prepare?" | translate}}<span class="required"
                   >*</span
                 ></label
               >
@@ -1037,7 +1032,7 @@
                         ?.value.includes('Only current year')
                     "
                   />
-                  Only current year
+                  {{"Only current year" | translate}}
                 </label>
                 <label>
                   <input
@@ -1050,7 +1045,7 @@
                         ?.value.includes('Current and last year')
                     "
                   />
-                  Current and last year
+                  {{"Current and last year" | translate}}
                 </label>
                 <label>
                   <input
@@ -1063,7 +1058,7 @@
                         ?.value.includes('Multiple years')
                     "
                   />
-                  Multiple years
+                  {{"Multiple years" | translate}}
                 </label>
                 <label>
                   <input
@@ -1076,7 +1071,7 @@
                         ?.value.includes('Other')
                     "
                   />
-                  Other
+                  {{"Other" | translate}}
                 </label>
                 <input
                   *ngIf="
@@ -1084,7 +1079,7 @@
                   "
                   type="text"
                   formControlName="taxYearsPreparedOther"
-                  placeholder="Specify other tax years"
+                  placeholder="{{'Specify other tax years' | translate}}"
                 />
               </div>
               <div
@@ -1094,13 +1089,12 @@
                   clinicForm.get('taxYearsPrepared')?.touched
                 "
               >
-                This field is required.
+                {{"This field is required." | translate}}
               </div>
             </div>
             <div class="form-group">
               <label class="required-label"
-                >Do you help with tax year for which a client was a resident
-                of?<span class="required">*</span></label
+                >{{"Do you help with tax year for which a client was a resident of?" | translate }}<span class="required">*</span></label
               >
               <div class="checkbox-group">
                 <label>
@@ -1114,7 +1108,7 @@
                         ?.value.includes('Ontario')
                     "
                   />
-                  Ontario
+                  {{"Ontario" | translate}}
                 </label>
                 <label>
                   <input
@@ -1127,7 +1121,7 @@
                         ?.value.includes('Quebec')
                     "
                   />
-                  Quebec
+                  {{"Quebec" | translate}}
                 </label>
                 <label>
                   <input
@@ -1142,7 +1136,7 @@
                         )
                     "
                   />
-                  Any province other than Ontario and Quebec
+                  {{"Any province other than Ontario and Quebec" | translate}}
                 </label>
                 <label>
                   <input
@@ -1155,7 +1149,7 @@
                         ?.value.includes('Other')
                     "
                   />
-                  Other
+                  {{"Other" | translate}}
                 </label>
                 <input
                   *ngIf="
@@ -1163,7 +1157,7 @@
                   "
                   type="text"
                   formControlName="residencyTaxYearOther"
-                  placeholder="Specify other provinces"
+                  placeholder="{{'Specify other provinces' | translate}}"
                 />
               </div>
               <div
@@ -1173,12 +1167,12 @@
                   clinicForm.get('residencyTaxYear')?.touched
                 "
               >
-                This field is required.
+                {{"This field is required." | translate}}
               </div>
             </div>
             <div class="form-group">
               <label class="required-label"
-                >Do you serve people with?<span class="required">*</span></label
+                >{{"Do you serve people with?" | translate}}<span class="required">*</span></label
               >
               <div class="checkbox-group">
                 <label
@@ -1192,7 +1186,7 @@
                         ?.value.includes('Rental income')
                     "
                   />
-                  Rental income</label
+                  {{"Rental income" | translate}}</label
                 >
                 <label
                   ><input
@@ -1205,7 +1199,7 @@
                         ?.value.includes('Self-employment income')
                     "
                   />
-                  Self-employment income</label
+                  {{"Self-employment income" | translate}}</label
                 >
                 <label
                   ><input
@@ -1218,7 +1212,7 @@
                         ?.value.includes('Interest income over $1000')
                     "
                   />
-                  Interest income over $1000</label
+                  {{"Interest income over $1000" | translate}}</label
                 >
                 <label
                   ><input
@@ -1231,7 +1225,7 @@
                         ?.value.includes('Return for a deceased person')
                     "
                   />
-                  Return for a deceased person</label
+                  {{"Return for a deceased person" | translate}}</label
                 >
                 <label
                   ><input
@@ -1246,7 +1240,7 @@
                         )
                     "
                   />
-                  Employment expenses (with specific conditions)</label
+                  {{"Employment expenses (with specific conditions)" | translate}}</label
                 >
                 <label
                   ><input
@@ -1261,7 +1255,7 @@
                         )
                     "
                   />
-                  Capital Gains/losses (with specific conditions)</label
+                  {{"Capital Gains/losses (with specific conditions)" | translate}}</label
                 >
                 <label
                   ><input
@@ -1274,7 +1268,7 @@
                       )
                     "
                   />
-                  Larger income than CVITP income-criteria. when people are low income now</label
+                  {{"Larger income than CVITP income-criteria. when people are low income now" | translate}}</label
                 >
                 <label
                   ><input
@@ -1285,13 +1279,13 @@
                       clinicForm.get('servePeople')?.value.includes('Other')
                     "
                   />
-                  Other</label
+                  {{"Other" | translate}}</label
                 >
                 <input
                   *ngIf="clinicForm.get('servePeopleOther')"
                   type="text"
                   formControlName="servePeopleOther"
-                  placeholder="Specify other criteria"
+                  placeholder="{{'Specify other criteria' | translate}}"
                 />
               </div>
               <div
@@ -1301,39 +1295,39 @@
                   clinicForm.get('servePeople')?.touched
                 "
               >
-                This field is required.
+                {{"This field is required." | translate}}
               </div>
             </div>
           </div>
           <div class="form-row">
             <div class="form-group">
               <label
-                >Webpage detailing the eligibility criteria:</label
+                >{{"Webpage detailing the eligibility criteria" | translate}}:</label
               >
               <input
                 type="text"
                 formControlName="eligibilityCriteriaWebpage"
-                placeholder="Enter webpage URL"
+                placeholder="{{'Enter webpage URL' | translate}}"
               />
             </div>
             <div class="form-group">
               <label
-                >Eligibility criteria detailing Link:</label
+                >{{"Eligibility criteria detailing Link" | translate}}:</label
               >
               <input
                 type="text"
                 formControlName="eligibilityCriteriaFile"
-                placeholder="Enter link..."
+                placeholder="{{'Enter link...' | translate}}"
               />
             </div>
           </div>
         </div>
-        <p>Appointment Booking Details</p>
+        <p>{{"Appointment Booking Details" | translate}}</p>
         <div class="org-details">
           <div class="form-row">
             <div class="form-group">
               <label class="required-label"
-                >Process for booking an appointment during the tax season<span
+                >{{"Process for booking an appointment during the tax season" | translate}}<span
                   class="required"
                   >*</span
                 ></label
@@ -1350,7 +1344,7 @@
                         ?.value.includes('In person')
                     "
                   />
-                  In person</label
+                  {{"In person"| translate}}</label
                 >
                 <label
                   ><input
@@ -1363,7 +1357,7 @@
                         ?.value.includes('By phone')
                     "
                   />
-                  By phone</label
+                  {{"By phone" | translate}}</label
                 >
                 <label
                   ><input
@@ -1374,19 +1368,19 @@
                       clinicForm.get('bookingProcess')?.value.includes('Online')
                     "
                   />
-                  Online</label
+                  {{"Online" | translate}}</label
                 >
               </div>
               <div
                 class="error"
                 *ngIf="clinicForm.get('bookingProcess')?.errors?.['required'] && clinicForm.get('bookingProcess')?.touched"
               >
-                This field is required.
+                {{"This field is required." | translate}}
               </div>
             </div>
             <div class="form-group">
               <label
-                >Would an online booking system be useful to the clinic?</label
+                >{{"Would an online booking system be useful to the clinic?" | translate}}</label
               >
               <div class="radio-group">
                 <label
@@ -1395,7 +1389,7 @@
                     formControlName="usefulOnlineBooking"
                     value="Yes"
                   />
-                  Yes</label
+                  {{"Yes" | translate}}</label
                 >
                 <label
                   ><input
@@ -1403,7 +1397,7 @@
                     formControlName="usefulOnlineBooking"
                     value="No"
                   />
-                  No</label
+                  {{"No" | translate}}</label
                 >
                 <label
                   ><input
@@ -1411,23 +1405,23 @@
                     formControlName="usefulOnlineBooking"
                     value="Maybe"
                   />
-                  Maybe</label
+                  {{"Maybe" | translate}}</label
                 >
               </div>
             </div>
             <div class="form-group">
-              <label>Link for online appointment booking:</label>
+              <label>{{"Link for online appointment booking" | translate}}:</label>
               <input
                 type="text"
                 formControlName="onlineBookingLink"
-                placeholder="Enter online Booking Link"
+                placeholder="{{'Enter online Booking Link' | translate}}"
               />
             </div>
           </div>
           <div class="form-row">
             <div class="form-group">
               <label class="required-label"
-                >Working days and hours for appointment booking:<span
+                >{{"Working days and hours for appointment booking" | translate}}:<span
                   class="required"
                   >*</span
                 ></label
@@ -1435,7 +1429,7 @@
               <input
                 type="text"
                 formControlName="bookingDaysHours"
-                placeholder="Enter Working days and hours"
+                placeholder="{{'Enter Working days and hours' | translate}}"
               />
               <div
                 class="error"
@@ -1444,43 +1438,42 @@
                   clinicForm.get('bookingDaysHours')?.touched
                 "
               >
-                This field is required.
+                {{"This field is required." | translate}}
               </div>
             </div>
             <div class="form-group">
-              <label>Phone number for appointment booking:</label>
+              <label>{{"Phone number for appointment booking" | translate}}:</label>
               <input
                 type="text"
                 formControlName="bookingContactPhone"
-                placeholder="Enter Phone number for Appointment booking"
+                placeholder="{{'Enter Phone number for Appointment booking' | translate}}"
               />
             </div>
             <div class="form-group">
-              <label>Email for appointment booking:</label>
+              <label>{{"Email for appointment booking" | translate}}:</label>
               <input
                 type="text"
                 formControlName="bookingContactEmail"
-                placeholder="Enter Email for appointment booking"
+                placeholder="{{'Enter Email for appointment booking' | translate}}"
               />
             </div>
           </div>
         </div>
-        <p>Client Documentation Details</p>
+        <p>{{"Client Documentation Details" | translate}}</p>
         <div class="org-details">
           <div class="form-row">
             <div class="form-group">
-              <label>Required Documents:</label>
+              <label>{{"Required Documents" | translate}}:</label>
               <input
                 type="text"
                 formControlName="requiredDocuments"
-                placeholder="List required documents..."
+                placeholder="{{'List required documents...' | translate}}"
               />
             </div>
 
             <div class="form-group">
               <label class="required-label"
-                >If the client does not have all their documentation, can clinic
-                help them find it?<span class="required">*</span></label
+                >{{"If the client does not have all their documentation, can clinic help them find it?" | translate}}<span class="required">*</span></label
               >
               <div class="checkbox-group">
                 <label>
@@ -1496,7 +1489,7 @@
                         )
                     "
                   />
-                  Yes for CRA documents with Autofill/repid
+                  {{"Yes for CRA documents with Autofill/repid" | translate}}
                 </label>
                 <label>
                   <input
@@ -1511,7 +1504,7 @@
                         )
                     "
                   />
-                  Yes with help from staff or volunteer for some documentation
+                  {{"Yes with help from staff or volunteer for some documentation" | translate}}
                 </label>
                 <label>
                   <input
@@ -1526,7 +1519,7 @@
                         )
                     "
                   />
-                  No client must have all their documents ready
+                  {{"No client must have all their documents ready" | translate}}
                 </label>
               </div>
               <div
@@ -1536,16 +1529,16 @@
                   clinicForm.get('helpWithMissingDocs')?.touched
                 "
               >
-                This field is required.
+                {{"This field is required." | translate}}
               </div>
             </div>
           </div>
         </div>
-        <p>Volunteers Details and other information</p>
+        <p>{{"Volunteers Details and other information" | translate}}</p>
         <div class="org-details">
           <div class="form-row">
             <div class="form-group">
-              <label>Who is preparing tax returns?</label>
+              <label>{{"Who is preparing tax returns?" | translate}}</label>
               <div class="checkbox-group">
                 <label
                   ><input
@@ -1558,7 +1551,7 @@
                         ?.value.includes('Volunteers')
                     "
                   />
-                  Volunteers</label
+                  {{"Volunteers" | translate}}</label
                 >
                 <label
                   ><input
@@ -1571,7 +1564,7 @@
                         ?.value.includes('Employees')
                     "
                   />
-                  Employees</label
+                  {{"Employees" | translate}}</label
                 >
                 <label>
                   <input
@@ -1580,19 +1573,19 @@
                     value="Other"
                     [checked]="clinicForm.get('taxPreparers')?.value.includes('Other')"
                   />
-                  Other
+                  {{"Other" | translate}}
                   <input
                     *ngIf="clinicForm.get('taxPreparersOther')"
                     type="text"
                     formControlName="taxPreparersOther"
-                    placeholder="Specify here..."
+                    placeholder="{{'Specify here...' | translate}}"
                   />
                 </label>
               </div>
             </div>
 
             <div class="form-group">
-              <label>Who is filing tax returns?</label>
+              <label>{{"Who is filing tax returns?" | translate}}</label>
               <div class="checkbox-group">
                 <label
                   ><input
@@ -1603,7 +1596,7 @@
                       clinicForm.get('taxFilers')?.value.includes('Volunteers')
                     "
                   />
-                  Volunteers</label
+                  {{"Volunteers" | translate}}</label
                 >
                 <label
                   ><input
@@ -1614,7 +1607,7 @@
                       clinicForm.get('taxFilers')?.value.includes('Employees')
                     "
                   />
-                  Employees</label
+                  {{"Employees" | translate}}</label
                 >
                 <label>
                   <input
@@ -1625,19 +1618,19 @@
                       clinicForm.get('taxFilers')?.value.includes('Other')
                     "
                   />
-                  Other
+                  {{"Other" | translate}}
                   <input
                     *ngIf="clinicForm.get('taxFilersOther')"
                     type="text"
                     formControlName="taxFilersOther"
-                    placeholder="Specify here..."
+                    placeholder="{{'Specify here...' | translate}}"
                   />
                 </label>
               </div>
             </div>
 
             <div class="form-group">
-              <label>What are your tax clinic volunteers' roles?</label>
+              <label>{{"What are your tax clinic volunteers' roles?" | translate}}</label>
               <div class="checkbox-group">
                 <label
                   ><input
@@ -1650,7 +1643,7 @@
                         ?.value.includes('Booking appointments')
                     "
                   />
-                  Booking appointments</label
+                  {{"Booking appointments" | translate}}</label
                 >
                 <label
                   ><input
@@ -1665,7 +1658,7 @@
                         )
                     "
                   />
-                  Client intake (gathering personal information and tax slips)</label
+                  {{"Client intake (gathering personal information and tax slips)" | translate}}</label
                 >
                 <label
                   ><input
@@ -1678,7 +1671,7 @@
                         ?.value.includes('Preparing tax returns using software')
                     "
                   />
-                  Preparing tax returns using software</label
+                  {{"Preparing tax returns using software" | translate}}</label
                 >
                 <label
                   ><input
@@ -1693,7 +1686,7 @@
                         )
                     "
                   />
-                  Explaining tax return to client and having them sign e-filing authorization</label
+                  {{"Explaining tax return to client and having them sign e-filing authorization" | translate}}</label
                 >
                 <label
                   ><input
@@ -1708,7 +1701,7 @@
                         )
                     "
                   />
-                  Tax return verification/audit before e-filing</label
+                  {{"Tax return verification/audit before e-filing" | translate}}</label
                 >
                 <label
                   ><input
@@ -1721,7 +1714,7 @@
                         ?.value.includes('E-FILE tax returns')
                     "
                   />
-                  E-FILE tax returns</label
+                  {{"E-FILE tax returns" | translate}}</label
                 >
                 <label
                   ><input
@@ -1734,7 +1727,7 @@
                         ?.value.includes('Administrative tasks')
                     "
                   />
-                  Administrative tasks</label
+                  {{"Administrative tasks" | translate}}</label
                 >
                 <label>
                   <input
@@ -1745,14 +1738,14 @@
                       clinicForm.get('volunteerRoles')?.value.includes('Other')
                     "
                   />
-                  Other
+                  {{"Other" | translate}}
                   <input
                     *ngIf="
                       clinicForm.get('volunteerRolesOther')
                     "
                     type="text"
                     formControlName="volunteerRolesOther"
-                    placeholder="Specify here..."
+                    placeholder="{{'Specify here...' | translate}}"
                   />
                 </label>
               </div>
@@ -1761,8 +1754,7 @@
           <div class="form-row">
             <div class="form-group">
               <label
-                >Would you benefit from additional support with any of the
-                following?</label
+                >{{"Would you benefit from additional support with any of the following?" | translate}}</label
               >
               <div class="checkbox-group">
                 <label
@@ -1776,7 +1768,7 @@
                         ?.value.includes('Volunteer recruitment')
                     "
                   />
-                  Volunteer recruitment</label
+                  {{"Volunteer recruitment" | translate}}</label
                 >
                 <label
                   ><input
@@ -1789,7 +1781,7 @@
                         ?.value.includes('Volunteer training')
                     "
                   />
-                  Volunteer training</label
+                  {{"Volunteer training" | translate}}</label
                 >
                 <label
                   ><input
@@ -1804,7 +1796,7 @@
                         )
                     "
                   />
-                  Training of employees new to operating tax clinics</label
+                  {{"Training of employees new to operating tax clinics" | translate}}</label
                 >
                 <label
                   ><input
@@ -1819,7 +1811,7 @@
                         )
                     "
                   />
-                  Follow-up with clients post-tax season</label
+                  {{"Follow-up with clients post-tax season" | translate}}</label
                 >
                 <label
                   ><input
@@ -1834,7 +1826,7 @@
                         )
                     "
                   />
-                  Visibility for your tax clinic to reach more clients</label
+                  {{"Visibility for your tax clinic to reach more clients" | translate}}</label
                 >
                 <label
                   ><input
@@ -1847,7 +1839,7 @@
                         ?.value.includes('Set up an online booking system')
                     "
                   />
-                  Set up an online booking system</label
+                  {{"Set up an online booking system" | translate}}</label
                 >
                 <label>
                   <input
@@ -1860,7 +1852,7 @@
                         ?.value.includes('Other')
                     "
                   />
-                  Other
+                  {{"Other" | translate}}
                   <input
                     *ngIf="
                       clinicForm
@@ -1868,7 +1860,7 @@
                     "
                     type="text"
                     formControlName="additionalSupportOther"
-                    placeholder="Specify here..."
+                    placeholder="{{'Specify here...' | translate}}"
                   />
                 </label>
               </div>
@@ -1876,19 +1868,18 @@
 
             <div class="form-group">
               <label>
-                What is the approxime capacity of the tax clinic during the tax
-                season (March-April)?
+                {{"What is the approxime capacity of the tax clinic during the tax season (March-April)?" | translate}}
               </label>
               <input
                 type="text"
                 formControlName="clinicCapacity"
-                placeholder="Number of tax returns"
+                placeholder="{{'Number of tax returns' | translate}}"
               />
             </div>
 
             <div class="form-group">
-              <label>Any last comments or questions?</label>
-              <textarea formControlName="comments" rows="2" placeholder="Your comments or questions..."></textarea>
+              <label>{{"Any last comments or questions?" | translate}}</label>
+              <textarea formControlName="comments" rows="2" placeholder="{{'Your comments or questions...' | translate}}"></textarea>
             </div>
           </div>
         </div>
@@ -1899,7 +1890,7 @@
             class="save-button"
             [disabled]="clinicForm.invalid"
           >
-            {{ isEditMode ? "Update Clinic" : "Add Clinic" }}
+            {{ isEditMode ? ("Update Clinic" | translate) : ("Add Clinic") | translate }}
           </button>
         </div>
       </form>

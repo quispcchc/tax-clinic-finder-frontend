@@ -2,6 +2,7 @@ import { Location } from './location.model';
 export interface Clinic {
   [key: string]: any;
   id: number;
+  distance?: number;
   organizationName: string;
   organisationWebsite: string;
   organisationalEmail: string;

@@ -139,7 +139,7 @@ export class DashboardMainComponent implements OnInit {
 
     if (postalCodeFilter && coordinates) {
       await Promise.all(this.filteredClinics.map(async (clinic) => {
-        let distance = Infinity;
+         clinic.distance = Infinity;
         let servesPostalCode = false;
         let hasCatchmentBoundaries = false;
 
@@ -158,7 +158,7 @@ export class DashboardMainComponent implements OnInit {
           }
 
           if (clinicCoords) {
-            distance = this.calculateDistance(coordinates, clinicCoords);
+            clinic.distance = this.calculateDistance(coordinates, clinicCoords);
           }
 
           if (clinic.catchmentBoundaries) {
@@ -177,10 +177,14 @@ export class DashboardMainComponent implements OnInit {
           }
         }
 
-        distanceCache.set(clinic, distance);
+        distanceCache.set(clinic, clinic.distance);
         servesPostalCodeCache.set(clinic, servesPostalCode);
         hasCatchmentBoundariesCache.set(clinic, hasCatchmentBoundaries);
       }));
+    } else {
+      this.filteredClinics.forEach(clinic => {
+        delete clinic.distance;
+      });
     }
   
     const populationPriority: Record<string, number> = {

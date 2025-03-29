@@ -78,4 +78,8 @@ export class ClinicListComponent implements OnInit {
         return 'gray';
     }
   }
+
+  isValidDistance(distance: number | undefined | null): boolean {
+    return distance !== undefined && distance !== null && distance !== Infinity;
+  }
 }

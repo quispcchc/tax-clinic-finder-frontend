@@ -40,6 +40,11 @@
       {{ "Appointment Availability" | translate }}:
       {{ clinic.appointmentAvailability }}
     </p>
+    <p *ngIf="isValidDistance(clinic.distance)" class="distance-tag">
+      <span class="distance-text">
+        {{ "Distance" | translate }}: {{ clinic.distance | number:'1.2-2' }} km
+      </span>
+    </p>
   </div>  
   <div *ngIf="filteredClinics.length == 0" class="clinic-not-found">
     <h3>{{ "No Tax Clinic Found" | translate }}</h3>

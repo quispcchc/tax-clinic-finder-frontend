@@ -129,6 +129,20 @@
     }
   }
 }
+
+.distance-tag {
+  display: inline-block;
+  margin: 0 0 8px;
+}
+
+.distance-text {
+  border: 1px solid #0097B2;
+  border-radius: 16px;
+  padding: 8px 8px;
+  display: inline-block;
+  background-color: #f8f9fa;
+}
+
 @media (max-width: 1024px) {
   .find-clinic-btn {
     width: 50%;
