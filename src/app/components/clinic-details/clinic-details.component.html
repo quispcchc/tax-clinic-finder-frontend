@@ -11,8 +11,8 @@
       </div>
       <div class="header-buttons">
         <button *ngIf="!isNewClient" class="close-button" (click)="close()">X</button>
-        <button *ngIf="isNewClient" class="action-button" (click)="referClinic()">{{"Assign Clinic" | translate}}</button>
-        <button *ngIf="isNewClient" class="action-button" (click)="backToFilterClinic()">{{"Back to Filter Clinic" | translate}}</button>
+        <button *ngIf="isNewClient" class="assign-action-button" (click)="referClinic()">{{"Assign Clinic" | translate}}</button>
+        <button *ngIf="isNewClient" class="unassign-action-button" (click)="backToFilterClinic()">{{"Back to Filter Clinic" | translate}}</button>
       </div>
     </div>
     <div class="clinic-details-container">

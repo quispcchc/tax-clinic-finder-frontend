@@ -39,7 +39,7 @@
   gap: 10px;
 }
 
-.action-button {
+.assign-action-button {
   background-color: #80CBD8;
   color: #2B2B2B;
   border: none;
@@ -47,11 +47,28 @@
   border-radius: 16px;
   cursor: pointer;
   font-size: 14px;
+  font-weight: 600;
 }
 
-.action-button:hover {
+.assign-action-button:hover {
   background-color: #007E94;
   color: #ffffff;
+}
+
+.unassign-action-button {
+  background-color: #ffffff;
+  color: #2B2B2B;
+  border: 1px solid #0097B2;
+  padding: 10px 15px;
+  border-radius: 16px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.unassign-action-button:hover {
+  background-color: #AADCE5;
+  color: #2B2B2B;
 }
 
 .clinic-header-left {
