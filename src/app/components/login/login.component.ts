@@ -15,6 +15,7 @@ export class LoginComponent implements OnInit {
   loginForm!: FormGroup;
   errorMessage: string | null = null;
   currentLanguage: string = 'en';
+  showPassword: boolean = false;
 
   constructor(
     private fb: FormBuilder,
@@ -97,5 +98,9 @@ export class LoginComponent implements OnInit {
 
   switchLanguage(language: string): void {
     this.languageService.setLanguage(language);
+  }
+
+  togglePasswordVisibility(): void {
+    this.showPassword = !this.showPassword;
   }
 }

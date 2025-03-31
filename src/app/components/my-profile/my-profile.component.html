@@ -46,13 +46,13 @@
       <label for="currentPassword">{{ "Current Password" | translate }}</label>
       <div class="input-wrapper">
         <input
-          [type]="passwordFieldType"
+          [type]="passwordVisibility.currentPassword ? 'text' : 'password'"
           id="currentPassword"
           formControlName="currentPassword"
           placeholder="{{'Enter Current Password' | translate}}"
         />
         <img
-          src="/assets/images/eye-icon.svg"
+          [src]="passwordVisibility.currentPassword ? 'assets/images/eye-open.svg' : 'assets/images/eye-close.svg'"
           alt="Toggle Visibility"
           class="input-icon"
           (click)="togglePasswordVisibility('currentPassword')"
@@ -71,13 +71,13 @@
       <label for="newPassword">{{ "New Password" | translate }}</label>
       <div class="input-wrapper">
         <input
-          [type]="passwordFieldType"
+          [type]="passwordVisibility.newPassword ? 'text' : 'password'"
           id="newPassword"
           formControlName="newPassword"
           placeholder="{{'Enter New Password' | translate}}"
         />
         <img
-          src="/assets/images/eye-icon.svg"
+        [src]="passwordVisibility.newPassword ? 'assets/images/eye-open.svg' : 'assets/images/eye-close.svg'"
           alt="Toggle Visibility"
           class="input-icon"
           (click)="togglePasswordVisibility('newPassword')"
@@ -174,13 +174,13 @@
       <label for="confirmPassword">{{ "Confirm Password" | translate }}</label>
       <div class="input-wrapper">
         <input
-          [type]="passwordFieldType"
+          [type]="passwordVisibility.confirmPassword ? 'text' : 'password'"
           id="confirmPassword"
           formControlName="confirmPassword"
           placeholder="{{'Confirm New Password' | translate}}"
         />
         <img
-          src="/assets/images/eye-icon.svg"
+          [src]="passwordVisibility.confirmPassword ? 'assets/images/eye-open.svg' : 'assets/images/eye-close.svg'"
           alt="Toggle Visibility"
           class="input-icon"
           (click)="togglePasswordVisibility('confirmPassword')"

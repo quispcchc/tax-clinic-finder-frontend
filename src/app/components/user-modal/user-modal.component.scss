@@ -113,6 +113,26 @@ h3 {
   }
 }
 
+.password-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+
+  input {
+    width: 100%;
+    padding-right: 40px;
+  }
+
+  .input-icon {
+    position: absolute;
+    right: 20%;
+    cursor: pointer;
+    width: 20px;
+    height: 20px;
+  }
+}
+
+
 button:disabled {
   background-color: #ccc;
   cursor: not-allowed;

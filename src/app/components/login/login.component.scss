@@ -98,27 +98,43 @@ h2 {
       font-size: 0.75rem;
       margin-top: 0.25rem;
     }
+  }
 
-    .password-input-container input {
-      width: 100%;
-      padding: 0.75rem;
-      border: 1px solid #ddd;
-      border-radius: 24px;
-      font-size: 1rem;
-      box-sizing: border-box;
-      margin: 0;
-    
-      &:focus {
-        border-color: #007e94;
-        box-shadow: 0 0 5px rgba(0, 126, 148, 0.5);
-        outline: none;
-      }
-    
-      &.error-border {
-        border-color: #e74c3c;
-      }
+  .password-input-container {
+    position: relative;
+    width: 100%;
+  }
+  
+  .password-input-container input {
+    width: 100%;
+    padding: 0.75rem;
+    padding-right: 2.5rem;
+    border: 1px solid #ddd;
+    border-radius: 24px;
+    font-size: 1rem;
+    box-sizing: border-box;
+        
+    &:focus {
+      border-color: #007e94;
+      box-shadow: 0 0 5px rgba(0, 126, 148, 0.5);
+      outline: none;
+    }
+  
+    &.error-border {
+      border-color: #e74c3c;
     }
   }
+  
+  .password-input-container .input-icon {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+  }
+  
 
   .error-message {
     color: #e74c3c;

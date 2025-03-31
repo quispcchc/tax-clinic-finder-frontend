@@ -16,9 +16,14 @@ export class MyProfileComponent implements OnInit {
   isChangePassword = false;
   passwordForm!: FormGroup;
   passwordError: string = '';
-  showPassword = false;
-  passwordFieldType = 'password';
   userInitials: string = '';
+  showPassword: boolean = false;
+
+  passwordVisibility = {
+    currentPassword: false,
+    newPassword: false,
+    confirmPassword: false,
+  };
 
   popupMessage: string = '';
   popupVisible: boolean = false;
@@ -87,7 +92,6 @@ export class MyProfileComponent implements OnInit {
     this.authService.changePassword(this.userProfile.userId, currentPassword, newPassword).subscribe(
       () => {
         this.passwordError = '';
-        //this.logout();
         this.isChangePassword = !this.isChangePassword;
         this.showPopup('Password Changed successfully!', 'success');
       },
@@ -109,11 +113,8 @@ export class MyProfileComponent implements OnInit {
     };
   }
 
-  togglePasswordVisibility(field: string): void {
-    const input = document.getElementById(field) as HTMLInputElement;
-    if (input) {
-      input.type = input.type === 'password' ? 'text' : 'password';
-    }
+  togglePasswordVisibility(field: 'currentPassword' | 'newPassword' | 'confirmPassword'): void {
+    this.passwordVisibility[field] = !this.passwordVisibility[field];
   }
 
   logout(): void {

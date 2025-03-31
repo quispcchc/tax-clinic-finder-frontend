@@ -67,6 +67,7 @@ export class UserModalComponent {
     },
     { label: 'Role', key: 'role', type: 'text', placeholder: 'Select Role' },
   ];
+  showPassword: boolean = false;
 
   constructor(private fb: FormBuilder) {
     this.userForm = this.createForm();
@@ -96,14 +97,12 @@ export class UserModalComponent {
     }
 
     if (this.isEditMode) {
-      // Remove password field in edit mode
       this.formFields = this.formFields.filter(
         (field) => field.key !== 'password'
       );
       this.userForm.get('password')?.clearValidators();
       this.userForm.get('password')?.updateValueAndValidity();
     } else {
-      // Add password field in add mode
       if (!this.formFields.some((field) => field.key === 'password')) {
         this.formFields.push({
           label: 'Password',
@@ -165,5 +164,9 @@ export class UserModalComponent {
 
   closeModal() {
     this.close.emit();
+  }
+
+  togglePasswordVisibility(): void {
+    this.showPassword = !this.showPassword;
   }
 }

@@ -49,7 +49,7 @@
           <input
             id="password"
             formControlName="password"
-            type="password"
+            [type]="showPassword ? 'text' : 'password'"
             [placeholder]="'Enter Password' | translate"
             [ngClass]="
               password && password.value !== '' && password.invalid
@@ -57,6 +57,12 @@
                 : ''
             "
           />
+          <img
+          [src]="showPassword ? 'assets/images/eye-open.svg' : 'assets/images/eye-close.svg'"
+          alt="Toggle Visibility"
+          class="input-icon"
+          (click)="togglePasswordVisibility()"
+        />
         </div>
         <div
           *ngIf="
@@ -102,8 +108,8 @@
       <p></p>
     </div>
     <div class="login-footer">
-      <p class="left-footer">&#169; 2025. All rights reserved</p>
-      <p class="right-footer">Developed by Carlington CHC team
+      <p class="left-footer">&#169; 2025. {{"All rights reserved" | translate}}</p>
+      <p class="right-footer">{{"Developed by Carlington CHC team" | translate}}
         <img src="assets/images/carlington-footer-logo.svg" alt="Carlington CHC Logo" class="footer-logo" />
       </p>
     </div>

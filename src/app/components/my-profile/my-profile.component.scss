@@ -98,6 +98,10 @@
             background-color: #007e94;
             color: #ffffff;
           }
+
+          &:disabled {
+            cursor: not-allowed;
+          }
         }
 
         &.settings-btn {

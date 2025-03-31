@@ -21,12 +21,27 @@
           </div>
 
           <input
-            *ngIf="field.key !== 'role'"
+            *ngIf="field.key !== 'role' && field.key !== 'password'"
             [type]="field.type"
             [formControlName]="field.key"
             [placeholder]="field.placeholder"
             required
           />
+
+          <div class="password-container" *ngIf="field.key === 'password'">
+            <input
+              [type]="showPassword ? 'text' : 'password'"
+              [formControlName]="field.key"
+              [placeholder]="field.placeholder"
+              required
+            />
+            <img
+              [src]="showPassword ? 'assets/images/eye-open.svg' : 'assets/images/eye-close.svg'"
+              alt="Toggle Visibility"
+              class="input-icon"
+              (click)="togglePasswordVisibility()"
+            />
+          </div>
 
           <div
             class="error-message"
