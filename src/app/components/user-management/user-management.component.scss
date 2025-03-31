@@ -109,15 +109,16 @@
                 color: #006577;
                 font-weight: 600;
                 display: inline-block;
-                border: none;
+                border: 1px solid #0097B2;
                 padding: 10px 0px;
                 width: 60%;
                 background-color: inherit;
+                border-radius: 16px;
                 cursor: pointer;
 
                 &:hover {
-                    border-bottom: 1px solid #ccc;
-                    border-radius: 16px;
+                    background-color: #007E94;
+                    color: #ffffff;
                 }
             }
         }

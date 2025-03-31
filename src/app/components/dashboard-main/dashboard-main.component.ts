@@ -731,7 +731,7 @@ export class DashboardMainComponent implements OnInit {
         .updateFilteredData(this.newClientId, this.filteredData)
         .subscribe(() => {
           this.isNewClient = false;
-          this.onFilterSidebarToggle();
+          this.isSidebarOpen = true;
           this.newClientId = '';
           console.log('Clinic assigned successfully.');
         });
@@ -746,6 +746,7 @@ export class DashboardMainComponent implements OnInit {
       this.clinicService
         .updateFilteredData(this.newClientId, this.filteredData)
         .subscribe(() => {
+          this.isSidebarOpen = false;
           console.log('Clinic unassigned successfully.');
         });
     }
