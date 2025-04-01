@@ -266,11 +266,11 @@ export class TaxClinicModalComponent implements OnChanges, OnInit, OnDestroy  {
       },
       fr: {
         'Booking appointments': 'Prise de rendez-vous',
-        'Client intake (gathering personal information and tax slips)': 'Accueil des clients (collecte d\'informations personnelles et de bordereaux fiscaux)',
-        'Preparing tax returns using software': 'Préparation des déclarations fiscales à l\'aide d\'un logiciel',
-        'Explaining tax return to client and having them sign e-filing authorization': 'Expliquer la déclaration de revenus au client et lui faire signer l\'autorisation de dépôt électronique',
-        'Tax return verification/audit before e-filing': 'Vérification/vérification de la déclaration de revenus avant le dépôt électronique',
-        'E-FILE tax returns': 'Déclarations de revenus E-FILE',
+        'Client intake (gathering personal information and tax slips)': 'Accueil des clients (collecte des informations personnelles et feuillets d\'impôt)',
+        'Preparing tax returns using software': 'Préparation des déclarations d\'impôt avec un logiciel',
+        'Explaining tax return to client and having them sign e-filing authorization': 'Explication de la déclaration au client et signature de l’autorisation de transmission (TED)',
+        'Tax return verification/audit before e-filing': 'Vérification/audit avant transmission (TED)',
+        'E-FILE tax returns': 'transmission électronique des déclarations (TED)',
         'Administrative tasks': 'Tâches administratives'
       }
     },
@@ -286,10 +286,10 @@ export class TaxClinicModalComponent implements OnChanges, OnInit, OnDestroy  {
       fr: {
         'Volunteer recruitment': 'Recrutement de bénévoles',
         'Volunteer training': 'Formation des bénévoles',
-        'Training of employees new to operating tax clinics': 'Formation des employés nouveaux dans l\'exploitation des cliniques fiscales',
+        'Training of employees new to operating tax clinics': 'Formation des employés nouveaux dans la gestion des cliniques d\'impôt',
         'Follow-up with clients post-tax season': 'Suivi avec les clients après la saison des impôts',
-        'Visibility for your tax clinic to reach more clients': 'Visibilité pour votre clinique fiscale pour atteindre plus de clients',
-        'Set up an online booking system': 'Mettre en place un système de réservation en ligne'
+        'Visibility for your tax clinic to reach more clients': 'Visibilité pour votre clinique d\'impôt afin d’atteindre plus de clients',
+        'Set up an online booking system': 'Mise en place d’un système de prise de rendez-vous en ligne'
       }
     }
 
