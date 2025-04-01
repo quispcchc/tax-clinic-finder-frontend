@@ -715,6 +715,10 @@ export class TaxClinicModalComponent implements OnChanges, OnInit, OnDestroy  {
         formValue.servePeopleFrom = formValue['servePeopleFromOther'];
         delete formValue['servePeopleFromOther'];
       }
+
+      if (formValue.appointmentAvailability) {
+        formValue.appointmentAvailability = this.translateAppointmentToEnglish(formValue.appointmentAvailability);
+      }
   
       const finalData = {
         ...formValue,
@@ -730,6 +734,16 @@ export class TaxClinicModalComponent implements OnChanges, OnInit, OnDestroy  {
       const translatedFormValue = this.translateForSaving(finalData, this.currentLanguage);
       this.save.emit(translatedFormValue);
     }
+  }
+
+  private translateAppointmentToEnglish(value: string): string {
+    const frenchToEnglishMap: Record<string, string> = {
+      'Oui': 'Yes',
+      'Non': 'No',
+      'Pourrait être bientôt disponible': 'Might be available soon'
+    };
+  
+    return frenchToEnglishMap[value] || value;
   }
 
   closeModal() {
@@ -1049,7 +1063,7 @@ export class TaxClinicModalComponent implements OnChanges, OnInit, OnDestroy  {
   private translateForSaving(clinic: Clinic, targetLang: string): Clinic {
     const translated = { ...clinic };
     
-    const radioFields = ['listedOnCra', 'visibleOnNceo', 'appointmentAvailability', 
+    const radioFields = ['listedOnCra', 'visibleOnNceo', 
       'publicInfo', 'wheelchairAccessible', 'yearRoundService', 'servePeopleFrom', 
       'usefulOnlineBooking'];
     
