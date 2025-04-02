@@ -23,6 +23,8 @@ export class MapComponent implements OnInit, OnChanges {
   private markers: L.LayerGroup = L.layerGroup();
   public isLoading = false;
   private isMapInitialized = false;
+  public selectedClinic?: Clinic;
+  public showModal = false;
 
   constructor(private postalCodeService: PostalCodeService) {}
 
@@ -109,10 +111,23 @@ export class MapComponent implements OnInit, OnChanges {
 
         const marker = L.marker(clinicLatLng).bindPopup(`
           <strong>${clinic.organizationName}</strong><br>
-          ${fullAddress}<br>
+          Address: ${fullAddress}<br>
           Type: ${clinic.clinicTypes || 'N/A'}<br>
-          Language: ${clinic.serviceLanguages || 'N/A'}
+          Language: ${clinic.serviceLanguages || 'N/A'}<br>
+          <a href="#" class="open-modal" data-clinic-id="${clinic.id}">More Details</a>
         `);
+  
+        marker.on('popupopen', (event) => {
+          setTimeout(() => {
+            const link = document.querySelector(`.open-modal[data-clinic-id="${clinic.id}"]`);
+            if (link) {
+              link.addEventListener('click', (e) => {
+                e.preventDefault();
+                this.openModal(clinic);
+              });
+            }
+          }, 0);
+        });
 
         this.markers.addLayer(marker);
 
@@ -132,5 +147,15 @@ export class MapComponent implements OnInit, OnChanges {
     }
 
     this.isLoading = false;
+  }
+
+  openModal(clinic: Clinic): void {
+    this.selectedClinic = clinic;
+    this.showModal = true;
+  }
+  
+  closeModal(): void {
+    this.showModal = false;
+    this.selectedClinic = undefined;
   }
 }

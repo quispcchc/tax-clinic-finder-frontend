@@ -1,3 +1,5 @@
 <div *ngIf="isLoading" class="loading-spinner">Loading...</div>
-
 <div id="map" style="height: 100%"></div>
+
+<app-tax-clinic-details *ngIf="showModal && selectedClinic" [clinic]="selectedClinic"
+(closeModal)="closeModal()"></app-tax-clinic-details>
