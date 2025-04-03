@@ -35,7 +35,7 @@
     .add-clinic {
         background-color: #80CBD8;
         color: #2B2B2B;
-        padding: 10px 15px;
+        padding: 15px 15px;
         border: none;
         border-radius: 18px;
         cursor: pointer;
@@ -131,19 +131,36 @@
                 gap: 20px;
             }
 
-            .edit-button,
-            .delete-button {
-                color: #2B2B2B;
+            .edit-button {
+                color: #006577;
                 font-weight: 600;
                 border: 1px solid #0097B2;
-                background-color: #f7fcff;
+                background-color: inherit;
                 border-radius: 16px;
                 padding: 10px;
                 width: 75%;
                 cursor: pointer;
 
                 &:hover {
-                    background-color: #80CBD8;
+                    background-color: #AADCE5;
+                }
+            }
+
+            .delete-button {
+                color: #006577;
+                font-weight: 600;
+                border: none;
+                background-color: inherit;
+                padding: 10px;
+                width: 75%;
+                cursor: pointer;
+
+                &:hover {
+                    color: #0097B2;
+                    background-color: #CCEAF0;
+                    border-bottom: 1px solid #006577;
+                    border-radius: 16px;
+                    padding: 10px;
                 }
             }
         }

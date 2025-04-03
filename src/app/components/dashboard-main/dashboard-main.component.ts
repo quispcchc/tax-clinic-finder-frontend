@@ -129,7 +129,7 @@ export class DashboardMainComponent implements OnInit {
   }
 
   async sortClinics( filters?: { [key: string]: any }, coordinates?: { lat: number, lng: number }) {
-    const appointmentPriority: Record<string, number> = { 'Yes': 1, 'No': 2, 'Might be available soon': 3 };
+    const appointmentPriority: Record<string, number> = { 'Yes': 1, 'No': 2, 'Might be available soon': 3, 'Information not available': 4 };
   
     const postalCodeFilter = filters?.['postalCodesServe'];
     const clinicCoordinateCache = new Map<string, { lat: number, lng: number }>();

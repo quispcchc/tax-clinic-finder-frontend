@@ -55,8 +55,8 @@ export class TaxClinicModalComponent implements OnChanges, OnInit, OnDestroy  {
       fr: { 'Yes': 'Oui', 'No': 'Non', 'I do not know': 'Je ne sais pas' }
     },
     appointmentAvailability: {
-      en: { 'Yes': 'Yes', 'No': 'No', 'Might be available soon': 'Might be available soon' },
-      fr: { 'Yes': 'Oui', 'No': 'Non', 'Might be available soon': 'Pourrait être bientôt disponible' }
+      en: { 'Yes': 'Yes', 'No': 'No', 'Might be available soon': 'Might be available soon', 'Information not available': 'Information not available' },
+      fr: { 'Yes': 'Oui', 'No': 'Non', 'Might be available soon': 'Pourrait être bientôt disponible', 'Information not available': 'Information non disponible' }
     },
     publicInfo: {
       en: { 'Yes': 'Yes', 'No, only for EBO': 'No, only for EBO', 'Maybe but needs more info': 'Maybe but needs more info' },
@@ -740,7 +740,8 @@ export class TaxClinicModalComponent implements OnChanges, OnInit, OnDestroy  {
     const frenchToEnglishMap: Record<string, string> = {
       'Oui': 'Yes',
       'Non': 'No',
-      'Pourrait être bientôt disponible': 'Might be available soon'
+      'Pourrait être bientôt disponible': 'Might be available soon',
+      'Information non disponible': 'Information not available'
     };
   
     return frenchToEnglishMap[value] || value;

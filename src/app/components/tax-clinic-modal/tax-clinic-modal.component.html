@@ -299,6 +299,10 @@
                   <input type="radio" formControlName="appointmentAvailability" value="Might be available soon" />
                   <span>{{"Might be available soon" | translate}}</span>
                 </div>
+                <div class="radio-item">
+                  <input type="radio" formControlName="appointmentAvailability" value="Information not available" />
+                  <span>{{"Information not available" | translate}}</span>
+                </div>
               </div>
               <div class="error" *ngIf="
                   clinicForm.get('appointmentAvailability')?.invalid &&

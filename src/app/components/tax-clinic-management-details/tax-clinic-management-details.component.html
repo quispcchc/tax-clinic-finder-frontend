@@ -102,6 +102,16 @@
                 />
                 {{ "Might be available soon" | translate }}
               </p>
+              <p>
+                <input
+                  type="radio"
+                  name="appointmentAvailability"
+                  value="Information not available"
+                  [(ngModel)]="appointmentAvailability"
+                  (ngModelChange)="onAppointmentAvailabilityChange()"
+                />
+                {{ "Information not available" | translate }}
+              </p>
               <button
                 (click)="updateAppointmentAvailability()"
                 class="save-button"
