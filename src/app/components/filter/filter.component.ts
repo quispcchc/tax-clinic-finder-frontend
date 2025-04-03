@@ -209,6 +209,7 @@ export class FilterComponent {
   }
 
   onToggleChange() {
+    this.resetFilters();
     this.isNewClientChange.emit(this.isNewClient);
   }
 
