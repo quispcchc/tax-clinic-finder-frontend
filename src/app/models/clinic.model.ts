@@ -3,6 +3,7 @@ export interface Clinic {
   [key: string]: any;
   id: number;
   distance?: number;
+  showWarningTest?: boolean;
   organizationName: string;
   organisationWebsite: string;
   organisationalEmail: string;

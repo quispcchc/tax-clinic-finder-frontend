@@ -8,6 +8,9 @@
     </p>
   </ng-template>
   <div *ngFor="let clinic of filteredClinics" class="clinic-card" (click)="openModal(clinic)">
+    <div *ngIf="clinic.showWarningTest" class="criteria-warning">
+      {{ "Please check the eligibility criteria specific to the clinic" | translate }}
+    </div>
     <label class="clinic-label">
       <span
         class="availability-dot"

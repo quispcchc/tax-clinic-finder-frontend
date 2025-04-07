@@ -143,6 +143,18 @@
   background-color: #f8f9fa;
 }
 
+.criteria-warning {
+  background-color: #f3e8ff;
+  color: #6a0dad;
+  border-left: 4px solid #a855f7;
+  padding: 10px 12px;
+  margin-bottom: 10px;
+  font-size: 0.9rem;
+  border-radius: 6px;
+  font-weight: 500;
+  width: 100%;
+}
+
 @media (max-width: 1024px) {
   .find-clinic-btn {
     width: 50%;

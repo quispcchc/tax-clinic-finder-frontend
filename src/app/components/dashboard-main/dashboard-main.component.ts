@@ -324,12 +324,9 @@ export class DashboardMainComponent implements OnInit {
   }
 
   private async filterClinics(clinics: any[], filters: { [key: string]: any }): Promise<any[]> {
+
     const hasSelectedFilters = (filterGroup: any) =>
       Object.values(filterGroup || {}).some(Boolean);
-
-    if (filters['lowIncome'] === 'Above') {
-      return [];
-    }
 
     let coordinates: { lat: number, lng: number } | null = null;
     const postalCodeFilter = filters['postalCodesServe'];
@@ -339,6 +336,18 @@ export class DashboardMainComponent implements OnInit {
     }
 
     return clinics.filter((clinic) => {
+      let servesAboveIncome = true;
+
+      if (filters['lowIncome'] === 'Above') {
+         servesAboveIncome = clinic.servePeople?.toLowerCase().includes('above cvitp income') ||
+                                  clinic.servePeople?.toLowerCase().includes('larger income than cvitp income-criteria. when people are low income now') ||
+                                  clinic.servePeople?.toLowerCase().includes('revenu supérieur aux critères de revenu du cvitp. lorsque les personnes ont un faible revenu actuellement');
+
+        clinic.showWarningTest = servesAboveIncome;
+        if (!servesAboveIncome) {
+            return false;
+        }
+      }
       const matchesServiceDelivery =
         (filters['serviceDeliveryModes']?.inPerson &&
           (clinic.clinicTypes?.toLowerCase().includes('in person') ||
@@ -506,6 +515,7 @@ export class DashboardMainComponent implements OnInit {
             return false;
           }));
       return (
+        servesAboveIncome &&
         matchesSupportedTaxYears &&
         matchesProvinces &&
         matchesLanguage &&
