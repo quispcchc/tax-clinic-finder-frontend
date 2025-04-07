@@ -41,7 +41,7 @@
     </p>
     <p>
       {{ "Appointment Availability" | translate }}:
-      {{ clinic.appointmentAvailability }}
+      {{ clinic.appointmentAvailability | translate}}
     </p>
     <p *ngIf="isValidDistance(clinic.distance)" class="distance-tag">
       <span class="distance-text">
