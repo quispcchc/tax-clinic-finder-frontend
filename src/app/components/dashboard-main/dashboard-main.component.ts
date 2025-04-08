@@ -307,6 +307,7 @@ export class DashboardMainComponent implements OnInit {
     }
 
     if (!filters) {
+      this.clinics.forEach(clinic => delete clinic.showWarningTest);
       this.filteredClinics = [...this.clinics];
     } else {
       this.filteredClinics = await this.filterClinics(this.clinics, filters);
@@ -334,6 +335,8 @@ export class DashboardMainComponent implements OnInit {
     if (postalCodeFilter) {
       coordinates = await this.geocodePostalCode(postalCodeFilter);
     }
+
+    clinics.forEach(clinic => delete clinic.showWarningTest);
 
     return clinics.filter((clinic) => {
       let servesAboveIncome = true;
