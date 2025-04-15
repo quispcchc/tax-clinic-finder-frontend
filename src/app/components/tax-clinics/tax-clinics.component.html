@@ -39,6 +39,10 @@
         {{ "Appointment Availability" | translate }}:
         {{ clinic.appointmentAvailability }}
       </p>
+      <p>
+        {{ "Updated Date" | translate }}:
+        {{ clinic.updatedDate | translate}}
+      </p>
     </div>
   </div>
   <app-tax-clinic-details *ngIf="showModal" [clinic]="selectedClinic"

@@ -43,6 +43,10 @@
       {{ "Appointment Availability" | translate }}:
       {{ clinic.appointmentAvailability | translate}}
     </p>
+    <p>
+      {{ "Updated Date" | translate }}:
+      {{ clinic.updatedDate | translate}}
+    </p>
     <p *ngIf="isValidDistance(clinic.distance)" class="distance-tag">
       <span class="distance-text">
         {{ "Distance" | translate }}: {{ clinic.distance | number:'1.2-2' }} km

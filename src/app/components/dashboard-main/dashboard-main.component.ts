@@ -102,7 +102,7 @@ export class DashboardMainComponent implements OnInit {
           comments: clinic.comments,
           catchmentBoundaries: clinic.catchment_boundaries,
           createdDate: clinic.created_at,
-          updatedDate: clinic.updated_at,
+          updatedDate: format(new Date(clinic.updated_at), 'dd MMM yyyy'),
           isVirtualClinic: clinic.is_virtual_clinic,
           locations: Array.isArray(clinic.locations)
             ? clinic.locations.map((location: any) => ({
